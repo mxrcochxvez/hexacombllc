@@ -45,23 +45,6 @@ export const metadata: Metadata = {
 
 const iconProps = { size: 28, strokeWidth: 1.75 };
 
-function PhotoPlaceholder({
-  label,
-  icon: Icon,
-  className = "",
-}: {
-  label: string;
-  icon: React.ElementType;
-  className?: string;
-}) {
-  return (
-    <div className={`photo-placeholder ${className}`}>
-      <Icon size={32} strokeWidth={1.5} />
-      <span>{label}</span>
-    </div>
-  );
-}
-
 export default function About() {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -129,8 +112,8 @@ export default function About() {
               src="/images/marco-portrait.jpg"
               alt="Portrait of Marco"
               className="about-portrait"
-              width={680}
-              height={907}
+              width={340}
+              height={454}
               priority
             />
           </div>
@@ -268,15 +251,16 @@ export default function About() {
               </div>
             </div>
 
-            {/* Milestone 6 — Hexacomb + photo */}
+            {/* Milestone 6 — Hexacomb */}
             <div className="timeline-item right">
               <div className="timeline-dot" aria-hidden="true" />
-              <div className="timeline-content">
-                <PhotoPlaceholder
-                  label="Current / Hexacomb photo"
-                  icon={Hexagon}
-                  className="wide"
-                />
+              <div className="timeline-content timeline-content--featured">
+                <div className="hexacomb-visual" aria-hidden="true">
+                  <div className="hexacomb-orbital" />
+                  <div className="hexacomb-glow" />
+                  <Hexagon size={52} strokeWidth={1.5} />
+                </div>
+                <span className="badge-current">Current</span>
                 <span className="timeline-period">Founder</span>
                 <h3>Starting Hexacomb</h3>
                 <p>
