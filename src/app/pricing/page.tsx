@@ -14,8 +14,8 @@ const iconProps = { size: 28, strokeWidth: 1.75 };
 
 export const metadata: Metadata = {
   title: "Pricing",
-  description:
-    "0% down. Pay as you grow. Hexacomb's analytics-based pricing means your website costs scale with your actual traffic — perfect for small businesses in Fresno and the Central Valley.",
+    description:
+      "30% retainer to get started. Pay as you grow. Hexacomb's analytics-based pricing means your website costs scale with your actual traffic — perfect for small businesses in Fresno and the Central Valley.",
   alternates: {
     canonical: "https://hexacombllc.com/pricing",
   },
@@ -107,7 +107,7 @@ const faqs = [
   },
   {
     q: "How much is the 30% retainer?",
-    a: "It depends on your project's scope, but most small business sites fall in the $3,000–$5,000 range — meaning your retainer is roughly $900–$1,500. That's 70% less cash upfront than traditional agencies require. The retainer secures your spot and covers initial design and architecture.",
+    a: "It depends on your project's scope, but most small business sites fall in the $1,700–$2,300 range — meaning your retainer is roughly $500–$700. That's 70% less cash upfront than traditional agencies require. The retainer secures your spot and covers initial design and architecture.",
   },
   {
     q: "What if I go over my visitor limit?",
@@ -134,7 +134,7 @@ export default function PricingPage() {
     name: "Pricing | Hexacomb",
     url: "https://hexacombllc.com/pricing",
     description:
-      "0% down. Pay as you grow. Analytics-based pricing for small businesses in Fresno and the Central Valley.",
+      "30% retainer to get started. Pay as you grow. Analytics-based pricing for small businesses in Fresno and the Central Valley.",
     mainEntity: {
       "@type": "FAQPage",
       mainEntity: faqs.map((f) => ({
@@ -158,7 +158,7 @@ export default function PricingPage() {
         {/* Hero */}
         <section className="pricing-hero hex-bg" aria-labelledby="pricing-hero-heading">
           <div className="container">
-            <span className="hero-badge">0% Down</span>
+            <span className="hero-badge">30% Retainer to Start</span>
             <h1 id="pricing-hero-heading">
               Pay As You <span>Grow</span>
             </h1>
@@ -203,7 +203,7 @@ export default function PricingPage() {
                 <h3>30% Retainer</h3>
                 <p>
                   Based on your project's estimated total cost. For most
-                  small business sites, that's roughly $900–$1,500 to get
+                  small business sites, that's roughly $500–$700 to get
                   started — not $5,000.
                 </p>
               </div>
