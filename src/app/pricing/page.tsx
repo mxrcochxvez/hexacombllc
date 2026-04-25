@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import {
-  Sprout,
-  TrendingUp,
-  Award,
-  Crown,
+  Compass,
+  Package,
+  Shield,
+  Globe,
   Check,
   BarChart3,
   ArrowRight,
@@ -23,13 +23,13 @@ export const metadata: Metadata = {
 
 const tiers = [
   {
-    name: "Seedling",
-    icon: <Sprout {...iconProps} />,
+    name: "Scout",
+    icon: <Compass {...iconProps} />,
     price: "$59",
     period: "/mo",
     range: "0 – 500",
     rangeLabel: "monthly unique visitors",
-    description: "Perfect for new businesses getting their first customers online.",
+    description: "Exploring new ground and finding your first customers online.",
     features: [
       "Custom hand-coded website",
       "Built-in SEO & accessibility",
@@ -38,64 +38,64 @@ const tiers = [
       "Email support",
     ],
     cta: "Get Started",
-    track: "cta_pricing_seedling",
+    track: "cta_pricing_scout",
     highlighted: false,
   },
   {
-    name: "Growth",
-    icon: <TrendingUp {...iconProps} />,
+    name: "Forager",
+    icon: <Package {...iconProps} />,
     price: "$119",
     period: "/mo",
     range: "501 – 2,500",
     rangeLabel: "monthly unique visitors",
-    description: "For businesses gaining traction and need more from their site.",
+    description: "Actively gathering leads and building momentum in your market.",
     features: [
-      "Everything in Seedling",
+      "Everything in Scout",
       "Priority email support",
       "Quarterly performance review",
       "Minor content updates included",
       "Social media integration",
     ],
     cta: "Get Started",
-    track: "cta_pricing_growth",
+    track: "cta_pricing_forager",
     highlighted: true,
   },
   {
-    name: "Thrive",
-    icon: <Award {...iconProps} />,
+    name: "Keeper",
+    icon: <Shield {...iconProps} />,
     price: "$219",
     period: "/mo",
     range: "2,501 – 7,500",
     rangeLabel: "monthly unique visitors",
-    description: "For established businesses ready to optimize and convert.",
+    description: "Nurturing an established presence that turns visitors into regulars.",
     features: [
-      "Everything in Growth",
+      "Everything in Forager",
       "Advanced SEO optimizations",
       "A/B testing setup",
       "Monthly strategy call",
       "Conversion tracking",
     ],
     cta: "Get Started",
-    track: "cta_pricing_thrive",
+    track: "cta_pricing_keeper",
     highlighted: false,
   },
   {
-    name: "Harvest",
-    icon: <Crown {...iconProps} />,
+    name: "Swarm",
+    icon: <Globe {...iconProps} />,
     price: "Custom",
     period: "",
     range: "7,500+",
     rangeLabel: "monthly unique visitors",
-    description: "Volume pricing for high-traffic businesses and custom needs.",
+    description: "Expanding reach across channels and markets at scale.",
     features: [
-      "Everything in Thrive",
+      "Everything in Keeper",
       "Dedicated support",
       "Custom integrations",
       "Multi-location setup",
       "SLA guarantee",
     ],
     cta: "Contact Us",
-    track: "cta_pricing_harvest",
+    track: "cta_pricing_swarm",
     highlighted: false,
   },
 ];
@@ -231,8 +231,8 @@ export default function PricingPage() {
         {/* Pricing Tiers */}
         <section className="pricing-tiers" aria-labelledby="tiers-heading">
           <div className="container">
-            <span className="section-label">Pricing Tiers</span>
-            <h2 id="tiers-heading">Choose Your Growth Stage</h2>
+            <span className="section-label">The Colony</span>
+            <h2 id="tiers-heading">Find Your Place in the Hive</h2>
             <p className="section-intro">
               Every tier includes your custom website, hosting, maintenance,
               and support. You simply pay more as your traffic grows — never
@@ -300,7 +300,7 @@ export default function PricingPage() {
                 <strong>Cash-Flow Friendly</strong>
                 <p>
                   Small businesses can't drop $5,000 on a website before they
-                  know if it will work. Our $0-down model lets you invest
+                  know if it will work. Our 30% retainer model lets you invest
                   capital where it matters: inventory, staff, and marketing.
                 </p>
               </div>

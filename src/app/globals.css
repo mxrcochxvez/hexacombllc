@@ -187,7 +187,7 @@ h3 {
   gap: 24px;
 }
 
-.header-nav > a[href="/about"] {
+.header-nav > a:not(.header-cta) {
   color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
   font-size: 0.9rem;
@@ -195,8 +195,8 @@ h3 {
   transition: color var(--transition);
 }
 
-.header-nav > a[href="/about"]:hover,
-.header-nav > a[href="/about"]:focus-visible {
+.header-nav > a:not(.header-cta):hover,
+.header-nav > a:not(.header-cta):focus-visible {
   color: var(--honey);
 }
 
@@ -1584,12 +1584,15 @@ section {
 }
 
 .pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
 }
 
 .pricing-card {
+  flex: 1 1 240px;
+  max-width: 280px;
   background: var(--white);
   border: 1px solid var(--gray-light);
   border-radius: var(--radius-lg);
@@ -1843,7 +1846,11 @@ section {
     gap: 20px;
   }
   .pricing-grid {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .pricing-card {
+    max-width: 100%;
   }
   .faq-item summary {
     padding: 16px 20px;
