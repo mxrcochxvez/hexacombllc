@@ -1,7 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+export const dynamic = "force-dynamic";
+
+let _resend: import("resend").Resend | null = null;
+
+async function getResend(): Promise<import("resend").Resend> {
+  if (!_resend) {
+    const { Resend } = await import("resend");
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      throw new Error("RESEND_API_KEY is not configured.");
+    }
+    _resend = new Resend(apiKey);
+  }
+  return _resend;
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -60,6 +73,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const resend = await getResend();
     const { error } = await resend.emails.send({
       from:
         process.env.CONTACT_FROM_EMAIL ?? "Hexacomb <onboarding@resend.dev>",
