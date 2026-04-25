@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Turnstile } from "@marsidev/react-turnstile";
 
-const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "1x00000000000000000000AA";
+const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "0x4AAAAAADC6NwtGoO-9AuVg";
 
 export function ContactForm() {
   const [status, setStatus] = useState<
