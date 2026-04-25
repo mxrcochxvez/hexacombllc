@@ -1,26 +1,637 @@
-@import "tailwindcss";
-
+/* ── Reset & Variables ── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --honey: #e8a41e;
+  --honey-light: #f6c150;
+  --honey-soft: #fef6e5;
+  --charcoal: #1a1a1a;
+  --charcoal-soft: #272727;
+  --white: #ffffff;
+  --off-white: #fafafa;
+  --gray: #6b6b6b;
+  --gray-light: #e0e0e0;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --font-body: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Georgia", "Times New Roman", serif;
+  --max-width: 1120px;
+  --transition: 0.2s ease;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  color: var(--charcoal);
+  background: var(--off-white);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Utility ── */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Typography ── */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+h2 {
+  font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+  margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  border-radius: var(--radius);
+  border: 2px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--transition);
+}
+
+.btn-primary {
+  background: var(--honey);
+  color: var(--charcoal);
+  border-color: var(--honey);
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: var(--honey-light);
+  border-color: var(--honey-light);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(232, 164, 30, 0.35);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--white);
+  border-color: var(--white);
+}
+
+.btn-outline:hover,
+.btn-outline:focus-visible {
+  background: var(--white);
+  color: var(--charcoal);
+}
+
+/* ── Hexagon Motif ── */
+.hex-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.hex-bg::before {
+  content: "";
+  position: absolute;
+  top: -120px;
+  right: -120px;
+  width: 360px;
+  height: 360px;
+  opacity: 0.04;
+  background: conic-gradient(from 0deg, var(--honey) 0deg 60deg, transparent 60deg 300deg, var(--honey) 300deg 360deg),
+    repeating-conic-gradient(from 0deg, var(--honey) 0deg 0.5deg, transparent 0.5deg 60deg),
+    repeating-conic-gradient(from 120deg, var(--honey) 0deg 0.5deg, transparent 0.5deg 60deg),
+    repeating-conic-gradient(from 240deg, var(--honey) 0deg 0.5deg, transparent 0.5deg 60deg);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Header ── */
+.site-header {
+  background: var(--charcoal);
+  color: var(--white);
+  padding: 16px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.logo-hex {
+  width: 28px;
+  height: 28px;
+  background: var(--honey);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.header-cta {
+  font-size: 0.9rem;
+  padding: 8px 20px;
+  background: var(--honey);
+  color: var(--charcoal);
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all var(--transition);
+}
+
+.header-cta:hover,
+.header-cta:focus-visible {
+  background: var(--honey-light);
+  transform: translateY(-1px);
+}
+
+/* ── Hero ── */
+.hero {
+  background: var(--charcoal);
+  color: var(--white);
+  padding: 100px 0 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/central-valley.webp") center / cover no-repeat;
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero .container {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-badge {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--honey);
+  border: 1px solid rgba(232, 164, 30, 0.3);
+  border-radius: 50px;
+  padding: 6px 18px;
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 {
+  max-width: 800px;
+  margin-bottom: 1.25rem;
+}
+
+.hero h1 span {
+  color: var(--honey);
+}
+
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 600px;
+  margin-bottom: 2.5rem;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 32px;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hero-stat-num {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--honey);
+}
+
+.hero-stat-label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.3;
+}
+
+/* ── Large hex background shapes ── */
+.hero-ornament {
+  position: absolute;
+  border: 2px solid rgba(232, 164, 30, 0.12);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  pointer-events: none;
+}
+
+.hero-ornament-1 {
+  width: 500px;
+  height: 500px;
+  top: -200px;
+  right: -100px;
+}
+
+.hero-ornament-2 {
+  width: 200px;
+  height: 200px;
+  bottom: -60px;
+  left: -60px;
+}
+
+/* ── Sections ── */
+section {
+  padding: 80px 0;
+}
+
+.section-label {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--honey);
+  margin-bottom: 0.75rem;
+}
+
+.section-intro {
+  max-width: 640px;
+  color: var(--gray);
+  font-size: 1.05rem;
+  margin-bottom: 3rem;
+}
+
+/* ── Problem ── */
+.problem {
+  background: var(--white);
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.problem-visual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.problem-card {
+  background: var(--off-white);
+  border: 1px solid var(--gray-light);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  text-align: center;
+}
+
+.problem-card-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0.5rem;
+}
+
+.problem-card-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--gray);
+}
+
+.problem-card-bad {
+  color: #c0392b;
+}
+
+/* ── Workflow ── */
+.workflow {
+  background: var(--off-white);
+}
+
+.workflow-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  counter-reset: step;
+}
+
+.workflow-step {
+  background: var(--white);
+  border: 1px solid var(--gray-light);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  position: relative;
+  transition: all var(--transition);
+}
+
+.workflow-step:hover {
+  border-color: var(--honey);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.workflow-step::before {
+  counter-increment: step;
+  content: counter(step, decimal-leading-zero);
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 700;
+  color: rgba(232, 164, 30, 0.12);
+  position: absolute;
+  top: 16px;
+  right: 24px;
+}
+
+.workflow-step h3 {
+  margin-bottom: 0.5rem;
+}
+
+.workflow-step p {
+  color: var(--gray);
+  font-size: 0.95rem;
+}
+
+/* ── Deliverables ── */
+.deliverables {
+  background: var(--charcoal);
+  color: var(--white);
+}
+
+.deliverables .section-label {
+  color: var(--honey-light);
+}
+
+.deliverables .section-intro {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background: var(--charcoal-soft);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-lg);
+  padding: 40px 32px;
+  transition: all var(--transition);
+}
+
+.card:hover {
+  border-color: var(--honey);
+  transform: translateY(-2px);
+}
+
+.card-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(232, 164, 30, 0.1);
+  border-radius: var(--radius);
+  margin-bottom: 1.25rem;
+  color: var(--honey);
+}
+
+.card h3 {
+  margin-bottom: 0.75rem;
+  color: var(--white);
+}
+
+.card p {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.95rem;
+}
+
+/* ── Pricing ── */
+.pricing {
+  background: var(--white);
+}
+
+.pricing-box {
+  background: var(--charcoal);
+  color: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 48px 40px;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.pricing-box h2 {
+  color: var(--honey);
+}
+
+.pricing-box p {
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 1.5rem;
+}
+
+.scarcity {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(232, 164, 30, 0.1);
+  border: 1px solid rgba(232, 164, 30, 0.25);
+  border-radius: 50px;
+  padding: 8px 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--honey-light);
+  margin-bottom: 1.5rem;
+}
+
+/* ── Contact ── */
+.contact {
+  background: var(--off-white);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.contact-info h2 {
+  margin-bottom: 0.75rem;
+}
+
+.contact-info p {
+  color: var(--gray);
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--charcoal);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 1rem;
+  font-family: var(--font-body);
+  border: 1px solid var(--gray-light);
+  border-radius: var(--radius);
+  background: var(--white);
+  color: var(--charcoal);
+  transition: border-color var(--transition);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--honey);
+  box-shadow: 0 0 0 3px rgba(232, 164, 30, 0.15);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* ── Footer ── */
+.site-footer {
+  background: var(--charcoal);
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  padding: 32px 0;
+  font-size: 0.85rem;
+}
+
+.site-footer .logo-hex {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background: var(--honey);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .hero {
+    padding: 64px 0 80px;
+  }
+  .hero-stats {
+    gap: 20px;
+    margin-top: 2rem;
+  }
+  .hero-stat-num {
+    font-size: 2rem;
+  }
+  .problem-grid {
+    grid-template-columns: 1fr;
+  }
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+  section {
+    padding: 56px 0;
+  }
+  .pricing-box {
+    padding: 32px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+  .workflow-steps {
+    grid-template-columns: 1fr;
+  }
+  .cards {
+    grid-template-columns: 1fr;
+  }
+  .hero-stats {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .site-header .container {
+    justify-content: center;
+  }
+}
+
+/* ── Focus ── */
+:focus-visible {
+  outline: 2px solid var(--honey);
+  outline-offset: 2px;
 }
