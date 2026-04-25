@@ -52,8 +52,10 @@ export default function Navbar() {
 
         {/* Desktop Nav */}
         <nav className="header-nav" aria-label="Main navigation">
-          <Link href="/about">About</Link>
-          <Link href="/#contact" className="header-cta">
+          <Link href="/about" data-track="nav_about">
+            About
+          </Link>
+          <Link href="/#contact" className="header-cta" data-track="nav_cta_early_adopter">
             Apply for Early-Adopter Rate
           </Link>
         </nav>
@@ -67,6 +69,7 @@ export default function Navbar() {
           aria-controls="mobile-menu"
           onClick={() => setIsOpen((prev) => !prev)}
           type="button"
+          data-track={isOpen ? "mobile_menu_close" : "mobile_menu_open"}
         >
           {isOpen ? <X size={24} strokeWidth={2} /> : <Menu size={24} strokeWidth={2} />}
         </button>
@@ -81,10 +84,10 @@ export default function Navbar() {
         inert={!isOpen}
       >
         <nav className="mobile-menu-nav" aria-label="Mobile navigation">
-          <Link href="/about" onClick={closeMenu}>
+          <Link href="/about" onClick={closeMenu} data-track="nav_mobile_about">
             About
           </Link>
-          <Link href="/#contact" className="header-cta" onClick={closeMenu}>
+          <Link href="/#contact" className="header-cta" onClick={closeMenu} data-track="nav_mobile_cta_early_adopter">
             Apply for Early-Adopter Rate
           </Link>
         </nav>

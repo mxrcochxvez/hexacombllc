@@ -2,6 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import CloudflareAnalytics from "@/components/CloudflareAnalytics";
+import TrackClicks from "@/components/TrackClicks";
+import CookieBanner from "@/components/CookieBanner";
 
 const inter = Inter({
   variable: "--font-body",
@@ -118,9 +121,13 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
       </head>
       <body className={`${inter.variable} ${fraunces.variable}`}>
+        <CloudflareAnalytics token={process.env.CF_ANALYTICS_TOKEN} />
+        <TrackClicks />
         <Navbar />
 
         {children}
+
+        <CookieBanner />
 
         {/* Shared Footer */}
         <footer className="site-footer" role="contentinfo">

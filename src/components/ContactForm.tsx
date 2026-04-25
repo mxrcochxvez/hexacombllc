@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { Turnstile } from "@marsidev/react-turnstile";
+import { track } from "@/lib/analytics";
 
 const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "0x4AAAAAADC6NwtGoO-9AuVg";
 
@@ -102,8 +103,9 @@ export function ContactForm() {
       return;
     }
 
-    setStatus("sending");
-    setErrorMsg("");
+      setStatus("sending");
+      setErrorMsg("");
+      track("contact_form_submit", { name, email, hasWebsite: !!website });
 
     try {
       const res = await fetch("/api/contact", {
@@ -125,11 +127,15 @@ export function ContactForm() {
       }
 
       setStatus("success");
+      track("contact_form_success");
     } catch (err) {
       setStatus("error");
       setErrorMsg(
         err instanceof Error ? err.message : "Failed to send message."
       );
+      track("contact_form_error", {
+        message: err instanceof Error ? err.message : "Unknown error",
+      });
     }
   }
 

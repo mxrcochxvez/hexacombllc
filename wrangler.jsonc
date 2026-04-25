@@ -42,7 +42,8 @@
 	],
 	"vars": {
 		"NEXT_PUBLIC_TURNSTILE_SITE_KEY": "0x4AAAAAADC6NwtGoO-9AuVg",
-		"CONTACT_TO_EMAIL": "marcode.chavez.jr@gmail.com"
+		"CONTACT_TO_EMAIL": "marcode.chavez.jr@gmail.com",
+		"CF_ANALYTICS_TOKEN": ""
 	},
 	"images": {
 		// Enable image optimization

@@ -403,7 +403,11 @@ export default function About() {
               If I&rsquo;m not the right fit, I&rsquo;ll point you in the
               right direction.
             </p>
-            <Link href="/#contact" className="btn btn-primary">
+            <Link
+              href="/#contact"
+              className="btn btn-primary"
+              data-track="cta_about_reach_out"
+            >
               Reach Out →
             </Link>
           </div>

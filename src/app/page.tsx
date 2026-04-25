@@ -139,6 +139,7 @@ export default function Home() {
               href="#contact"
               className="btn btn-primary"
               aria-label="Get your digital fast-track consultation"
+              data-track="cta_hero_fast_track"
             >
               Get Your Digital Fast-Track →
             </a>
@@ -409,7 +410,11 @@ export default function Home() {
                 <Zap size={16} strokeWidth={2} /> 3 Partner Spots Available —
                 Apply Now
               </div>
-              <a href="#contact" className="btn btn-primary">
+              <a
+                href="#contact"
+                className="btn btn-primary"
+                data-track="cta_pricing_early_adopter"
+              >
                 Apply for the Early-Adopter Rate →
               </a>
             </div>
