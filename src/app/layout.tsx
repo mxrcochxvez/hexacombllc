@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({
   variable: "--font-body",
@@ -106,21 +106,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${fraunces.variable}`}>
-        {/* Shared Header */}
-        <header className="site-header" role="banner">
-          <div className="container">
-            <Link href="/" className="logo" aria-label="Hexacomb Home">
-              <span className="logo-hex" aria-hidden />
-              Hexacomb
-            </Link>
-            <nav className="header-nav" aria-label="Main navigation">
-              <Link href="/about">About</Link>
-              <Link href="/#contact" className="header-cta">
-                Apply for Early-Adopter Rate
-              </Link>
-            </nav>
-          </div>
-        </header>
+        <Navbar />
 
         {children}
 
