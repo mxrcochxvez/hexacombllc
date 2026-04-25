@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -13,6 +13,10 @@ const fraunces = Fraunces({
   subsets: ["latin"],
   weight: ["400", "600", "700"],
 });
+
+export const viewport: Viewport = {
+  themeColor: "#1a1a1a",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://hexacombllc.com"),
@@ -40,9 +44,13 @@ export const metadata: Metadata = {
   creator: "Hexacomb LLC",
   publisher: "Hexacomb LLC",
   category: "Web Development",
-  alternates: {
-    canonical: "https://hexacombllc.com",
+  applicationName: "Hexacomb",
+  appleWebApp: {
+    capable: true,
+    title: "Hexacomb",
+    statusBarStyle: "black-translucent",
   },
+  manifest: "/manifest.json",
   robots: {
     index: true,
     follow: true,
@@ -105,6 +113,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://images.unsplash.com" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
+      </head>
       <body className={`${inter.variable} ${fraunces.variable}`}>
         <Navbar />
 

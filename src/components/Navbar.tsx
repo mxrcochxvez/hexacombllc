@@ -78,6 +78,7 @@ export default function Navbar() {
         ref={menuRef}
         className={`mobile-menu ${isOpen ? "open" : ""}`}
         aria-hidden={!isOpen}
+        inert={!isOpen}
       >
         <nav className="mobile-menu-nav" aria-label="Mobile navigation">
           <Link href="/about" onClick={closeMenu}>

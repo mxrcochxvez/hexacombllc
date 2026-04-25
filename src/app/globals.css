@@ -807,7 +807,7 @@ section {
 
 .about-trust-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: 32px;
   margin-top: 2rem;
 }
@@ -832,6 +832,197 @@ section {
   color: var(--gray);
   font-size: 0.95rem;
   line-height: 1.7;
+}
+
+/* ── About Hero v2 (split) ── */
+.about-hero-v2 {
+  background: var(--charcoal);
+  color: var(--white);
+  padding: 100px 0 80px;
+}
+
+.about-hero-grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.about-hero-photo {
+  display: flex;
+  justify-content: center;
+}
+
+.about-hero-photo .photo-placeholder.portrait {
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-lg);
+}
+
+.about-hero-text h1 {
+  max-width: 640px;
+  margin-bottom: 1.25rem;
+  line-height: 1.25;
+}
+
+.about-hero-sub {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: rgba(255, 255, 255, 0.65);
+  max-width: 560px;
+  line-height: 1.75;
+  margin-bottom: 1.75rem;
+}
+
+.about-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.meta-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  padding: 8px 18px;
+}
+
+.meta-tag svg {
+  color: var(--honey);
+  flex-shrink: 0;
+}
+
+/* ── Photo Placeholders ── */
+.photo-placeholder {
+  background: var(--off-white);
+  border: 2px dashed var(--gray-light);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--gray);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: center;
+  padding: 24px;
+  transition: all var(--transition);
+}
+
+.photo-placeholder:hover {
+  border-color: var(--honey);
+  color: var(--charcoal);
+}
+
+.photo-placeholder.wide {
+  aspect-ratio: 16 / 9;
+  margin-bottom: 1.25rem;
+}
+
+/* ── About Timeline ── */
+.about-timeline {
+  background: var(--white);
+  padding: 100px 0;
+}
+
+.about-timeline .container {
+  max-width: 900px;
+}
+
+.about-timeline h2 {
+  margin-bottom: 3.5rem;
+}
+
+.timeline {
+  position: relative;
+}
+
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--honey) 10%,
+    var(--honey) 90%,
+    transparent 100%
+  );
+  transform: translateX(-50%);
+}
+
+.timeline-item {
+  position: relative;
+  width: 50%;
+  padding-bottom: 56px;
+}
+
+.timeline-item.left {
+  padding-right: 48px;
+  text-align: left;
+}
+
+.timeline-item.right {
+  margin-left: 50%;
+  padding-left: 48px;
+  text-align: left;
+}
+
+.timeline-dot {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: var(--honey);
+  border-radius: 50%;
+  top: 6px;
+  border: 3px solid var(--white);
+  box-shadow: 0 0 0 2px var(--honey);
+}
+
+.timeline-item.left .timeline-dot {
+  right: -9px;
+}
+
+.timeline-item.right .timeline-dot {
+  left: -9px;
+}
+
+.timeline-content {
+  background: var(--off-white);
+  border: 1px solid var(--gray-light);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+}
+
+.timeline-content h3 {
+  font-size: clamp(1.15rem, 2.5vw, 1.35rem);
+  margin-bottom: 0.5rem;
+  color: var(--charcoal);
+}
+
+.timeline-content p {
+  color: var(--gray);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.timeline-period {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--honey);
+  margin-bottom: 0.5rem;
 }
 
 /* ── About Talk (CTA) ── */
@@ -909,6 +1100,46 @@ section {
   }
   .header-nav {
     gap: 16px;
+  }
+
+  /* About v2 responsive */
+  .about-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+  .about-hero-v2 {
+    padding: 64px 0 56px;
+  }
+  .about-hero-text h1 {
+    margin: 0 auto 1.25rem;
+  }
+  .about-hero-sub {
+    margin: 0 auto 1.5rem;
+  }
+  .about-hero-meta {
+    justify-content: center;
+  }
+
+  .timeline-line {
+    left: 20px;
+  }
+  .timeline-item,
+  .timeline-item.left,
+  .timeline-item.right {
+    width: 100%;
+    margin-left: 0;
+    padding-left: 56px;
+    padding-right: 0;
+    text-align: left;
+  }
+  .timeline-item.left .timeline-dot,
+  .timeline-item.right .timeline-dot {
+    left: 11px;
+    right: auto;
+  }
+  .about-trust-grid {
+    grid-template-columns: 1fr;
   }
 }
 

@@ -1,128 +1,300 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Code, Heart, Eye, MessageCircle } from "lucide-react";
+import {
+  Code,
+  Heart,
+  Eye,
+  MessageCircle,
+  MapPin,
+  Briefcase,
+  User,
+  GraduationCap,
+  Users,
+  Coffee,
+  Hexagon,
+} from "lucide-react";
+
+const baseUrl = "https://hexacombllc.com";
+const ogImage = {
+  url: "/hexacomb_logo_wordmark.png",
+  width: 1200,
+  height: 630,
+  alt: "Hexacomb — Modern Websites for the Central Valley",
+};
 
 export const metadata: Metadata = {
-  title: "About Marco — Senior Software Engineer | Hexacomb",
+  title: "About Marco — Senior Software Engineer",
   description:
     "Marco is a Senior Software Engineer based in Clovis, CA, building custom websites and apps for local businesses in the Central Valley. Accessibility-first, no shortcuts.",
   alternates: {
-    canonical: "https://hexacombllc.com/about",
+    canonical: `${baseUrl}/about`,
   },
   openGraph: {
     title: "About Marco — Senior Software Engineer | Hexacomb",
     description:
       "Marco is a Senior Software Engineer based in Clovis, CA, building custom websites and apps for local businesses in the Central Valley.",
-    url: "https://hexacombllc.com/about",
+    url: `${baseUrl}/about`,
+    images: [ogImage],
   },
   twitter: {
+    card: "summary_large_image",
     title: "About Marco — Senior Software Engineer | Hexacomb",
     description:
       "Marco is a Senior Software Engineer based in Clovis, CA, building custom websites and apps for local businesses in the Central Valley.",
+    images: ["/hexacomb_logo_wordmark.png"],
   },
 };
 
 const iconProps = { size: 28, strokeWidth: 1.75 };
 
-export default function About() {
+function PhotoPlaceholder({
+  label,
+  icon: Icon,
+  className = "",
+}: {
+  label: string;
+  icon: React.ElementType;
+  className?: string;
+}) {
   return (
-    <main id="main-content">
-      {/* Hero */}
-      <section className="about-hero" aria-labelledby="about-heading">
-        <div className="container">
-          <h1 id="about-heading">
-            I&rsquo;m Marco. I build software that feels like it was made
-            by a person, not a machine.
-          </h1>
-          <p className="about-hero-sub">
-            Senior Software Engineer based in Clovis, California. Six years
-            of turning messy problems into clean, maintainable code — across
-            startups, agencies, and now my own shop.
-          </p>
+    <div className={`photo-placeholder ${className}`}>
+      <Icon size={32} strokeWidth={1.5} />
+      <span>{label}</span>
+    </div>
+  );
+}
+
+export default function About() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": `${baseUrl}/about#person`,
+        name: "Marco",
+        jobTitle: "Senior Software Engineer",
+        worksFor: {
+          "@id": `${baseUrl}/#organization`,
+        },
+        url: `${baseUrl}/about`,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Clovis",
+          addressRegion: "CA",
+          addressCountry: "US",
+        },
+        description:
+          "Senior Software Engineer based in Clovis, CA, building custom websites and apps for local businesses in the Central Valley.",
+        knowsAbout: [
+          "Web Development",
+          "Accessibility",
+          "SEO",
+          "React",
+          "Next.js",
+          "JavaScript",
+          "TypeScript",
+        ],
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${baseUrl}/about#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: baseUrl,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "About",
+            item: `${baseUrl}/about`,
+          },
+        ],
+      },
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <main id="main-content">
+      {/* ── Hero: Split with portrait ── */}
+      <section className="about-hero-v2" aria-labelledby="about-heading">
+        <div className="container about-hero-grid">
+          <div className="about-hero-photo">
+            <PhotoPlaceholder
+              label="Portrait photo"
+              icon={User}
+              className="portrait"
+            />
+          </div>
+          <div className="about-hero-text">
+            <h1 id="about-heading">
+              I&rsquo;m Marco. I build software that feels like it was made
+              by a person, not a machine.
+            </h1>
+            <p className="about-hero-sub">
+              Senior Software Engineer based in Clovis, California. Six years
+              of turning messy problems into clean, maintainable code — across
+              startups, agencies, and now my own shop.
+            </p>
+            <div className="about-hero-meta">
+              <span className="meta-tag">
+                <MapPin size={16} strokeWidth={2} />
+                Clovis, CA
+              </span>
+              <span className="meta-tag">
+                <Briefcase size={16} strokeWidth={2} />
+                6+ Years Experience
+              </span>
+              <span className="meta-tag">
+                <Coffee size={16} strokeWidth={2} />
+                15+ Projects Shipped
+              </span>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* My Story */}
-      <section className="about-story" aria-labelledby="story-heading">
+      {/* ── Timeline: My Story ── */}
+      <section className="about-timeline" aria-labelledby="story-heading">
         <div className="container">
           <span className="section-label">How I Got Here</span>
           <h2 id="story-heading">I didn&rsquo;t take the usual path.</h2>
 
-          <div className="story-block">
-            <p>
-              I started in a chemistry lab. For over a year at BouMatic, my
-              job was testing chemicals, making sure every batch was within
-              spec, and keeping inventory accurate. It was precise,
-              repetitive, and surprisingly — it taught me the same
-              discipline I bring to software: check your work, stay
-              organized, and never assume anything is &ldquo;close
-              enough.&rdquo;
-            </p>
-          </div>
+          <div className="timeline">
+            <div className="timeline-line" aria-hidden="true" />
 
-          <div className="story-block">
-            <p>
-              I taught myself to code. My first real project was a reporting
-              tool for Ordrslip that the Chief Product Officer used to
-              present insights across sales, marketing, and engineering.
-              That project led to a full role on the core dev team, building
-              mobile ordering sites for restaurants nationwide. I learned
-              that good software doesn&rsquo;t just work — it makes someone
-              else&rsquo;s job easier.
-            </p>
-          </div>
+            {/* Milestone 1 — Chemistry */}
+            <div className="timeline-item left">
+              <div className="timeline-dot" aria-hidden="true" />
+              <div className="timeline-content">
+                <span className="timeline-period">Before Code</span>
+                <h3>Precision in a Chemistry Lab</h3>
+                <p>
+                  I started at BouMatic testing chemicals, ensuring every batch
+                  was within spec and inventory stayed accurate. It was
+                  repetitive, precise work — and it taught me the same
+                  discipline I bring to software: check your work, stay
+                  organized, and never assume anything is &ldquo;close
+                  enough.&rdquo;
+                </p>
+              </div>
+            </div>
 
-          <div className="story-block">
-            <p>
-              Then I started teaching. At Woz U, I mentored aspiring
-              developers in JavaScript, C#, and Java — making sure they
-              weren&rsquo;t just completing assignments, but actually
-              understanding what they were building. Teaching forces you to
-              truly know your craft. It also teaches you patience, clarity,
-              and how to communicate technical ideas to non-technical
-              people. Those skills show up in every client conversation I
-              have today.
-            </p>
-          </div>
+            {/* Milestone 2 — First Code */}
+            <div className="timeline-item right">
+              <div className="timeline-dot" aria-hidden="true" />
+              <div className="timeline-content">
+                <span className="timeline-period">Career Start</span>
+                <h3>Taught Myself to Code</h3>
+                <p>
+                  My first real project was a reporting tool for Ordrslip that
+                  the Chief Product Officer used to present insights across
+                  sales, marketing, and engineering. That project led to a full
+                  role on the core dev team, building mobile ordering sites for
+                  restaurants nationwide. I learned that good software
+                  doesn&rsquo;t just work — it makes someone else&rsquo;s job
+                  easier.
+                </p>
+              </div>
+            </div>
 
-          <div className="story-block">
-            <p>
-              At Bitwise, I led the frontend modernization initiative —
-              migrating legacy Angular apps to React and Next.js. More
-              importantly, I led a team of six junior and apprentice
-              developers. I introduced accessibility best practices, wrote
-              CI/CD pipelines, and helped a team with almost no professional
-              experience deliver production code with confidence. I also
-              taught evening classes — HTML, CSS, React — because I
-              genuinely enjoy helping people break into this industry.
-            </p>
-          </div>
+            {/* Milestone 3 — Teaching + photo */}
+            <div className="timeline-item left">
+              <div className="timeline-dot" aria-hidden="true" />
+              <div className="timeline-content">
+                <PhotoPlaceholder
+                  label="Teaching photo"
+                  icon={GraduationCap}
+                  className="wide"
+                />
+                <span className="timeline-period">Mentor</span>
+                <h3>Teaching at Woz U</h3>
+                <p>
+                  I mentored aspiring developers in JavaScript, C#, and Java —
+                  making sure they weren&rsquo;t just completing assignments,
+                  but actually understanding what they were building. Teaching
+                  forces you to truly know your craft. It also teaches you
+                  patience, clarity, and how to communicate technical ideas to
+                  non-technical people. Those skills show up in every client
+                  conversation I have today.
+                </p>
+              </div>
+            </div>
 
-          <div className="story-block">
-            <p>
-              At Pressed Juicery, I went deep on accessibility — resolving
-              audit after audit until every screen met WCAG standards. I
-              built shared component libraries, optimized APIs, and
-              co-created tools that marketing and operations teams actually
-              enjoyed using. It was retail e-commerce at scale, and I
-              learned that accessibility isn&rsquo;t a compliance checkbox.
-              It&rsquo;s respect for every person who uses your product.
-            </p>
-          </div>
+            {/* Milestone 4 — Bitwise + photo */}
+            <div className="timeline-item right">
+              <div className="timeline-dot" aria-hidden="true" />
+              <div className="timeline-content">
+                <PhotoPlaceholder
+                  label="Team / workspace photo"
+                  icon={Users}
+                  className="wide"
+                />
+                <span className="timeline-period">Leader</span>
+                <h3>Leading Frontend Modernization</h3>
+                <p>
+                  At Bitwise, I led the migration of legacy Angular apps to
+                  React and Next.js. More importantly, I led a team of six
+                  junior and apprentice developers. I introduced accessibility
+                  best practices, wrote CI/CD pipelines, and helped a team with
+                  almost no professional experience deliver production code
+                  with confidence. I also taught evening classes — HTML, CSS,
+                  React — because I genuinely enjoy helping people break into
+                  this industry.
+                </p>
+              </div>
+            </div>
 
-          <div className="story-block">
-            <p>
-              Today, I run Hexacomb. I build custom websites, apps, and
-              integrations for local businesses in the Central Valley. I
-              take on projects I believe in, work at a pace that doesn&rsquo;t
-              burn anyone out, and treat every client like a long-term
-              partner — not a transaction.
-            </p>
+            {/* Milestone 5 — Pressed Juicery */}
+            <div className="timeline-item left">
+              <div className="timeline-dot" aria-hidden="true" />
+              <div className="timeline-content">
+                <span className="timeline-period">Expert</span>
+                <h3>Accessibility at Scale</h3>
+                <p>
+                  At Pressed Juicery, I went deep on accessibility — resolving
+                  audit after audit until every screen met WCAG standards. I
+                  built shared component libraries, optimized APIs, and
+                  co-created tools that marketing and operations teams actually
+                  enjoyed using. It was retail e-commerce at scale, and I
+                  learned that accessibility isn&rsquo;t a compliance checkbox.
+                  It&rsquo;s respect for every person who uses your product.
+                </p>
+              </div>
+            </div>
+
+            {/* Milestone 6 — Hexacomb + photo */}
+            <div className="timeline-item right">
+              <div className="timeline-dot" aria-hidden="true" />
+              <div className="timeline-content">
+                <PhotoPlaceholder
+                  label="Current / Hexacomb photo"
+                  icon={Hexagon}
+                  className="wide"
+                />
+                <span className="timeline-period">Founder</span>
+                <h3>Starting Hexacomb</h3>
+                <p>
+                  Today, I run Hexacomb. I build custom websites, apps, and
+                  integrations for local businesses in the Central Valley. I
+                  take on projects I believe in, work at a pace that
+                  doesn&rsquo;t burn anyone out, and treat every client like a
+                  long-term partner — not a transaction.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* What I Believe */}
+      {/* ── What I Believe ── */}
       <section className="about-values" aria-labelledby="values-heading">
         <div className="container">
           <span className="section-label">What I Believe</span>
@@ -173,7 +345,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Trust */}
+      {/* ── Trust ── */}
       <section className="about-trust" aria-labelledby="trust-heading">
         <div className="container">
           <span className="section-label">Why Trust Me</span>
@@ -219,7 +391,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Let's Talk */}
+      {/* ── Let's Talk ── */}
       <section className="about-talk" aria-labelledby="talk-heading">
         <div className="container">
           <div className="about-talk-box">
@@ -238,5 +410,6 @@ export default function About() {
         </div>
       </section>
     </main>
+    </>
   );
 }

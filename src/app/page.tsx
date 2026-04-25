@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import {
   Clock,
   Smartphone,
@@ -12,6 +13,12 @@ import {
 import { ContactFormClient } from "@/components/ContactFormClient";
 
 const iconProps = { size: 28, strokeWidth: 1.75 };
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "https://hexacombllc.com",
+  },
+};
 
 export default function Home() {
   const jsonLd = {
@@ -73,6 +80,38 @@ export default function Home() {
         publisher: {
           "@id": "https://hexacombllc.com/#organization",
         },
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://hexacombllc.com/#webpage",
+        url: "https://hexacombllc.com",
+        name: "Hexacomb — Modern Websites for the Central Valley | Built Fast",
+        description:
+          "Hexacomb modernizes local businesses in Fresno, Clovis, and the Central Valley with custom, high-performance websites delivered lightning fast.",
+        isPartOf: {
+          "@id": "https://hexacombllc.com/#website",
+        },
+        about: {
+          "@id": "https://hexacombllc.com/#organization",
+        },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: "https://hexacombllc.com/hexacomb_logo_wordmark.png",
+          width: 1200,
+          height: 630,
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://hexacombllc.com/#breadcrumb",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://hexacombllc.com",
+          },
+        ],
       },
     ],
   };
