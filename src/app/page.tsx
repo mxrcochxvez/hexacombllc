@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Link from "next/link";
 import {
   Clock,
   Smartphone,
@@ -19,10 +19,10 @@ export default function Home() {
       {/* Header */}
       <header className="site-header" role="banner">
         <div className="container">
-          <a href="/" className="logo" aria-label="Hexacomb Home">
+          <Link href="/" className="logo" aria-label="Hexacomb Home">
             <span className="logo-hex" aria-hidden />
             Hexacomb
-          </a>
+          </Link>
           <a href="#contact" className="header-cta">
             Apply for Early-Adopter Rate
           </a>
@@ -33,7 +33,7 @@ export default function Home() {
         {/* Hero */}
         <section className="hero hex-bg" aria-labelledby="hero-heading">
           <div className="container">
-            <span className="hero-badge">Serving the Central Valley</span>
+            <span className="hero-badge">Built in the 559</span>
             <h1 id="hero-heading">
               Modernizing the Central Valley <span>at Digital Speed</span>
             </h1>
@@ -434,6 +434,26 @@ export default function Home() {
           <p style={{ marginTop: 8 }}>
             &copy; {new Date().getFullYear()} Hexacomb LLC. All rights
             reserved.
+          </p>
+          <p style={{ marginTop: 6, fontSize: "0.75rem", opacity: 0.5 }}>
+            Photo by{" "}
+            <a
+              href="https://unsplash.com/@ghpvisuals?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              rel="noopener noreferrer"
+              target="_blank"
+              style={{ color: "inherit" }}
+            >
+              Grant Porter
+            </a>{" "}
+            on{" "}
+            <a
+              href="https://unsplash.com/photos/birds-eye-view-of-skyscrapers-Mx71xeQOev8?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              rel="noopener noreferrer"
+              target="_blank"
+              style={{ color: "inherit" }}
+            >
+              Unsplash
+            </a>
           </p>
         </div>
       </footer>

@@ -3,6 +3,16 @@
 	"main": ".open-next/worker.js",
 	"name": "hexacombllc",
 	"compatibility_date": "2026-04-25",
+	"routes": [
+		{
+			"pattern": "hexacombllc.com",
+			"zone_name": "hexacombllc.com"
+		},
+		{
+			"pattern": "www.hexacombllc.com",
+			"zone_name": "hexacombllc.com"
+		}
+	],
 	"compatibility_flags": [
 		"nodejs_compat",
 		"global_fetch_strictly_public"
