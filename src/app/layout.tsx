@@ -24,11 +24,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://hexacombllc.com"),
   title: {
-    default: "Hexacomb — Modern Websites for the Central Valley | Built Fast",
+    default: "Hexacomb — Websites for Fresno & Clovis Small Businesses",
     template: "%s | Hexacomb",
   },
   description:
-    "Hexacomb modernizes local businesses in Fresno, Clovis, and the Central Valley with custom, high-performance websites delivered lightning fast. No templates — pure hand-coded quality.",
+    "Custom websites for Fresno and Clovis small businesses — built fast by a local developer you can actually call. No templates, no jargon.",
   keywords: [
     "web development",
     "Fresno",
@@ -74,31 +74,31 @@ export const metadata: Metadata = {
     url: "https://hexacombllc.com",
     siteName: "Hexacomb",
     title:
-      "Hexacomb — Modern Websites for the Central Valley | Built Fast",
+      "Hexacomb — Websites for Fresno & Clovis Small Businesses",
     description:
-      "Hexacomb modernizes local businesses in Fresno, Clovis, and the Central Valley with custom, high-performance websites delivered lightning fast.",
+      "Custom websites for Fresno and Clovis small businesses — built fast by a local developer you can actually call. No templates, no jargon.",
     images: [
       {
         url: "/hexacomb_logo_wordmark.png",
         width: 1200,
         height: 630,
-        alt: "Hexacomb — Modern Websites for the Central Valley",
+        alt: "Hexacomb — Websites for Fresno & Clovis Small Businesses",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title:
-      "Hexacomb — Modern Websites for the Central Valley | Built Fast",
+      "Hexacomb — Websites for Fresno & Clovis Small Businesses",
     description:
-      "Hexacomb modernizes local businesses in Fresno, Clovis, and the Central Valley with custom, high-performance websites delivered lightning fast.",
+      "Custom websites for Fresno and Clovis small businesses — built fast by a local developer you can actually call. No templates, no jargon.",
     images: ["/hexacomb_logo_wordmark.png"],
   },
   formatDetection: {
-    telephone: false,
+    telephone: true,
     date: false,
     address: false,
-    email: false,
+    email: true,
   },
   icons: {
     icon: "/favicon.ico",
@@ -138,10 +138,19 @@ export default function RootLayout({
               Valley
             </p>
             <p style={{ marginTop: 8 }}>
+              <a href="tel:+15591234567" style={{ color: "inherit" }}>
+                (559) 123-4567
+              </a>{" "}
+              ·{" "}
+              <a href="mailto:hello@hexacombllc.com" style={{ color: "inherit" }}>
+                hello@hexacombllc.com
+              </a>
+            </p>
+            <p style={{ marginTop: 8 }}>
               &copy; {new Date().getFullYear()} Hexacomb LLC. All rights
               reserved.
             </p>
-            <p style={{ marginTop: 6, fontSize: "0.75rem", opacity: 0.5 }}>
+            <p style={{ marginTop: 6, fontSize: "0.65rem", opacity: 0.35 }}>
               Photo by{" "}
               <a
                 href="https://unsplash.com/@ghpvisuals?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"

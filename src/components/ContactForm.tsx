@@ -9,6 +9,7 @@ const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "0x4AAAAAADC6NwtG
 interface FieldErrors {
   name?: string;
   email?: string;
+  phone?: string;
   website?: string;
 }
 
@@ -22,6 +23,14 @@ function validateEmail(value: string): string | undefined {
   const v = value.trim();
   if (!v) return "Email address is required.";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return "Please enter a valid email address.";
+}
+
+function validatePhone(value: string): string | undefined {
+  const v = value.trim();
+  if (!v) return undefined;
+  if (!/^[\d\s\-\+\(\)\.]+$/.test(v) || v.replace(/\D/g, "").length < 10) {
+    return "Please enter a valid phone number.";
+  }
 }
 
 function validateWebsite(value: string): string | undefined {
@@ -50,6 +59,7 @@ export function ContactForm() {
     let error: string | undefined;
     if (name === "name") error = validateName(value);
     else if (name === "email") error = validateEmail(value);
+    else if (name === "phone") error = validatePhone(value);
     else if (name === "website") error = validateWebsite(value);
 
     setFieldErrors((prev) => ({ ...prev, [name]: error }));
@@ -82,18 +92,20 @@ export function ContactForm() {
     const formData = new FormData(form);
     const name = String(formData.get("name") ?? "");
     const email = String(formData.get("email") ?? "");
+    const phone = String(formData.get("phone") ?? "");
     const website = String(formData.get("website") ?? "");
 
     const errors: FieldErrors = {
       name: validateName(name),
       email: validateEmail(email),
+      phone: validatePhone(phone),
       website: validateWebsite(website),
     };
 
-    setTouched({ name: true, email: true, website: true });
+    setTouched({ name: true, email: true, phone: true, website: true });
     setFieldErrors(errors);
 
-    if (errors.name || errors.email || errors.website) {
+    if (errors.name || errors.email || errors.phone || errors.website) {
       setErrorMsg("Please fix the errors above before submitting.");
       return;
     }
@@ -114,6 +126,7 @@ export function ContactForm() {
         body: JSON.stringify({
           name,
           email,
+          phone,
           business: formData.get("business"),
           website,
           turnstileToken,
@@ -142,7 +155,7 @@ export function ContactForm() {
   if (status === "success") {
     return (
       <div className="form-success" role="alert">
-        <h3>Application Received</h3>
+        <h3>Message Sent</h3>
         <p>
           Thank you! I&rsquo;ll reach out within 24 hours to schedule your free
           discovery call.
@@ -213,7 +226,27 @@ export function ContactForm() {
         />
       </div>
       <div className="form-group">
-        <label htmlFor="website">Current Website URL</label>
+        <label htmlFor="phone">Phone Number</label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          autoComplete="tel"
+          placeholder="(559) 555-1234"
+          disabled={status === "sending"}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          aria-invalid={!!fieldErrors.phone}
+          aria-describedby={fieldErrors.phone ? "phone-error" : undefined}
+        />
+        {fieldErrors.phone && (
+          <span id="phone-error" className="field-error" role="alert">
+            {fieldErrors.phone}
+          </span>
+        )}
+      </div>
+      <div className="form-group">
+        <label htmlFor="website">Current Website (if you have one)</label>
         <input
           type="url"
           id="website"
@@ -263,7 +296,7 @@ export function ContactForm() {
         disabled={isSubmitDisabled}
         style={{ width: "100%", justifyContent: "center", marginTop: 12 }}
       >
-        {status === "sending" ? "Sending..." : "Send Application →"}
+        {status === "sending" ? "Sending..." : "Get My Free Quote →"}
       </button>
     </form>
   );

@@ -19,7 +19,7 @@ async function getResend(): Promise<import("resend").Resend> {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, business, website, turnstileToken } = body;
+    const { name, email, phone, business, website, turnstileToken } = body;
 
     if (!name || typeof name !== "string" || !name.trim()) {
       return NextResponse.json(
@@ -80,11 +80,12 @@ export async function POST(request: NextRequest) {
       to: [
         process.env.CONTACT_TO_EMAIL ?? "marcode.chavez.jr@gmail.com",
       ],
-      subject: `New Application from ${name.trim()}`,
-      html: `<h2>New Early-Adopter Application</h2>
+      subject: `New Lead from ${name.trim()}`,
+      html: `<h2>New Contact Form Submission</h2>
 <table style="border-collapse:collapse;width:100%">
 <tr><td style="padding:8px;font-weight:bold">Name</td><td style="padding:8px">${name.trim()}</td></tr>
 <tr><td style="padding:8px;font-weight:bold">Email</td><td style="padding:8px">${email.trim()}</td></tr>
+<tr><td style="padding:8px;font-weight:bold">Phone</td><td style="padding:8px">${(phone || "N/A").trim()}</td></tr>
 <tr><td style="padding:8px;font-weight:bold">Business</td><td style="padding:8px">${(business || "N/A").trim()}</td></tr>
 <tr><td style="padding:8px;font-weight:bold">Website</td><td style="padding:8px">${(website || "N/A").trim()}</td></tr>
 </table>`,

@@ -59,8 +59,8 @@ export default function Navbar() {
             <Link href="/pricing" data-track="nav_pricing">
               Pricing
             </Link>
-            <Link href="/#contact" className="header-cta" data-track="nav_cta_early_adopter">
-              Apply for Early-Adopter Rate
+            <Link href="/#contact" className="header-cta" data-track="nav_cta_free_quote">
+              Get a Free Quote
             </Link>
           </nav>
         </div>
@@ -119,10 +119,10 @@ export default function Navbar() {
             <Link
               href="/#contact"
               onClick={closeMenu}
-              data-track="nav_mobile_cta_early_adopter"
+              data-track="nav_mobile_cta_free_quote"
               className="mobile-menu-cta"
             >
-              Apply for Early-Adopter Rate
+              Get a Free Quote
             </Link>
           </nav>
         </div>

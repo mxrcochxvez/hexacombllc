@@ -126,7 +126,7 @@ export default function Home() {
         {/* Hero */}
         <section className="hero hex-bg" aria-labelledby="hero-heading">
           <div className="container">
-            <span className="hero-badge">Built in the 559</span>
+            <span className="hero-badge">Built in the 559 — Fresno & Clovis</span>
             <h1 id="hero-heading">
               Modernizing the Central Valley <span>at Digital Speed</span>
             </h1>
@@ -138,10 +138,10 @@ export default function Home() {
             <a
               href="#contact"
               className="btn btn-primary"
-              aria-label="Get your digital fast-track consultation"
+              aria-label="Get your free quote"
               data-track="cta_hero_fast_track"
             >
-              Get Your Digital Fast-Track →
+              Get Your Free Quote →
             </a>
             <div className="hero-stats" aria-label="Key metrics">
               <div className="hero-stat">
@@ -198,7 +198,7 @@ export default function Home() {
                 </p>
                 <p className="section-intro">
                   A mature digital presence in this region is not table
-                  stakes — it&rsquo;s a <strong>competitive moat</strong>.
+                  stakes — it&rsquo;s a <strong>real edge over your competition</strong>.
                   When your competitor&rsquo;s site loads slowly on mobile
                   and hasn&rsquo;t been touched since 2018, your modern,
                   fast, accessible website wins the customer before they
@@ -284,15 +284,13 @@ export default function Home() {
           <div className="container">
             <span className="section-label">The Digital Fast-Track</span>
             <h2 id="workflow-heading">
-              High-Leverage Orchestration — Speed Without Sacrifice
+              Your Website, Built in Days — Not Months
             </h2>
             <p className="section-intro">
-              We compress what normally takes months into an accelerated
-              launch schedule. How? A proprietary high-leverage workflow —
-              a carefully orchestrated system of modern tooling, design
-              systems, and pre-built architectural foundations. No
-              templates. No page builders. Pure custom code, shipped at
-              the speed your business needs to compete.
+              I use a proven system that lets me build faster — without
+              cutting corners. No templates. No page builders. Your site
+              is designed and coded from scratch to match your brand,
+              shipped on a timeline measured in days, not months.
             </p>
             <div className="workflow-steps">
               <div className="workflow-step">
@@ -364,21 +362,21 @@ export default function Home() {
                 </div>
                 <h3>Built-in SEO</h3>
                 <p>
-                  Semantic HTML structure, proper heading hierarchy, fast
-                  load times, and structured data. We don&rsquo;t bolt SEO
-                  on at the end — it&rsquo;s baked into every line of
-                  markup.
+                  Google can read your site properly, so you show up in
+                  local search results when customers look for businesses
+                  like yours. Fast load times and clean structure come
+                  standard.
                 </p>
               </article>
               <article className="card">
                 <div className="card-icon" aria-hidden>
                   <Accessibility {...iconProps} />
                 </div>
-                <h3>Strict WCAG Accessibility</h3>
+                <h3>Works for Everyone</h3>
                 <p>
-                  Every site meets WCAG 2.1 AA standards. High-contrast
-                  ratios, keyboard navigation, screen-reader support, and
-                  proper ARIA landmarks. Accessible to everyone.
+                  Every site is accessible to people using screen readers,
+                  keyboard navigation, or anyone who needs larger text and
+                  strong contrast. No one gets left out.
                 </p>
               </article>
             </div>
@@ -391,31 +389,29 @@ export default function Home() {
             <div className="pricing-box">
               <span className="section-label">Partnership</span>
               <h2 id="pricing-heading">
-                The Digital Fast-Track, At an Early-Adopter Rate
+                Custom Websites, Local Prices
               </h2>
               <p>
                 You&rsquo;re not just paying for a website. You&rsquo;re
-                paying for high-end quality, extreme speed to market, and
-                the competitive advantage of being the most polished
-                business in your market —{" "}
+                paying for high-end quality, delivered fast, and the
+                confidence of being the most polished business in your
+                market —{" "}
                 <em>without the typical agency wait</em>.
               </p>
               <p>
-                As I baseline this new high-speed pricing model, I&rsquo;m
-                looking for <strong>3 local businesses</strong> in the
-                Central Valley to partner with at a special early-adopter
-                rate.
+                I&rsquo;m looking for <strong>3 local businesses</strong>{" "}
+                in the Central Valley to partner with at a special rate.
               </p>
               <div className="scarcity" aria-live="polite">
-                <Zap size={16} strokeWidth={2} /> 3 Partner Spots Available —
-                Apply Now
+                <Zap size={16} strokeWidth={2} /> 3 Spots Available —
+                Claim Yours
               </div>
               <a
                 href="#contact"
                 className="btn btn-primary"
-                data-track="cta_pricing_early_adopter"
+                data-track="cta_pricing_free_quote"
               >
-                Apply for the Early-Adopter Rate →
+                Get Your Free Quote →
               </a>
             </div>
           </div>

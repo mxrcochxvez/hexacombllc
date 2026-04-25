@@ -21,9 +21,9 @@ const ogImage = {
 };
 
 export const metadata: Metadata = {
-  title: "About Marco — Senior Software Engineer",
+  title: "About Marco — Local Web Developer",
   description:
-    "Marco is a Senior Software Engineer based in Clovis, CA, building custom websites and apps for local businesses in the Central Valley. Accessibility-first, no shortcuts.",
+    "Marco is a web developer based in Clovis, CA, building custom websites for local businesses in the Central Valley. No jargon, no shortcuts — just honest work.",
   alternates: {
     canonical: `${baseUrl}/about`,
   },
@@ -36,9 +36,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "About Marco — Senior Software Engineer | Hexacomb",
+    title: "About Marco — Local Web Developer | Hexacomb",
     description:
-      "Marco is a Senior Software Engineer based in Clovis, CA, building custom websites and apps for local businesses in the Central Valley.",
+      "Marco is a web developer based in Clovis, CA, building custom websites for local businesses in the Central Valley. No jargon, no shortcuts.",
     images: ["/hexacomb_logo_wordmark.png"],
   },
 };
@@ -53,7 +53,7 @@ export default function About() {
         "@type": "Person",
         "@id": `${baseUrl}/about#person`,
         name: "Marco",
-        jobTitle: "Senior Software Engineer",
+        jobTitle: "Web Developer",
         worksFor: {
           "@id": `${baseUrl}/#organization`,
         },
@@ -65,7 +65,7 @@ export default function About() {
           addressCountry: "US",
         },
         description:
-          "Senior Software Engineer based in Clovis, CA, building custom websites and apps for local businesses in the Central Valley.",
+          "Web developer based in Clovis, CA, building custom websites for local businesses in the Central Valley.",
         knowsAbout: [
           "Web Development",
           "Accessibility",
@@ -221,13 +221,13 @@ export default function About() {
                 <span className="timeline-period">Leader</span>
                 <h3>Leading Frontend Modernization</h3>
                 <p>
-                  At Bitwise, I led the migration of legacy Angular apps to
-                  React and Next.js. More importantly, I led a team of six
-                  junior and apprentice developers. I introduced accessibility
-                  best practices, wrote CI/CD pipelines, and helped a team with
-                  almost no professional experience deliver production code
-                  with confidence. I also taught evening classes — HTML, CSS,
-                  React — because I genuinely enjoy helping people break into
+                  At Bitwise, I led the modernization of outdated websites
+                  and apps. More importantly, I led a team of six junior
+                  developers. I introduced accessibility best practices,
+                  streamlined our build process, and helped a team with almost
+                  no professional experience deliver production code with
+                  confidence. I also taught evening classes in web development
+                  basics — because I genuinely enjoy helping people break into
                   this industry.
                 </p>
               </div>
@@ -240,9 +240,9 @@ export default function About() {
                 <span className="timeline-period">Expert</span>
                 <h3>Accessibility at Scale</h3>
                 <p>
-                  At Pressed Juicery, I went deep on accessibility — resolving
-                  audit after audit until every screen met WCAG standards. I
-                  built shared component libraries, optimized APIs, and
+                  At Pressed Juicery, I focused on making sure the website
+                  worked for everyone — including people with disabilities. I
+                  built reusable website components, sped up load times, and
                   co-created tools that marketing and operations teams actually
                   enjoyed using. It was retail e-commerce at scale, and I
                   learned that accessibility isn&rsquo;t a compliance checkbox.
@@ -290,11 +290,10 @@ export default function About() {
               </div>
               <h3>Accessibility is not a feature.</h3>
               <p>
-                It&rsquo;s the baseline. Every site I ship meets WCAG 2.1 AA
-                standards — proper landmarks, keyboard navigation,
-                screen-reader support, and contrast ratios that don&rsquo;t
-                strain eyes. I don&rsquo;t bolt accessibility on at the end.
-                It&rsquo;s in every commit.
+                It&rsquo;s the baseline. Every site I ship works with screen
+                readers, keyboard navigation, and text large enough for
+                everyone to read comfortably. I don&rsquo;t bolt accessibility
+                on at the end. It&rsquo;s built in from day one.
               </p>
             </article>
             <article className="card">
@@ -390,7 +389,7 @@ export default function About() {
               className="btn btn-primary"
               data-track="cta_about_reach_out"
             >
-              Reach Out →
+              Schedule a Free Call →
             </Link>
           </div>
         </div>

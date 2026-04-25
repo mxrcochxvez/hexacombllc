@@ -13,9 +13,9 @@ import {
 const iconProps = { size: 28, strokeWidth: 1.75 };
 
 export const metadata: Metadata = {
-  title: "Pricing",
+    title: "Pricing",
     description:
-      "30% retainer to get started. Pay as you grow. Hexacomb's analytics-based pricing means your website costs scale with your actual traffic — perfect for small businesses in Fresno and the Central Valley.",
+      "30% retainer to get started. Pay as you grow. Your website cost scales with your actual traffic — perfect for small businesses in Fresno and the Central Valley.",
   alternates: {
     canonical: "https://hexacombllc.com/pricing",
   },
@@ -23,13 +23,13 @@ export const metadata: Metadata = {
 
 const tiers = [
   {
-    name: "Scout",
+    name: "Starter",
     icon: <Compass {...iconProps} />,
     price: "$59",
     period: "/mo",
     range: "0 – 500",
-    rangeLabel: "monthly unique visitors",
-    description: "Exploring new ground and finding your first customers online.",
+    rangeLabel: "monthly visitors",
+    description: "Perfect for new businesses just getting online and finding your first customers.",
     features: [
       "Custom hand-coded website",
       "Built-in SEO & accessibility",
@@ -38,17 +38,17 @@ const tiers = [
       "Email support",
     ],
     cta: "Get Started",
-    track: "cta_pricing_scout",
+    track: "cta_pricing_starter",
     highlighted: false,
   },
   {
-    name: "Forager",
+    name: "Growing",
     icon: <Package {...iconProps} />,
     price: "$119",
     period: "/mo",
     range: "501 – 2,500",
-    rangeLabel: "monthly unique visitors",
-    description: "Actively gathering leads and building momentum in your market.",
+    rangeLabel: "monthly visitors",
+    description: "For businesses already getting traffic and building momentum.",
     features: [
       "Everything in Scout",
       "Priority email support",
@@ -57,17 +57,17 @@ const tiers = [
       "Social media integration",
     ],
     cta: "Get Started",
-    track: "cta_pricing_forager",
+    track: "cta_pricing_growing",
     highlighted: true,
   },
   {
-    name: "Keeper",
+    name: "Established",
     icon: <Shield {...iconProps} />,
     price: "$219",
     period: "/mo",
     range: "2,501 – 7,500",
-    rangeLabel: "monthly unique visitors",
-    description: "Nurturing an established presence that turns visitors into regulars.",
+    rangeLabel: "monthly visitors",
+    description: "For businesses with a steady flow of visitors ready to scale up.",
     features: [
       "Everything in Forager",
       "Advanced SEO optimizations",
@@ -76,17 +76,17 @@ const tiers = [
       "Conversion tracking",
     ],
     cta: "Get Started",
-    track: "cta_pricing_keeper",
+    track: "cta_pricing_established",
     highlighted: false,
   },
   {
-    name: "Swarm",
+    name: "Enterprise",
     icon: <Globe {...iconProps} />,
     price: "Custom",
     period: "",
     range: "7,500+",
-    rangeLabel: "monthly unique visitors",
-    description: "Expanding reach across channels and markets at scale.",
+    rangeLabel: "monthly visitors",
+    description: "Expanding reach across multiple locations or markets at scale.",
     features: [
       "Everything in Keeper",
       "Dedicated support",
@@ -95,7 +95,7 @@ const tiers = [
       "SLA guarantee",
     ],
     cta: "Contact Us",
-    track: "cta_pricing_swarm",
+    track: "cta_pricing_enterprise",
     highlighted: false,
   },
 ];
@@ -231,8 +231,8 @@ export default function PricingPage() {
         {/* Pricing Tiers */}
         <section className="pricing-tiers" aria-labelledby="tiers-heading">
           <div className="container">
-            <span className="section-label">The Colony</span>
-            <h2 id="tiers-heading">Find Your Place in the Hive</h2>
+            <span className="section-label">Pricing Plans</span>
+            <h2 id="tiers-heading">Choose the Plan That Fits Your Business</h2>
             <p className="section-intro">
               Every tier includes your custom website, hosting, maintenance,
               and support. You simply pay more as your traffic grows — never
@@ -352,16 +352,16 @@ export default function PricingPage() {
                 Let's Build Something That Scales With You
               </h2>
               <p>
-                Apply for the early-adopter program and start your custom site
-                with just a <strong>30% retainer</strong>. Spots are limited to
-                3 local businesses.
+                Get started on your custom site with just a
+                <strong> 30% retainer</strong>. Spots are limited to 3 local
+                businesses.
               </p>
               <a
                 href="/#contact"
                 className="btn btn-primary"
                 data-track="cta_pricing_bottom"
               >
-                Apply for Early-Adopter Rate →
+                Get Your Free Quote →
               </a>
             </div>
           </div>

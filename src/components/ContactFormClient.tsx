@@ -43,7 +43,17 @@ const ContactFormClient = dynamic(() => import("@/components/ContactForm").then(
         />
       </div>
       <div className="form-group">
-        <label htmlFor="website-loading">Current Website URL</label>
+        <label htmlFor="phone-loading">Phone Number</label>
+        <input
+          type="tel"
+          id="phone-loading"
+          autoComplete="tel"
+          placeholder="(559) 555-1234"
+          disabled
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="website-loading">Current Website (if you have one)</label>
         <input
           type="url"
           id="website-loading"
