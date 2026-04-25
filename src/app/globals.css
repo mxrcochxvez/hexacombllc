@@ -663,7 +663,8 @@ section {
 }
 
 .scarcity {
-  display: inline-flex;
+  display: flex;
+  justify-content: center;
   align-items: center;
   gap: 8px;
   background: rgba(232, 164, 30, 0.1);
