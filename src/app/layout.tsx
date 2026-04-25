@@ -91,7 +91,7 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: "/favicon.ico",
-    apple: "/hexacomb_logo_transparent.png",
+    apple: "/apple-touch-icon.png",
   },
   verification: {
     google: process.env.GOOGLE_SITE_VERIFICATION,
