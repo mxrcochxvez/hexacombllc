@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   Code,
@@ -7,9 +8,6 @@ import {
   MessageCircle,
   MapPin,
   Briefcase,
-  User,
-  GraduationCap,
-  Users,
   Coffee,
   Hexagon,
 } from "lucide-react";
@@ -127,10 +125,13 @@ export default function About() {
       <section className="about-hero-v2" aria-labelledby="about-heading">
         <div className="container about-hero-grid">
           <div className="about-hero-photo">
-            <PhotoPlaceholder
-              label="Portrait photo"
-              icon={User}
-              className="portrait"
+            <Image
+              src="/images/marco-portrait.jpg"
+              alt="Portrait of Marco"
+              className="about-portrait"
+              width={680}
+              height={907}
+              priority
             />
           </div>
           <div className="about-hero-text">
@@ -205,15 +206,10 @@ export default function About() {
               </div>
             </div>
 
-            {/* Milestone 3 — Teaching + photo */}
+            {/* Milestone 3 — Teaching */}
             <div className="timeline-item left">
               <div className="timeline-dot" aria-hidden="true" />
               <div className="timeline-content">
-                <PhotoPlaceholder
-                  label="Teaching photo"
-                  icon={GraduationCap}
-                  className="wide"
-                />
                 <span className="timeline-period">Mentor</span>
                 <h3>Teaching at Woz U</h3>
                 <p>
@@ -232,10 +228,12 @@ export default function About() {
             <div className="timeline-item right">
               <div className="timeline-dot" aria-hidden="true" />
               <div className="timeline-content">
-                <PhotoPlaceholder
-                  label="Team / workspace photo"
-                  icon={Users}
-                  className="wide"
+                <Image
+                  src="/images/marco-bitwise.jpg"
+                  alt="Marco with the Bitwise team"
+                  className="timeline-photo"
+                  width={1080}
+                  height={810}
                 />
                 <span className="timeline-period">Leader</span>
                 <h3>Leading Frontend Modernization</h3>

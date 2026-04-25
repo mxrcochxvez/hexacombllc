@@ -924,6 +924,15 @@ section {
   border-radius: var(--radius-lg);
 }
 
+.about-hero-photo .about-portrait {
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+  display: block;
+}
+
 .about-hero-text h1 {
   max-width: 640px;
   margin-bottom: 1.25rem;
@@ -987,6 +996,15 @@ section {
 
 .photo-placeholder.wide {
   aspect-ratio: 16 / 9;
+  margin-bottom: 1.25rem;
+}
+
+.timeline-photo {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+  display: block;
   margin-bottom: 1.25rem;
 }
 
