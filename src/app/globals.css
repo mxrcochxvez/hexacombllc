@@ -597,6 +597,18 @@ section {
   min-height: 100px;
 }
 
+.form-group input[aria-invalid="true"] {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+.field-error {
+  display: block;
+  color: #dc2626;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
 .form-success {
   background: rgba(232, 164, 30, 0.08);
   border: 1px solid var(--honey);
