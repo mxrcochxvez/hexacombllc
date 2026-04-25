@@ -1,4 +1,3 @@
-import Link from "next/link";
 import {
   Clock,
   Smartphone,
@@ -10,25 +9,80 @@ import {
   Zap,
   MapPin,
 } from "lucide-react";
+import { ContactFormClient } from "@/components/ContactFormClient";
 
 const iconProps = { size: 28, strokeWidth: 1.75 };
 
 export default function Home() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://hexacombllc.com/#organization",
+        name: "Hexacomb LLC",
+        url: "https://hexacombllc.com",
+        logo: "https://hexacombllc.com/hexacomb_logo_wordmark.png",
+        description:
+          "Modern websites for local businesses in Fresno, Clovis, and the Central Valley. Custom, high-performance websites delivered lightning fast.",
+        foundingDate: "2025",
+        areaServed: {
+          "@type": "City",
+          name: "Fresno",
+          sameAs: "https://en.wikipedia.org/wiki/Fresno,_California",
+        },
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "sales",
+          areaServed: ["US-CA"],
+          availableLanguage: ["English"],
+        },
+      },
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://hexacombllc.com/#localbusiness",
+        name: "Hexacomb LLC",
+        url: "https://hexacombllc.com",
+        image: "https://hexacombllc.com/hexacomb_logo_wordmark.png",
+        description:
+          "Custom web design and development for local businesses in Fresno, Clovis, and the Central Valley.",
+        areaServed: {
+          "@type": "GeoCircle",
+          geoMidpoint: {
+            "@type": "GeoCoordinates",
+            latitude: 36.7378,
+            longitude: -119.7871,
+          },
+          geoRadius: "100000",
+        },
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Fresno",
+          addressRegion: "CA",
+          addressCountry: "US",
+        },
+        priceRange: "$$",
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://hexacombllc.com/#website",
+        url: "https://hexacombllc.com",
+        name: "Hexacomb — Modern Websites for the Central Valley",
+        description:
+          "Hexacomb modernizes local businesses in Fresno, Clovis, and the Central Valley with custom, high-performance websites delivered lightning fast.",
+        publisher: {
+          "@id": "https://hexacombllc.com/#organization",
+        },
+      },
+    ],
+  };
+
   return (
     <>
-      {/* Header */}
-      <header className="site-header" role="banner">
-        <div className="container">
-          <Link href="/" className="logo" aria-label="Hexacomb Home">
-            <span className="logo-hex" aria-hidden />
-            Hexacomb
-          </Link>
-          <a href="#contact" className="header-cta">
-            Apply for Early-Adopter Rate
-          </a>
-        </div>
-      </header>
-
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <main id="main-content">
         {/* Hero */}
         <section className="hero hex-bg" aria-labelledby="hero-heading">
@@ -355,108 +409,11 @@ export default function Home() {
                   the Central Valley
                 </p>
               </div>
-              <form
-                action="#"
-                method="POST"
-                aria-label="Contact form"
-                noValidate
-              >
-                <div className="form-group">
-                  <label htmlFor="name">
-                    Full Name <span aria-hidden>*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    autoComplete="name"
-                    placeholder="Your full name"
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="email">
-                    Email Address <span aria-hidden>*</span>
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    autoComplete="email"
-                    placeholder="you@yourbusiness.com"
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="business">Business Name</label>
-                  <input
-                    type="text"
-                    id="business"
-                    name="business"
-                    autoComplete="organization"
-                    placeholder="Your business name"
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="website">Current Website URL</label>
-                  <input
-                    type="url"
-                    id="website"
-                    name="website"
-                    autoComplete="url"
-                    placeholder="https://"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  style={{
-                    width: "100%",
-                    justifyContent: "center",
-                  }}
-                >
-                  Send Application →
-                </button>
-              </form>
+              <ContactFormClient />
             </div>
           </div>
         </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="site-footer" role="contentinfo">
-        <div className="container">
-          <p>
-            <span className="logo-hex" aria-hidden />{" "}
-            <strong>Hexacomb</strong> — Modern Websites for the Central
-            Valley
-          </p>
-          <p style={{ marginTop: 8 }}>
-            &copy; {new Date().getFullYear()} Hexacomb LLC. All rights
-            reserved.
-          </p>
-          <p style={{ marginTop: 6, fontSize: "0.75rem", opacity: 0.5 }}>
-            Photo by{" "}
-            <a
-              href="https://unsplash.com/@ghpvisuals?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-              rel="noopener noreferrer"
-              target="_blank"
-              style={{ color: "inherit" }}
-            >
-              Grant Porter
-            </a>{" "}
-            on{" "}
-            <a
-              href="https://unsplash.com/photos/birds-eye-view-of-skyscrapers-Mx71xeQOev8?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-              rel="noopener noreferrer"
-              target="_blank"
-              style={{ color: "inherit" }}
-            >
-              Unsplash
-            </a>
-          </p>
-        </div>
-      </footer>
+    </main>
     </>
   );
 }

@@ -40,6 +40,10 @@
 			"bucket_name": "hexacombllc-opennext-cache"
 		}
 	],
+	"vars": {
+		"NEXT_PUBLIC_TURNSTILE_SITE_KEY": "0x4AAAAAADC6NwtGoO-9AuVg",
+		"CONTACT_TO_EMAIL": "marcode.chavez.jr@gmail.com"
+	},
 	"images": {
 		// Enable image optimization
 		// see https://opennext.js.org/cloudflare/howtos/image
