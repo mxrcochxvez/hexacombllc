@@ -2427,6 +2427,40 @@ body::before {
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   animation: brand-nav-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  overflow: visible;
+}
+
+.site-header::before,
+.site-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -18px;
+  height: 28px;
+  pointer-events: none;
+  background-repeat: repeat-x;
+  background-size: 360px 28px;
+}
+
+.site-header::before {
+  opacity: 0.92;
+  background-image:
+    radial-gradient(10px 16px at 48px 0, var(--color-amber) 45%, transparent 47%),
+    radial-gradient(6px 11px at 126px 0, var(--color-amber-light) 45%, transparent 47%),
+    radial-gradient(8px 15px at 218px 0, var(--color-amber) 45%, transparent 47%),
+    linear-gradient(90deg, transparent 0 22px, rgba(217, 119, 6, 0.9) 22px 84px, transparent 84px 120px, rgba(245, 158, 11, 0.82) 120px 146px, transparent 146px 202px, rgba(217, 119, 6, 0.86) 202px 238px, transparent 238px);
+  filter: drop-shadow(0 5px 10px rgba(217, 119, 6, 0.12));
+  animation: honey-drip-shift 9s cubic-bezier(0.16, 1, 0.3, 1) infinite alternate;
+}
+
+.site-header::after {
+  bottom: -23px;
+  opacity: 0.65;
+  background-image:
+    radial-gradient(4px 16px at 72px 0, var(--color-amber-light) 42%, transparent 44%),
+    radial-gradient(5px 21px at 284px 0, var(--color-amber) 42%, transparent 44%);
+  animation: honey-drip-drop 4.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
 .logo,
@@ -3284,6 +3318,23 @@ body::before {
   }
   50% {
     box-shadow: 0 0 46px rgba(245, 158, 11, 0.36);
+  }
+}
+
+@keyframes honey-drip-shift {
+  to {
+    background-position: 32px 0, 16px 0, 44px 0, 24px 0;
+  }
+}
+
+@keyframes honey-drip-drop {
+  0%, 100% {
+    transform: translateY(-3px) scaleY(0.82);
+    opacity: 0.45;
+  }
+  45% {
+    transform: translateY(4px) scaleY(1.08);
+    opacity: 0.72;
   }
 }
 
