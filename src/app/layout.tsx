@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, JetBrains_Mono, Nunito_Sans } from "next/font/google";
+import { Bricolage_Grotesque, DM_Sans, JetBrains_Mono, Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import CloudflareAnalytics from "@/components/CloudflareAnalytics";
@@ -23,6 +23,12 @@ const nunitoSans = Nunito_Sans({
   variable: "--font-nunito-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
+});
+
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const viewport: Viewport = {
@@ -125,7 +131,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${dmSans.variable} ${nunitoSans.variable} ${jetBrainsMono.variable}`}
+      className={`${dmSans.variable} ${nunitoSans.variable} ${bricolage.variable} ${jetBrainsMono.variable}`}
     >
       <body>
         <svg className="grain-svg" aria-hidden focusable="false">

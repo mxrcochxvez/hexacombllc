@@ -23,6 +23,7 @@
   --radius-lg: 12px;
   --font-body: var(--font-dm-sans), "DM Sans", sans-serif;
   --font-display: var(--font-nunito-sans), "Nunito Sans", sans-serif;
+  --font-hero: var(--font-bricolage), "Bricolage Grotesque", sans-serif;
   --font-soft: var(--font-nunito-sans), "Nunito Sans", sans-serif;
   --font-mono-stack: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
   --max-width: 1120px;
@@ -2714,7 +2715,7 @@ body::before {
 .brand-hero-title {
   max-width: 940px;
   color: var(--color-cream);
-  font-family: var(--font-display);
+  font-family: var(--font-hero);
   font-size: clamp(3.7rem, 8vw, 7.2rem);
   font-weight: 600;
   letter-spacing: 0;
