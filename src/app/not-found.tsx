@@ -21,7 +21,7 @@ export default function NotFound() {
             justifyContent: "center",
             minHeight: "100vh",
             padding: "2rem",
-            fontFamily: "system-ui, sans-serif",
+            fontFamily: "DM Sans, sans-serif",
             textAlign: "center",
             background: "#faf8f5",
             color: "#1a1a1a",
