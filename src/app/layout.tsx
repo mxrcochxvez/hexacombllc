@@ -6,6 +6,7 @@ import CloudflareAnalytics from "@/components/CloudflareAnalytics";
 import TrackClicks from "@/components/TrackClicks";
 import CookieBanner from "@/components/CookieBanner";
 import CustomCursor from "@/components/CustomCursor";
+import DeviceTilt from "@/components/DeviceTilt";
 import Footer from "@/components/Footer";
 
 const dmSans = DM_Sans({
@@ -149,7 +150,9 @@ export default function RootLayout({
         <CustomCursor />
         <Navbar />
 
-        {children}
+        <DeviceTilt>
+          {children}
+        </DeviceTilt>
 
         <CookieBanner />
         <Footer />

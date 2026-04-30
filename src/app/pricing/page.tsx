@@ -10,13 +10,14 @@ import {
   ArrowRight,
   HelpCircle,
 } from "lucide-react";
+import RevealSection from "@/components/RevealSection";
 
 const iconProps = { size: 28, strokeWidth: 1.75 };
 
 export const metadata: Metadata = {
-    title: "Pricing",
-    description:
-      "30% retainer to get started. Pay as you grow. Your website cost scales with your actual traffic — perfect for small businesses in Fresno and the Central Valley.",
+  title: "Pricing",
+  description:
+    "30% retainer to get started. Pay as you grow. Your website cost scales with your actual traffic — perfect for small businesses in Fresno and the Central Valley.",
   alternates: {
     canonical: "https://hexacombllc.com/pricing",
   },
@@ -51,7 +52,7 @@ const tiers = [
     rangeLabel: "monthly visitors",
     description: "For businesses already getting traffic and building momentum.",
     features: [
-      "Everything in Scout",
+      "Everything in Starter",
       "Priority email support",
       "Quarterly performance review",
       "Minor content updates included",
@@ -70,7 +71,7 @@ const tiers = [
     rangeLabel: "monthly visitors",
     description: "For businesses with a steady flow of visitors ready to scale up.",
     features: [
-      "Everything in Forager",
+      "Everything in Growing",
       "Advanced SEO optimizations",
       "A/B testing setup",
       "Monthly strategy call",
@@ -89,7 +90,7 @@ const tiers = [
     rangeLabel: "monthly visitors",
     description: "Expanding reach across multiple locations or markets at scale.",
     features: [
-      "Everything in Keeper",
+      "Everything in Established",
       "Dedicated support",
       "Custom integrations",
       "Multi-location setup",
@@ -189,9 +190,9 @@ export default function PricingPage() {
         </section>
 
         {/* How It Works */}
-        <section className="how-it-works" aria-labelledby="how-heading">
+        <RevealSection className="how-it-works" ariaLabelledBy="how-heading">
           <div className="container">
-            <span className="section-label">How It Works</span>
+            <p className="brand-kicker">How It Works</p>
             <h2 id="how-heading">Simple. Fair. Transparent.</h2>
             <p className="section-intro">
               Traditional agencies demand 100% upfront and disappear. We ask
@@ -199,40 +200,41 @@ export default function PricingPage() {
               the rest month by month as your traffic grows.
             </p>
             <div className="how-steps">
-              <div className="how-step">
-                <div className="how-step-num">1</div>
-                <h3>30% Retainer</h3>
-                <p>
-                  Based on your project&rsquo;s estimated total cost. For most
-                  small business sites, that&rsquo;s roughly $500–$700 to get
-                  started — not $5,000.
-                </p>
-              </div>
-              <div className="how-step">
-                <div className="how-step-num">2</div>
-                <h3>We Build & Launch</h3>
-                <p>
-                  Custom hand-coded website, tailored to your brand. We
-                  install privacy-friendly analytics before go-live.
-                </p>
-              </div>
-              <div className="how-step">
-                <div className="how-step-num">3</div>
-                <h3>Pay As You Grow</h3>
-                <p>
-                  After launch, your monthly bill matches your traffic tier.
-                  More visitors = more revenue for you. If traffic drops,
-                  your bill drops too.
-                </p>
-              </div>
+              {[
+                {
+                  num: "1",
+                  title: "30% Retainer",
+                  body: "Based on your project's estimated total cost. For most small business sites, that's roughly $500–$700 to get started — not $5,000.",
+                },
+                {
+                  num: "2",
+                  title: "We Build & Launch",
+                  body: "Custom hand-coded website, tailored to your brand. We install privacy-friendly analytics before go-live.",
+                },
+                {
+                  num: "3",
+                  title: "Pay As You Grow",
+                  body: "After launch, your monthly bill matches your traffic tier. More visitors = more revenue for you. If traffic drops, your bill drops too.",
+                },
+              ].map((step, i) => (
+                <div
+                  className="how-step reveal-item"
+                  key={step.title}
+                  style={{ "--reveal-delay": `${i * 120}ms` } as React.CSSProperties}
+                >
+                  <div className="how-step-num">{step.num}</div>
+                  <h3>{step.title}</h3>
+                  <p>{step.body}</p>
+                </div>
+              ))}
             </div>
           </div>
-        </section>
+        </RevealSection>
 
         {/* Pricing Tiers */}
-        <section className="pricing-tiers" aria-labelledby="tiers-heading">
+        <RevealSection className="pricing-tiers" ariaLabelledBy="tiers-heading">
           <div className="container">
-            <span className="section-label">Pricing Plans</span>
+            <p className="brand-kicker">Pricing Plans</p>
             <h2 id="tiers-heading">Choose the Plan That Fits Your Business</h2>
             <p className="section-intro">
               Every tier includes your custom website, hosting, maintenance,
@@ -240,10 +242,11 @@ export default function PricingPage() {
               before.
             </p>
             <div className="pricing-grid">
-              {tiers.map((tier) => (
+              {tiers.map((tier, i) => (
                 <article
                   key={tier.name}
-                  className={`pricing-card ${tier.highlighted ? "pricing-card-highlighted" : ""}`}
+                  className={`pricing-card reveal-item ${tier.highlighted ? "pricing-card-highlighted" : ""}`}
+                  style={{ "--reveal-delay": `${i * 100}ms` } as React.CSSProperties}
                 >
                   {tier.highlighted && (
                     <span className="pricing-badge">Most Popular</span>
@@ -280,59 +283,53 @@ export default function PricingPage() {
               ))}
             </div>
           </div>
-        </section>
+        </RevealSection>
 
-        {/* Trust / Comparison */}
-        <section className="pricing-trust" aria-labelledby="trust-heading">
+        {/* Trust */}
+        <RevealSection className="pricing-trust" ariaLabelledBy="trust-heading">
           <div className="container">
-            <span className="section-label">Why This Model Works</span>
+            <p className="brand-kicker">Why This Model Works</p>
             <h2 id="trust-heading">We Win When You Win</h2>
             <div className="trust-grid">
-              <div className="trust-item">
-                <strong>Aligned Incentives</strong>
-                <p>
-                  Traditional agencies get paid whether your site performs or
-                  not. Our revenue grows only when your traffic grows — so we
-                  are motivated to build you a site that actually attracts
-                  customers.
-                </p>
-              </div>
-              <div className="trust-item">
-                <strong>Cash-Flow Friendly</strong>
-                <p>
-                  Small businesses can&rsquo;t drop $5,000 on a website before they
-                  know if it will work. Our 30% retainer model lets you invest
-                  capital where it matters: inventory, staff, and marketing.
-                </p>
-              </div>
-              <div className="trust-item">
-                <strong>No Long-Term Traps</strong>
-                <p>
-                  No 12-month contracts with penalties. If your traffic drops
-                  (seasonal business, slow month), your bill drops too. Stay
-                  because it works, not because you&rsquo;re stuck.
-                </p>
-              </div>
-              <div className="trust-item">
-                <strong>Predictable Scaling</strong>
-                <p>
-                  Know exactly what you&rsquo;ll pay at every stage of growth. No
-                  surprise invoices for &ldquo;extra revisions&rdquo; or &ldquo;server
-                  overages.&rdquo; What you see is what you pay.
-                </p>
-              </div>
+              {[
+                {
+                  title: "Aligned Incentives",
+                  body: "Traditional agencies get paid whether your site performs or not. Our revenue grows only when your traffic grows — so we are motivated to build you a site that actually attracts customers.",
+                },
+                {
+                  title: "Cash-Flow Friendly",
+                  body: "Small businesses can't drop $5,000 on a website before they know if it will work. Our 30% retainer model lets you invest capital where it matters: inventory, staff, and marketing.",
+                },
+                {
+                  title: "No Long-Term Traps",
+                  body: "No 12-month contracts with penalties. If your traffic drops (seasonal business, slow month), your bill drops too. Stay because it works, not because you're stuck.",
+                },
+                {
+                  title: "Predictable Scaling",
+                  body: "Know exactly what you'll pay at every stage of growth. No surprise invoices for \"extra revisions\" or \"server overages.\" What you see is what you pay.",
+                },
+              ].map((item, i) => (
+                <div
+                  className="trust-item reveal-item"
+                  key={item.title}
+                  style={{ "--reveal-delay": `${i * 120}ms` } as React.CSSProperties}
+                >
+                  <strong>{item.title}</strong>
+                  <p>{item.body}</p>
+                </div>
+              ))}
             </div>
           </div>
-        </section>
+        </RevealSection>
 
         {/* FAQ */}
-        <section className="pricing-faq" aria-labelledby="faq-heading">
+        <RevealSection className="pricing-faq" ariaLabelledBy="faq-heading">
           <div className="container">
-            <span className="section-label">FAQ</span>
+            <p className="brand-kicker">FAQ</p>
             <h2 id="faq-heading">Questions Small Business Owners Ask</h2>
             <div className="faq-list">
               {faqs.map((faq, i) => (
-                <details key={i} className="faq-item">
+                <details key={i} className="faq-item reveal-item" style={{ "--reveal-delay": `${i * 80}ms` } as React.CSSProperties}>
                   <summary>
                     <HelpCircle size={18} strokeWidth={2} aria-hidden />
                     <span>{faq.q}</span>
@@ -342,13 +339,13 @@ export default function PricingPage() {
               ))}
             </div>
           </div>
-        </section>
+        </RevealSection>
 
         {/* CTA */}
         <section className="pricing-cta" aria-labelledby="pricing-cta-heading">
           <div className="container">
             <div className="pricing-box">
-              <span className="section-label">Ready to Grow?</span>
+              <p className="brand-kicker">Ready to Grow?</p>
               <h2 id="pricing-cta-heading">
                 Let&rsquo;s Build Something That Scales With You
               </h2>

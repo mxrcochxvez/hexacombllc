@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { BarChart3, Eye, Search, Timer } from "lucide-react";
 import WebsiteAuditTool from "@/components/WebsiteAuditTool";
+import RevealSection from "@/components/RevealSection";
 
 const iconProps = { size: 28, strokeWidth: 1.75 };
 
@@ -70,54 +71,53 @@ export default function WebsiteAuditPage() {
           <div className="hero-ornament hero-ornament-2" aria-hidden />
         </section>
 
-        <section className="audit-intro" aria-labelledby="audit-intro-heading">
+        <RevealSection className="audit-intro" ariaLabelledBy="audit-intro-heading">
           <div className="container">
-            <span className="section-label">What It Checks</span>
+            <p className="brand-kicker">What It Checks</p>
             <h2 id="audit-intro-heading">A Website Audit for Business Decisions</h2>
             <p className="section-intro">
               The report avoids developer language and focuses on the questions that
               matter in a sales conversation.
             </p>
             <div className="cards audit-intro-cards">
-              <article className="card">
-                <div className="card-icon" aria-hidden>
-                  <Search {...iconProps} />
-                </div>
-                <h3>SEO Clarity</h3>
-                <p>
-                  Can Google understand what the business does, where it serves, and
-                  why a customer should click?
-                </p>
-              </article>
-              <article className="card">
-                <div className="card-icon" aria-hidden>
-                  <Timer {...iconProps} />
-                </div>
-                <h3>Load-Time Risk</h3>
-                <p>
-                  Does the first page response feel quick, or is the site asking
-                  customers to wait before they can take action?
-                </p>
-              </article>
-              <article className="card">
-                <div className="card-icon" aria-hidden>
-                  <Eye {...iconProps} />
-                </div>
-                <h3>Trust Issues</h3>
-                <p>
-                  Does the site show obvious problems with security, accessibility,
-                  mobile setup, or social previews?
-                </p>
-              </article>
+              {[
+                {
+                  icon: <Search {...iconProps} />,
+                  title: "SEO Clarity",
+                  body: "Can Google understand what the business does, where it serves, and why a customer should click?",
+                },
+                {
+                  icon: <Timer {...iconProps} />,
+                  title: "Load-Time Risk",
+                  body: "Does the first page response feel quick, or is the site asking customers to wait before they can take action?",
+                },
+                {
+                  icon: <Eye {...iconProps} />,
+                  title: "Trust Issues",
+                  body: "Does the site show obvious problems with security, accessibility, mobile setup, or social previews?",
+                },
+              ].map((card, i) => (
+                <article
+                  className="card reveal-item"
+                  key={card.title}
+                  style={{ "--reveal-delay": `${i * 120}ms` } as React.CSSProperties}
+                >
+                  <div className="card-icon" aria-hidden>
+                    {card.icon}
+                  </div>
+                  <h3>{card.title}</h3>
+                  <p>{card.body}</p>
+                </article>
+              ))}
             </div>
           </div>
-        </section>
+        </RevealSection>
 
-        <section className="audit-runner" aria-labelledby="audit-runner-heading">
+        <RevealSection className="audit-runner" id="audit-tool" ariaLabelledBy="audit-runner-heading">
           <div className="container">
             <div className="audit-runner-heading">
               <div>
-                <span className="section-label">Run the Scan</span>
+                <p className="brand-kicker">Run the Scan</p>
                 <h2 id="audit-runner-heading">See the Website Through a Customer&rsquo;s Eyes</h2>
               </div>
               <p>
@@ -128,13 +128,13 @@ export default function WebsiteAuditPage() {
             </div>
             <WebsiteAuditTool />
           </div>
-        </section>
+        </RevealSection>
 
         <section className="audit-cta" aria-labelledby="audit-cta-heading">
           <div className="container">
             <div className="pricing-box">
               <BarChart3 size={32} strokeWidth={1.8} aria-hidden />
-              <span className="section-label">Next Step</span>
+              <p className="brand-kicker">Next Step</p>
               <h2 id="audit-cta-heading">Turn the Findings Into a Better Website</h2>
               <p>
                 A scan can identify symptoms. Hexacomb turns those symptoms into a
