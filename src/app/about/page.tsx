@@ -191,7 +191,7 @@ export default function About() {
         {/* ── Hero ── */}
         <section className="about-hero-v2 hex-bg" aria-labelledby="about-heading">
           <div className="container about-hero-grid">
-            <div className="about-hero-photo reveal-item">
+            <div className="about-hero-photo">
               <Image
                 src="/images/marco-portrait.jpg"
                 alt="Portrait of Marco"

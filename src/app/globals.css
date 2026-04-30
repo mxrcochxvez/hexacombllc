@@ -242,9 +242,9 @@ h3 {
 
 .header-audit-cta:hover,
 .header-audit-cta:focus-visible {
-  color: var(--color-bg);
-  background: var(--color-amber-light);
-  border-color: var(--color-amber-light);
+  color: var(--color-cream);
+  background: var(--color-amber);
+  border-color: var(--color-amber);
   transform: translateY(-1px);
   box-shadow: 0 0 24px var(--color-amber-glow);
 }
@@ -474,8 +474,8 @@ h3 {
 
 .mobile-menu-audit:hover,
 .mobile-menu-audit:focus-visible {
-  color: var(--color-bg);
-  background: var(--color-amber-light);
+  color: var(--color-cream);
+  background: var(--color-amber);
 }
 
 .mobile-menu-liquid.open .mobile-menu-cta {
