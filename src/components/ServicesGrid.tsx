@@ -43,7 +43,7 @@ export default function ServicesGrid() {
           observer.disconnect();
         }
       },
-      { threshold: 0.12 }
+      { threshold: 0.15, rootMargin: "-60px 0px -60px 0px" }
     );
 
     observer.observe(element);
