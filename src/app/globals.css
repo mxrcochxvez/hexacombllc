@@ -2557,6 +2557,7 @@ body::before {
 
 .brand-hero {
   min-height: 100vh;
+  height: 100vh;
   display: flex;
   align-items: flex-start;
   padding: clamp(88px, 12vh, 118px) 0 72px;
@@ -3290,6 +3291,7 @@ body::before {
 @media (max-width: 820px) {
   .brand-hero {
     min-height: 92vh;
+    height: auto;
     padding: 86px 0 64px;
   }
 
