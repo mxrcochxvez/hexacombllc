@@ -222,6 +222,31 @@ h3 {
   transition: all var(--transition);
 }
 
+.header-audit-cta {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  color: var(--color-amber-light);
+  border: 1px solid rgba(245, 158, 11, 0.58);
+  border-radius: 999px;
+  background: rgba(217, 119, 6, 0.08);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all var(--transition);
+}
+
+.header-audit-cta:hover,
+.header-audit-cta:focus-visible {
+  color: var(--color-bg);
+  background: var(--color-amber-light);
+  border-color: var(--color-amber-light);
+  transform: translateY(-1px);
+  box-shadow: 0 0 24px var(--color-amber-glow);
+}
+
 .header-cta:hover,
 .header-cta:focus-visible {
   background: var(--honey-light);
@@ -352,10 +377,41 @@ h3 {
   box-shadow: 0 4px 16px rgba(232, 164, 30, 0.35);
 }
 
-.mobile-menu-liquid.open .mobile-menu-cta {
+.mobile-menu-audit {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+  padding: 14px 24px;
+  color: var(--color-amber-light);
+  border: 1px solid rgba(245, 158, 11, 0.58);
+  border-radius: 50px;
+  background: rgba(217, 119, 6, 0.08);
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 4vw, 1.35rem);
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-menu-liquid.open .mobile-menu-audit {
   opacity: 1;
   transform: translateY(0);
   transition-delay: 0.32s;
+}
+
+.mobile-menu-audit:hover,
+.mobile-menu-audit:focus-visible {
+  color: var(--color-bg);
+  background: var(--color-amber-light);
+}
+
+.mobile-menu-liquid.open .mobile-menu-cta {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.4s;
 }
 
 .mobile-menu-cta:hover,
@@ -2383,7 +2439,7 @@ body::before {
   box-shadow: 0 0 24px var(--color-amber-glow);
 }
 
-.header-nav > a:not(.header-cta),
+.header-nav > a:not(.header-cta):not(.header-audit-cta),
 .footer-nav a {
   color: var(--color-cream-muted);
   font-family: var(--font-body);
