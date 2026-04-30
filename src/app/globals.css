@@ -22,7 +22,7 @@
   --radius: 8px;
   --radius-lg: 12px;
   --font-body: var(--font-dm-sans), "DM Sans", sans-serif;
-  --font-display: var(--font-dm-sans), "DM Sans", sans-serif;
+  --font-display: var(--font-nunito-sans), "Nunito Sans", sans-serif;
   --font-soft: var(--font-nunito-sans), "Nunito Sans", sans-serif;
   --font-mono-stack: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
   --max-width: 1120px;

@@ -123,8 +123,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${dmSans.variable} ${nunitoSans.variable} ${jetBrainsMono.variable}`}>
+    <html
+      lang="en"
+      className={`${dmSans.variable} ${nunitoSans.variable} ${jetBrainsMono.variable}`}
+    >
+      <body>
         <svg className="grain-svg" aria-hidden focusable="false">
           <filter id="grain">
             <feTurbulence
