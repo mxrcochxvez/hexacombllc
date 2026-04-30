@@ -255,6 +255,74 @@ h3 {
   transform: translateY(-1px);
 }
 
+/* ── Honey Drip Effect ── */
+.honey-drip {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 56px;
+  pointer-events: none;
+  z-index: 1;
+  filter: url(#goo);
+  overflow: visible;
+}
+
+.honey-drip-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: var(--honey);
+  opacity: 0.8;
+}
+
+.drip {
+  position: absolute;
+  top: -1px;
+  width: 12px;
+  height: 12px;
+  background: var(--honey);
+  border-radius: 50%;
+  animation: honey-drip 4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  opacity: 0;
+}
+
+.drip-1 { left: 10%; animation-delay: 0s; animation-duration: 4.2s; width: 10px; height: 10px; }
+.drip-2 { left: 25%; animation-delay: 1.2s; animation-duration: 3.4s; width: 14px; height: 14px; }
+.drip-3 { left: 42%; animation-delay: 2.4s; animation-duration: 4.8s; width: 11px; height: 11px; }
+.drip-4 { left: 58%; animation-delay: 0.6s; animation-duration: 3.9s; width: 13px; height: 13px; }
+.drip-5 { left: 74%; animation-delay: 1.8s; animation-duration: 4.5s; width: 10px; height: 10px; }
+.drip-6 { left: 90%; animation-delay: 3.0s; animation-duration: 3.6s; width: 12px; height: 12px; }
+
+@keyframes honey-drip {
+  0% {
+    transform: translateY(0) scale(0.9);
+    opacity: 0;
+  }
+  8% {
+    transform: translateY(2px) scale(1);
+    opacity: 0.9;
+  }
+  45% {
+    transform: translateY(24px) scale(0.75, 1.55);
+    opacity: 0.95;
+  }
+  80% {
+    transform: translateY(48px) scale(0.4, 0.6);
+    opacity: 0.2;
+  }
+  90% {
+    transform: translateY(52px) scale(0.2, 0.2);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(0.9);
+    opacity: 0;
+  }
+}
+
 /* ── Mobile Floating Action Button ── */
 .mobile-fab {
   display: none;

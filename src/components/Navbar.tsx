@@ -67,6 +67,31 @@ export default function Navbar() {
             </Link>
           </nav>
         </div>
+
+        {/* Honey Drip Effect */}
+        <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
+          <defs>
+            <filter id="goo">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur" />
+              <feColorMatrix
+                in="blur"
+                mode="matrix"
+                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
+                result="goo"
+              />
+              <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+            </filter>
+          </defs>
+        </svg>
+        <div className="honey-drip" aria-hidden="true">
+          <div className="honey-drip-bar" />
+          <div className="drip drip-1" />
+          <div className="drip drip-2" />
+          <div className="drip drip-3" />
+          <div className="drip drip-4" />
+          <div className="drip drip-5" />
+          <div className="drip drip-6" />
+        </div>
       </header>
 
       {/* Floating Action Button — bottom right (mobile only) */}
