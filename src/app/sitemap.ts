@@ -22,5 +22,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.9,
     },
+    {
+      url: `${baseUrl}/website-audit`,
+      lastModified: "2026-04-29",
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
   ];
 }

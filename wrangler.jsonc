@@ -45,6 +45,11 @@
 		"CONTACT_TO_EMAIL": "marcode.chavez.jr@gmail.com",
 		"CF_ANALYTICS_TOKEN": ""
 	},
+	"ai": {
+		// Workers AI binding, available through getCloudflareContext().env.AI
+		"binding": "AI",
+		"remote": true
+	},
 	"images": {
 		// Enable image optimization
 		// see https://opennext.js.org/cloudflare/howtos/image

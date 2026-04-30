@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import {
   Compass,
   Package,
@@ -202,8 +203,8 @@ export default function PricingPage() {
                 <div className="how-step-num">1</div>
                 <h3>30% Retainer</h3>
                 <p>
-                  Based on your project's estimated total cost. For most
-                  small business sites, that's roughly $500–$700 to get
+                  Based on your project&rsquo;s estimated total cost. For most
+                  small business sites, that&rsquo;s roughly $500–$700 to get
                   started — not $5,000.
                 </p>
               </div>
@@ -268,13 +269,13 @@ export default function PricingPage() {
                       </li>
                     ))}
                   </ul>
-                  <a
+                  <Link
                     href="/#contact"
                     className={`btn ${tier.highlighted ? "btn-primary" : "btn-outline-dark"}`}
                     data-track={tier.track}
                   >
                     {tier.cta} <ArrowRight size={16} strokeWidth={2} />
-                  </a>
+                  </Link>
                 </article>
               ))}
             </div>
@@ -299,7 +300,7 @@ export default function PricingPage() {
               <div className="trust-item">
                 <strong>Cash-Flow Friendly</strong>
                 <p>
-                  Small businesses can't drop $5,000 on a website before they
+                  Small businesses can&rsquo;t drop $5,000 on a website before they
                   know if it will work. Our 30% retainer model lets you invest
                   capital where it matters: inventory, staff, and marketing.
                 </p>
@@ -309,15 +310,15 @@ export default function PricingPage() {
                 <p>
                   No 12-month contracts with penalties. If your traffic drops
                   (seasonal business, slow month), your bill drops too. Stay
-                  because it works, not because you're stuck.
+                  because it works, not because you&rsquo;re stuck.
                 </p>
               </div>
               <div className="trust-item">
                 <strong>Predictable Scaling</strong>
                 <p>
-                  Know exactly what you'll pay at every stage of growth. No
-                  surprise invoices for "extra revisions" or "server
-                  overages." What you see is what you pay.
+                  Know exactly what you&rsquo;ll pay at every stage of growth. No
+                  surprise invoices for &ldquo;extra revisions&rdquo; or &ldquo;server
+                  overages.&rdquo; What you see is what you pay.
                 </p>
               </div>
             </div>
@@ -349,20 +350,20 @@ export default function PricingPage() {
             <div className="pricing-box">
               <span className="section-label">Ready to Grow?</span>
               <h2 id="pricing-cta-heading">
-                Let's Build Something That Scales With You
+                Let&rsquo;s Build Something That Scales With You
               </h2>
               <p>
                 Get started on your custom site with just a
                 <strong> 30% retainer</strong>. Spots are limited to 3 local
                 businesses.
               </p>
-              <a
+              <Link
                 href="/#contact"
                 className="btn btn-primary"
                 data-track="cta_pricing_bottom"
               >
                 Get Your Free Quote →
-              </a>
+              </Link>
             </div>
           </div>
         </section>

@@ -12,11 +12,32 @@ import {
 } from "lucide-react";
 import { ContactFormClient } from "@/components/ContactFormClient";
 
+const baseUrl = "https://hexacombllc.com";
+
 const iconProps = { size: 28, strokeWidth: 1.75 };
 
 export const metadata: Metadata = {
   alternates: {
-    canonical: "https://hexacombllc.com",
+    canonical: baseUrl,
+  },
+  openGraph: {
+    title: "Hexacomb — Websites for Fresno & Clovis Small Businesses",
+    description: "Custom websites for Fresno and Clovis small businesses — built fast by a local developer you can actually call. No templates, no jargon.",
+    url: baseUrl,
+    images: [
+      {
+        url: "/hexacomb_logo_wordmark.png",
+        width: 1200,
+        height: 630,
+        alt: "Hexacomb — Websites for Fresno & Clovis Small Businesses",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Hexacomb — Websites for Fresno & Clovis Small Businesses",
+    description: "Custom websites for Fresno and Clovis small businesses — built fast by a local developer you can actually call. No templates, no jargon.",
+    images: ["/hexacomb_logo_wordmark.png"],
   },
 };
 

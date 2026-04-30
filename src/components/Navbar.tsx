@@ -59,6 +59,9 @@ export default function Navbar() {
             <Link href="/pricing" data-track="nav_pricing">
               Pricing
             </Link>
+            <Link href="/website-audit" data-track="nav_website_audit">
+              Audit
+            </Link>
             <Link href="/#contact" className="header-cta" data-track="nav_cta_free_quote">
               Get a Free Quote
             </Link>
@@ -115,6 +118,14 @@ export default function Navbar() {
               className="mobile-menu-link"
             >
               Pricing
+            </Link>
+            <Link
+              href="/website-audit"
+              onClick={closeMenu}
+              data-track="nav_mobile_website_audit"
+              className="mobile-menu-link"
+            >
+              Audit
             </Link>
             <Link
               href="/#contact"
