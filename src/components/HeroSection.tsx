@@ -76,12 +76,12 @@ export default function HeroSection() {
             See Our Work
           </Link>
         </div>
-        <div className="scroll-indicator" aria-hidden>
-          <span>
-            <i />
-          </span>
-          <em>scroll</em>
-        </div>
+      </div>
+      <div className="scroll-indicator" aria-hidden>
+        <span>
+          <i />
+        </span>
+        <em>scroll</em>
       </div>
     </section>
   );

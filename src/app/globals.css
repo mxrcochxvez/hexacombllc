@@ -2755,8 +2755,9 @@ body::before {
 
 .scroll-indicator {
   position: absolute;
-  left: 20px;
-  bottom: -72px;
+  left: clamp(20px, calc((100vw - var(--max-width)) / 2 + 20px), 12vw);
+  bottom: 28px;
+  z-index: 2;
   display: flex;
   align-items: center;
   gap: 10px;
