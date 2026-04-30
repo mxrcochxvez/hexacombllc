@@ -3585,3 +3585,36 @@ body::before {
 .audit-cta .section-label {
   color: var(--color-amber-light);
 }
+
+.pricing-box,
+.about-talk-box {
+  background:
+    linear-gradient(145deg, rgba(64, 35, 10, 0.98), rgba(38, 21, 6, 0.96)),
+    var(--color-bg-soft);
+  border: 1px solid rgba(245, 158, 11, 0.34);
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, 0.34),
+    0 0 42px rgba(217, 119, 6, 0.12);
+}
+
+.pricing-box::before,
+.about-talk-box::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.16), transparent 42%);
+}
+
+.pricing-box,
+.about-talk-box {
+  position: relative;
+  overflow: hidden;
+}
+
+.pricing-box > *,
+.about-talk-box > * {
+  position: relative;
+  z-index: 1;
+}
