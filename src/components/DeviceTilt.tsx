@@ -68,23 +68,21 @@ export default function DeviceTilt({ children }: { children: React.ReactNode }) 
     let currentRotateY = 0;
     let frame = 0;
 
-    const MAX_TILT = 3; // degrees — subtle enough to feel premium, not enough to break layout
+    const MAX_TILT = 0.6; // barely perceptible nudge
 
     const handleOrientation = (event: DeviceOrientationEvent) => {
       const gamma = event.gamma ?? 0; // left/right tilt (-90 to 90)
       const beta = event.beta ?? 0;   // front/back tilt (-180 to 180)
 
-      // Normalize to a smaller range for subtlety
-      // gamma: phone tilted left/right while holding upright
-      // beta: phone tilted toward/away from face
-      targetRotateY = Math.max(-MAX_TILT, Math.min(MAX_TILT, gamma * 0.15));
-      targetRotateX = Math.max(-MAX_TILT, Math.min(MAX_TILT, (beta - 45) * 0.1));
+      // Very low sensitivity so it feels like a gentle suggestion, not a swing
+      targetRotateY = Math.max(-MAX_TILT, Math.min(MAX_TILT, gamma * 0.03));
+      targetRotateX = Math.max(-MAX_TILT, Math.min(MAX_TILT, (beta - 45) * 0.02));
     };
 
     const tick = () => {
-      // Smooth interpolation (lerp)
-      currentRotateX += (targetRotateX - currentRotateX) * 0.08;
-      currentRotateY += (targetRotateY - currentRotateY) * 0.08;
+      // Heavy smoothing — slow, gentle follow
+      currentRotateX += (targetRotateX - currentRotateX) * 0.04;
+      currentRotateY += (targetRotateY - currentRotateY) * 0.04;
 
       wrapper.style.transform = `perspective(1200px) rotateX(${currentRotateX}deg) rotateY(${currentRotateY}deg)`;
       frame = window.requestAnimationFrame(tick);
