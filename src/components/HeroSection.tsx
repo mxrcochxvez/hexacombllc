@@ -3,13 +3,37 @@ import Link from "next/link";
 const headline = "We help local businesses thrive in the digital age.";
 const words = headline.split(" ");
 
+const honeycombCells = Array.from({ length: 30 }).map((_, index) => {
+  const columns = 6;
+  const col = index % columns;
+  const row = Math.floor(index / columns);
+  return {
+    x: 50 + col * 78 + (row % 2) * 39,
+    y: 42 + row * 68,
+    filled: index % 5 === 0 || index % 11 === 0,
+    soft: col > 4 || row > 3,
+  };
+});
+
 export default function HeroSection() {
   return (
     <section className="brand-hero honeycomb-bg" aria-labelledby="brand-hero-heading">
       <div className="brand-hero-comb" aria-hidden>
-        {Array.from({ length: 12 }).map((_, index) => (
-          <span key={index} />
-        ))}
+        <svg viewBox="0 0 560 420" role="img">
+          <g>
+            {honeycombCells.map((cell, index) => (
+              <path
+                key={index}
+                className={[
+                  "hero-comb-cell",
+                  cell.filled ? "hero-comb-cell-filled" : "",
+                  cell.soft ? "hero-comb-cell-soft" : "",
+                ].join(" ")}
+                d={`M ${cell.x} ${cell.y - 35} L ${cell.x + 40} ${cell.y - 12} L ${cell.x + 40} ${cell.y + 35} L ${cell.x} ${cell.y + 58} L ${cell.x - 40} ${cell.y + 35} L ${cell.x - 40} ${cell.y - 12} Z`}
+              />
+            ))}
+          </g>
+        </svg>
       </div>
       <div className="brand-hero-bee" aria-hidden>
         <span className="bee-wing bee-wing-left" />

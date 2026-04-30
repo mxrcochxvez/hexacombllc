@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, DM_Sans, JetBrains_Mono } from "next/font/google";
+import { DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import CloudflareAnalytics from "@/components/CloudflareAnalytics";
@@ -12,12 +12,6 @@ const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   subsets: ["latin"],
   weight: ["300", "400", "500"],
-});
-
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
 });
 
 const jetBrainsMono = JetBrains_Mono({
@@ -124,7 +118,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${dmSans.variable} ${bricolage.variable} ${jetBrainsMono.variable}`}>
+      <body className={`${dmSans.variable} ${jetBrainsMono.variable}`}>
         <svg className="grain-svg" aria-hidden focusable="false">
           <filter id="grain">
             <feTurbulence
