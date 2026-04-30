@@ -2,6 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 
+interface DeviceOrientationEventWithPermission {
+  requestPermission?: () => Promise<string>;
+}
+
 export default function DeviceTilt({ children }: { children: React.ReactNode }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [enabled, setEnabled] = useState(false);
@@ -12,19 +16,19 @@ export default function DeviceTilt({ children }: { children: React.ReactNode }) 
 
     if (!isTouchDevice || prefersReducedMotion) return;
 
+    const DOE = DeviceOrientationEvent as unknown as DeviceOrientationEventWithPermission;
+
     // iOS 13+ requires permission request for deviceorientation
     const requestPermission = async () => {
-      if (typeof (DeviceOrientationEvent as any).requestPermission === "function") {
+      if (typeof DOE.requestPermission === "function") {
         try {
-          const response = await (DeviceOrientationEvent as any).requestPermission();
+          const response = await DOE.requestPermission();
           if (response === "granted") {
             setEnabled(true);
           }
         } catch {
           // permission denied or error
         }
-      } else {
-        setEnabled(true);
       }
     };
 
@@ -38,12 +42,15 @@ export default function DeviceTilt({ children }: { children: React.ReactNode }) 
     window.addEventListener("touchstart", handleFirstInteraction, { once: true });
     window.addEventListener("click", handleFirstInteraction, { once: true });
 
-    // For Android and devices that don't need permission, enable immediately
-    if (typeof (DeviceOrientationEvent as any).requestPermission !== "function") {
-      setEnabled(true);
+    // For Android and devices that don't need permission, enable after a frame
+    // to avoid the synchronous setState-in-effect lint warning.
+    let rafId = 0;
+    if (typeof DOE.requestPermission !== "function") {
+      rafId = requestAnimationFrame(() => setEnabled(true));
     }
 
     return () => {
+      cancelAnimationFrame(rafId);
       window.removeEventListener("touchstart", handleFirstInteraction);
       window.removeEventListener("click", handleFirstInteraction);
     };
