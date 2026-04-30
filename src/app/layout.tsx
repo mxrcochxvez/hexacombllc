@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, JetBrains_Mono } from "next/font/google";
+import { DM_Sans, JetBrains_Mono, Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import CloudflareAnalytics from "@/components/CloudflareAnalytics";
@@ -17,6 +17,12 @@ const dmSans = DM_Sans({
 const jetBrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
+});
+
+const nunitoSans = Nunito_Sans({
+  variable: "--font-nunito-sans",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const viewport: Viewport = {
@@ -118,7 +124,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${dmSans.variable} ${jetBrainsMono.variable}`}>
+      <body className={`${dmSans.variable} ${nunitoSans.variable} ${jetBrainsMono.variable}`}>
         <svg className="grain-svg" aria-hidden focusable="false">
           <filter id="grain">
             <feTurbulence

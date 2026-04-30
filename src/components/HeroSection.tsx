@@ -77,7 +77,9 @@ export default function HeroSection() {
           </Link>
         </div>
         <div className="scroll-indicator" aria-hidden>
-          <span />
+          <span>
+            <i />
+          </span>
           <em>scroll</em>
         </div>
       </div>
