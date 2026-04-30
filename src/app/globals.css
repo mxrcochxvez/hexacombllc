@@ -3506,3 +3506,82 @@ body::before {
   background: rgba(220, 38, 38, 0.16);
   color: #fca5a5;
 }
+
+/* ── Dark Theme Contrast Repairs ── */
+.btn-outline-dark,
+.btn-outline {
+  background: transparent;
+  color: var(--color-cream);
+  border-color: var(--color-amber);
+}
+
+.btn-outline-dark:hover,
+.btn-outline-dark:focus-visible,
+.btn-outline:hover,
+.btn-outline:focus-visible {
+  background: var(--color-amber-light);
+  color: var(--color-bg);
+  border-color: var(--color-amber-light);
+  box-shadow: 0 0 28px var(--color-amber-glow);
+}
+
+.pricing-card-features li,
+.pricing-card-range,
+.faq-item summary,
+.audit-form label,
+.audit-input-row input,
+.audit-form-note,
+.about-hero-meta,
+.meta-tag,
+.scarcity {
+  color: var(--color-cream);
+}
+
+.pricing-card-features li span,
+.pricing-card-desc,
+.pricing-card-range span,
+.faq-item p,
+.audit-form-note,
+.meta-tag,
+.scarcity {
+  color: rgba(255, 251, 235, 0.74);
+}
+
+.pricing-card-features li svg,
+.faq-item summary svg,
+.scarcity svg,
+.meta-tag svg {
+  color: var(--color-amber-light);
+}
+
+.pricing-card .btn,
+.pricing-box .btn,
+.about-talk-box .btn,
+.audit-cta .btn,
+.audit-input-row .btn {
+  color: var(--color-bg);
+}
+
+.pricing-card .btn-outline-dark {
+  color: var(--color-cream);
+}
+
+.pricing-card .btn-outline-dark:hover,
+.pricing-card .btn-outline-dark:focus-visible {
+  color: var(--color-bg);
+}
+
+.audit-input-row input {
+  background: rgba(26, 14, 5, 0.72);
+  border-color: var(--color-border);
+}
+
+.audit-input-row input::placeholder {
+  color: rgba(214, 200, 168, 0.6);
+}
+
+.pricing-box .section-label,
+.about-talk-box .section-label,
+.audit-cta .section-label {
+  color: var(--color-amber-light);
+}
