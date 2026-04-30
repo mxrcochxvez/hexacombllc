@@ -6,7 +6,11 @@ const words = headline.split(" ");
 export default function HeroSection() {
   return (
     <section className="brand-hero honeycomb-bg" aria-labelledby="brand-hero-heading">
-      <div className="brand-hero-hex" aria-hidden />
+      <div className="brand-hero-comb" aria-hidden>
+        {Array.from({ length: 12 }).map((_, index) => (
+          <span key={index} />
+        ))}
+      </div>
       <div className="brand-hero-bee" aria-hidden>
         <span className="bee-wing bee-wing-left" />
         <span className="bee-wing bee-wing-right" />
