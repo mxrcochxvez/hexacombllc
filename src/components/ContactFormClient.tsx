@@ -2,82 +2,54 @@
 
 import dynamic from "next/dynamic";
 
-const ContactFormClient = dynamic(() => import("@/components/ContactForm").then((mod) => mod.ContactForm), {
-  ssr: false,
-  loading: () => (
-    <form aria-label="Loading contact form..." aria-busy="true">
-      <div className="form-group">
-        <label htmlFor="name-loading">
-          Full Name <span aria-hidden>*</span>
-        </label>
-        <input
-          type="text"
-          id="name-loading"
-          required
-          autoComplete="name"
-          placeholder="Your full name"
-          disabled
-        />
+const skeletonLabel = "mb-1.5 block h-3.5 w-24 rounded-sm bg-ink/8 font-display text-sm font-semibold";
+const skeletonInput = "h-10 w-full rounded-md border border-border bg-surface";
+
+const ContactFormClient = dynamic(
+  () => import("@/components/ContactForm").then((mod) => mod.ContactForm),
+  {
+    ssr: false,
+    loading: () => (
+      <div aria-label="Loading contact form" aria-busy="true">
+        {/* Name + Email row */}
+        <div className="mb-4 sm:grid sm:grid-cols-2 sm:gap-4">
+          <div className="mb-4 sm:mb-0">
+            <span className={skeletonLabel} aria-hidden />
+            <div className={skeletonInput} aria-hidden />
+          </div>
+          <div>
+            <span className={skeletonLabel} aria-hidden />
+            <div className={skeletonInput} aria-hidden />
+          </div>
+        </div>
+        {/* Business + Phone row */}
+        <div className="mb-4 sm:grid sm:grid-cols-2 sm:gap-4">
+          <div className="mb-4 sm:mb-0">
+            <span className={skeletonLabel} aria-hidden />
+            <div className={skeletonInput} aria-hidden />
+          </div>
+          <div>
+            <span className={skeletonLabel} aria-hidden />
+            <div className={skeletonInput} aria-hidden />
+          </div>
+        </div>
+        {/* Website */}
+        <div className="mb-4">
+          <span className={skeletonLabel} aria-hidden />
+          <div className={skeletonInput} aria-hidden />
+        </div>
+        {/* Message */}
+        <div className="mb-4">
+          <span className={skeletonLabel} aria-hidden />
+          <div className="h-20 w-full rounded-md border border-border bg-surface" aria-hidden />
+        </div>
+        {/* Turnstile */}
+        <div className="mb-5 h-16 w-full max-w-[300px] rounded-md bg-surface" aria-hidden />
+        {/* Submit */}
+        <div className="h-12 w-full rounded-md bg-accent/30" aria-hidden />
       </div>
-      <div className="form-group">
-        <label htmlFor="email-loading">
-          Email Address <span aria-hidden>*</span>
-        </label>
-        <input
-          type="email"
-          id="email-loading"
-          required
-          autoComplete="email"
-          placeholder="you@yourbusiness.com"
-          disabled
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="business-loading">Business Name</label>
-        <input
-          type="text"
-          id="business-loading"
-          autoComplete="organization"
-          placeholder="Your business name"
-          disabled
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="phone-loading">Phone Number</label>
-        <input
-          type="tel"
-          id="phone-loading"
-          autoComplete="tel"
-          placeholder="(559) 555-1234"
-          disabled
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="website-loading">Current Website (if you have one)</label>
-        <input
-          type="url"
-          id="website-loading"
-          autoComplete="url"
-          placeholder="https://"
-          disabled
-        />
-      </div>
-      <div
-        style={{ height: 65, display: "flex", alignItems: "center" }}
-        aria-label="Loading security check"
-      >
-        <div className="loading-shimmer" style={{ width: 300, height: 65, borderRadius: 12 }} />
-      </div>
-      <button
-        type="button"
-        className="btn btn-primary"
-        disabled
-        style={{ width: "100%", justifyContent: "center", marginTop: 12 }}
-      >
-        Loading...
-      </button>
-    </form>
-  ),
-});
+    ),
+  }
+);
 
 export { ContactFormClient };

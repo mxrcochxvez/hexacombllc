@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BarChart3, Eye, Search, Timer } from "lucide-react";
+import { BarChart3 } from "lucide-react";
 import WebsiteAuditTool from "@/components/WebsiteAuditTool";
 import RevealSection from "@/components/RevealSection";
-
-const iconProps = { size: 28, strokeWidth: 1.75 };
 
 export const metadata: Metadata = {
   title: "Website Audit",
@@ -35,81 +33,86 @@ export default function WebsiteAuditPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <main id="main-content">
-        <section className="audit-hero hex-bg" aria-labelledby="audit-hero-heading">
+        <section className="audit-hero" aria-labelledby="audit-hero-heading">
           <div className="container audit-hero-grid">
             <div>
-              <span className="hero-badge">Free First-Pass Website Audit</span>
               <h1 id="audit-hero-heading">
-                Find Out If Your Website Is <span>Helping or Hurting Sales</span>
+                Find Out If Your Website Is{" "}
+                <span>Helping or Hurting Sales</span>
               </h1>
-              <p className="hero-sub">
+              <p className="audit-hero-sub">
                 Enter a website and get a plain-English scan of the basics CEOs care
                 about: whether customers can find you, whether the site feels slow,
                 and whether anything obvious is damaging trust.
               </p>
-              <a href="#audit-tool" className="btn btn-primary" data-track="cta_audit_hero">
-                Audit My Site
-              </a>
+              <div className="audit-hero-actions">
+                <a href="#audit-tool" className="btn btn-primary" data-track="cta_audit_hero">
+                  Audit My Site
+                </a>
+                <span className="audit-hero-note">Free. No login required.</span>
+              </div>
             </div>
-            <div className="audit-hero-panel" aria-hidden>
-              <div className="audit-mini-score">72</div>
-              <div>
-                <strong>Potential revenue leak</strong>
-                <span>Slow mobile response</span>
-              </div>
-              <div>
-                <strong>Search gap</strong>
-                <span>Missing local business context</span>
-              </div>
-              <div>
-                <strong>Trust issue</strong>
-                <span>Weak share preview</span>
-              </div>
+            <div className="audit-hero-preview" aria-hidden>
+              <p className="audit-preview-caption">From a typical scan</p>
+              <ul className="audit-preview-list">
+                <li>
+                  <span className="audit-pill audit-pill-costing-you-leads">Costing you leads</span>
+                  <strong>Missing local business context</strong>
+                  <span>Google can&rsquo;t connect this page to Fresno searches.</span>
+                </li>
+                <li>
+                  <span className="audit-pill audit-pill-needs-attention">Needs attention</span>
+                  <strong>Slow first response on mobile</strong>
+                  <span>Customers on phones wait before they can take action.</span>
+                </li>
+                <li>
+                  <span className="audit-pill audit-pill-strong">Strong</span>
+                  <strong>SSL certificate active</strong>
+                  <span>The site is secure. No trust warnings on load.</span>
+                </li>
+              </ul>
             </div>
           </div>
-          <div className="hero-ornament hero-ornament-1" aria-hidden />
-          <div className="hero-ornament hero-ornament-2" aria-hidden />
         </section>
 
         <RevealSection className="audit-intro" ariaLabelledBy="audit-intro-heading">
           <div className="container">
-            <p className="brand-kicker">What It Checks</p>
             <h2 id="audit-intro-heading">A Website Audit for Business Decisions</h2>
             <p className="section-intro">
               The report avoids developer language and focuses on the questions that
               matter in a sales conversation.
             </p>
-            <div className="cards audit-intro-cards">
+            <ol className="audit-what-list">
               {[
                 {
-                  icon: <Search {...iconProps} />,
+                  num: "01",
                   title: "SEO Clarity",
                   body: "Can Google understand what the business does, where it serves, and why a customer should click?",
                 },
                 {
-                  icon: <Timer {...iconProps} />,
+                  num: "02",
                   title: "Load-Time Risk",
                   body: "Does the first page response feel quick, or is the site asking customers to wait before they can take action?",
                 },
                 {
-                  icon: <Eye {...iconProps} />,
+                  num: "03",
                   title: "Trust Issues",
                   body: "Does the site show obvious problems with security, accessibility, mobile setup, or social previews?",
                 },
-              ].map((card, i) => (
-                <article
-                  className="card reveal-item"
-                  key={card.title}
+              ].map((item, i) => (
+                <li
+                  className="audit-what-item reveal-item"
+                  key={item.title}
                   style={{ "--reveal-delay": `${i * 120}ms` } as React.CSSProperties}
                 >
-                  <div className="card-icon" aria-hidden>
-                    {card.icon}
+                  <span className="audit-what-num">{item.num}</span>
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p>{item.body}</p>
                   </div>
-                  <h3>{card.title}</h3>
-                  <p>{card.body}</p>
-                </article>
+                </li>
               ))}
-            </div>
+            </ol>
           </div>
         </RevealSection>
 
@@ -117,7 +120,6 @@ export default function WebsiteAuditPage() {
           <div className="container">
             <div className="audit-runner-heading">
               <div>
-                <p className="brand-kicker">Run the Scan</p>
                 <h2 id="audit-runner-heading">See the Website Through a Customer&rsquo;s Eyes</h2>
               </div>
               <p>

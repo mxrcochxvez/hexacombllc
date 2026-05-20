@@ -1,168 +1,121 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
+const links = [
+  { href: "/about", label: "About" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/website-audit", label: "Check your site" },
+];
+
+const linkBase =
+  "font-display text-sm font-medium text-ink-muted transition-colors hover:text-ink focus-visible:text-ink";
+const primaryLinkBase =
+  "inline-flex items-center justify-center rounded-md bg-accent px-4 py-2.5 font-display text-sm font-semibold text-canvas transition-colors hover:bg-accent-hover";
+
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const menuId = useId();
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const firstLinkRef = useRef<HTMLAnchorElement>(null);
 
-  // Lock body scroll when menu is open
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
-
-  // Close on Escape key
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
-        setIsOpen(false);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && open) {
+        setOpen(false);
+        toggleRef.current?.focus();
       }
     };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen]);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
 
-  // Focus management: focus first link when opened
   useEffect(() => {
-    if (isOpen && menuRef.current) {
-      const firstLink = menuRef.current.querySelector<HTMLElement>("a, button");
-      firstLink?.focus();
+    if (open) {
+      firstLinkRef.current?.focus();
     }
-  }, [isOpen]);
+  }, [open]);
 
-  const closeMenu = () => setIsOpen(false);
-  const toggleMenu = () => setIsOpen((prev) => !prev);
+  const close = () => setOpen(false);
 
   return (
-    <>
-      {/* Sticky Header — logo only on mobile, full nav on desktop */}
-      <header className="site-header" role="banner">
-        <div className="container">
-          <Link href="/" className="logo" aria-label="Hexacomb Home" onClick={closeMenu}>
-            <span className="logo-hex" aria-hidden />
-            Hexacomb
+    <header className="sticky top-0 z-50 border-b border-border bg-canvas">
+      <div className="mx-auto flex h-[4.25rem] max-w-6xl items-center justify-between gap-4 px-5 sm:px-6">
+        <Link
+          href="/"
+          onClick={close}
+          className="font-display text-lg font-semibold tracking-tight text-ink"
+        >
+          Hexacomb LLC
+        </Link>
+
+        <nav className="hidden items-center gap-9 md:flex" aria-label="Main">
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={linkBase}
+              data-track={`nav_${link.label.toLowerCase().replace(/\s+/g, "_")}`}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <Link
+            href="/#contact"
+            className={primaryLinkBase}
+            data-track="nav_cta_contact"
+          >
+            Contact
           </Link>
+        </nav>
 
-          <nav className="header-nav" aria-label="Main navigation">
-            <Link href="/about" data-track="nav_about">
-              About
-            </Link>
-            <Link href="/pricing" data-track="nav_pricing">
-              Pricing
-            </Link>
-            <Link href="/website-audit" className="header-audit-cta" data-track="nav_website_audit">
-              Audit
-            </Link>
-            <Link href="/#contact" className="header-cta" data-track="nav_cta_free_quote">
-              Get a Free Quote
-            </Link>
-          </nav>
-        </div>
-
-        {/* Honey Drip Effect */}
-        <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
-          <defs>
-            <filter id="goo">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur" />
-              <feColorMatrix
-                in="blur"
-                mode="matrix"
-                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
-                result="goo"
-              />
-              <feComposite in="SourceGraphic" in2="goo" operator="atop" />
-            </filter>
-          </defs>
-        </svg>
-        <div className="honey-drip" aria-hidden="true">
-          <div className="honey-drip-bar" />
-          <div className="drip drip-1" />
-          <div className="drip drip-2" />
-          <div className="drip drip-3" />
-          <div className="drip drip-4" />
-          <div className="drip drip-5" />
-          <div className="drip drip-6" />
-        </div>
-      </header>
-
-      {/* Floating Action Button — bottom right (mobile only) */}
-      <button
-        className={`mobile-fab ${isOpen ? "open" : ""}`}
-        aria-label={isOpen ? "Close menu" : "Open menu"}
-        aria-expanded={isOpen}
-        aria-controls="mobile-menu-liquid"
-        onClick={toggleMenu}
-        type="button"
-        data-track={isOpen ? "mobile_menu_close" : "mobile_menu_open"}
-      >
-        {isOpen ? <X size={24} strokeWidth={2.5} /> : <Menu size={24} strokeWidth={2.5} />}
-      </button>
-
-      {/* Liquid Mobile Menu Overlay */}
-      <div
-        id="mobile-menu-liquid"
-        ref={menuRef}
-        className={`mobile-menu-liquid ${isOpen ? "open" : ""}`}
-        aria-hidden={!isOpen}
-        inert={!isOpen}
-        onClick={(e) => {
-          if (e.target === e.currentTarget) closeMenu();
-        }}
-      >
-        <div className="mobile-menu-panel">
-          <nav className="mobile-menu-nav" aria-label="Mobile navigation">
-            <Link
-              href="/"
-              onClick={closeMenu}
-              data-track="nav_mobile_home"
-              className="mobile-menu-link"
-            >
-              Home
-            </Link>
-            <Link
-              href="/about"
-              onClick={closeMenu}
-              data-track="nav_mobile_about"
-              className="mobile-menu-link"
-            >
-              About
-            </Link>
-            <Link
-              href="/pricing"
-              onClick={closeMenu}
-              data-track="nav_mobile_pricing"
-              className="mobile-menu-link"
-            >
-              Pricing
-            </Link>
-            <Link
-              href="/website-audit"
-              onClick={closeMenu}
-              data-track="nav_mobile_website_audit"
-              className="mobile-menu-audit"
-            >
-              Audit
-            </Link>
-            <Link
-              href="/#contact"
-              onClick={closeMenu}
-              data-track="nav_mobile_cta_free_quote"
-              className="mobile-menu-cta"
-            >
-              Get a Free Quote
-            </Link>
-          </nav>
-        </div>
+        <button
+          ref={toggleRef}
+          type="button"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-md text-ink hover:bg-surface md:hidden"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          aria-controls={menuId}
+          onClick={() => setOpen((v) => !v)}
+        >
+          {open ? <X size={22} aria-hidden /> : <Menu size={22} aria-hidden />}
+        </button>
       </div>
-    </>
+
+      {open && (
+        <nav
+          id={menuId}
+          className="border-t border-border bg-canvas px-5 pb-5 pt-2 md:hidden"
+          aria-label="Mobile"
+        >
+          <ul className="flex flex-col">
+            {links.map((link, i) => (
+              <li key={link.href}>
+                <Link
+                  ref={i === 0 ? firstLinkRef : undefined}
+                  href={link.href}
+                  onClick={close}
+                  className="block rounded-md px-3 py-3 font-display text-base font-medium text-ink hover:bg-surface"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+            <li className="pt-3">
+              <Link
+                href="/#contact"
+                onClick={close}
+                className="block rounded-md bg-accent px-3 py-3 text-center font-display text-base font-semibold text-canvas hover:bg-accent-hover"
+                data-track="nav_mobile_contact"
+              >
+                Contact
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      )}
+    </header>
   );
 }

@@ -1,90 +1,38 @@
-"use client";
-
-import { useEffect, useRef } from "react";
-
-const callouts = [
+const points = [
   {
-    title: "We speak your language",
-    body: "No jargon, no vague technical lectures. You get plain explanations and clear choices.",
+    title: "We explain things clearly",
+    body: "You always know what we are doing, why it matters, and what it costs before we start.",
   },
   {
-    title: "We move fast",
-    body: "Most projects are delivered in weeks, not months, with a plan you can understand from day one.",
+    title: "We do the work for you",
+    body: "You do not need to manage servers or fix plugins. That is our job.",
   },
   {
-    title: "We grow with you",
-    body: "From your first website to full digital operations, we build systems that can mature with the business.",
+    title: "We stay after launch",
+    body: "We keep things running and help when something breaks.",
   },
 ];
 
 export default function WhyHexacomb() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const element = sectionRef.current;
-    if (!element) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          element.classList.add("is-visible");
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15, rootMargin: "-60px 0px -60px 0px" }
-    );
-
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section
-      ref={sectionRef}
-      className="brand-section why-section reveal-scope"
-      aria-labelledby="why-heading"
-    >
-      <div className="container why-grid">
-        <div className="why-graphic" aria-hidden>
-          <svg viewBox="0 0 520 440" role="img">
-            <g fill="none" stroke="currentColor" strokeWidth="2">
-              {Array.from({ length: 20 }).map((_, index) => {
-                const col = index % 5;
-                const row = Math.floor(index / 5);
-                const x = 52 + col * 88 + (row % 2) * 44;
-                const y = 54 + row * 76;
-                return (
-                  <path
-                    key={index}
-                    className={index % 4 === 0 ? "hex-cell hex-cell-fill" : "hex-cell"}
-                    d={`M ${x} ${y - 34} L ${x + 40} ${y - 12} L ${x + 40} ${y + 34} L ${x} ${y + 56} L ${x - 40} ${y + 34} L ${x - 40} ${y - 12} Z`}
-                  />
-                );
-              })}
-            </g>
-          </svg>
-        </div>
-        <div className="why-content">
-          <p className="brand-kicker">Why Hexacomb</p>
-          <h2 id="why-heading" className="brand-section-title">
-            Expert help that still feels human.
+    <section className="bg-canvas py-20 sm:py-28" aria-labelledby="why-heading">
+      <div className="mx-auto max-w-6xl px-5 sm:px-6">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
+          <h2
+            id="why-heading"
+            className="font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-semibold leading-tight tracking-tight lg:sticky lg:top-28 lg:self-start"
+          >
+            Built for owners who want it handled
           </h2>
-          <div className="why-rule" aria-hidden />
-          <div className="why-callouts">
-            {callouts.map((callout, index) => (
-              <article
-                className="why-callout reveal-item"
-                key={callout.title}
-                style={{ "--reveal-delay": `${index * 150}ms` } as React.CSSProperties}
-              >
-                <span aria-hidden>✦</span>
-                <div>
-                  <h3>{callout.title}</h3>
-                  <p>{callout.body}</p>
-                </div>
-              </article>
+
+          <dl className="space-y-10">
+            {points.map((point) => (
+              <div key={point.title}>
+                <dt className="font-display text-lg font-semibold text-ink">{point.title}</dt>
+                <dd className="mt-2 text-base leading-relaxed text-ink-muted">{point.body}</dd>
+              </div>
             ))}
-          </div>
+          </dl>
         </div>
       </div>
     </section>

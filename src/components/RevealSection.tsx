@@ -1,48 +1,47 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef } from "react";
+import type { HTMLAttributes, ReactNode } from "react";
 
-interface RevealSectionProps {
+interface RevealSectionProps extends HTMLAttributes<HTMLElement> {
   children: ReactNode;
-  className?: string;
-  id?: string;
-  ariaLabelledBy?: string;
   threshold?: number;
+  ariaLabelledBy?: string;
 }
 
 export default function RevealSection({
   children,
-  className = "",
-  id,
+  threshold = 0.15,
+  className,
   ariaLabelledBy,
-  threshold = 0.1,
+  ...rest
 }: RevealSectionProps) {
-  const sectionRef = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const element = sectionRef.current;
-    if (!element) return;
+    const el = ref.current;
+    if (!el) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          element.classList.add("is-visible");
+          el.classList.add("is-visible");
           observer.disconnect();
         }
       },
-      { threshold }
+      { threshold, rootMargin: "-60px 0px -60px 0px" }
     );
 
-    observer.observe(element);
+    observer.observe(el);
     return () => observer.disconnect();
   }, [threshold]);
 
   return (
     <section
-      ref={sectionRef}
-      className={`reveal-scope ${className}`}
-      id={id}
+      ref={ref}
+      className={className}
       aria-labelledby={ariaLabelledBy}
+      {...rest}
     >
       {children}
     </section>

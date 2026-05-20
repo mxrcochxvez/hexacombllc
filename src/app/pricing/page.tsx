@@ -1,18 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  Compass,
-  Package,
-  Shield,
-  Globe,
-  Check,
-  BarChart3,
-  ArrowRight,
-  HelpCircle,
-} from "lucide-react";
+import { Check, ArrowRight } from "lucide-react";
 import RevealSection from "@/components/RevealSection";
-
-const iconProps = { size: 28, strokeWidth: 1.75 };
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -26,12 +15,12 @@ export const metadata: Metadata = {
 const tiers = [
   {
     name: "Starter",
-    icon: <Compass {...iconProps} />,
     price: "$59",
     period: "/mo",
     range: "0 – 500",
     rangeLabel: "monthly visitors",
-    description: "Perfect for new businesses just getting online and finding your first customers.",
+    description:
+      "For new businesses just getting online and finding your first customers.",
     features: [
       "Custom hand-coded website",
       "Built-in SEO & accessibility",
@@ -39,13 +28,12 @@ const tiers = [
       "Monthly analytics report",
       "Email support",
     ],
-    cta: "Get Started",
+    cta: "Get started",
     track: "cta_pricing_starter",
     highlighted: false,
   },
   {
     name: "Growing",
-    icon: <Package {...iconProps} />,
     price: "$119",
     period: "/mo",
     range: "501 – 2,500",
@@ -58,18 +46,17 @@ const tiers = [
       "Minor content updates included",
       "Social media integration",
     ],
-    cta: "Get Started",
+    cta: "Get started",
     track: "cta_pricing_growing",
     highlighted: true,
   },
   {
     name: "Established",
-    icon: <Shield {...iconProps} />,
     price: "$219",
     period: "/mo",
     range: "2,501 – 7,500",
     rangeLabel: "monthly visitors",
-    description: "For businesses with a steady flow of visitors ready to scale up.",
+    description: "For businesses with steady traffic ready to scale up.",
     features: [
       "Everything in Growing",
       "Advanced SEO optimizations",
@@ -77,18 +64,18 @@ const tiers = [
       "Monthly strategy call",
       "Conversion tracking",
     ],
-    cta: "Get Started",
+    cta: "Get started",
     track: "cta_pricing_established",
     highlighted: false,
   },
   {
     name: "Enterprise",
-    icon: <Globe {...iconProps} />,
     price: "Custom",
     period: "",
     range: "7,500+",
     rangeLabel: "monthly visitors",
-    description: "Expanding reach across multiple locations or markets at scale.",
+    description:
+      "For businesses expanding across multiple locations or markets.",
     features: [
       "Everything in Established",
       "Dedicated support",
@@ -96,7 +83,7 @@ const tiers = [
       "Multi-location setup",
       "SLA guarantee",
     ],
-    cta: "Contact Us",
+    cta: "Contact us",
     track: "cta_pricing_enterprise",
     highlighted: false,
   },
@@ -105,11 +92,11 @@ const tiers = [
 const faqs = [
   {
     q: "How does 'pay-as-you-grow' actually work?",
-    a: "We install privacy-friendly analytics on your site to measure monthly unique visitors. At the end of each month, we check your traffic and bill you for the tier you reached. If your traffic drops, your bill drops too — no penalties, no surprises.",
+    a: "We install privacy-friendly analytics on your site to measure monthly unique visitors. At the end of each month, we check your traffic and bill you for the tier you reached. If your traffic drops, your bill drops too: no penalties, no surprises.",
   },
   {
     q: "How much is the 30% retainer?",
-    a: "It depends on your project's scope, but most small business sites fall in the $1,700–$2,300 range — meaning your retainer is roughly $500–$700. That's 70% less cash upfront than traditional agencies require. The retainer secures your spot and covers initial design and architecture.",
+    a: "It depends on your project's scope, but most small business sites fall in the $1,700–$2,300 range, meaning your retainer is roughly $500–$700. That's 70% less cash upfront than traditional agencies require. The retainer secures your spot and covers initial design and architecture.",
   },
   {
     q: "What if I go over my visitor limit?",
@@ -125,7 +112,7 @@ const faqs = [
   },
   {
     q: "Can I switch plans?",
-    a: "You don't need to — switching happens automatically based on your traffic. But if you ever want to pause, downgrade, or discuss a custom arrangement, just reach out. We're local and easy to talk to.",
+    a: "You don't need to. Switching happens automatically based on your traffic. But if you ever want to pause, downgrade, or discuss a custom arrangement, just reach out. We're local and easy to talk to.",
   },
 ];
 
@@ -158,128 +145,136 @@ export default function PricingPage() {
       />
       <main id="main-content">
         {/* Hero */}
-        <section className="pricing-hero hex-bg" aria-labelledby="pricing-hero-heading">
+        <section
+          className="pricing-hero"
+          aria-labelledby="pricing-hero-heading"
+        >
           <div className="container">
-            <span className="hero-badge">30% Retainer to Start</span>
             <h1 id="pricing-hero-heading">
-              Pay As You <span>Grow</span>
+              Pay as you{" "}
+              <span className="pricing-hero-accent">grow.</span>
             </h1>
-            <p className="hero-sub">
-              A 30% retainer gets you started. After launch, pay a simple
-              monthly fee based on your <strong>actual website traffic</strong>.
-              Built specifically for small businesses in the Central Valley
-              that need a professional site without draining their capital.
+            <p className="pricing-hero-lead">
+              A 30% retainer gets your site built. After launch, you pay a flat
+              monthly rate based on your{" "}
+              <strong>actual visitor count</strong>: lower in slow months,
+              higher as business picks up. No annual contracts. No surprise
+              invoices.
             </p>
-            <div className="pricing-hero-stats">
-              <div className="pricing-hero-stat">
-                <BarChart3 size={20} strokeWidth={2} />
-                <span>Traffic-based billing</span>
-              </div>
-              <div className="pricing-hero-stat">
-                <Check size={20} strokeWidth={2} />
-                <span>30% retainer to start</span>
-              </div>
-              <div className="pricing-hero-stat">
-                <Check size={20} strokeWidth={2} />
-                <span>Downgrades automatic</span>
-              </div>
-            </div>
+            <Link
+              href="/#contact"
+              className="btn btn-primary"
+              data-track="cta_pricing_hero"
+            >
+              Get your free quote <ArrowRight size={16} strokeWidth={2} />
+            </Link>
           </div>
-          <div className="hero-ornament hero-ornament-1" aria-hidden />
-          <div className="hero-ornament hero-ornament-2" aria-hidden />
         </section>
 
         {/* How It Works */}
         <RevealSection className="how-it-works" ariaLabelledBy="how-heading">
           <div className="container">
-            <p className="brand-kicker">How It Works</p>
-            <h2 id="how-heading">Simple. Fair. Transparent.</h2>
-            <p className="section-intro">
-              Traditional agencies demand 100% upfront and disappear. We ask
-              for a modest 30% retainer to begin your build — then we earn
-              the rest month by month as your traffic grows.
-            </p>
-            <div className="how-steps">
+            <h2 id="how-heading">How it works</h2>
+            <ol className="how-list">
               {[
                 {
-                  num: "1",
-                  title: "30% Retainer",
-                  body: "Based on your project's estimated total cost. For most small business sites, that's roughly $500–$700 to get started — not $5,000.",
+                  num: "01",
+                  title: "30% retainer",
+                  body: "Based on your project's estimated total cost. For most small business sites, that's roughly $500–$700 to get started, not $5,000.",
                 },
                 {
-                  num: "2",
-                  title: "We Build & Launch",
-                  body: "Custom hand-coded website, tailored to your brand. We install privacy-friendly analytics before go-live.",
+                  num: "02",
+                  title: "We build and launch",
+                  body: "Custom hand-coded website tailored to your brand. We install privacy-friendly analytics before go-live.",
                 },
                 {
-                  num: "3",
-                  title: "Pay As You Grow",
-                  body: "After launch, your monthly bill matches your traffic tier. More visitors = more revenue for you. If traffic drops, your bill drops too.",
+                  num: "03",
+                  title: "Pay as you grow",
+                  body: "Your monthly bill matches your traffic tier. More visitors means more revenue for you. If traffic drops, your bill drops too.",
                 },
               ].map((step, i) => (
-                <div
-                  className="how-step reveal-item"
+                <li
+                  className="how-item reveal-item"
                   key={step.title}
-                  style={{ "--reveal-delay": `${i * 120}ms` } as React.CSSProperties}
+                  style={
+                    { "--reveal-delay": `${i * 120}ms` } as React.CSSProperties
+                  }
                 >
-                  <div className="how-step-num">{step.num}</div>
-                  <h3>{step.title}</h3>
-                  <p>{step.body}</p>
-                </div>
+                  <span className="how-num" aria-hidden>
+                    {step.num}
+                  </span>
+                  <div>
+                    <h3>{step.title}</h3>
+                    <p>{step.body}</p>
+                  </div>
+                </li>
               ))}
-            </div>
+            </ol>
           </div>
         </RevealSection>
 
         {/* Pricing Tiers */}
         <RevealSection className="pricing-tiers" ariaLabelledBy="tiers-heading">
           <div className="container">
-            <p className="brand-kicker">Pricing Plans</p>
-            <h2 id="tiers-heading">Choose the Plan That Fits Your Business</h2>
+            <h2 id="tiers-heading">Plans</h2>
             <p className="section-intro">
-              Every tier includes your custom website, hosting, maintenance,
-              and support. You simply pay more as your traffic grows — never
-              before.
+              Every plan includes your custom site, hosting, maintenance, and
+              support. You move between plans automatically as your traffic
+              changes.
             </p>
-            <div className="pricing-grid">
+            <div className="pricing-table">
               {tiers.map((tier, i) => (
-                <article
+                <div
                   key={tier.name}
-                  className={`pricing-card reveal-item ${tier.highlighted ? "pricing-card-highlighted" : ""}`}
-                  style={{ "--reveal-delay": `${i * 100}ms` } as React.CSSProperties}
+                  className={`pricing-row reveal-item${
+                    tier.highlighted ? " pricing-row-featured" : ""
+                  }`}
+                  style={
+                    { "--reveal-delay": `${i * 80}ms` } as React.CSSProperties
+                  }
                 >
-                  {tier.highlighted && (
-                    <span className="pricing-badge">Most Popular</span>
-                  )}
-                  <div className="pricing-card-icon" aria-hidden>
-                    {tier.icon}
+                  <div className="pricing-row-meta">
+                    <span className="pricing-row-num" aria-hidden>
+                      0{i + 1}
+                    </span>
+                    <div className="pricing-row-info">
+                      <h3>
+                        {tier.name}
+                        {tier.highlighted && (
+                          <span className="pricing-row-badge">Popular</span>
+                        )}
+                      </h3>
+                      <p className="pricing-card-desc">{tier.description}</p>
+                      <ul className="pricing-row-features">
+                        {tier.features.map((feature) => (
+                          <li key={feature}>
+                            <Check size={14} strokeWidth={2.5} aria-hidden />
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
-                  <h3>{tier.name}</h3>
-                  <div className="pricing-card-price">
-                    <span className="price-amount">{tier.price}</span>
-                    <span className="price-period">{tier.period}</span>
+                  <div className="pricing-row-right">
+                    <div className="pricing-row-visitors">
+                      <strong>{tier.range}</strong>
+                      <span>{tier.rangeLabel}</span>
+                    </div>
+                    <div className="pricing-row-price">
+                      <span className="price-amount">{tier.price}</span>
+                      <span className="price-period">{tier.period}</span>
+                    </div>
+                    <Link
+                      href="/#contact"
+                      className={`btn ${
+                        tier.highlighted ? "btn-primary" : "btn-outline-dark"
+                      }`}
+                      data-track={tier.track}
+                    >
+                      {tier.cta} <ArrowRight size={16} strokeWidth={2} />
+                    </Link>
                   </div>
-                  <div className="pricing-card-range">
-                    <strong>{tier.range}</strong>{" "}
-                    <span>{tier.rangeLabel}</span>
-                  </div>
-                  <p className="pricing-card-desc">{tier.description}</p>
-                  <ul className="pricing-card-features">
-                    {tier.features.map((feature) => (
-                      <li key={feature}>
-                        <Check size={16} strokeWidth={2.5} aria-hidden />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Link
-                    href="/#contact"
-                    className={`btn ${tier.highlighted ? "btn-primary" : "btn-outline-dark"}`}
-                    data-track={tier.track}
-                  >
-                    {tier.cta} <ArrowRight size={16} strokeWidth={2} />
-                  </Link>
-                </article>
+                </div>
               ))}
             </div>
           </div>
@@ -288,34 +283,42 @@ export default function PricingPage() {
         {/* Trust */}
         <RevealSection className="pricing-trust" ariaLabelledBy="trust-heading">
           <div className="container">
-            <p className="brand-kicker">Why This Model Works</p>
-            <h2 id="trust-heading">We Win When You Win</h2>
-            <div className="trust-grid">
+            <h2 id="trust-heading">We win when you win</h2>
+            <div className="trust-list">
               {[
                 {
-                  title: "Aligned Incentives",
-                  body: "Traditional agencies get paid whether your site performs or not. Our revenue grows only when your traffic grows — so we are motivated to build you a site that actually attracts customers.",
+                  title: "Aligned incentives",
+                  body: "Traditional agencies get paid whether your site performs or not. Our revenue grows only when your traffic grows, so we're motivated to build a site that actually attracts customers.",
                 },
                 {
-                  title: "Cash-Flow Friendly",
-                  body: "Small businesses can't drop $5,000 on a website before they know if it will work. Our 30% retainer model lets you invest capital where it matters: inventory, staff, and marketing.",
+                  title: "Cash-flow friendly",
+                  body: "Small businesses can't drop $5,000 on a website before they know if it will work. Our 30% retainer lets you invest capital where it matters: inventory, staff, and marketing.",
                 },
                 {
-                  title: "No Long-Term Traps",
+                  title: "No long-term traps",
                   body: "No 12-month contracts with penalties. If your traffic drops (seasonal business, slow month), your bill drops too. Stay because it works, not because you're stuck.",
                 },
                 {
-                  title: "Predictable Scaling",
-                  body: "Know exactly what you'll pay at every stage of growth. No surprise invoices for \"extra revisions\" or \"server overages.\" What you see is what you pay.",
+                  title: "Predictable scaling",
+                  body: "Know exactly what you'll pay at every stage of growth. No surprise invoices for extra revisions or server overages. What you see is what you pay.",
                 },
               ].map((item, i) => (
                 <div
-                  className="trust-item reveal-item"
+                  className="trust-row reveal-item"
                   key={item.title}
-                  style={{ "--reveal-delay": `${i * 120}ms` } as React.CSSProperties}
+                  style={
+                    {
+                      "--reveal-delay": `${i * 100}ms`,
+                    } as React.CSSProperties
+                  }
                 >
-                  <strong>{item.title}</strong>
-                  <p>{item.body}</p>
+                  <span className="trust-row-num" aria-hidden>
+                    0{i + 1}
+                  </span>
+                  <div>
+                    <strong>{item.title}</strong>
+                    <p>{item.body}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -325,13 +328,19 @@ export default function PricingPage() {
         {/* FAQ */}
         <RevealSection className="pricing-faq" ariaLabelledBy="faq-heading">
           <div className="container">
-            <p className="brand-kicker">FAQ</p>
-            <h2 id="faq-heading">Questions Small Business Owners Ask</h2>
+            <h2 id="faq-heading">Questions owners ask</h2>
             <div className="faq-list">
               {faqs.map((faq, i) => (
-                <details key={i} className="faq-item reveal-item" style={{ "--reveal-delay": `${i * 80}ms` } as React.CSSProperties}>
+                <details
+                  key={i}
+                  className="faq-item reveal-item"
+                  style={
+                    {
+                      "--reveal-delay": `${i * 80}ms`,
+                    } as React.CSSProperties
+                  }
+                >
                   <summary>
-                    <HelpCircle size={18} strokeWidth={2} aria-hidden />
                     <span>{faq.q}</span>
                   </summary>
                   <p>{faq.a}</p>
@@ -342,24 +351,23 @@ export default function PricingPage() {
         </RevealSection>
 
         {/* CTA */}
-        <section className="pricing-cta" aria-labelledby="pricing-cta-heading">
+        <section
+          className="pricing-cta"
+          aria-labelledby="pricing-cta-heading"
+        >
           <div className="container">
-            <div className="pricing-box">
-              <p className="brand-kicker">Ready to Grow?</p>
-              <h2 id="pricing-cta-heading">
-                Let&rsquo;s Build Something That Scales With You
-              </h2>
+            <div className="pricing-cta-inner">
+              <h2 id="pricing-cta-heading">Ready to start?</h2>
               <p>
-                Get started on your custom site with just a
-                <strong> 30% retainer</strong>. Spots are limited to 3 local
-                businesses.
+                Just a <strong>30% retainer</strong> to kick things off. Spots
+                are limited to 3 local businesses at a time.
               </p>
               <Link
                 href="/#contact"
                 className="btn btn-primary"
                 data-track="cta_pricing_bottom"
               >
-                Get Your Free Quote →
+                Get your free quote <ArrowRight size={16} strokeWidth={2} />
               </Link>
             </div>
           </div>

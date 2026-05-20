@@ -1,48 +1,37 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, DM_Sans, JetBrains_Mono, Nunito_Sans } from "next/font/google";
+import { Libre_Franklin, Literata } from "next/font/google";
+import "./brand.css";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import CloudflareAnalytics from "@/components/CloudflareAnalytics";
 import TrackClicks from "@/components/TrackClicks";
 import CookieBanner from "@/components/CookieBanner";
-import CustomCursor from "@/components/CustomCursor";
 import Footer from "@/components/Footer";
 
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
+const libreFranklin = Libre_Franklin({
+  variable: "--font-libre-franklin",
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["500", "600", "700"],
 });
 
-const jetBrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
+const literata = Literata({
+  variable: "--font-literata",
   subsets: ["latin"],
-});
-
-const nunitoSans = Nunito_Sans({
-  variable: "--font-nunito-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-});
-
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500"],
 });
 
 export const viewport: Viewport = {
-  themeColor: "#1a0e05",
+  themeColor: "oklch(98.5% 0.008 75)",
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://hexacombllc.com"),
   title: {
-    default: "Hexacomb — Websites for Fresno & Clovis Small Businesses",
+    default: "Hexacomb: websites and tech for Fresno & Clovis small businesses",
     template: "%s | Hexacomb",
   },
   description:
-    "Custom websites for Fresno and Clovis small businesses — built fast by a local developer you can actually call. No templates, no jargon.",
+    "Websites, software, and IT for Fresno and Clovis small businesses. Built fast by a local developer you can actually call. No templates, no jargon.",
   keywords: [
     "web development",
     "Fresno",
@@ -65,7 +54,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     title: "Hexacomb",
-    statusBarStyle: "black-translucent",
+    statusBarStyle: "default",
   },
   manifest: "/manifest.json",
   robots: {
@@ -87,25 +76,23 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://hexacombllc.com",
     siteName: "Hexacomb",
-    title:
-      "Hexacomb — Websites for Fresno & Clovis Small Businesses",
+    title: "Hexacomb: websites and tech for Fresno & Clovis small businesses",
     description:
-      "Custom websites for Fresno and Clovis small businesses — built fast by a local developer you can actually call. No templates, no jargon.",
+      "Websites, software, and IT for Fresno and Clovis small businesses. Built fast by a local developer you can actually call. No templates, no jargon.",
     images: [
       {
         url: "/hexacomb_logo_wordmark.png",
         width: 1200,
         height: 630,
-        alt: "Hexacomb — Websites for Fresno & Clovis Small Businesses",
+        alt: "Hexacomb: technology for Fresno and Clovis small businesses",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Hexacomb — Websites for Fresno & Clovis Small Businesses",
+    title: "Hexacomb: websites and tech for Fresno & Clovis small businesses",
     description:
-      "Custom websites for Fresno and Clovis small businesses — built fast by a local developer you can actually call. No templates, no jargon.",
+      "Websites, software, and IT for Fresno and Clovis small businesses. Built fast by a local developer you can actually call. No templates, no jargon.",
     images: ["/hexacomb_logo_wordmark.png"],
   },
   formatDetection: {
@@ -131,26 +118,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${dmSans.variable} ${nunitoSans.variable} ${bricolage.variable} ${jetBrainsMono.variable}`}
+      data-scroll-behavior="smooth"
+      className={`${libreFranklin.variable} ${literata.variable}`}
     >
       <body>
-        <svg className="grain-svg" aria-hidden focusable="false">
-          <filter id="grain">
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.85"
-              numOctaves="3"
-              stitchTiles="stitch"
-            />
-          </filter>
-        </svg>
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <CloudflareAnalytics token={process.env.CF_ANALYTICS_TOKEN} />
         <TrackClicks />
-        <CustomCursor />
         <Navbar />
-
         {children}
-
         <CookieBanner />
         <Footer />
       </body>

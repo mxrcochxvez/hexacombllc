@@ -1,82 +1,64 @@
-"use client";
-
-import { useEffect, useRef } from "react";
-
 const services = [
   {
-    icon: "✦",
-    title: "Web Design & Development",
+    title: "Websites",
     description:
-      "Custom websites that load quickly, explain your business clearly, and make it easy for customers to take the next step.",
+      "A clear site that loads fast, shows up on Google, and makes it easy for customers to call or book.",
   },
   {
-    icon: "⌘",
-    title: "Custom Software",
+    title: "Custom software",
     description:
-      "Practical tools for the workflows spreadsheets, paper forms, and off-the-shelf software can no longer handle.",
+      "Tools built for how you actually work, when spreadsheets and off-the-shelf apps are not enough.",
   },
   {
-    icon: "◈",
-    title: "AI & Automation",
+    title: "AI and automation",
     description:
-      "AI-powered workflows that save time without making your team feel like they need to become engineers.",
+      "Less time on repetitive tasks, without adding complexity for you or your staff.",
   },
   {
-    icon: "◆",
-    title: "IT Modernization",
+    title: "IT support",
     description:
-      "Cleaner systems, safer operations, and simpler technology decisions for businesses ready to grow up digitally.",
+      "Email, backups, security, and systems that stay running. We handle it so you do not have to.",
   },
 ];
 
 export default function ServicesGrid() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const element = sectionRef.current;
-    if (!element) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          element.classList.add("is-visible");
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15, rootMargin: "-60px 0px -60px 0px" }
-    );
-
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section
-      ref={sectionRef}
-      className="brand-section services-section honeycomb-bg reveal-scope"
-      id="services"
-      aria-labelledby="services-heading"
-    >
-      <div className="container">
-        <p className="brand-kicker">What we do</p>
-        <h2 id="services-heading" className="brand-section-title">
-          Everything your business needs — under one roof.
-        </h2>
-        <div className="services-grid">
-          {services.map((service, index) => (
-            <article
-              className="service-card reveal-item"
-              key={service.title}
-              style={{ "--reveal-delay": `${index * 100}ms` } as React.CSSProperties}
-            >
-              <span className="service-card-icon" aria-hidden>
-                {service.icon}
-              </span>
-              <h3>{service.title}</h3>
-              <p>{service.description}</p>
-            </article>
-          ))}
+    <section id="services" className="bg-surface py-20 sm:py-28" aria-labelledby="services-heading">
+      <div className="mx-auto max-w-6xl px-5 sm:px-6">
+        <div className="max-w-2xl">
+          <h2
+            id="services-heading"
+            className="font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-semibold leading-tight tracking-tight"
+          >
+            What we take off your plate
+          </h2>
+          <p className="mt-4 text-lg leading-relaxed text-ink-muted">
+            One partner for the technology your business depends on. No juggling freelancers
+            or vendors.
+          </p>
         </div>
+
+        <ol className="mt-14 divide-y divide-border border-y border-border">
+          {services.map((service, index) => (
+            <li
+              key={service.title}
+              className="grid gap-4 py-8 sm:grid-cols-[4rem_1fr] sm:gap-8 sm:py-10"
+            >
+              <span
+                className="font-display text-3xl font-semibold tabular-nums text-accent"
+                aria-hidden
+              >
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <h3 className="font-display text-xl font-semibold text-ink">{service.title}</h3>
+                <p className="mt-2 max-w-prose text-base leading-relaxed text-ink-muted">
+                  {service.description}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );

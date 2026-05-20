@@ -1,21 +1,43 @@
 import { ContactFormClient } from "@/components/ContactFormClient";
 
+const trustItems = [
+  "Reply within one business day",
+  "Fresno-based, no offshore handoffs",
+  "Straight answers, no jargon or pressure",
+];
+
 export default function CtaSection() {
   return (
-    <section className="brand-cta" id="contact" aria-labelledby="contact-heading">
-      <div className="brand-cta-glow" aria-hidden />
-      <div className="container brand-cta-inner">
-        <div className="brand-cta-copy">
-          <h2 id="contact-heading">Ready to modernize?</h2>
-          <p>
-            Let&rsquo;s talk about your business. No pressure, no jargon — just a
-            conversation.
+    <section id="contact" className="bg-deep py-20 sm:py-28" aria-labelledby="contact-heading">
+      <div className="mx-auto grid max-w-6xl gap-12 px-5 sm:px-6 lg:grid-cols-2 lg:gap-20 lg:items-start">
+        <div className="lg:pt-3">
+          <h2
+            id="contact-heading"
+            className="font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-semibold leading-tight tracking-tight text-on-deep"
+          >
+            Let&rsquo;s talk about your business
+          </h2>
+          <p className="mt-4 max-w-md text-base leading-relaxed text-on-deep-muted">
+            Tell us what you&rsquo;re dealing with. We come back with honest next steps, not a
+            sales pitch.
           </p>
+          <ul className="mt-8 space-y-3" aria-label="What to expect">
+            {trustItems.map((item) => (
+              <li key={item} className="flex items-center gap-3 text-sm text-on-deep-muted">
+                <span
+                  className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent"
+                  aria-hidden
+                />
+                {item}
+              </li>
+            ))}
+          </ul>
         </div>
+
         <div
-          className="brand-contact-panel"
           id="consultation-form"
-          aria-label="Free consultation form"
+          className="rounded-lg border border-on-deep/10 bg-canvas p-6 shadow-[0_24px_60px_-30px_oklch(15%_0.03_265/0.6)] sm:p-8"
+          aria-label="Contact form"
         >
           <ContactFormClient />
         </div>

@@ -3,7 +3,6 @@ import CtaSection from "@/components/CtaSection";
 import HeroSection from "@/components/HeroSection";
 import ProcessSteps from "@/components/ProcessSteps";
 import ServicesGrid from "@/components/ServicesGrid";
-import TrustBar from "@/components/TrustBar";
 import WhyHexacomb from "@/components/WhyHexacomb";
 
 const baseUrl = "https://hexacombllc.com";
@@ -13,24 +12,24 @@ export const metadata: Metadata = {
     canonical: baseUrl,
   },
   openGraph: {
-    title: "Hexacomb — Software, Web, AI & IT for Local Businesses",
+    title: "Hexacomb: technology handled for local businesses",
     description:
-      "Hexacomb helps local business owners modernize websites, software, AI workflows, and IT without the jargon.",
+      "Websites, software, AI, and IT for local business owners. Plain language, one team to call.",
     url: baseUrl,
     images: [
       {
         url: "/hexacomb_logo_wordmark.png",
         width: 1200,
         height: 630,
-        alt: "Hexacomb — Software, Web, AI & IT for Local Businesses",
+        alt: "Hexacomb: technology handled for local businesses",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hexacomb — Software, Web, AI & IT for Local Businesses",
+    title: "Hexacomb: technology handled for local businesses",
     description:
-      "Hexacomb helps local business owners modernize websites, software, AI workflows, and IT without the jargon.",
+      "Websites, software, AI, and IT for local business owners. Plain language, one team to call.",
     images: ["/hexacomb_logo_wordmark.png"],
   },
 };
@@ -46,7 +45,7 @@ export default function Home() {
         url: "https://hexacombllc.com",
         logo: "https://hexacombllc.com/hexacomb_logo_wordmark.png",
         description:
-          "Boutique software and technology firm helping local businesses with web design, custom software, AI automation, and IT modernization.",
+          "Local technology partner for small businesses. Websites, custom software, AI automation, and IT support, explained in plain language.",
         foundingDate: "2025",
         areaServed: {
           "@type": "City",
@@ -89,9 +88,9 @@ export default function Home() {
         "@type": "WebSite",
         "@id": "https://hexacombllc.com/#website",
         url: "https://hexacombllc.com",
-        name: "Hexacomb — Local Business Technology Made Simple",
+        name: "Hexacomb: local business technology made simple",
         description:
-          "Hexacomb helps local businesses modernize web, software, AI, and IT with clear guidance and practical delivery.",
+          "Hexacomb helps local businesses with web, software, AI, and IT. Clear guidance and practical delivery.",
         publisher: {
           "@id": "https://hexacombllc.com/#organization",
         },
@@ -100,9 +99,9 @@ export default function Home() {
         "@type": "WebPage",
         "@id": "https://hexacombllc.com/#webpage",
         url: "https://hexacombllc.com",
-        name: "Hexacomb — Local Business Technology Made Simple",
+        name: "Hexacomb: local business technology made simple",
         description:
-          "Boutique software and technology support for local businesses that want expert help without jargon.",
+          "Technology partner for local businesses that want expert help without the jargon.",
         isPartOf: {
           "@id": "https://hexacombllc.com/#website",
         },
@@ -119,9 +118,8 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <main id="main-content" className="brand-home">
+      <main id="main-content">
         <HeroSection />
-        <TrustBar />
         <ServicesGrid />
         <WhyHexacomb />
         <ProcessSteps />

@@ -19,7 +19,7 @@ async function getResend(): Promise<import("resend").Resend> {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, phone, business, website, turnstileToken } = body;
+    const { name, email, phone, business, website, message, turnstileToken } = body;
 
     if (!name || typeof name !== "string" || !name.trim()) {
       return NextResponse.json(
@@ -88,6 +88,7 @@ export async function POST(request: NextRequest) {
 <tr><td style="padding:8px;font-weight:bold">Phone</td><td style="padding:8px">${(phone || "N/A").trim()}</td></tr>
 <tr><td style="padding:8px;font-weight:bold">Business</td><td style="padding:8px">${(business || "N/A").trim()}</td></tr>
 <tr><td style="padding:8px;font-weight:bold">Website</td><td style="padding:8px">${(website || "N/A").trim()}</td></tr>
+${message && message.trim() ? `<tr><td style="padding:8px;font-weight:bold;vertical-align:top">Message</td><td style="padding:8px;white-space:pre-wrap">${message.trim()}</td></tr>` : ""}
 </table>`,
       replyTo: email.trim(),
     });

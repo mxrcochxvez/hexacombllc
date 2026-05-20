@@ -16,38 +16,30 @@ export default function CookieBanner() {
 
   if (!visible) return null;
 
-  const handleAccept = () => {
-    setConsent("accepted");
-  };
-
-  const handleDecline = () => {
-    setConsent("declined");
-  };
-
   return (
     <div
-      className="cookie-banner"
+      className="fixed inset-x-0 bottom-0 z-[60] border-t border-border bg-canvas p-4 shadow-[0_-8px_30px_oklch(22%_0.025_265/0.08)] sm:p-5"
       role="dialog"
       aria-live="polite"
       aria-label="Cookie consent"
     >
-      <div className="cookie-banner-inner container">
-        <p className="cookie-banner-text">
-          We use cookies to analyze site traffic and improve your experience.
-          By clicking <strong>Accept</strong>, you consent to our use of cookies.
+      <div className="mx-auto flex max-w-6xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <p className="text-sm leading-relaxed text-ink-muted">
+          We use cookies to analyze site traffic. By clicking Accept, you consent to our use of
+          cookies.
         </p>
-        <div className="cookie-banner-actions">
+        <div className="flex shrink-0 gap-2">
           <button
             type="button"
-            className="btn btn-primary"
-            onClick={handleAccept}
+            onClick={() => setConsent("accepted")}
+            className="rounded-md bg-accent px-4 py-2 font-display text-sm font-semibold text-canvas hover:bg-accent-hover"
           >
             Accept
           </button>
           <button
             type="button"
-            className="btn btn-outline"
-            onClick={handleDecline}
+            onClick={() => setConsent("declined")}
+            className="rounded-md border border-border px-4 py-2 font-display text-sm font-medium text-ink hover:bg-surface"
           >
             Decline
           </button>
