@@ -2535,6 +2535,72 @@ section {
   }
 }
 
+/* ── App Router Navbar (Navbar.tsx) ── */
+
+/* Hamburger → × morph */
+.nav-ham {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 18px;
+  height: 13px;
+  pointer-events: none;
+}
+
+.nav-ham-bar {
+  display: block;
+  height: 1.5px;
+  width: 100%;
+  background: currentColor;
+  border-radius: 1px;
+  transform-origin: center;
+  transition:
+    transform 0.3s cubic-bezier(0.25, 0, 0.05, 1),
+    opacity 0.22s ease,
+    width 0.28s cubic-bezier(0.25, 0, 0.05, 1);
+}
+
+.nav-ham.is-open .nav-ham-bar:nth-child(1) {
+  transform: translateY(5.75px) rotate(45deg);
+}
+.nav-ham.is-open .nav-ham-bar:nth-child(2) {
+  opacity: 0;
+  width: 0;
+}
+.nav-ham.is-open .nav-ham-bar:nth-child(3) {
+  transform: translateY(-5.75px) rotate(-45deg);
+}
+
+/* Collapsible mobile panel via grid-template-rows */
+.nav-drawer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s cubic-bezier(0.25, 0, 0.05, 1);
+}
+
+.nav-drawer.is-open {
+  grid-template-rows: 1fr;
+}
+
+.nav-drawer-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Staggered link entrances */
+.nav-drawer-link {
+  opacity: 0;
+  transform: translateY(5px);
+  transition:
+    opacity 0.22s ease var(--nd, 0ms),
+    transform 0.22s cubic-bezier(0.25, 0, 0.05, 1) var(--nd, 0ms);
+}
+
+.nav-drawer.is-open .nav-drawer-link {
+  opacity: 1;
+  transform: none;
+}
+
 /* ── Focus ── */
 :focus-visible {
   outline: 2px solid var(--honey);

@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import React, { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
 
 const links = [
   { href: "/about", label: "About" },
@@ -80,42 +79,55 @@ export default function Navbar() {
           aria-controls={menuId}
           onClick={() => setOpen((v) => !v)}
         >
-          {open ? <X size={22} aria-hidden /> : <Menu size={22} aria-hidden />}
+          <span className={`nav-ham${open ? " is-open" : ""}`} aria-hidden="true">
+            <span className="nav-ham-bar" />
+            <span className="nav-ham-bar" />
+            <span className="nav-ham-bar" />
+          </span>
         </button>
       </div>
 
-      {open && (
-        <nav
-          id={menuId}
-          className="border-t border-border bg-canvas px-5 pb-5 pt-2 md:hidden"
-          aria-label="Mobile"
-        >
-          <ul className="flex flex-col">
-            {links.map((link, i) => (
-              <li key={link.href}>
+      <div
+        id={menuId}
+        className={`nav-drawer md:hidden${open ? " is-open" : ""}`}
+        aria-hidden={!open}
+      >
+        <div className="nav-drawer-inner">
+          <nav
+            className="border-t border-border bg-canvas px-5 pb-5 pt-2"
+            aria-label="Mobile"
+          >
+            <ul className="flex flex-col">
+              {links.map((link, i) => (
+                <li key={link.href}>
+                  <Link
+                    ref={i === 0 ? firstLinkRef : undefined}
+                    href={link.href}
+                    onClick={close}
+                    tabIndex={open ? 0 : -1}
+                    className="nav-drawer-link block rounded-md px-3 py-3 font-display text-base font-medium text-ink hover:bg-surface"
+                    style={{ "--nd": `${60 + i * 55}ms` } as React.CSSProperties}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+              <li className="pt-3">
                 <Link
-                  ref={i === 0 ? firstLinkRef : undefined}
-                  href={link.href}
+                  href="/#contact"
                   onClick={close}
-                  className="block rounded-md px-3 py-3 font-display text-base font-medium text-ink hover:bg-surface"
+                  tabIndex={open ? 0 : -1}
+                  className="nav-drawer-link block rounded-md bg-accent px-3 py-3 text-center font-display text-base font-semibold text-canvas hover:bg-accent-hover"
+                  style={{ "--nd": `${60 + links.length * 55}ms` } as React.CSSProperties}
+                  data-track="nav_mobile_contact"
                 >
-                  {link.label}
+                  Contact
                 </Link>
               </li>
-            ))}
-            <li className="pt-3">
-              <Link
-                href="/#contact"
-                onClick={close}
-                className="block rounded-md bg-accent px-3 py-3 text-center font-display text-base font-semibold text-canvas hover:bg-accent-hover"
-                data-track="nav_mobile_contact"
-              >
-                Contact
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      )}
+            </ul>
+          </nav>
+        </div>
+      </div>
     </header>
   );
 }
