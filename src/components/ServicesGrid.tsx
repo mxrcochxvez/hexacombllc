@@ -23,8 +23,8 @@ const services = [
 
 export default function ServicesGrid() {
   return (
-    <section id="services" className="bg-surface py-20 sm:py-28" aria-labelledby="services-heading">
-      <div className="mx-auto max-w-6xl px-5 sm:px-6">
+    <section id="services" style={{ padding: 0 }} className="bg-surface" aria-labelledby="services-heading">
+      <div className="mx-auto max-w-6xl px-5 py-20 sm:px-6 sm:py-28">
         <div className="max-w-2xl">
           <h2
             id="services-heading"

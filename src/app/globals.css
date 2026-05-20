@@ -589,6 +589,10 @@ h3 {
 }
 
 /* ── Sections ── */
+/* NOTE: This rule targets ALL section elements. Tailwind-based components on
+   the homepage neutralize it via inline style={{ padding: 0 }} on the section
+   and carry their own spacing on the inner content div. Do not remove those
+   inline styles — they are intentional overrides of this rule. */
 section {
   padding: 80px 0;
 }

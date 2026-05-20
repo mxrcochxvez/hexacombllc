@@ -15,8 +15,8 @@ const points = [
 
 export default function WhyHexacomb() {
   return (
-    <section className="bg-canvas py-20 sm:py-28" aria-labelledby="why-heading">
-      <div className="mx-auto max-w-6xl px-5 sm:px-6">
+    <section style={{ padding: 0 }} className="bg-canvas" aria-labelledby="why-heading">
+      <div className="mx-auto max-w-6xl px-5 py-20 sm:px-6 sm:py-28">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
           <h2
             id="why-heading"

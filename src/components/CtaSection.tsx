@@ -8,8 +8,8 @@ const trustItems = [
 
 export default function CtaSection() {
   return (
-    <section id="contact" className="bg-deep py-20 sm:py-28" aria-labelledby="contact-heading">
-      <div className="mx-auto grid max-w-6xl gap-12 px-5 sm:px-6 lg:grid-cols-2 lg:gap-20 lg:items-start">
+    <section id="contact" style={{ padding: 0 }} className="bg-deep" aria-labelledby="contact-heading">
+      <div className="mx-auto grid max-w-6xl gap-12 px-5 py-20 sm:px-6 sm:py-28 lg:grid-cols-2 lg:gap-20 lg:items-start">
         <div className="lg:pt-3">
           <h2
             id="contact-heading"

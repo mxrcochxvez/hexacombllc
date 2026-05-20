@@ -8,7 +8,7 @@ const trust = ["Local team", "Plain language", "Reply within one business day"];
 
 export default function HeroSection() {
   return (
-    <section className="border-b border-border bg-canvas" aria-labelledby="hero-heading">
+    <section style={{ padding: 0 }} className="border-b border-border bg-canvas" aria-labelledby="hero-heading">
       <div className="mx-auto grid max-w-6xl gap-12 px-5 py-16 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:py-24">
         <div>
           <p className="font-display text-sm font-medium text-ink-muted">

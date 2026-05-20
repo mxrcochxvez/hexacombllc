@@ -15,8 +15,8 @@ const steps = [
 
 export default function ProcessSteps() {
   return (
-    <section className="border-t border-border bg-surface py-20 sm:py-28" aria-labelledby="process-heading">
-      <div className="mx-auto max-w-6xl px-5 sm:px-6">
+    <section style={{ padding: 0 }} className="border-t border-border bg-surface" aria-labelledby="process-heading">
+      <div className="mx-auto max-w-6xl px-5 py-20 sm:px-6 sm:py-28">
         <h2
           id="process-heading"
           className="max-w-xl font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-semibold leading-tight tracking-tight"
