@@ -24,7 +24,7 @@ export default function ProcessSteps() {
           How it works
         </h2>
 
-        <ol className="mt-14 grid gap-12 md:grid-cols-3 md:gap-10">
+        <ol className="mt-10 grid gap-8 sm:mt-14 md:grid-cols-3 md:gap-10">
           {steps.map((step, index) => (
             <li key={step.title}>
               <p className="font-display text-sm font-semibold text-accent">

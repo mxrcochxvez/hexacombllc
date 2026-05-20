@@ -30,14 +30,14 @@ export default function HeroSection() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Link
               href="#contact"
-              className="inline-flex min-h-11 items-center justify-center rounded-md bg-accent px-6 py-3 font-display text-base font-semibold text-canvas transition-colors hover:bg-accent-hover"
+              className="inline-flex w-full min-h-11 items-center justify-center rounded-md bg-accent px-6 py-3 font-display text-base font-semibold text-canvas transition-colors hover:bg-accent-hover sm:w-auto"
               data-track="hero_consultation"
             >
               Book a free call
             </Link>
             <Link
               href="/pricing"
-              className="inline-flex min-h-11 items-center justify-center rounded-md border border-border bg-canvas px-6 py-3 font-display text-base font-semibold text-ink transition-colors hover:border-ink hover:bg-surface"
+              className="inline-flex w-full min-h-11 items-center justify-center rounded-md border border-border bg-canvas px-6 py-3 font-display text-base font-semibold text-ink transition-colors hover:border-ink hover:bg-surface sm:w-auto"
               data-track="hero_pricing"
             >
               See pricing

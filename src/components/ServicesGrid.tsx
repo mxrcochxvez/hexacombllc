@@ -42,10 +42,10 @@ export default function ServicesGrid() {
           {services.map((service, index) => (
             <li
               key={service.title}
-              className="grid gap-4 py-8 sm:grid-cols-[4rem_1fr] sm:gap-8 sm:py-10"
+              className="grid grid-cols-[3rem_1fr] gap-4 py-8 sm:grid-cols-[4rem_1fr] sm:gap-8 sm:py-10"
             >
               <span
-                className="font-display text-3xl font-semibold tabular-nums text-accent"
+                className="font-display text-2xl font-semibold tabular-nums text-accent sm:text-3xl"
                 aria-hidden
               >
                 {String(index + 1).padStart(2, "0")}
