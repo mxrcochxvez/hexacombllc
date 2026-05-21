@@ -2,6 +2,7 @@
 
 import React, { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
+import { Menu, X } from "lucide-react";
 
 const links = [
   { href: "/about", label: "About" },
@@ -40,7 +41,7 @@ export default function Navbar() {
   const close = () => setOpen(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-canvas">
+    <header className="sticky top-0 z-[90] border-b border-border bg-canvas">
       <div className="mx-auto flex h-[4.25rem] max-w-6xl items-center justify-between gap-4 px-5 sm:px-6">
         <Link
           href="/"
@@ -73,61 +74,67 @@ export default function Navbar() {
         <button
           ref={toggleRef}
           type="button"
-          className="inline-flex h-11 w-11 items-center justify-center rounded-md text-ink hover:bg-surface md:hidden"
+          className={`nav-floating-toggle md:hidden${open ? " is-open" : ""}`}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           aria-controls={menuId}
           onClick={() => setOpen((v) => !v)}
         >
-          <span className={`nav-ham${open ? " is-open" : ""}`} aria-hidden="true">
-            <span className="nav-ham-bar" />
-            <span className="nav-ham-bar" />
-            <span className="nav-ham-bar" />
-          </span>
+          {open ? (
+            <X aria-hidden="true" size={24} strokeWidth={2.25} />
+          ) : (
+            <Menu aria-hidden="true" size={24} strokeWidth={2.25} />
+          )}
         </button>
       </div>
 
-      <div
-        id={menuId}
-        className={`nav-drawer md:hidden${open ? " is-open" : ""}`}
-        aria-hidden={!open}
-      >
-        <div className="nav-drawer-inner">
-          <nav
-            className="border-t border-border bg-canvas px-5 pb-5 pt-2"
-            aria-label="Mobile"
-          >
-            <ul className="flex flex-col">
-              {links.map((link, i) => (
-                <li key={link.href}>
+      {open ? (
+        <div
+          id={menuId}
+          className="nav-mobile-overlay is-open md:hidden"
+        >
+          <div
+            className="nav-mobile-scrim"
+            aria-hidden="true"
+            onClick={close}
+          />
+          <div className="nav-mobile-panel" role="presentation">
+            <nav
+              className="nav-mobile-menu"
+              aria-label="Mobile"
+            >
+              <ul className="nav-mobile-list">
+                {links.map((link, i) => (
+                  <li key={link.href}>
+                    <Link
+                      ref={i === 0 ? firstLinkRef : undefined}
+                      href={link.href}
+                      onClick={close}
+                      className="nav-mobile-link"
+                      style={{ "--nm": `${90 + i * 55}ms` } as React.CSSProperties}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+                <li>
                   <Link
-                    ref={i === 0 ? firstLinkRef : undefined}
-                    href={link.href}
+                    href="/#contact"
                     onClick={close}
-                    tabIndex={open ? 0 : -1}
-                    className="nav-drawer-link block rounded-md px-3 py-3 font-display text-base font-medium text-ink hover:bg-surface"
-                    style={{ "--nd": `${60 + i * 55}ms` } as React.CSSProperties}
+                    className="nav-mobile-link nav-mobile-link-primary"
+                    style={{ "--nm": `${90 + links.length * 55}ms` } as React.CSSProperties}
+                    data-track="nav_mobile_contact"
                   >
-                    {link.label}
+                    Contact
                   </Link>
                 </li>
-              ))}
-              <li className="pt-3">
-                <Link
-                  href="/#contact"
-                  onClick={close}
-                  tabIndex={open ? 0 : -1}
-                  className="nav-drawer-link block rounded-md bg-accent px-3 py-3 text-center font-display text-base font-semibold text-canvas hover:bg-accent-hover"
-                  style={{ "--nd": `${60 + links.length * 55}ms` } as React.CSSProperties}
-                  data-track="nav_mobile_contact"
-                >
-                  Contact
-                </Link>
-              </li>
-            </ul>
-          </nav>
+              </ul>
+            </nav>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div id={menuId} hidden />
+      )}
     </header>
   );
 }
