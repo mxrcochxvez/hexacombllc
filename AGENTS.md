@@ -48,3 +48,12 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - `next.config.ts` exports an empty config object; the `@opennextjs/cloudflare` dev init is a **side-effect dynamic import at the bottom of the file** — do not remove or reorder.
 - User-facing copy targets small business owners and CEOs who are not technical. Translate SEO, performance, accessibility, and security findings into business impact.
 - When adding public pages, update `src/app/sitemap.ts`, page-level `metadata`, and the shared `Navbar` if the route should be discoverable.
+
+## Cursor Cloud specific instructions
+
+- **Single service**: `npm run dev` starts the entire app (Next.js 16 + Turbopack on port 3000). No databases, Docker, or external services are required for local development.
+- **No test suite**: There are no automated test commands. Validate changes with `npm run lint` and manual browser testing.
+- **Workers AI unavailable locally**: The `AI` binding only works via `wrangler dev` / `npm run preview`. In plain `npm run dev`, Workers AI calls return `undefined` and are caught gracefully — this is expected, not an error.
+- **Turnstile & Resend**: The contact form's bot-check and email delivery depend on real API keys in `.dev.vars`. With placeholder keys, the rest of the site still works; only contact form submission will fail validation.
+- **`.dev.vars` not committed**: Local dev secrets are in `.dev.vars` at the repo root. If the file is missing, create it with at minimum `NEXTJS_ENV=development`.
+- **Build**: `npm run build` runs `next build`. For Cloudflare-specific builds use `npm run preview` (builds + local wrangler preview) or `npm run deploy`.
