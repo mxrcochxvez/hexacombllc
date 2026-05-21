@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useEffect, useId, useRef, useState } from "react";
+import React, { useEffect, useId, useRef } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
 
 const links = [
   { href: "/about", label: "About" },
@@ -10,35 +9,34 @@ const links = [
   { href: "/website-audit", label: "Check your site" },
 ];
 
+const mobileLinks = [{ href: "/", label: "Home" }, ...links];
+
 const linkBase =
   "font-display text-sm font-medium text-ink-muted transition-colors hover:text-ink focus-visible:text-ink";
 const primaryLinkBase =
   "inline-flex items-center justify-center rounded-md bg-accent px-4 py-2.5 font-display text-sm font-semibold text-canvas transition-colors hover:bg-accent-hover";
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
-  const menuId = useId();
-  const toggleRef = useRef<HTMLButtonElement>(null);
-  const firstLinkRef = useRef<HTMLAnchorElement>(null);
+  const toggleId = useId();
+  const menuId = `${toggleId}-panel`;
+  const toggleRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && open) {
-        setOpen(false);
+      if (e.key === "Escape" && toggleRef.current?.checked) {
+        toggleRef.current.checked = false;
         toggleRef.current?.focus();
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
+  }, []);
 
-  useEffect(() => {
-    if (open) {
-      firstLinkRef.current?.focus();
+  const close = () => {
+    if (toggleRef.current) {
+      toggleRef.current.checked = false;
     }
-  }, [open]);
-
-  const close = () => setOpen(false);
+  };
 
   return (
     <header className="sticky top-0 z-[90] border-b border-border bg-canvas">
@@ -70,71 +68,59 @@ export default function Navbar() {
             Contact
           </Link>
         </nav>
-
-        <button
-          ref={toggleRef}
-          type="button"
-          className={`nav-floating-toggle md:hidden${open ? " is-open" : ""}`}
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          aria-controls={menuId}
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? (
-            <X aria-hidden="true" size={24} strokeWidth={2.25} />
-          ) : (
-            <Menu aria-hidden="true" size={24} strokeWidth={2.25} />
-          )}
-        </button>
       </div>
 
-      {open ? (
-        <div
-          id={menuId}
-          className="nav-mobile-overlay is-open md:hidden"
-        >
-          <div
-            className="nav-mobile-scrim"
-            aria-hidden="true"
-            onClick={close}
-          />
-          <div className="nav-mobile-panel" role="presentation">
-            <nav
-              className="nav-mobile-menu"
-              aria-label="Mobile"
-            >
-              <ul className="nav-mobile-list">
-                {links.map((link, i) => (
-                  <li key={link.href}>
-                    <Link
-                      ref={i === 0 ? firstLinkRef : undefined}
-                      href={link.href}
-                      onClick={close}
-                      className="nav-mobile-link"
-                      style={{ "--nm": `${90 + i * 55}ms` } as React.CSSProperties}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-                <li>
+      <input
+        ref={toggleRef}
+        id={toggleId}
+        type="checkbox"
+        className="nav-menu-check md:hidden"
+        aria-label="Open menu"
+        aria-controls={menuId}
+      />
+
+      <div
+        id={menuId}
+        className="nav-mobile-overlay md:hidden"
+      >
+        <label
+          className="nav-mobile-scrim"
+          aria-hidden="true"
+          htmlFor={toggleId}
+        />
+        <div className="nav-mobile-panel" role="presentation">
+          <nav
+            className="nav-mobile-menu"
+            aria-label="Mobile"
+          >
+            <ul className="nav-mobile-list">
+              {mobileLinks.map((link, i) => (
+                <li key={link.href}>
                   <Link
-                    href="/#contact"
+                    href={link.href}
                     onClick={close}
-                    className="nav-mobile-link nav-mobile-link-primary"
-                    style={{ "--nm": `${90 + links.length * 55}ms` } as React.CSSProperties}
-                    data-track="nav_mobile_contact"
+                    className="nav-mobile-link"
+                    style={{ "--nm": `${90 + i * 55}ms` } as React.CSSProperties}
                   >
-                    Contact
+                    {link.label}
                   </Link>
                 </li>
-              </ul>
-            </nav>
-          </div>
+              ))}
+              <li>
+                <Link
+                  href="/#contact"
+                  onClick={close}
+                  className="nav-mobile-link nav-mobile-link-primary"
+                  style={{ "--nm": `${90 + mobileLinks.length * 55}ms` } as React.CSSProperties}
+                  data-track="nav_mobile_contact"
+                >
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </nav>
         </div>
-      ) : (
-        <div id={menuId} hidden />
-      )}
+      </div>
     </header>
   );
 }
