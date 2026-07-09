@@ -2652,12 +2652,12 @@ section {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 78% 88%, oklch(78% 0.08 58 / 0.14), transparent 24rem),
-    linear-gradient(180deg, oklch(98.5% 0.008 75 / 0.24), oklch(22% 0.025 265 / 0.13));
+    radial-gradient(circle at 78% 88%, oklch(78% 0.08 58 / 0.22), transparent 24rem),
+    linear-gradient(180deg, oklch(98.5% 0.008 75 / 0.72), oklch(22% 0.025 265 / 0.48));
   border: 0;
   opacity: 0;
-  backdrop-filter: blur(7px) saturate(1.05);
-  -webkit-backdrop-filter: blur(7px) saturate(1.05);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
   transition: opacity 320ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -2692,16 +2692,16 @@ section {
   overflow: hidden;
   padding: 0.65rem;
   background:
-    linear-gradient(135deg, oklch(99% 0.008 75 / 0.84), oklch(94% 0.014 75 / 0.62)),
+    linear-gradient(135deg, oklch(99% 0.008 75 / 0.96), oklch(94% 0.014 75 / 0.92)),
     radial-gradient(circle at 12% 0%, oklch(78% 0.08 58 / 0.18), transparent 14rem);
-  border: 1px solid oklch(88% 0.018 75 / 0.48);
+  border: 1px solid oklch(88% 0.018 75 / 0.6);
   border-radius: 1.35rem;
   box-shadow:
-    0 26px 58px oklch(22% 0.025 265 / 0.16),
+    0 26px 58px oklch(22% 0.025 265 / 0.2),
     inset 0 1px 0 oklch(99% 0.008 75 / 0.62),
     inset 0 -1px 0 oklch(74% 0.04 70 / 0.12);
-  backdrop-filter: blur(30px) saturate(1.18);
-  -webkit-backdrop-filter: blur(30px) saturate(1.18);
+  backdrop-filter: blur(40px) saturate(1.2);
+  -webkit-backdrop-filter: blur(40px) saturate(1.2);
 }
 
 .nav-mobile-menu::before {
