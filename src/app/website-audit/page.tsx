@@ -46,13 +46,13 @@ export default function WebsiteAuditPage() {
                 and whether anything obvious is damaging trust.
               </p>
               <div className="audit-hero-actions">
-                <a href="#audit-tool" className="btn btn-primary" data-track="cta_audit_hero">
+                <a href="#audit-runner" className="btn btn-primary" data-track="cta_audit_hero">
                   Audit My Site
                 </a>
                 <span className="audit-hero-note">Free. No login required.</span>
               </div>
             </div>
-            <div className="audit-hero-preview" aria-hidden>
+            <div className="audit-hero-preview" aria-hidden="true">
               <p className="audit-preview-caption">From a typical scan</p>
               <ul className="audit-preview-list">
                 <li>
@@ -105,7 +105,7 @@ export default function WebsiteAuditPage() {
                   key={item.title}
                   style={{ "--reveal-delay": `${i * 120}ms` } as React.CSSProperties}
                 >
-                  <span className="audit-what-num">{item.num}</span>
+                  <span className="audit-what-num" aria-hidden="true">{item.num}</span>
                   <div>
                     <h3>{item.title}</h3>
                     <p>{item.body}</p>
@@ -116,7 +116,7 @@ export default function WebsiteAuditPage() {
           </div>
         </RevealSection>
 
-        <RevealSection className="audit-runner" id="audit-tool" ariaLabelledBy="audit-runner-heading">
+        <RevealSection className="audit-runner" id="audit-runner" ariaLabelledBy="audit-runner-heading">
           <div className="container">
             <div className="audit-runner-heading">
               <div>
@@ -135,7 +135,7 @@ export default function WebsiteAuditPage() {
         <section className="audit-cta" aria-labelledby="audit-cta-heading">
           <div className="container">
             <div className="pricing-box">
-              <BarChart3 size={32} strokeWidth={1.8} aria-hidden />
+              <BarChart3 size={32} strokeWidth={1.8} aria-hidden="true" />
               <p className="brand-kicker">Next Step</p>
               <h2 id="audit-cta-heading">Turn the Findings Into a Better Website</h2>
               <p>

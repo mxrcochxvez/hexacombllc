@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { AlertTriangle, CheckCircle2, Search, ShieldAlert, Timer, XCircle } from "lucide-react";
 import { track } from "@/lib/analytics";
 
@@ -51,9 +51,15 @@ const sectionMeta = {
 } as const;
 
 function statusIcon(status: AuditStatus) {
-  if (status === "good") return <CheckCircle2 size={18} strokeWidth={2} />;
-  if (status === "warning") return <AlertTriangle size={18} strokeWidth={2} />;
-  return <XCircle size={18} strokeWidth={2} />;
+  if (status === "good") return <CheckCircle2 size={18} strokeWidth={2} aria-hidden="true" />;
+  if (status === "warning") return <AlertTriangle size={18} strokeWidth={2} aria-hidden="true" />;
+  return <XCircle size={18} strokeWidth={2} aria-hidden="true" />;
+}
+
+function statusLabel(status: AuditStatus): string {
+  if (status === "good") return "Good";
+  if (status === "warning") return "Warning";
+  return "Issue";
 }
 
 function scoreLabel(score: number) {
@@ -67,6 +73,7 @@ export default function WebsiteAuditTool() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [error, setError] = useState("");
   const [result, setResult] = useState<AuditResult | null>(null);
+  const resultsRef = useRef<HTMLElement>(null);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -90,6 +97,9 @@ export default function WebsiteAuditTool() {
       setResult(data as AuditResult);
       setStatus("success");
       track("website_audit_success", { overall: (data as AuditResult).overall });
+
+      // Move focus to results
+      setTimeout(() => resultsRef.current?.focus(), 100);
     } catch (err) {
       setStatus("error");
       setError(err instanceof Error ? err.message : "We could not audit that site.");
@@ -100,8 +110,8 @@ export default function WebsiteAuditTool() {
   }
 
   return (
-    <div className="audit-tool" id="audit-tool">
-      <form className="audit-form" onSubmit={handleSubmit}>
+    <div className="audit-tool">
+      <form className="audit-form" onSubmit={handleSubmit} aria-label="Website audit form">
         <label htmlFor="audit-url">Website to audit</label>
         <div className="audit-input-row">
           <input
@@ -115,37 +125,50 @@ export default function WebsiteAuditTool() {
             onChange={(event) => setUrl(event.currentTarget.value)}
             disabled={status === "loading"}
             required
+            aria-required="true"
+            aria-describedby="audit-url-note"
           />
-          <button className="btn btn-primary" type="submit" disabled={status === "loading"}>
+          <button
+            className="btn btn-primary"
+            type="submit"
+            disabled={status === "loading"}
+            aria-disabled={status === "loading"}
+          >
             {status === "loading" ? "Auditing..." : "Run Audit"}
           </button>
         </div>
-        <p className="audit-form-note">
+        <p className="audit-form-note" id="audit-url-note">
           This scans one public page and translates the findings into business terms.
         </p>
         {status === "error" && (
-          <p className="audit-error" role="alert">
+          <p className="audit-error" role="alert" aria-live="assertive">
             {error}
           </p>
         )}
       </form>
 
       {status === "loading" && (
-        <div className="audit-loading" aria-live="polite">
-          <div className="loading-shimmer" />
+        <div className="audit-loading" role="status" aria-live="polite" aria-busy="true">
+          <div className="loading-shimmer" aria-hidden="true" />
           <p>Checking the page customers see first...</p>
         </div>
       )}
 
       {result && (
-        <section className="audit-results" aria-labelledby="audit-results-heading">
+        <section
+          ref={resultsRef}
+          className="audit-results"
+          aria-labelledby="audit-results-heading"
+          tabIndex={-1}
+        >
           <div className="audit-score-panel">
             <div
               className="audit-score-ring"
               style={{ "--score": `${result.overall}%` } as React.CSSProperties}
-              aria-label={`Overall audit score ${result.overall} out of 100`}
+              role="img"
+              aria-label={`Overall audit score: ${result.overall} out of 100`}
             >
-              <span>{result.overall}</span>
+              <span aria-hidden="true">{result.overall}</span>
             </div>
             <div>
               <span className="section-label">Audit Snapshot</span>
@@ -162,9 +185,9 @@ export default function WebsiteAuditTool() {
               const meta = sectionMeta[key as keyof typeof sectionMeta];
               const Icon = meta.icon;
               return (
-                <article className="audit-section-card" key={key}>
+                <article className="audit-section-card" key={key} aria-label={`${meta.label}: ${scoreLabel(section.score)}`}>
                   <div className="audit-section-header">
-                    <div className="audit-section-icon" aria-hidden>
+                    <div className="audit-section-icon" aria-hidden="true">
                       <Icon size={24} strokeWidth={1.8} />
                     </div>
                     <div>
@@ -176,12 +199,15 @@ export default function WebsiteAuditTool() {
                     </strong>
                   </div>
                   <p className="audit-section-summary">{section.summary}</p>
-                  <ul className="audit-check-list">
+                  <ul className="audit-check-list" aria-label={`${meta.label} checks`}>
                     {section.checks.map((check) => (
                       <li className={`audit-check audit-check-${check.status}`} key={check.label}>
-                        <span aria-hidden>{statusIcon(check.status)}</span>
+                        <span aria-hidden="true">{statusIcon(check.status)}</span>
                         <div>
-                          <strong>{check.label}</strong>
+                          <strong>
+                            <span className="sr-only">{statusLabel(check.status)}: </span>
+                            {check.label}
+                          </strong>
                           <p>{check.message}</p>
                         </div>
                       </li>

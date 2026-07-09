@@ -7,13 +7,13 @@
   --color-canvas: oklch(98.5% 0.008 75);
   --color-surface: oklch(96% 0.012 75);
   --color-ink: oklch(22% 0.025 265);
-  --color-ink-muted: oklch(48% 0.02 265);
+  --color-ink-muted: oklch(42% 0.02 265);
   --color-border: oklch(88% 0.015 75);
-  --color-accent: oklch(52% 0.14 45);
-  --color-accent-hover: oklch(46% 0.14 45);
+  --color-accent: oklch(48% 0.14 45);
+  --color-accent-hover: oklch(42% 0.14 45);
   --color-deep: oklch(24% 0.03 265);
   --color-on-deep: oklch(95% 0.01 75);
-  --color-on-deep-muted: oklch(78% 0.02 75);
+  --color-on-deep-muted: oklch(72% 0.02 75);
   --color-danger: oklch(46% 0.18 28);
   --color-danger-soft: oklch(95% 0.03 28);
   --color-success: oklch(42% 0.12 145);
@@ -42,6 +42,24 @@
     outline-offset: 2px;
     border-radius: 4px;
   }
+
+  /* Ensure focus is never invisible */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* Screen-reader only utility */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
 }
 
 @layer utilities {
@@ -62,7 +80,8 @@
 
   .skip-link:focus-visible {
     transform: translateY(0);
-    outline: none;
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
   }
 }
 

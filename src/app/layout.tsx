@@ -128,7 +128,7 @@ export default function RootLayout({
         <CloudflareAnalytics token={process.env.CF_ANALYTICS_TOKEN} />
         <TrackClicks />
         <Navbar />
-        {children}
+        <main id="main-content">{children}</main>
         <CookieBanner />
         <Footer />
       </body>

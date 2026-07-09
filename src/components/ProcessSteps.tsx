@@ -24,13 +24,16 @@ export default function ProcessSteps() {
           How it works
         </h2>
 
-        <ol className="mt-10 grid gap-8 sm:mt-14 md:grid-cols-3 md:gap-10">
+        <ol className="mt-10 grid gap-8 sm:mt-14 md:grid-cols-3 md:gap-10" aria-label="Process steps">
           {steps.map((step, index) => (
             <li key={step.title}>
-              <p className="font-display text-sm font-semibold text-accent">
+              <p className="font-display text-sm font-semibold text-accent" aria-hidden="true">
                 Step {index + 1}
               </p>
-              <h3 className="mt-3 font-display text-lg font-semibold text-ink">{step.title}</h3>
+              <h3 className="mt-3 font-display text-lg font-semibold text-ink">
+                <span className="sr-only">Step {index + 1}: </span>
+                {step.title}
+              </h3>
               <p className="mt-2 text-base leading-relaxed text-ink-muted">{step.body}</p>
             </li>
           ))}

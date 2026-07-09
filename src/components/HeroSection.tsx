@@ -44,7 +44,10 @@ export default function HeroSection() {
             </Link>
           </div>
 
-          <ul className="mt-10 flex flex-col gap-2 border-t border-border pt-8 text-sm text-ink-muted sm:flex-row sm:flex-wrap sm:gap-x-8">
+          <ul
+            className="mt-10 flex flex-col gap-2 border-t border-border pt-8 text-sm text-ink-muted sm:flex-row sm:flex-wrap sm:gap-x-8"
+            aria-label="Why choose us"
+          >
             {trust.map((item) => (
               <li key={item}>{item}</li>
             ))}

@@ -14,6 +14,7 @@ export default function NotFound() {
     <html lang="en">
       <body>
         <main
+          role="main"
           style={{
             display: "flex",
             flexDirection: "column",
@@ -31,7 +32,7 @@ export default function NotFound() {
             style={{
               fontSize: "clamp(3rem, 8vw, 8rem)",
               margin: 0,
-              color: "#d4a853",
+              color: "#92400e",
             }}
           >
             404
@@ -53,6 +54,8 @@ export default function NotFound() {
               fontWeight: 600,
               textDecoration: "none",
               fontSize: "1rem",
+              minHeight: "44px",
+              minWidth: "44px",
             }}
           >
             &larr; Back to Home

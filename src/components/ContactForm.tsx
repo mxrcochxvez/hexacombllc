@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { track } from "@/lib/analytics";
 
@@ -58,6 +58,7 @@ export function ContactForm() {
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const statusRef = useRef<HTMLDivElement>(null);
 
   const validateField = useCallback((name: string, value: string) => {
     let error: string | undefined;
@@ -111,6 +112,14 @@ export function ContactForm() {
     setFieldErrors(errors);
 
     if (errors.name || errors.email || errors.phone || errors.website) {
+      // Focus the first field with an error
+      const firstErrorField = Object.keys(errors).find(
+        (key) => errors[key as keyof FieldErrors]
+      );
+      if (firstErrorField) {
+        const el = form.querySelector<HTMLInputElement>(`[name="${firstErrorField}"]`);
+        el?.focus();
+      }
       return;
     }
 
@@ -160,8 +169,11 @@ export function ContactForm() {
   if (status === "success") {
     return (
       <div
+        ref={statusRef}
         className="rounded-md border border-success/30 bg-success-soft px-5 py-7"
-        role="alert"
+        role="status"
+        aria-live="polite"
+        tabIndex={-1}
       >
         <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-full bg-success/10">
           <svg
@@ -170,7 +182,7 @@ export function ContactForm() {
             height="17"
             viewBox="0 0 17 17"
             fill="none"
-            aria-hidden
+            aria-hidden="true"
           >
             <path
               d="M2.5 8.5l4 4 8-8"
@@ -200,48 +212,52 @@ export function ContactForm() {
       <div className="sm:grid sm:grid-cols-2 sm:gap-4">
         <div className={fieldWrap}>
           <label htmlFor="name" className={labelClass}>
-            Full name <span className="text-accent" aria-hidden>*</span>
+            Full name <span className="text-accent" aria-hidden="true">*</span>
+            <span className="sr-only">(required)</span>
           </label>
           <input
             type="text"
             id="name"
             name="name"
             required
+            aria-required="true"
             autoComplete="name"
             placeholder="Your name"
             disabled={status === "sending"}
             onBlur={handleBlur}
             onChange={handleChange}
-            aria-invalid={!!fieldErrors.name}
+            aria-invalid={touched.name && !!fieldErrors.name}
             aria-describedby={fieldErrors.name ? "name-error" : undefined}
             className={inputClass}
           />
           {fieldErrors.name && (
-            <span id="name-error" className={errorClass} role="alert">
+            <span id="name-error" className={errorClass} role="alert" aria-live="assertive">
               {fieldErrors.name}
             </span>
           )}
         </div>
         <div className={fieldWrap}>
           <label htmlFor="email" className={labelClass}>
-            Email <span className="text-accent" aria-hidden>*</span>
+            Email <span className="text-accent" aria-hidden="true">*</span>
+            <span className="sr-only">(required)</span>
           </label>
           <input
             type="email"
             id="email"
             name="email"
             required
+            aria-required="true"
             autoComplete="email"
             placeholder="you@yourbusiness.com"
             disabled={status === "sending"}
             onBlur={handleBlur}
             onChange={handleChange}
-            aria-invalid={!!fieldErrors.email}
+            aria-invalid={touched.email && !!fieldErrors.email}
             aria-describedby={fieldErrors.email ? "email-error" : undefined}
             className={inputClass}
           />
           {fieldErrors.email && (
-            <span id="email-error" className={errorClass} role="alert">
+            <span id="email-error" className={errorClass} role="alert" aria-live="assertive">
               {fieldErrors.email}
             </span>
           )}
@@ -277,12 +293,12 @@ export function ContactForm() {
             disabled={status === "sending"}
             onBlur={handleBlur}
             onChange={handleChange}
-            aria-invalid={!!fieldErrors.phone}
+            aria-invalid={touched.phone && !!fieldErrors.phone}
             aria-describedby={fieldErrors.phone ? "phone-error" : undefined}
             className={inputClass}
           />
           {fieldErrors.phone && (
-            <span id="phone-error" className={errorClass} role="alert">
+            <span id="phone-error" className={errorClass} role="alert" aria-live="assertive">
               {fieldErrors.phone}
             </span>
           )}
@@ -304,12 +320,12 @@ export function ContactForm() {
           disabled={status === "sending"}
           onBlur={handleBlur}
           onChange={handleChange}
-          aria-invalid={!!fieldErrors.website}
+          aria-invalid={touched.website && !!fieldErrors.website}
           aria-describedby={fieldErrors.website ? "website-error" : undefined}
           className={inputClass}
         />
         {fieldErrors.website && (
-          <span id="website-error" className={errorClass} role="alert">
+          <span id="website-error" className={errorClass} role="alert" aria-live="assertive">
             {fieldErrors.website}
           </span>
         )}
@@ -345,6 +361,7 @@ export function ContactForm() {
         <p
           className="mb-4 rounded-md border border-danger/20 bg-danger-soft px-3.5 py-2.5 font-display text-sm text-danger"
           role="alert"
+          aria-live="assertive"
         >
           {errorMsg}
         </p>
@@ -353,6 +370,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={isSubmitDisabled}
+        aria-disabled={isSubmitDisabled}
         className="group inline-flex w-full min-h-12 items-center justify-center gap-2 rounded-md bg-accent px-4 py-3 font-display text-base font-semibold text-canvas transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
       >
         {status === "sending" ? (
@@ -361,7 +379,7 @@ export function ContactForm() {
               className="h-4 w-4 animate-spin"
               viewBox="0 0 24 24"
               fill="none"
-              aria-hidden
+              aria-hidden="true"
             >
               <circle
                 className="opacity-25"
@@ -377,7 +395,7 @@ export function ContactForm() {
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
               />
             </svg>
-            Sending&hellip;
+            <span aria-live="polite">Sending&hellip;</span>
           </>
         ) : (
           <>
@@ -386,7 +404,7 @@ export function ContactForm() {
               className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
               viewBox="0 0 16 16"
               fill="none"
-              aria-hidden
+              aria-hidden="true"
             >
               <path
                 d="M3 8h10M9 4l4 4-4 4"
