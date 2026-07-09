@@ -38,7 +38,6 @@ function buildEmailHtml(body: Record<string, unknown>): string {
     visitors,
     features,
     timeline,
-    budget,
     notes,
   } = body;
 
@@ -87,10 +86,9 @@ function buildEmailHtml(body: Record<string, unknown>): string {
     }
   </table>
 
-  <h3 style="color:#555;margin:24px 0 12px">Timeline &amp; Budget</h3>
+  <h3 style="color:#555;margin:24px 0 12px">Timeline</h3>
   <table style="border-collapse:collapse;width:100%">
     ${row("Timeline", String(timeline || "N/A"))}
-    ${row("Budget", String(budget || "N/A"))}
   </table>
 
   ${

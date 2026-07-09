@@ -63,14 +63,6 @@ const FEATURES = [
 
 const TIMELINES = ["ASAP", "1-2 weeks", "1 month", "2-3 months", "No rush"];
 
-const BUDGETS = [
-  "Under $1,000",
-  "$1,000-$3,000",
-  "$3,000-$5,000",
-  "$5,000-$10,000",
-  "$10,000+",
-  "Not sure yet",
-];
 
 interface FieldErrors {
   name?: string;
@@ -206,7 +198,6 @@ export function IntakeForm() {
           visitors: formData.get("visitors") ?? "",
           features,
           timeline: formData.get("timeline") ?? "",
-          budget: formData.get("budget") ?? "",
           notes: formData.get("notes") ?? "",
           turnstileToken,
         }),
@@ -531,47 +522,26 @@ export function IntakeForm() {
         </fieldset>
       </div>
 
-      {/* ── Timeline & Budget ─────────────────────────────────── */}
-      <h2 className={sectionTitle}>Timeline &amp; Budget</h2>
+      {/* ── Timeline ─────────────────────────────────────────── */}
+      <h2 className={sectionTitle}>Timeline</h2>
 
-      <div className="sm:grid sm:grid-cols-2 sm:gap-4">
-        <div className={fieldWrap}>
-          <label htmlFor="intake-timeline" className={labelClass}>
-            What&rsquo;s your timeline?
-          </label>
-          <select
-            id="intake-timeline"
-            name="timeline"
-            disabled={status === "sending"}
-            className={selectClass}
-          >
-            <option value="">Select a timeline</option>
-            {TIMELINES.map((t) => (
-              <option key={t} value={t}>
-                {t}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className={fieldWrap}>
-          <label htmlFor="intake-budget" className={labelClass}>
-            Budget range
-          </label>
-          <select
-            id="intake-budget"
-            name="budget"
-            disabled={status === "sending"}
-            className={selectClass}
-          >
-            <option value="">Select a range</option>
-            {BUDGETS.map((b) => (
-              <option key={b} value={b}>
-                {b}
-              </option>
-            ))}
-          </select>
-        </div>
+      <div className={fieldWrap}>
+        <label htmlFor="intake-timeline" className={labelClass}>
+          What&rsquo;s your timeline?
+        </label>
+        <select
+          id="intake-timeline"
+          name="timeline"
+          disabled={status === "sending"}
+          className={selectClass}
+        >
+          <option value="">Select a timeline</option>
+          {TIMELINES.map((t) => (
+            <option key={t} value={t}>
+              {t}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className={fieldWrap}>
