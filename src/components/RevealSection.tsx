@@ -22,6 +22,13 @@ export default function RevealSection({
     const el = ref.current;
     if (!el) return;
 
+    // Respect prefers-reduced-motion: skip animation entirely
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) {
+      el.classList.add("is-visible");
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {

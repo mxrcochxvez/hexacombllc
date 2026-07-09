@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useId, useRef } from "react";
+import React, { useEffect, useId, useRef, useCallback } from "react";
 import Link from "next/link";
 
 const links = [
@@ -20,21 +20,66 @@ export default function Navbar() {
   const toggleId = useId();
   const menuId = `${toggleId}-panel`;
   const toggleRef = useRef<HTMLInputElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  const close = useCallback(() => {
+    if (toggleRef.current) {
+      toggleRef.current.checked = false;
+      toggleRef.current.setAttribute("aria-expanded", "false");
+    }
+  }, []);
+
+  const open = useCallback(() => {
+    if (toggleRef.current) {
+      toggleRef.current.setAttribute("aria-expanded", "true");
+    }
+  }, []);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape" && toggleRef.current?.checked) {
-        toggleRef.current.checked = false;
+        close();
         toggleRef.current?.focus();
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
+  }, [close]);
+
+  // Focus trap for mobile menu
+  useEffect(() => {
+    const onTab = (e: KeyboardEvent) => {
+      if (e.key !== "Tab" || !toggleRef.current?.checked) return;
+
+      const menu = menuRef.current;
+      if (!menu) return;
+
+      const focusable = menu.querySelectorAll<HTMLElement>(
+        'a[href], button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    window.addEventListener("keydown", onTab);
+    return () => window.removeEventListener("keydown", onTab);
   }, []);
 
-  const close = () => {
-    if (toggleRef.current) {
-      toggleRef.current.checked = false;
+  const handleToggleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget.checked) {
+      open();
+    } else {
+      close();
     }
   };
 
@@ -45,6 +90,7 @@ export default function Navbar() {
           href="/"
           onClick={close}
           className="font-display text-lg font-semibold tracking-tight text-ink"
+          aria-label="Hexacomb LLC — Home"
         >
           Hexacomb LLC
         </Link>
@@ -75,25 +121,30 @@ export default function Navbar() {
         id={toggleId}
         type="checkbox"
         className="nav-menu-check md:hidden"
-        aria-label="Open menu"
+        aria-label="Toggle navigation menu"
         aria-controls={menuId}
+        aria-expanded="false"
+        onChange={handleToggleChange}
       />
 
       <div
+        ref={menuRef}
         id={menuId}
         className="nav-mobile-overlay md:hidden"
+        role="dialog"
+        aria-label="Mobile navigation menu"
       >
         <label
           className="nav-mobile-scrim"
           aria-hidden="true"
           htmlFor={toggleId}
         />
-        <div className="nav-mobile-panel" role="presentation">
+        <div className="nav-mobile-panel">
           <nav
             className="nav-mobile-menu"
             aria-label="Mobile"
           >
-            <ul className="nav-mobile-list">
+            <ul className="nav-mobile-list" role="list">
               {mobileLinks.map((link, i) => (
                 <li key={link.href}>
                   <Link

@@ -26,7 +26,7 @@ export default function CtaSection() {
               <li key={item} className="flex items-center gap-3 text-sm text-on-deep-muted">
                 <span
                   className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent"
-                  aria-hidden
+                  aria-hidden="true"
                 />
                 {item}
               </li>
@@ -37,6 +37,7 @@ export default function CtaSection() {
         <div
           id="consultation-form"
           className="rounded-lg border border-on-deep/10 bg-canvas p-6 shadow-[0_24px_60px_-30px_oklch(15%_0.03_265/0.6)] sm:p-8"
+          role="region"
           aria-label="Contact form"
         >
           <ContactFormClient />

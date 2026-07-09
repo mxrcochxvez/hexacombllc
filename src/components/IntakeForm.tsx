@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { Turnstile } from "@marsidev/react-turnstile";
 
 const SITE_KEY =
@@ -114,6 +114,7 @@ export function IntakeForm() {
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [hasExistingWebsite, setHasExistingWebsite] = useState<string>("");
+  const formRef = useRef<HTMLFormElement>(null);
 
   const validateField = useCallback((name: string, value: string) => {
     let error: string | undefined;
@@ -166,6 +167,14 @@ export function IntakeForm() {
     setFieldErrors(errors);
 
     if (errors.name || errors.email || errors.phone || errors.website) {
+      // Focus the first field with an error
+      const firstErrorField = Object.keys(errors).find(
+        (key) => errors[key as keyof FieldErrors]
+      );
+      if (firstErrorField) {
+        const el = form.querySelector<HTMLInputElement>(`[name="${firstErrorField}"]`);
+        el?.focus();
+      }
       return;
     }
 
@@ -224,7 +233,9 @@ export function IntakeForm() {
     return (
       <div
         className="rounded-md border border-success/30 bg-success-soft px-5 py-7"
-        role="alert"
+        role="status"
+        aria-live="polite"
+        tabIndex={-1}
       >
         <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-full bg-success/10">
           <svg
@@ -233,7 +244,7 @@ export function IntakeForm() {
             height="17"
             viewBox="0 0 17 17"
             fill="none"
-            aria-hidden
+            aria-hidden="true"
           >
             <path
               d="M2.5 8.5l4 4 8-8"
@@ -259,31 +270,33 @@ export function IntakeForm() {
   const isSubmitDisabled = status === "sending" || !turnstileToken;
 
   return (
-    <form onSubmit={handleSubmit} aria-label="Project intake form" noValidate>
+    <form ref={formRef} onSubmit={handleSubmit} aria-label="Project intake form" noValidate>
       {/* ── Contact Information ───────────────────────────────── */}
       <h2 className={sectionTitle}>Contact Information</h2>
 
       <div className="sm:grid sm:grid-cols-2 sm:gap-4">
         <div className={fieldWrap}>
           <label htmlFor="intake-name" className={labelClass}>
-            Full name <span className="text-accent" aria-hidden>*</span>
+            Full name <span className="text-accent" aria-hidden="true">*</span>
+            <span className="sr-only">(required)</span>
           </label>
           <input
             type="text"
             id="intake-name"
             name="name"
             required
+            aria-required="true"
             autoComplete="name"
             placeholder="Your name"
             disabled={status === "sending"}
             onBlur={handleBlur}
             onChange={handleChange}
-            aria-invalid={!!fieldErrors.name}
+            aria-invalid={touched.name && !!fieldErrors.name}
             aria-describedby={fieldErrors.name ? "intake-name-error" : undefined}
             className={inputClass}
           />
           {fieldErrors.name && (
-            <span id="intake-name-error" className={errorClass} role="alert">
+            <span id="intake-name-error" className={errorClass} role="alert" aria-live="assertive">
               {fieldErrors.name}
             </span>
           )}
@@ -291,24 +304,26 @@ export function IntakeForm() {
 
         <div className={fieldWrap}>
           <label htmlFor="intake-email" className={labelClass}>
-            Email <span className="text-accent" aria-hidden>*</span>
+            Email <span className="text-accent" aria-hidden="true">*</span>
+            <span className="sr-only">(required)</span>
           </label>
           <input
             type="email"
             id="intake-email"
             name="email"
             required
+            aria-required="true"
             autoComplete="email"
             placeholder="you@yourbusiness.com"
             disabled={status === "sending"}
             onBlur={handleBlur}
             onChange={handleChange}
-            aria-invalid={!!fieldErrors.email}
+            aria-invalid={touched.email && !!fieldErrors.email}
             aria-describedby={fieldErrors.email ? "intake-email-error" : undefined}
             className={inputClass}
           />
           {fieldErrors.email && (
-            <span id="intake-email-error" className={errorClass} role="alert">
+            <span id="intake-email-error" className={errorClass} role="alert" aria-live="assertive">
               {fieldErrors.email}
             </span>
           )}
@@ -317,24 +332,26 @@ export function IntakeForm() {
 
       <div className={fieldWrap}>
         <label htmlFor="intake-phone" className={labelClass}>
-          Phone <span className="text-accent" aria-hidden>*</span>
+          Phone <span className="text-accent" aria-hidden="true">*</span>
+          <span className="sr-only">(required)</span>
         </label>
         <input
           type="tel"
           id="intake-phone"
           name="phone"
           required
+          aria-required="true"
           autoComplete="tel"
           placeholder="(559) 555-0100"
           disabled={status === "sending"}
           onBlur={handleBlur}
           onChange={handleChange}
-          aria-invalid={!!fieldErrors.phone}
+          aria-invalid={touched.phone && !!fieldErrors.phone}
           aria-describedby={fieldErrors.phone ? "intake-phone-error" : undefined}
           className={inputClass}
         />
         {fieldErrors.phone && (
-          <span id="intake-phone-error" className={errorClass} role="alert">
+          <span id="intake-phone-error" className={errorClass} role="alert" aria-live="assertive">
             {fieldErrors.phone}
           </span>
         )}
@@ -384,26 +401,26 @@ export function IntakeForm() {
           <legend className={labelClass}>
             Do you have an existing website?
           </legend>
-          <div className="mt-1.5 flex gap-6">
-            <label className="flex cursor-pointer items-center gap-2 text-sm text-ink">
+          <div className="mt-1.5 flex gap-6" role="radiogroup" aria-label="Existing website">
+            <label className="flex min-h-[44px] cursor-pointer items-center gap-2 text-sm text-ink">
               <input
                 type="radio"
                 name="hasExistingWebsite"
                 value="Yes"
                 disabled={status === "sending"}
                 onChange={() => setHasExistingWebsite("Yes")}
-                className="accent-accent"
+                className="accent-accent h-4 w-4"
               />
               Yes
             </label>
-            <label className="flex cursor-pointer items-center gap-2 text-sm text-ink">
+            <label className="flex min-h-[44px] cursor-pointer items-center gap-2 text-sm text-ink">
               <input
                 type="radio"
                 name="hasExistingWebsite"
                 value="No"
                 disabled={status === "sending"}
                 onChange={() => setHasExistingWebsite("No")}
-                className="accent-accent"
+                className="accent-accent h-4 w-4"
               />
               No
             </label>
@@ -425,14 +442,14 @@ export function IntakeForm() {
             disabled={status === "sending"}
             onBlur={handleBlur}
             onChange={handleChange}
-            aria-invalid={!!fieldErrors.website}
+            aria-invalid={touched.website && !!fieldErrors.website}
             aria-describedby={
               fieldErrors.website ? "intake-website-error" : undefined
             }
             className={inputClass}
           />
           {fieldErrors.website && (
-            <span id="intake-website-error" className={errorClass} role="alert">
+            <span id="intake-website-error" className={errorClass} role="alert" aria-live="assertive">
               {fieldErrors.website}
             </span>
           )}
@@ -507,13 +524,13 @@ export function IntakeForm() {
             {FEATURES.map((feature) => (
               <label
                 key={feature}
-                className="flex cursor-pointer items-center gap-2.5 text-sm text-ink"
+                className="flex min-h-[44px] cursor-pointer items-center gap-2.5 text-sm text-ink"
               >
                 <input
                   type="checkbox"
                   name={`feature_${feature}`}
                   disabled={status === "sending"}
-                  className="accent-accent rounded"
+                  className="accent-accent h-4 w-4 rounded"
                 />
                 {feature}
               </label>
@@ -574,6 +591,7 @@ export function IntakeForm() {
         <p
           className="mb-4 rounded-md border border-danger/20 bg-danger-soft px-3.5 py-2.5 font-display text-sm text-danger"
           role="alert"
+          aria-live="assertive"
         >
           {errorMsg}
         </p>
@@ -582,6 +600,7 @@ export function IntakeForm() {
       <button
         type="submit"
         disabled={isSubmitDisabled}
+        aria-disabled={isSubmitDisabled}
         className="group inline-flex w-full min-h-12 items-center justify-center gap-2 rounded-md bg-accent px-4 py-3 font-display text-base font-semibold text-canvas transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
       >
         {status === "sending" ? (
@@ -590,7 +609,7 @@ export function IntakeForm() {
               className="h-4 w-4 animate-spin"
               viewBox="0 0 24 24"
               fill="none"
-              aria-hidden
+              aria-hidden="true"
             >
               <circle
                 className="opacity-25"
@@ -606,7 +625,7 @@ export function IntakeForm() {
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
               />
             </svg>
-            Submitting&hellip;
+            <span aria-live="polite">Submitting&hellip;</span>
           </>
         ) : (
           <>
@@ -615,7 +634,7 @@ export function IntakeForm() {
               className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
               viewBox="0 0 16 16"
               fill="none"
-              aria-hidden
+              aria-hidden="true"
             >
               <path
                 d="M3 8h10M9 4l4 4-4 4"

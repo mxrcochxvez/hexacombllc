@@ -38,7 +38,7 @@ export default function ServicesGrid() {
           </p>
         </div>
 
-        <ol className="mt-14 divide-y divide-border border-y border-border">
+        <ol className="mt-14 divide-y divide-border border-y border-border" aria-label="Services list">
           {services.map((service, index) => (
             <li
               key={service.title}
@@ -46,7 +46,7 @@ export default function ServicesGrid() {
             >
               <span
                 className="font-display text-2xl font-semibold tabular-nums text-accent sm:text-3xl"
-                aria-hidden
+                aria-hidden="true"
               >
                 {String(index + 1).padStart(2, "0")}
               </span>
