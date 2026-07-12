@@ -4747,8 +4747,22 @@ body::before {
   line-height: 1.65;
 }
 
+/* Neutralize global `section { padding: 80px 0 }` inside the agreement. */
+.agreement-doc section {
+  padding: 0;
+}
+
+.agreement-doc p {
+  margin: 0 0 0.75rem;
+}
+
+.agreement-doc ul {
+  margin: 0.35rem 0 0.75rem;
+  padding-left: 1.25rem;
+}
+
 .agreement-doc__header {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .agreement-doc__eyebrow {
@@ -4766,11 +4780,11 @@ body::before {
 
 .agreement-doc h2 {
   font-size: 1.1rem;
-  margin: 1.5rem 0 0.5rem;
+  margin: 1.15rem 0 0.35rem;
 }
 
 .agreement-doc__parties {
-  margin: 0.75rem 0 1.25rem;
+  margin: 0.5rem 0 1rem;
   padding-left: 1.25rem;
 }
 
