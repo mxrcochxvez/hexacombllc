@@ -84,7 +84,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-[90] border-b border-border bg-canvas">
+    <div className="border-b border-border bg-canvas">
       <div className="mx-auto flex h-[4.25rem] max-w-6xl items-center justify-between gap-4 px-5 sm:px-6">
         <Link
           href="/"
@@ -172,6 +172,6 @@ export default function Navbar() {
           </nav>
         </div>
       </div>
-    </header>
+    </div>
   );
 }
