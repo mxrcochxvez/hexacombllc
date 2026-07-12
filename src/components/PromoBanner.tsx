@@ -12,17 +12,17 @@ export default function PromoBanner() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/15 to-transparent promo-banner-shimmer"
       />
-      <div className="relative mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-3 gap-y-1 px-5 py-3 text-center sm:px-6">
-        <p className="font-display text-[0.9375rem] font-semibold leading-snug tracking-tight sm:text-base">
+      <div className="relative mx-auto flex max-w-6xl items-center justify-center gap-x-2.5 px-4 py-2 text-center sm:gap-x-3 sm:px-6 sm:py-3">
+        <p className="font-display text-sm font-semibold leading-none tracking-tight sm:text-base sm:leading-snug">
           Grab your free website
-          <span className="font-medium opacity-90">
+          <span className="hidden font-medium opacity-90 sm:inline">
             {" "}
             — free design, unlimited iterations until delivery
           </span>
         </p>
         <span
           aria-hidden="true"
-          className="inline-flex shrink-0 items-center gap-1 rounded-md bg-white/15 px-2.5 py-0.5 font-display text-xs font-bold uppercase tracking-wide text-white transition-transform group-hover:translate-x-0.5 sm:text-[0.8125rem]"
+          className="inline-flex shrink-0 items-center gap-1 rounded-md bg-white/15 px-2 py-0.5 font-display text-[0.6875rem] font-bold uppercase tracking-wide text-white transition-transform group-hover:translate-x-0.5 sm:px-2.5 sm:text-[0.8125rem]"
         >
           Start now
           <span className="transition-transform group-hover:translate-x-0.5">→</span>
