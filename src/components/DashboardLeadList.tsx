@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import {
   LEAD_STATUS_LABELS,
   type LeadStatus,
 } from "@/lib/statuses";
+import { DashboardNav } from "@/components/DashboardNav";
 
 export type DashboardLeadRow = {
   _id: string;
@@ -27,24 +27,12 @@ function formatDate(ms: number): string {
 }
 
 export function DashboardLeadList({ leads }: { leads: DashboardLeadRow[] }) {
-  const router = useRouter();
-
-  async function logout() {
-    await fetch("/api/dashboard/logout", { method: "POST" });
-    router.refresh();
-  }
-
   return (
     <div className="dash-shell">
-      <div className="dash-toolbar">
-        <div>
-          <h1 className="dash-title">Leads</h1>
-          <p className="dash-muted">Manage pipeline status and agreements.</p>
-        </div>
-        <button type="button" className="btn btn-secondary" onClick={logout}>
-          Log out
-        </button>
-      </div>
+      <DashboardNav
+        title="Leads"
+        subtitle="Manage pipeline status and agreements."
+      />
 
       {leads.length === 0 ? (
         <p className="dash-muted">No leads yet.</p>

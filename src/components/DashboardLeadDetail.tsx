@@ -10,6 +10,7 @@ import {
   type ContractStatus,
   type LeadStatus,
 } from "@/lib/statuses";
+import { DashboardNav } from "@/components/DashboardNav";
 
 type LeadDetail = {
   _id: string;
@@ -56,9 +57,11 @@ type FormState = {
 export function DashboardLeadDetail({
   lead,
   contract,
+  clientId,
 }: {
   lead: LeadDetail;
   contract: ContractDetail;
+  clientId?: string | null;
 }) {
   const router = useRouter();
   const [status, setStatus] = useState<LeadStatus>(lead.status);
@@ -188,12 +191,15 @@ export function DashboardLeadDetail({
         <Link href="/dashboard">← All leads</Link>
       </p>
 
-      <div className="dash-toolbar">
-        <div>
-          <h1 className="dash-title">{lead.name}</h1>
-          <p className="dash-muted">{lead.email}</p>
-        </div>
-      </div>
+      <DashboardNav title={lead.name} subtitle={lead.email} />
+
+      {clientId ? (
+        <p className="mb-6">
+          <Link href={`/dashboard/clients/${clientId}`}>
+            Open client record →
+          </Link>
+        </p>
+      ) : null}
 
       <section className="dash-card mb-8">
         <h2 className="dash-section-title">Lead details</h2>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import type { Id, ContractStatus, LeadStatus } from "@/lib/convex";
 import { isAdminAuthenticated } from "@/lib/adminAuth";
-import { getContractByLead, getLead } from "@/lib/convex";
+import { getClientByLead, getContractByLead, getLead } from "@/lib/convex";
 import { DashboardLeadDetail } from "@/components/DashboardLeadDetail";
 
 export const metadata: Metadata = {
@@ -24,9 +24,11 @@ export default async function DashboardLeadPage({ params }: PageProps) {
 
   let lead;
   let contract;
+  let client = null;
   try {
     lead = await getLead(leadId);
     contract = lead ? await getContractByLead(leadId) : null;
+    client = lead ? await getClientByLead(leadId) : null;
   } catch (err) {
     console.error("Dashboard lead detail failed:", err);
     notFound();
@@ -74,6 +76,7 @@ export default async function DashboardLeadPage({ params }: PageProps) {
               }
             : null
         }
+        clientId={client?._id ?? null}
       />
     </div>
   );
