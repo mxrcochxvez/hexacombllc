@@ -6,7 +6,7 @@ import RevealSection from "@/components/RevealSection";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "30% retainer to get started. Pay as you grow. Your website cost scales with your actual traffic — perfect for small businesses in Fresno and the Central Valley.",
+    "Clear feature-based website plans for small businesses in Fresno and the Central Valley. Choose the care, tools, and support that fit your needs.",
   alternates: {
     canonical: "https://hexacombllc.com/pricing",
   },
@@ -15,17 +15,16 @@ export const metadata: Metadata = {
 const tiers = [
   {
     name: "Starter",
-    price: "$59",
+    price: "$70",
     period: "/mo",
-    range: "0 – 500",
-    rangeLabel: "monthly visitors",
-    description:
-      "For new businesses just getting online and finding your first customers.",
+    label: "Essentials",
+    labelDetail: "Get online",
+    description: "For new businesses just getting online.",
     features: [
-      "Custom hand-coded website",
-      "Built-in SEO & accessibility",
-      "Secure hosting & SSL certificate",
-      "Monthly analytics report",
+      "Custom hand-coded website (up to 5 pages)",
+      "Built-in SEO basics & accessibility",
+      "Secure hosting & SSL",
+      "Contact form",
       "Email support",
     ],
     cta: "Get started",
@@ -36,15 +35,18 @@ const tiers = [
     name: "Growing",
     price: "$119",
     period: "/mo",
-    range: "501 – 2,500",
-    rangeLabel: "monthly visitors",
-    description: "For businesses already getting traffic and building momentum.",
+    label: "Most popular",
+    labelDetail: "Monthly care",
+    description:
+      "For businesses ready to improve the site month to month.",
     features: [
       "Everything in Starter",
+      "Up to ~10 pages",
+      "Privacy-friendly analytics + simple dashboard",
+      "Minor content updates monthly",
+      "Social media / basic embeds",
       "Priority email support",
-      "Quarterly performance review",
-      "Minor content updates included",
-      "Social media integration",
+      "Quarterly check-in",
     ],
     cta: "Get started",
     track: "cta_pricing_growing",
@@ -54,15 +56,17 @@ const tiers = [
     name: "Established",
     price: "$219",
     period: "/mo",
-    range: "2,501 – 7,500",
-    rangeLabel: "monthly visitors",
-    description: "For businesses with steady traffic ready to scale up.",
+    label: "Growth-focused",
+    labelDetail: "Leads & care",
+    description: "For businesses focused on leads and growth.",
     features: [
       "Everything in Growing",
-      "Advanced SEO optimizations",
-      "A/B testing setup",
-      "Monthly strategy call",
+      "Larger site / more sections as needed",
+      "Ongoing SEO improvements",
       "Conversion tracking",
+      "Booking, maps, or CRM-style integrations",
+      "More content updates + priority turnaround",
+      "Monthly strategy call",
     ],
     cta: "Get started",
     track: "cta_pricing_established",
@@ -72,16 +76,15 @@ const tiers = [
     name: "Enterprise",
     price: "Custom",
     period: "",
-    range: "7,500+",
-    rangeLabel: "monthly visitors",
-    description:
-      "For businesses expanding across multiple locations or markets.",
+    label: "Custom scope",
+    labelDetail: "Complex needs",
+    description: "For multi-location or complex needs.",
     features: [
       "Everything in Established",
-      "Dedicated support",
+      "Multi-location / multi-site setup",
       "Custom integrations",
-      "Multi-location setup",
-      "SLA guarantee",
+      "Dedicated support & SLA",
+      "Custom reporting cadence",
     ],
     cta: "Contact us",
     track: "cta_pricing_enterprise",
@@ -91,28 +94,24 @@ const tiers = [
 
 const faqs = [
   {
-    q: "How does 'pay-as-you-grow' actually work?",
-    a: "We install privacy-friendly analytics on your site to measure monthly unique visitors. At the end of each month, we check your traffic and bill you for the tier you reached. If your traffic drops, your bill drops too: no penalties, no surprises.",
+    q: "What's included in every plan?",
+    a: "Every plan includes a custom hand-coded website, secure hosting, SSL, maintenance, backups, and support. Higher plans add more pages, content updates, analytics, integrations, and strategy time.",
   },
   {
-    q: "How much is the 30% retainer?",
-    a: "It depends on your project's scope, but most small business sites fall in the $1,700–$2,300 range, meaning your retainer is roughly $500–$700. That's 70% less cash upfront than traditional agencies require. The retainer secures your spot and covers initial design and architecture.",
+    q: "Does Starter include analytics or a dashboard?",
+    a: "No. Starter is built to get you online with a solid site, hosting, and email support. Privacy-friendly analytics and a simple dashboard start on the Growing plan.",
   },
   {
-    q: "What if I go over my visitor limit?",
-    a: "You automatically move to the next tier for that month. There are no overage fees or surprise charges. If you consistently outgrow a tier, we'll reach out to discuss the best plan for your growth.",
+    q: "What counts as a content update?",
+    a: "Things like changing copy, swapping photos, updating hours, or tweaking a section. Growing includes minor monthly updates. Established includes more updates with faster turnaround. Bigger redesigns are scoped separately.",
   },
   {
-    q: "What happens if my traffic drops?",
-    a: "Your bill automatically adjusts downward the following month. We believe you should pay for results, not promises. Seasonal businesses especially love this flexibility.",
+    q: "Can I upgrade later?",
+    a: "Yes. Start where it makes sense and move up when you want analytics, more updates, SEO work, or integrations. We'll help you pick the right plan — no pressure, no long-term traps.",
   },
   {
-    q: "What's included in the monthly price?",
-    a: "Everything: custom design, hosting, maintenance, security updates, SSL, backups, and support. No hidden fees. No separate hosting bill. No 'webmaster' retainers.",
-  },
-  {
-    q: "Can I switch plans?",
-    a: "You don't need to. Switching happens automatically based on your traffic. But if you ever want to pause, downgrade, or discuss a custom arrangement, just reach out. We're local and easy to talk to.",
+    q: "Are there hidden fees?",
+    a: "No. Your monthly price covers the features listed for that plan. No separate hosting bill. If you need something outside your plan, we'll quote it clearly before any work starts.",
   },
 ];
 
@@ -123,7 +122,7 @@ export default function PricingPage() {
     name: "Pricing | Hexacomb",
     url: "https://hexacombllc.com/pricing",
     description:
-      "30% retainer to get started. Pay as you grow. Analytics-based pricing for small businesses in Fresno and the Central Valley.",
+      "Feature-based website plans for small businesses in Fresno and the Central Valley. Clear inclusions for hosting, care, and growth tools.",
     mainEntity: {
       "@type": "FAQPage",
       mainEntity: faqs.map((f) => ({
@@ -151,14 +150,12 @@ export default function PricingPage() {
         >
           <div className="container">
             <h1 id="pricing-hero-heading">
-              Pay as you{" "}
-              <span className="pricing-hero-accent">grow.</span>
+              Plans that match{" "}
+              <span className="pricing-hero-accent">what you need.</span>
             </h1>
             <p className="pricing-hero-lead">
-              A 30% retainer gets your site built. After launch, you pay a flat
-              monthly rate based on your{" "}
-              <strong>actual visitor count</strong>: lower in slow months,
-              higher as business picks up. No annual contracts. No surprise
+              Choose by what you need: site size, ongoing care, and growth
+              tools. Flat monthly pricing. No annual contracts. No surprise
               invoices.
             </p>
             <Link
@@ -179,18 +176,18 @@ export default function PricingPage() {
               {[
                 {
                   num: "01",
-                  title: "30% retainer",
-                  body: "Based on your project's estimated total cost. For most small business sites, that's roughly $500–$700 to get started, not $5,000.",
+                  title: "Pick the plan that fits",
+                  body: "Match your needs for pages, updates, analytics, and support. We'll help you choose if you're unsure.",
                 },
                 {
                   num: "02",
                   title: "We build and launch",
-                  body: "Custom hand-coded website tailored to your brand. We install privacy-friendly analytics before go-live.",
+                  body: "Custom hand-coded website tailored to your brand, hosted and secured from day one.",
                 },
                 {
                   num: "03",
-                  title: "Pay as you grow",
-                  body: "Your monthly bill matches your traffic tier. More visitors means more revenue for you. If traffic drops, your bill drops too.",
+                  title: "Care that matches your plan",
+                  body: "Hosting, maintenance, and the updates or growth tools included in your tier — predictable every month.",
                 },
               ].map((step, i) => (
                 <li
@@ -219,8 +216,8 @@ export default function PricingPage() {
             <h2 id="tiers-heading">Plans</h2>
             <p className="section-intro">
               Every plan includes your custom site, hosting, maintenance, and
-              support. You move between plans automatically as your traffic
-              changes.
+              support. Higher plans add more pages, content updates, analytics,
+              and growth tools.
             </p>
             <div className="pricing-table">
               {tiers.map((tier, i) => (
@@ -257,8 +254,8 @@ export default function PricingPage() {
                   </div>
                   <div className="pricing-row-right">
                     <div className="pricing-row-visitors">
-                      <strong>{tier.range}</strong>
-                      <span>{tier.rangeLabel}</span>
+                      <strong>{tier.label}</strong>
+                      <span>{tier.labelDetail}</span>
                     </div>
                     <div className="pricing-row-price">
                       <span className="price-amount">{tier.price}</span>
@@ -283,24 +280,24 @@ export default function PricingPage() {
         {/* Trust */}
         <RevealSection className="pricing-trust" ariaLabelledBy="trust-heading">
           <div className="container">
-            <h2 id="trust-heading">We win when you win</h2>
+            <h2 id="trust-heading">Clear plans. Honest care.</h2>
             <div className="trust-list">
               {[
                 {
-                  title: "Aligned incentives",
-                  body: "Traditional agencies get paid whether your site performs or not. Our revenue grows only when your traffic grows, so we're motivated to build a site that actually attracts customers.",
+                  title: "Know what you're getting",
+                  body: "Each plan lists what's included — pages, updates, analytics, and support. No vague packages, no surprise add-ons after you sign on.",
                 },
                 {
                   title: "Cash-flow friendly",
-                  body: "Small businesses can't drop $5,000 on a website before they know if it will work. Our 30% retainer lets you invest capital where it matters: inventory, staff, and marketing.",
+                  body: "Flat monthly pricing instead of a large upfront agency bill. Put capital where it matters: inventory, staff, and marketing.",
                 },
                 {
                   title: "No long-term traps",
-                  body: "No 12-month contracts with penalties. If your traffic drops (seasonal business, slow month), your bill drops too. Stay because it works, not because you're stuck.",
+                  body: "No 12-month contracts with penalties. Stay because the site and support work for you, not because you're locked in.",
                 },
                 {
-                  title: "Predictable scaling",
-                  body: "Know exactly what you'll pay at every stage of growth. No surprise invoices for extra revisions or server overages. What you see is what you pay.",
+                  title: "Upgrade when you're ready",
+                  body: "Start lean on Starter, then add analytics, content updates, or strategy time when you need them. Your plan grows with your business.",
                 },
               ].map((item, i) => (
                 <div
@@ -359,8 +356,8 @@ export default function PricingPage() {
             <div className="pricing-cta-inner">
               <h2 id="pricing-cta-heading">Ready to start?</h2>
               <p>
-                Just a <strong>30% retainer</strong> to kick things off. Spots
-                are limited to 3 local businesses at a time.
+                Spots are limited to 3 local businesses at a time. Get a free
+                quote and we&apos;ll take it from there.
               </p>
               <Link
                 href="/#contact"
