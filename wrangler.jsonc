@@ -43,7 +43,8 @@
 	"vars": {
 		"NEXT_PUBLIC_TURNSTILE_SITE_KEY": "0x4AAAAAADC6NwtGoO-9AuVg",
 		"CONTACT_TO_EMAIL": "marcode.chavez.jr@gmail.com",
-		"CF_ANALYTICS_TOKEN": ""
+		"CF_ANALYTICS_TOKEN": "",
+		"NEXT_PUBLIC_CONVEX_URL": "https://sincere-lapwing-643.convex.cloud"
 	},
 	"ai": {
 		// Workers AI binding, available through getCloudflareContext().env.AI
