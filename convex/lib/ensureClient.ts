@@ -55,3 +55,17 @@ export async function ensureMissingClientsForContracted(
     await ensureClientForLead(ctx, lead._id);
   }
 }
+
+/** Remove the client row for a lead if present. */
+export async function removeClientForLead(
+  ctx: MutationCtx,
+  leadId: Id<"leads">,
+): Promise<void> {
+  const existing = await ctx.db
+    .query("clients")
+    .withIndex("by_lead", (q) => q.eq("leadId", leadId))
+    .first();
+  if (existing) {
+    await ctx.db.delete(existing._id);
+  }
+}

@@ -5,8 +5,10 @@ import type { QueryCtx } from "./_generated/server";
 import {
   ensureClientForLead,
   ensureMissingClientsForContracted,
+  removeClientForLead,
 } from "./lib/ensureClient";
 import { clientDocValidator, clientPhase, leadStatus } from "./schema";
+import { canTransitionLeadStatus } from "./statuses";
 
 function assertIngestSecret(ingestSecret: string) {
   const expected = process.env.LEAD_INGEST_SECRET;
@@ -162,5 +164,51 @@ export const update = mutation({
       throw new Error("Failed to update client");
     }
     return updated;
+  },
+});
+
+/**
+ * Undo an accidental client promotion: delete the client row and move the
+ * lead back to negotiating.
+ */
+export const revertToLead = mutation({
+  args: {
+    ingestSecret: v.string(),
+    clientId: v.id("clients"),
+  },
+  returns: v.object({
+    leadId: v.id("leads"),
+  }),
+  handler: async (ctx, args) => {
+    assertIngestSecret(args.ingestSecret);
+
+    const client = await ctx.db.get(args.clientId);
+    if (!client) {
+      throw new Error("Client not found");
+    }
+
+    const lead = await ctx.db.get(client.leadId);
+    if (!lead) {
+      throw new Error("Lead not found");
+    }
+
+    if (lead.status !== "contracted") {
+      await removeClientForLead(ctx, lead._id);
+      return { leadId: lead._id };
+    }
+
+    if (!canTransitionLeadStatus("contracted", "negotiating")) {
+      throw new Error("Cannot revert this client to a lead");
+    }
+
+    const now = Date.now();
+    await ctx.db.patch(lead._id, {
+      status: "negotiating",
+      updatedAt: now,
+      statusChangedAt: now,
+    });
+    await removeClientForLead(ctx, lead._id);
+
+    return { leadId: lead._id };
   },
 });

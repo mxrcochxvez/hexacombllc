@@ -38,7 +38,8 @@ export const LEAD_STATUS_TRANSITIONS: Record<
   qualified: ["proposal_sent", "lost", "nurture"],
   proposal_sent: ["negotiating", "contracted", "lost", "nurture"],
   negotiating: ["contracted", "lost", "nurture"],
-  contracted: [],
+  // Allow undo if someone was promoted to client by mistake.
+  contracted: ["negotiating", "lost", "nurture"],
   lost: ["contacted", "qualified", "nurture", "lost"],
   nurture: ["contacted", "qualified", "nurture", "lost"],
 };

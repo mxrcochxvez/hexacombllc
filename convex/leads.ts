@@ -1,6 +1,9 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
-import { ensureClientForLead } from "./lib/ensureClient";
+import {
+  ensureClientForLead,
+  removeClientForLead,
+} from "./lib/ensureClient";
 import { leadDocValidator, leadSource, leadStatus } from "./schema";
 import {
   canTransitionLeadStatus,
@@ -108,6 +111,8 @@ export const updateStatus = mutation({
 
     if (to === "contracted") {
       await ensureClientForLead(ctx, args.leadId);
+    } else if (from === "contracted") {
+      await removeClientForLead(ctx, args.leadId);
     }
 
     return null;
