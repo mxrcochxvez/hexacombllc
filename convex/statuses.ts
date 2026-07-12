@@ -23,7 +23,7 @@ export const LEAD_STATUS_LABELS: Record<LeadStatus, string> = {
   qualified: "Qualified",
   proposal_sent: "Proposal sent",
   negotiating: "Negotiating",
-  contracted: "Contracted",
+  contracted: "Client",
   lost: "Lost",
   nurture: "Nurture",
 };
@@ -98,4 +98,26 @@ export const CONTRACT_STATUS_LABELS: Record<ContractStatus, string> = {
 
 export function isContractStatus(value: string): value is ContractStatus {
   return (CONTRACT_STATUSES as readonly string[]).includes(value);
+}
+
+export const CLIENT_PHASES = [
+  "design",
+  "build",
+  "review",
+  "live",
+  "paused",
+] as const;
+
+export type ClientPhase = (typeof CLIENT_PHASES)[number];
+
+export const CLIENT_PHASE_LABELS: Record<ClientPhase, string> = {
+  design: "Design",
+  build: "Build",
+  review: "Review",
+  live: "Live",
+  paused: "Paused",
+};
+
+export function isClientPhase(value: string): value is ClientPhase {
+  return (CLIENT_PHASES as readonly string[]).includes(value);
 }

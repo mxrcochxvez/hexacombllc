@@ -1,6 +1,10 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
-import { CONTRACT_STATUSES, LEAD_STATUSES } from "./statuses";
+import {
+  CLIENT_PHASES,
+  CONTRACT_STATUSES,
+  LEAD_STATUSES,
+} from "./statuses";
 
 export const leadStatus = v.union(
   v.literal(LEAD_STATUSES[0]),
@@ -21,6 +25,14 @@ export const contractStatus = v.union(
   v.literal(CONTRACT_STATUSES[0]),
   v.literal(CONTRACT_STATUSES[1]),
   v.literal(CONTRACT_STATUSES[2]),
+);
+
+export const clientPhase = v.union(
+  v.literal(CLIENT_PHASES[0]),
+  v.literal(CLIENT_PHASES[1]),
+  v.literal(CLIENT_PHASES[2]),
+  v.literal(CLIENT_PHASES[3]),
+  v.literal(CLIENT_PHASES[4]),
 );
 
 export const leadDocValidator = v.object({
@@ -65,6 +77,21 @@ export const contractDocValidator = v.object({
   clientSignedAt: v.optional(v.string()),
   acceptedTerms: v.optional(v.boolean()),
   sentAt: v.optional(v.number()),
+  createdAt: v.number(),
+  updatedAt: v.number(),
+});
+
+export const clientDocValidator = v.object({
+  _id: v.id("clients"),
+  _creationTime: v.number(),
+  leadId: v.id("leads"),
+  name: v.string(),
+  email: v.string(),
+  phase: clientPhase,
+  designReviewUrl: v.optional(v.string()),
+  productionUrl: v.optional(v.string()),
+  goalsSummary: v.optional(v.string()),
+  conversationNotes: v.optional(v.string()),
   createdAt: v.number(),
   updatedAt: v.number(),
 });
@@ -118,4 +145,20 @@ export default defineSchema({
     .index("by_lead", ["leadId"])
     .index("by_accessToken", ["accessToken"])
     .index("by_status", ["status"]),
+
+  clients: defineTable({
+    leadId: v.id("leads"),
+    name: v.string(),
+    email: v.string(),
+    phase: clientPhase,
+    designReviewUrl: v.optional(v.string()),
+    productionUrl: v.optional(v.string()),
+    goalsSummary: v.optional(v.string()),
+    conversationNotes: v.optional(v.string()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_lead", ["leadId"])
+    .index("by_createdAt", ["createdAt"])
+    .index("by_phase", ["phase"]),
 });
