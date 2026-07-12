@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Libre_Franklin, Literata } from "next/font/google";
 import "./brand.css";
 import "./globals.css";
+import PromoBanner from "@/components/PromoBanner";
 import Navbar from "@/components/Navbar";
 import CloudflareAnalytics from "@/components/CloudflareAnalytics";
 import TrackClicks from "@/components/TrackClicks";
@@ -127,7 +128,10 @@ export default function RootLayout({
         </a>
         <CloudflareAnalytics token={process.env.CF_ANALYTICS_TOKEN} />
         <TrackClicks />
-        <Navbar />
+        <header className="sticky top-0 z-[90]">
+          <PromoBanner />
+          <Navbar />
+        </header>
         <main id="main-content">{children}</main>
         <CookieBanner />
         <Footer />
