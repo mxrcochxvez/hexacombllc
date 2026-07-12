@@ -81,6 +81,8 @@ export function DashboardLeadDetail({
   });
   const [contractMsg, setContractMsg] = useState("");
   const [contractPending, setContractPending] = useState(false);
+  const [promotePending, setPromotePending] = useState(false);
+  const [promoteMsg, setPromoteMsg] = useState("");
   const [contractUrl, setContractUrl] = useState(
     contract?.status === "sent" || contract?.status === "signed"
       ? `/contract/${contract.accessToken}`
@@ -185,6 +187,35 @@ export function DashboardLeadDetail({
     }
   }
 
+  async function promoteToClient() {
+    setPromoteMsg("");
+    setPromotePending(true);
+    try {
+      const res = await fetch(`/api/dashboard/leads/${lead._id}/client`, {
+        method: "POST",
+      });
+      const data = (await res.json()) as {
+        error?: string;
+        clientId?: string;
+      };
+      if (!res.ok) {
+        setPromoteMsg(data.error || "Failed to make client.");
+        return;
+      }
+      if (data.clientId) {
+        router.push(`/dashboard/clients/${data.clientId}`);
+        router.refresh();
+        return;
+      }
+      setPromoteMsg("Client created.");
+      router.refresh();
+    } catch {
+      setPromoteMsg("Failed to make client.");
+    } finally {
+      setPromotePending(false);
+    }
+  }
+
   return (
     <div className="dash-shell">
       <p className="mb-4">
@@ -199,7 +230,27 @@ export function DashboardLeadDetail({
             Open client record →
           </Link>
         </p>
-      ) : null}
+      ) : (
+        <div className="mb-6">
+          <button
+            type="button"
+            className="btn btn-secondary"
+            disabled={promotePending}
+            onClick={() => void promoteToClient()}
+          >
+            {promotePending ? "Creating…" : "Make client"}
+          </button>
+          {promoteMsg ? (
+            <p className="mt-2 text-sm" role="status">
+              {promoteMsg}
+            </p>
+          ) : (
+            <p className="dash-muted text-sm mt-2">
+              Skip the agreement flow and open a client record now.
+            </p>
+          )}
+        </div>
+      )}
 
       <section className="dash-card mb-8">
         <h2 className="dash-section-title">Lead details</h2>
