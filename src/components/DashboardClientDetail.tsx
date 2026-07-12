@@ -135,6 +135,7 @@ export function DashboardClientDetail({
       <DashboardNav
         title={form.name || client.name}
         subtitle={client.email}
+        showSectionNav={false}
       />
 
       <section className="dash-card mb-8">

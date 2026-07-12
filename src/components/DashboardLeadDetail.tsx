@@ -222,7 +222,7 @@ export function DashboardLeadDetail({
         <Link href="/dashboard">← All leads</Link>
       </p>
 
-      <DashboardNav title={lead.name} subtitle={lead.email} />
+      <DashboardNav title={lead.name} subtitle={lead.email} showSectionNav={false} />
 
       {clientId ? (
         <p className="mb-6">

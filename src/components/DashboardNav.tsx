@@ -3,7 +3,16 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
-export function DashboardNav({ title, subtitle }: { title: string; subtitle: string }) {
+export function DashboardNav({
+  title,
+  subtitle,
+  showSectionNav = true,
+}: {
+  title: string;
+  subtitle: string;
+  /** Leads/Clients tabs — list pages only, not detail pages. */
+  showSectionNav?: boolean;
+}) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -19,22 +28,24 @@ export function DashboardNav({ title, subtitle }: { title: string; subtitle: str
   return (
     <div className="dash-toolbar">
       <div>
-        <nav className="dash-nav" aria-label="Dashboard sections">
-          <Link
-            href="/dashboard"
-            className={onLeads ? "dash-nav__link is-active" : "dash-nav__link"}
-          >
-            Leads
-          </Link>
-          <Link
-            href="/dashboard/clients"
-            className={
-              onClients ? "dash-nav__link is-active" : "dash-nav__link"
-            }
-          >
-            Clients
-          </Link>
-        </nav>
+        {showSectionNav ? (
+          <nav className="dash-nav" aria-label="Dashboard sections">
+            <Link
+              href="/dashboard"
+              className={onLeads ? "dash-nav__link is-active" : "dash-nav__link"}
+            >
+              Leads
+            </Link>
+            <Link
+              href="/dashboard/clients"
+              className={
+                onClients ? "dash-nav__link is-active" : "dash-nav__link"
+              }
+            >
+              Clients
+            </Link>
+          </nav>
+        ) : null}
         <h1 className="dash-title">{title}</h1>
         <p className="dash-muted">{subtitle}</p>
       </div>
