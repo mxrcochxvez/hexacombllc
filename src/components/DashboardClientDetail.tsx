@@ -59,6 +59,7 @@ export function DashboardClientDetail({
   });
   const [msg, setMsg] = useState("");
   const [pending, setPending] = useState(false);
+  const [revertPending, setRevertPending] = useState(false);
 
   async function save(e: React.FormEvent) {
     e.preventDefault();
@@ -88,6 +89,40 @@ export function DashboardClientDetail({
       setMsg("Failed to save.");
     } finally {
       setPending(false);
+    }
+  }
+
+  async function revertToLead() {
+    if (
+      !window.confirm(
+        "Revert this client back to a lead? The client record will be removed and the lead will move to Negotiating.",
+      )
+    ) {
+      return;
+    }
+    setMsg("");
+    setRevertPending(true);
+    try {
+      const res = await fetch(
+        `/api/dashboard/clients/${client._id}/revert`,
+        { method: "POST" },
+      );
+      const data = (await res.json()) as { error?: string; leadId?: string };
+      if (!res.ok) {
+        setMsg(data.error || "Failed to revert.");
+        return;
+      }
+      if (data.leadId) {
+        router.push(`/dashboard/leads/${data.leadId}`);
+        router.refresh();
+        return;
+      }
+      router.push("/dashboard/clients");
+      router.refresh();
+    } catch {
+      setMsg("Failed to revert.");
+    } finally {
+      setRevertPending(false);
     }
   }
 
@@ -220,9 +255,17 @@ export function DashboardClientDetail({
           <button
             type="submit"
             className="btn btn-primary"
-            disabled={pending}
+            disabled={pending || revertPending}
           >
             {pending ? "Saving…" : "Save"}
+          </button>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            disabled={pending || revertPending}
+            onClick={() => void revertToLead()}
+          >
+            {revertPending ? "Reverting…" : "Revert to lead"}
           </button>
         </div>
 

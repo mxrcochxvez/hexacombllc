@@ -232,3 +232,13 @@ export async function updateClient(
     ...input,
   });
 }
+
+export async function revertClientToLead(
+  clientId: Id<"clients">,
+): Promise<{ leadId: Id<"leads"> }> {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.mutation(api.clients.revertToLead, {
+    ingestSecret,
+    clientId,
+  });
+}
