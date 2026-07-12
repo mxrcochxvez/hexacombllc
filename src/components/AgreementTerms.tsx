@@ -13,7 +13,7 @@ function formatFee(amount: number): string {
 }
 
 /**
- * HTML port of public/website_agreement.pdf (7 sections).
+ * HTML port of public/website_agreement.pdf (8 sections).
  */
 export function AgreementTerms({
   clientName,
@@ -138,7 +138,21 @@ export function AgreementTerms({
       </section>
 
       <section>
-        <h2>7. Acceptance of Terms</h2>
+        <h2>7. Changes to Terms</h2>
+        <p>
+          Hexacomb reserves the right to modify, update, or replace any term of
+          this Agreement at any time, with or without prior notice. When
+          practical, Hexacomb will provide courtesy notice of material changes;
+          however, such notice is a courtesy only and is not required for any
+          change to be effective. Continued use of Hexacomb&apos;s services after
+          a change constitutes acceptance of the updated terms. The Client may
+          terminate this Agreement under Section 4 if they do not agree to a
+          change.
+        </p>
+      </section>
+
+      <section>
+        <h2>8. Acceptance of Terms</h2>
         <p>
           By accepting below, both Hexacomb and the Client acknowledge that they
           have read, understood, and agreed to all terms, pricing structures, and
