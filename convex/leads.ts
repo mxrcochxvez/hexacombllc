@@ -1,6 +1,11 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
-import { leadSource, leadStatus } from "./schema";
+import { leadDocValidator, leadSource, leadStatus } from "./schema";
+import {
+  canTransitionLeadStatus,
+  LEAD_STATUS_LABELS,
+  type LeadStatus,
+} from "./statuses";
 
 function assertIngestSecret(ingestSecret: string) {
   const expected = process.env.LEAD_INGEST_SECRET;
@@ -81,6 +86,18 @@ export const updateStatus = mutation({
       throw new Error("Lead not found");
     }
 
+    const from = lead.status as LeadStatus;
+    const to = args.status as LeadStatus;
+    if (!canTransitionLeadStatus(from, to)) {
+      throw new Error(
+        `Invalid status transition: ${LEAD_STATUS_LABELS[from]} → ${LEAD_STATUS_LABELS[to]}`,
+      );
+    }
+
+    if (from === to) {
+      return null;
+    }
+
     const now = Date.now();
     await ctx.db.patch(args.leadId, {
       status: args.status,
@@ -91,38 +108,25 @@ export const updateStatus = mutation({
   },
 });
 
+export const get = query({
+  args: {
+    ingestSecret: v.string(),
+    leadId: v.id("leads"),
+  },
+  returns: v.union(leadDocValidator, v.null()),
+  handler: async (ctx, args) => {
+    assertIngestSecret(args.ingestSecret);
+    return await ctx.db.get(args.leadId);
+  },
+});
+
 export const list = query({
   args: {
     ingestSecret: v.string(),
     status: v.optional(leadStatus),
     limit: v.optional(v.number()),
   },
-  returns: v.array(
-    v.object({
-      _id: v.id("leads"),
-      _creationTime: v.number(),
-      name: v.string(),
-      email: v.string(),
-      phone: v.optional(v.string()),
-      business: v.optional(v.string()),
-      website: v.optional(v.string()),
-      source: leadSource,
-      temperature: v.union(v.literal("warm"), v.literal("cool")),
-      status: leadStatus,
-      industry: v.optional(v.string()),
-      hasExistingWebsite: v.optional(v.string()),
-      goal: v.optional(v.string()),
-      pageCount: v.optional(v.string()),
-      visitors: v.optional(v.string()),
-      features: v.optional(v.array(v.string())),
-      timeline: v.optional(v.string()),
-      notes: v.optional(v.string()),
-      message: v.optional(v.string()),
-      createdAt: v.number(),
-      updatedAt: v.number(),
-      statusChangedAt: v.number(),
-    }),
-  ),
+  returns: v.array(leadDocValidator),
   handler: async (ctx, args) => {
     assertIngestSecret(args.ingestSecret);
 
@@ -149,32 +153,7 @@ export const getByEmail = query({
     ingestSecret: v.string(),
     email: v.string(),
   },
-  returns: v.array(
-    v.object({
-      _id: v.id("leads"),
-      _creationTime: v.number(),
-      name: v.string(),
-      email: v.string(),
-      phone: v.optional(v.string()),
-      business: v.optional(v.string()),
-      website: v.optional(v.string()),
-      source: leadSource,
-      temperature: v.union(v.literal("warm"), v.literal("cool")),
-      status: leadStatus,
-      industry: v.optional(v.string()),
-      hasExistingWebsite: v.optional(v.string()),
-      goal: v.optional(v.string()),
-      pageCount: v.optional(v.string()),
-      visitors: v.optional(v.string()),
-      features: v.optional(v.array(v.string())),
-      timeline: v.optional(v.string()),
-      notes: v.optional(v.string()),
-      message: v.optional(v.string()),
-      createdAt: v.number(),
-      updatedAt: v.number(),
-      statusChangedAt: v.number(),
-    }),
-  ),
+  returns: v.array(leadDocValidator),
   handler: async (ctx, args) => {
     assertIngestSecret(args.ingestSecret);
 

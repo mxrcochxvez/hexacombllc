@@ -1,20 +1,73 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
+import { CONTRACT_STATUSES, LEAD_STATUSES } from "./statuses";
 
 export const leadStatus = v.union(
-  v.literal("fresh"),
-  v.literal("contacted"),
-  v.literal("qualified"),
-  v.literal("proposal_sent"),
-  v.literal("negotiating"),
-  v.literal("contracted"),
-  v.literal("lost"),
-  v.literal("nurture"),
+  v.literal(LEAD_STATUSES[0]),
+  v.literal(LEAD_STATUSES[1]),
+  v.literal(LEAD_STATUSES[2]),
+  v.literal(LEAD_STATUSES[3]),
+  v.literal(LEAD_STATUSES[4]),
+  v.literal(LEAD_STATUSES[5]),
+  v.literal(LEAD_STATUSES[6]),
+  v.literal(LEAD_STATUSES[7]),
 );
 
 export const leadSource = v.union(v.literal("intake"), v.literal("contact"));
 
 export const leadTemperature = v.union(v.literal("warm"), v.literal("cool"));
+
+export const contractStatus = v.union(
+  v.literal(CONTRACT_STATUSES[0]),
+  v.literal(CONTRACT_STATUSES[1]),
+  v.literal(CONTRACT_STATUSES[2]),
+);
+
+export const leadDocValidator = v.object({
+  _id: v.id("leads"),
+  _creationTime: v.number(),
+  name: v.string(),
+  email: v.string(),
+  phone: v.optional(v.string()),
+  business: v.optional(v.string()),
+  website: v.optional(v.string()),
+  source: leadSource,
+  temperature: leadTemperature,
+  status: leadStatus,
+  industry: v.optional(v.string()),
+  hasExistingWebsite: v.optional(v.string()),
+  goal: v.optional(v.string()),
+  pageCount: v.optional(v.string()),
+  visitors: v.optional(v.string()),
+  features: v.optional(v.array(v.string())),
+  timeline: v.optional(v.string()),
+  notes: v.optional(v.string()),
+  message: v.optional(v.string()),
+  createdAt: v.number(),
+  updatedAt: v.number(),
+  statusChangedAt: v.number(),
+});
+
+export const contractDocValidator = v.object({
+  _id: v.id("contracts"),
+  _creationTime: v.number(),
+  leadId: v.id("leads"),
+  accessToken: v.string(),
+  status: contractStatus,
+  clientName: v.string(),
+  maintenanceFeeMonthly: v.number(),
+  agreementDate: v.optional(v.string()),
+  hexacombSignerName: v.string(),
+  hexacombSignerTitle: v.string(),
+  hexacombSignedAt: v.optional(v.string()),
+  clientSignerName: v.optional(v.string()),
+  clientSignerTitle: v.optional(v.string()),
+  clientSignedAt: v.optional(v.string()),
+  acceptedTerms: v.optional(v.boolean()),
+  sentAt: v.optional(v.number()),
+  createdAt: v.number(),
+  updatedAt: v.number(),
+});
 
 export default defineSchema({
   leads: defineTable({
@@ -43,4 +96,26 @@ export default defineSchema({
     .index("by_status", ["status"])
     .index("by_source", ["source"])
     .index("by_createdAt", ["createdAt"]),
+
+  contracts: defineTable({
+    leadId: v.id("leads"),
+    accessToken: v.string(),
+    status: contractStatus,
+    clientName: v.string(),
+    maintenanceFeeMonthly: v.number(),
+    agreementDate: v.optional(v.string()),
+    hexacombSignerName: v.string(),
+    hexacombSignerTitle: v.string(),
+    hexacombSignedAt: v.optional(v.string()),
+    clientSignerName: v.optional(v.string()),
+    clientSignerTitle: v.optional(v.string()),
+    clientSignedAt: v.optional(v.string()),
+    acceptedTerms: v.optional(v.boolean()),
+    sentAt: v.optional(v.number()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_lead", ["leadId"])
+    .index("by_accessToken", ["accessToken"])
+    .index("by_status", ["status"]),
 });
