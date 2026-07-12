@@ -86,7 +86,13 @@ export function DashboardLeadDetail({
 
   const statusOptions = leadStatusSelectOptions(status);
   const signed = contract?.status === "signed";
-  const readOnlyContract = signed;
+  const proposalAlreadySent =
+    contract?.status === "sent" ||
+    contract?.status === "signed" ||
+    status === "proposal_sent" ||
+    status === "negotiating" ||
+    status === "contracted";
+  const readOnlyContract = proposalAlreadySent;
 
   async function saveStatus(next: LeadStatus) {
     setStatusMsg("");

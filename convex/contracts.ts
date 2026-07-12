@@ -60,8 +60,10 @@ export const upsertDraft = mutation({
     const hexacombSignedAt = args.hexacombSignedAt?.trim() || undefined;
 
     if (existing) {
-      if (existing.status === "signed") {
-        throw new Error("Cannot edit a signed contract");
+      if (existing.status === "sent" || existing.status === "signed") {
+        throw new Error(
+          "Cannot edit a contract that has already been sent for review",
+        );
       }
       await ctx.db.patch(existing._id, {
         clientName,
@@ -126,6 +128,9 @@ export const send = mutation({
 
     if (contract?.status === "signed") {
       throw new Error("Contract is already signed");
+    }
+    if (contract?.status === "sent") {
+      throw new Error("Contract has already been sent for review");
     }
 
     const clientName = (
