@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { ensureClientForLead } from "./lib/ensureClient";
 import { leadDocValidator, leadSource, leadStatus } from "./schema";
 import {
   canTransitionLeadStatus,
@@ -104,6 +105,11 @@ export const updateStatus = mutation({
       updatedAt: now,
       statusChangedAt: now,
     });
+
+    if (to === "contracted") {
+      await ensureClientForLead(ctx, args.leadId);
+    }
+
     return null;
   },
 });

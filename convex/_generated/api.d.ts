@@ -8,8 +8,10 @@
  * @module
  */
 
+import type * as clients from "../clients.js";
 import type * as contracts from "../contracts.js";
 import type * as leads from "../leads.js";
+import type * as lib_ensureClient from "../lib/ensureClient.js";
 import type * as statuses from "../statuses.js";
 
 import type {
@@ -19,8 +21,10 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  clients: typeof clients;
   contracts: typeof contracts;
   leads: typeof leads;
+  "lib/ensureClient": typeof lib_ensureClient;
   statuses: typeof statuses;
 }>;
 

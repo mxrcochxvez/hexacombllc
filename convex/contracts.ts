@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { ensureClientForLead } from "./lib/ensureClient";
 import { contractDocValidator } from "./schema";
 import { statusAfterContractSend, type LeadStatus } from "./statuses";
 
@@ -372,6 +373,8 @@ export const accept = mutation({
     } else {
       await ctx.db.patch(lead._id, { updatedAt: now });
     }
+
+    await ensureClientForLead(ctx, lead._id);
 
     return {
       leadId: lead._id,
