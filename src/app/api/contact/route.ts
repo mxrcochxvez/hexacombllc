@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createLead } from "@/lib/convex";
 
 export const dynamic = "force-dynamic";
 
@@ -72,6 +73,16 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    await createLead({
+      name: name.trim(),
+      email: email.trim(),
+      phone: typeof phone === "string" ? phone : undefined,
+      business: typeof business === "string" ? business : undefined,
+      website: typeof website === "string" ? website : undefined,
+      message: typeof message === "string" ? message : undefined,
+      source: "contact",
+    });
 
     const resend = await getResend();
     const { error } = await resend.emails.send({

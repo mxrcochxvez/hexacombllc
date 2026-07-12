@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createLead } from "@/lib/convex";
 
 export const dynamic = "force-dynamic";
 
@@ -172,6 +173,30 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    const features = Array.isArray(body.features)
+      ? body.features.filter((f: unknown): f is string => typeof f === "string")
+      : undefined;
+
+    await createLead({
+      name: name.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
+      business: typeof body.business === "string" ? body.business : undefined,
+      website: typeof body.website === "string" ? body.website : undefined,
+      source: "intake",
+      industry: typeof body.industry === "string" ? body.industry : undefined,
+      hasExistingWebsite:
+        typeof body.hasExistingWebsite === "string"
+          ? body.hasExistingWebsite
+          : undefined,
+      goal: typeof body.goal === "string" ? body.goal : undefined,
+      pageCount: typeof body.pageCount === "string" ? body.pageCount : undefined,
+      visitors: typeof body.visitors === "string" ? body.visitors : undefined,
+      features,
+      timeline: typeof body.timeline === "string" ? body.timeline : undefined,
+      notes: typeof body.notes === "string" ? body.notes : undefined,
+    });
 
     // ── Send email via Resend ───────────────────────────────────
     const resend = await getResend();
