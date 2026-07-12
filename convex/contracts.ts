@@ -130,9 +130,6 @@ export const send = mutation({
     if (contract?.status === "signed") {
       throw new Error("Contract is already signed");
     }
-    if (contract?.status === "sent") {
-      throw new Error("Contract has already been sent for review");
-    }
 
     const clientName = (
       args.clientName?.trim() ||

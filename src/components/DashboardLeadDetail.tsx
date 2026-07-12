@@ -91,13 +91,15 @@ export function DashboardLeadDetail({
 
   const statusOptions = leadStatusSelectOptions(status);
   const signed = contract?.status === "signed";
+  const alreadySent = contract?.status === "sent";
   const proposalAlreadySent =
-    contract?.status === "sent" ||
-    contract?.status === "signed" ||
+    alreadySent ||
+    signed ||
     status === "proposal_sent" ||
     status === "negotiating" ||
     status === "contracted";
   const readOnlyContract = proposalAlreadySent;
+  const canResend = alreadySent && !signed;
 
   async function saveStatus(next: LeadStatus) {
     setStatusMsg("");
@@ -178,7 +180,11 @@ export function DashboardLeadDetail({
         return;
       }
       if (data.contractUrl) setContractUrl(data.contractUrl);
-      setContractMsg("Agreement emailed to the client.");
+      setContractMsg(
+        alreadySent
+          ? "Agreement re-sent to the client."
+          : "Agreement emailed to the client.",
+      );
       router.refresh();
     } catch {
       setContractMsg("Failed to send agreement.");
@@ -452,6 +458,22 @@ export function DashboardLeadDetail({
             >
               Submit for review
             </button>
+          </div>
+        ) : null}
+
+        {canResend ? (
+          <div className="dash-actions mt-6">
+            <button
+              type="button"
+              className="btn btn-primary"
+              disabled={contractPending}
+              onClick={() => void submitForReview()}
+            >
+              {contractPending ? "Sending…" : "Resend agreement"}
+            </button>
+            <p className="dash-muted text-sm">
+              Use this if the email failed or the client needs another copy.
+            </p>
           </div>
         ) : null}
 
