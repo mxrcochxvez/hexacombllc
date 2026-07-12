@@ -1,10 +1,14 @@
 import { ConvexHttpClient } from "convex/browser";
 import { api } from "../../convex/_generated/api";
 import type { Doc, Id } from "../../convex/_generated/dataModel";
-import type { LeadStatus } from "../../convex/statuses";
+import type { ClientPhase, LeadStatus } from "../../convex/statuses";
 
 export type { Doc, Id } from "../../convex/_generated/dataModel";
-export type { LeadStatus, ContractStatus } from "../../convex/statuses";
+export type {
+  LeadStatus,
+  ContractStatus,
+  ClientPhase,
+} from "../../convex/statuses";
 
 export type LeadCreateInput = {
   name: string;
@@ -32,6 +36,16 @@ export type ContractDraftInput = {
   hexacombSignerName: string;
   hexacombSignerTitle: string;
   hexacombSignedAt?: string;
+};
+
+export type ClientUpdateInput = {
+  clientId: Id<"clients">;
+  name?: string;
+  phase?: ClientPhase;
+  designReviewUrl?: string;
+  productionUrl?: string;
+  goalsSummary?: string;
+  conversationNotes?: string;
 };
 
 function getConvexClient(): ConvexHttpClient | null {
@@ -177,4 +191,44 @@ export async function acceptContract(input: {
     throw new Error("NEXT_PUBLIC_CONVEX_URL is not configured.");
   }
   return await client.mutation(api.contracts.accept, input);
+}
+
+export async function ensureClientsForContracted(): Promise<void> {
+  const { client, ingestSecret } = requireClientAndSecret();
+  await client.mutation(api.clients.ensureForContracted, { ingestSecret });
+}
+
+export async function listClients(options?: {
+  limit?: number;
+}): Promise<Doc<"clients">[]> {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.query(api.clients.list, {
+    ingestSecret,
+    limit: options?.limit,
+  });
+}
+
+export async function getClient(clientId: Id<"clients">) {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.query(api.clients.get, { ingestSecret, clientId });
+}
+
+export async function getClientByLead(
+  leadId: Id<"leads">,
+): Promise<Doc<"clients"> | null> {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.query(api.clients.getByLead, {
+    ingestSecret,
+    leadId,
+  });
+}
+
+export async function updateClient(
+  input: ClientUpdateInput,
+): Promise<Doc<"clients">> {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.mutation(api.clients.update, {
+    ingestSecret,
+    ...input,
+  });
 }
