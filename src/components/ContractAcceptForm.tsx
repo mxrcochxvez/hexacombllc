@@ -18,6 +18,26 @@ export type PublicContract = {
   acceptedTerms?: boolean;
 };
 
+function todayIsoDate(): string {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+/** Prefer YYYY-MM-DD for <input type="date">; fall back to today. */
+function toDateInputValue(value?: string): string {
+  if (!value) return todayIsoDate();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return todayIsoDate();
+  const year = parsed.getFullYear();
+  const month = String(parsed.getMonth() + 1).padStart(2, "0");
+  const day = String(parsed.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 export function ContractAcceptForm({
   token,
   contract,
@@ -33,12 +53,7 @@ export function ContractAcceptForm({
     contract.clientSignerTitle || "",
   );
   const [clientSignedAt, setClientSignedAt] = useState(
-    contract.clientSignedAt ||
-      new Date().toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      }),
+    toDateInputValue(contract.clientSignedAt),
   );
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [error, setError] = useState("");
@@ -151,6 +166,7 @@ export function ContractAcceptForm({
           <label htmlFor="clientSignedAt">Date</label>
           <input
             id="clientSignedAt"
+            type="date"
             value={clientSignedAt}
             onChange={(e) => setClientSignedAt(e.target.value)}
             required
