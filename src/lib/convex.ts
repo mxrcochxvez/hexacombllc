@@ -242,3 +242,28 @@ export async function revertClientToLead(
     clientId,
   });
 }
+
+export async function createClient(input: {
+  name: string;
+  email: string;
+  phone?: string;
+  business?: string;
+  goalsSummary?: string;
+  phase?: ClientPhase;
+}): Promise<{ clientId: Id<"clients">; leadId: Id<"leads"> }> {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.mutation(api.clients.create, {
+    ingestSecret,
+    ...input,
+  });
+}
+
+export async function promoteLeadToClient(
+  leadId: Id<"leads">,
+): Promise<{ clientId: Id<"clients">; leadId: Id<"leads"> }> {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.mutation(api.clients.promoteFromLead, {
+    ingestSecret,
+    leadId,
+  });
+}

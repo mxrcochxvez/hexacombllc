@@ -5,6 +5,7 @@ import type { QueryCtx } from "./_generated/server";
 import {
   ensureClientForLead,
   ensureMissingClientsForContracted,
+  promoteLeadToClient,
   removeClientForLead,
 } from "./lib/ensureClient";
 import { clientDocValidator, clientPhase, leadStatus } from "./schema";
@@ -34,6 +35,86 @@ export const ensureForContracted = mutation({
     assertIngestSecret(args.ingestSecret);
     await ensureMissingClientsForContracted(ctx);
     return null;
+  },
+});
+
+/** Create a brand-new client (and backing lead) from the dashboard. */
+export const create = mutation({
+  args: {
+    ingestSecret: v.string(),
+    name: v.string(),
+    email: v.string(),
+    phone: v.optional(v.string()),
+    business: v.optional(v.string()),
+    goalsSummary: v.optional(v.string()),
+    phase: v.optional(clientPhase),
+  },
+  returns: v.object({
+    clientId: v.id("clients"),
+    leadId: v.id("leads"),
+  }),
+  handler: async (ctx, args) => {
+    assertIngestSecret(args.ingestSecret);
+
+    const name = args.name.trim();
+    const email = args.email.trim().toLowerCase();
+    if (!name || !email) {
+      throw new Error("Name and email are required");
+    }
+    if (!email.includes("@")) {
+      throw new Error("Invalid email address");
+    }
+
+    const now = Date.now();
+    const business = optionalTrimmed(args.business);
+    const goalsSummary = optionalTrimmed(args.goalsSummary);
+    const phone = optionalTrimmed(args.phone);
+    const phase = args.phase ?? "design";
+
+    const leadId = await ctx.db.insert("leads", {
+      name,
+      email,
+      phone,
+      business,
+      source: "contact",
+      temperature: "cool",
+      status: "contracted",
+      goal: goalsSummary,
+      notes: "Manually created as a client from the dashboard.",
+      createdAt: now,
+      updatedAt: now,
+      statusChangedAt: now,
+    });
+
+    const displayName = business || name;
+    const clientId = await ctx.db.insert("clients", {
+      leadId,
+      name: displayName,
+      email,
+      phase,
+      goalsSummary,
+      createdAt: now,
+      updatedAt: now,
+    });
+
+    return { clientId, leadId };
+  },
+});
+
+/** Promote an existing lead to client without requiring a signed contract. */
+export const promoteFromLead = mutation({
+  args: {
+    ingestSecret: v.string(),
+    leadId: v.id("leads"),
+  },
+  returns: v.object({
+    clientId: v.id("clients"),
+    leadId: v.id("leads"),
+  }),
+  handler: async (ctx, args) => {
+    assertIngestSecret(args.ingestSecret);
+    const clientId = await promoteLeadToClient(ctx, args.leadId);
+    return { clientId, leadId: args.leadId };
   },
 });
 

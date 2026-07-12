@@ -69,3 +69,28 @@ export async function removeClientForLead(
     await ctx.db.delete(existing._id);
   }
 }
+
+/**
+ * Mark a lead as contracted and ensure a client row exists.
+ * Admin override — skips normal pipeline transition checks.
+ */
+export async function promoteLeadToClient(
+  ctx: MutationCtx,
+  leadId: Id<"leads">,
+): Promise<Id<"clients">> {
+  const lead = await ctx.db.get(leadId);
+  if (!lead) {
+    throw new Error("Lead not found");
+  }
+
+  const now = Date.now();
+  if (lead.status !== "contracted") {
+    await ctx.db.patch(leadId, {
+      status: "contracted",
+      updatedAt: now,
+      statusChangedAt: now,
+    });
+  }
+
+  return await ensureClientForLead(ctx, leadId);
+}
