@@ -17,17 +17,24 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 ## Architecture
 - **Next.js 16 App Router** (`src/app/`), deployed to **Cloudflare Workers** via `@opennextjs/cloudflare`, not Vercel.
-- **Public routes** currently include `/`, `/about`, `/pricing`, and `/website-audit`.
+- **Public routes** currently include `/`, `/about`, `/pricing`, `/website-audit`, and `/intake`.
+- **Internal / noindex routes** (not in Navbar or sitemap):
+  - `/dashboard` — password-gated lead list + login (`ADMIN_PASSWORD` cookie session).
+  - `/dashboard/leads/[id]` — lead detail, typed status changes, contract draft / “Submit for review”.
+  - `/contract/[token]` — client web acceptance of the website agreement (unguessable `accessToken`).
 - **API routes** exist in `src/app/api/`:
   - `contact/route.ts` — accepts form submissions, verifies Turnstile token, creates a Convex lead (`source: contact`, cool), then sends email via Resend. Convex write failures are logged and do not block email.
   - `intake/route.ts` — project intake submissions; creates a Convex lead (`source: intake`, warm), then emails via Resend.
   - `track/route.ts` — lightweight analytics ingestion (logs to worker console).
   - `audit/route.ts` — first-pass public website audit. Accepts a URL, fetches one HTML page server-side, and returns plain-English SEO, load-time, and issue checks. It optionally uses the Cloudflare Workers AI binding for recommendation bullets. Keep SSRF protections and public-URL validation in place when editing.
-- **Convex** (`convex/`) stores CRM leads. Schema is in `convex/schema.ts`; mutations/queries in `convex/leads.ts`. Form APIs call `createLead` via `ConvexHttpClient` in `src/lib/convex.ts` (no React `ConvexProvider` yet). Lead statuses: `fresh` → `contacted` → `qualified` → `proposal_sent` → `negotiating` → `contracted` | `lost` | `nurture`. Manage/update in the Convex dashboard for now; there is no admin UI.
+  - `dashboard/*` — login/logout, lead list/detail/status, contract draft + send (session cookie required).
+  - `contract/[token]` + `accept` — public token-gated contract read/accept; accept notifies `CONTACT_TO_EMAIL` via Resend.
+- **Convex** (`convex/`) stores CRM leads and contracts. Schema is in `convex/schema.ts`. Lead + contract status constants, labels, and allowed lead transitions live in `convex/statuses.ts` (single source of truth for validators, dashboard selects, and API checks). Mutations/queries: `convex/leads.ts`, `convex/contracts.ts`. Form/dashboard APIs use `ConvexHttpClient` helpers in `src/lib/convex.ts` (no React `ConvexProvider` yet). Lead pipeline: `fresh` → `contacted` → `qualified` → `proposal_sent` → `negotiating` → `contracted` (terminal), with `lost` / `nurture` side paths; contract send may set `proposal_sent` if not already further along; client accept sets lead to `contracted`.
 - **Interactive client components** live in `src/components/`:
   - `WebsiteAuditTool.tsx` calls `/api/audit` and renders CEO-friendly audit results.
   - `ContactForm.tsx` is dynamically loaded through `ContactFormClient.tsx` because Turnstile is client-only.
   - `IntakeForm.tsx` powers `/intake`.
+  - Dashboard + contract UI: `DashboardLoginForm`, `DashboardLeadList`, `DashboardLeadDetail`, `ContractAcceptForm`, `AgreementTerms` (HTML port of `public/website_agreement.pdf`).
 - **Styling**: Tailwind CSS v4 is configured in `postcss.config.mjs`, but `src/app/globals.css` uses **custom CSS** (no `@import "tailwindcss"`). Do not assume Tailwind utility classes are available.
 - **Path alias**: `@/*` → `./src/*` (tsconfig paths).
 - **OpenNext config**: uses R2 incremental cache (`open-next.config.ts`).
@@ -42,9 +49,13 @@ This version has breaking changes — APIs, conventions, and file structure may 
   - `CONTACT_TO_EMAIL`
   - `NEXTJS_ENV=development`
   - `NEXT_PUBLIC_CONVEX_URL` (Convex deployment URL; local uses the dev deployment)
-  - `LEAD_INGEST_SECRET` (shared with Convex env; gates `leads.create` / `updateStatus` / `list` / `getByEmail`)
+  - `LEAD_INGEST_SECRET` (shared with Convex env; gates `leads.*` and admin `contracts.*` writes/reads)
+  - `ADMIN_PASSWORD` (gates `/dashboard` via httpOnly session cookie)
+  - Optional: `ADMIN_SESSION_SECRET` (HMAC key for session cookie; defaults to `ADMIN_PASSWORD` if unset)
+  - Optional: `NEXT_PUBLIC_SITE_URL` (base URL for contract invite links; defaults to request origin on localhost, else `https://hexacombllc.com`)
 - **Public vars** are defined in `wrangler.jsonc` (`NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `CONTACT_TO_EMAIL`, `NEXT_PUBLIC_CONVEX_URL` for production Convex).
 - `LEAD_INGEST_SECRET` must also be set as a Cloudflare Worker secret (`wrangler secret put LEAD_INGEST_SECRET`) and via `npx convex env set LEAD_INGEST_SECRET …` on each Convex deployment.
+- `ADMIN_PASSWORD` must be set as a Worker secret for production (`wrangler secret put ADMIN_PASSWORD`). Optionally also `ADMIN_SESSION_SECRET`.
 - `CONTACT_FROM_EMAIL` defaults to `onboarding@resend.dev` in code if unset.
 - Day-to-day Convex: `npm run convex:dev`. Production Convex push: `npx convex deploy` (only when intentionally shipping backend changes).
 
@@ -63,6 +74,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - **No test suite**: There are no automated test commands. Validate changes with `npm run lint` and manual browser testing.
 - **Workers AI unavailable locally**: The `AI` binding only works via `wrangler dev` / `npm run preview`. In plain `npm run dev`, Workers AI calls return `undefined` and are caught gracefully — this is expected, not an error.
 - **Turnstile & Resend**: The contact form's bot-check and email delivery depend on real API keys in `.dev.vars`. With placeholder keys, the rest of the site still works; only contact form submission will fail validation.
-- **Convex leads**: Contact and intake APIs write leads after Turnstile. Missing `NEXT_PUBLIC_CONVEX_URL` / `LEAD_INGEST_SECRET` logs and skips the write; email still sends. View leads in the Convex dashboard. Set the Worker secret with `npx wrangler secret put LEAD_INGEST_SECRET` before production deploys that need lead writes.
+- **Convex leads**: Contact and intake APIs write leads after Turnstile. Missing `NEXT_PUBLIC_CONVEX_URL` / `LEAD_INGEST_SECRET` logs and skips the write; email still sends. Manage leads at `/dashboard` (requires `ADMIN_PASSWORD`) or in the Convex dashboard. Set the Worker secret with `npx wrangler secret put LEAD_INGEST_SECRET` before production deploys that need lead writes.
+- **Dashboard / contracts**: Set `ADMIN_PASSWORD` in `.dev.vars` locally and `wrangler secret put ADMIN_PASSWORD` for production. Contract invite + signed notification emails need a real `RESEND_API_KEY`.
 - **`.dev.vars` not committed**: Local dev secrets are in `.dev.vars` at the repo root. If the file is missing, create it with at minimum `NEXTJS_ENV=development`.
 - **Build**: `npm run build` runs `next build`. For Cloudflare-specific builds use `npm run preview` (builds + local wrangler preview) or `npm run deploy`.
