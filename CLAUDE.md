@@ -11,7 +11,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - `npm run preview` — build + Cloudflare preview
 - `npm run deploy` — build + deploy to Cloudflare Workers
 - `npm run upload` — build + upload to Cloudflare (separate from deploy)
-- `npm run cf-typegen` — generate `cloudflare-env.d.ts` from wrangler config
+- `npm run cf-typegen` — generate `cloudflare-env.d.ts` from wrangler config (gitignored; optional local typing aid)
 - `npm run convex:dev` — sync Convex functions to the linked dev deployment (`npx convex dev`)
 - No dedicated typecheck or test commands exist in this repo.
 
