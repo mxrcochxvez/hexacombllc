@@ -2,12 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Libre_Franklin, Literata } from "next/font/google";
 import "./brand.css";
 import "./globals.css";
-import PromoBanner from "@/components/PromoBanner";
-import Navbar from "@/components/Navbar";
 import CloudflareAnalytics from "@/components/CloudflareAnalytics";
 import TrackClicks from "@/components/TrackClicks";
-import CookieBanner from "@/components/CookieBanner";
-import Footer from "@/components/Footer";
 
 const libreFranklin = Libre_Franklin({
   variable: "--font-libre-franklin",
@@ -123,18 +119,9 @@ export default function RootLayout({
       className={`${libreFranklin.variable} ${literata.variable}`}
     >
       <body>
-        <a href="#main-content" className="skip-link">
-          Skip to main content
-        </a>
         <CloudflareAnalytics token={process.env.CF_ANALYTICS_TOKEN} />
         <TrackClicks />
-        <header className="sticky top-0 z-[90]">
-          <PromoBanner />
-          <Navbar />
-        </header>
-        <main id="main-content">{children}</main>
-        <CookieBanner />
-        <Footer />
+        {children}
       </body>
     </html>
   );
