@@ -283,8 +283,6 @@ export const getByToken = query({
         v.object({
           _id: v.id("designDemoComments"),
           body: v.string(),
-          xPercent: v.number(),
-          yPercent: v.number(),
           submitterName: v.optional(v.string()),
           createdAt: v.number(),
         }),
@@ -319,8 +317,6 @@ export const getByToken = query({
       comments: comments.map((c) => ({
         _id: c._id,
         body: c.body,
-        xPercent: c.xPercent,
-        yPercent: c.yPercent,
         submitterName: c.submitterName,
         createdAt: c.createdAt,
       })),
@@ -328,40 +324,11 @@ export const getByToken = query({
   },
 });
 
-export const generateScreenshotUploadUrl = mutation({
-  args: {
-    accessToken: v.string(),
-  },
-  returns: v.string(),
-  handler: async (ctx, args) => {
-    const token = args.accessToken.trim();
-    if (!token) {
-      throw new Error("Invalid review link");
-    }
-
-    const demo = await ctx.db
-      .query("designDemos")
-      .withIndex("by_accessToken", (q) => q.eq("accessToken", token))
-      .first();
-    if (!demo) {
-      throw new Error("Invalid review link");
-    }
-    if (demo.status === "closed") {
-      throw new Error("This design review is closed");
-    }
-
-    return await ctx.storage.generateUploadUrl();
-  },
-});
-
 export const submitComment = mutation({
   args: {
     accessToken: v.string(),
     body: v.string(),
-    xPercent: v.number(),
-    yPercent: v.number(),
     submitterName: v.optional(v.string()),
-    screenshotStorageId: v.optional(v.id("_storage")),
   },
   returns: designDemoCommentDocValidator,
   handler: async (ctx, args) => {
@@ -389,27 +356,6 @@ export const submitComment = mutation({
       throw new Error("Comment is too long");
     }
 
-    if (
-      !Number.isFinite(args.xPercent) ||
-      !Number.isFinite(args.yPercent) ||
-      args.xPercent < 0 ||
-      args.xPercent > 100 ||
-      args.yPercent < 0 ||
-      args.yPercent > 100
-    ) {
-      throw new Error("Click position is invalid");
-    }
-
-    if (args.screenshotStorageId !== undefined) {
-      const meta = await ctx.db.system.get(
-        "_storage",
-        args.screenshotStorageId,
-      );
-      if (!meta) {
-        throw new Error("Screenshot upload not found");
-      }
-    }
-
     const submitterName = optionalTrimmed(args.submitterName);
     if (submitterName && submitterName.length > 120) {
       throw new Error("Name is too long");
@@ -420,9 +366,6 @@ export const submitComment = mutation({
       demoId: demo._id,
       clientId: demo.clientId,
       body,
-      xPercent: args.xPercent,
-      yPercent: args.yPercent,
-      screenshotStorageId: args.screenshotStorageId,
       submitterName,
       createdAt: now,
     });

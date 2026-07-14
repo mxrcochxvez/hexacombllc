@@ -145,22 +145,24 @@ export const designDemoCommentDocValidator = v.object({
   demoId: v.id("designDemos"),
   clientId: v.id("clients"),
   body: v.string(),
-  xPercent: v.number(),
-  yPercent: v.number(),
+  /** @deprecated Pin feedback removed; kept optional for legacy rows. */
+  xPercent: v.optional(v.number()),
+  /** @deprecated Pin feedback removed; kept optional for legacy rows. */
+  yPercent: v.optional(v.number()),
   screenshotStorageId: v.optional(v.id("_storage")),
   submitterName: v.optional(v.string()),
   createdAt: v.number(),
 });
 
-/** Query DTO: stored comment fields plus resolved Convex storage URL. */
+/** Query DTO: stored comment fields plus optional resolved storage URL. */
 export const designDemoCommentWithUrlValidator = v.object({
   _id: v.id("designDemoComments"),
   _creationTime: v.number(),
   demoId: v.id("designDemos"),
   clientId: v.id("clients"),
   body: v.string(),
-  xPercent: v.number(),
-  yPercent: v.number(),
+  xPercent: v.optional(v.number()),
+  yPercent: v.optional(v.number()),
   screenshotStorageId: v.optional(v.id("_storage")),
   screenshotUrl: v.union(v.string(), v.null()),
   submitterName: v.optional(v.string()),
@@ -274,8 +276,10 @@ export default defineSchema({
     demoId: v.id("designDemos"),
     clientId: v.id("clients"),
     body: v.string(),
-    xPercent: v.number(),
-    yPercent: v.number(),
+    /** @deprecated Pin feedback removed; kept optional for legacy rows. */
+    xPercent: v.optional(v.number()),
+    /** @deprecated Pin feedback removed; kept optional for legacy rows. */
+    yPercent: v.optional(v.number()),
     screenshotStorageId: v.optional(v.id("_storage")),
     submitterName: v.optional(v.string()),
     createdAt: v.number(),

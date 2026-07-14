@@ -380,25 +380,10 @@ export async function getDesignDemoByToken(accessToken: string) {
   return await client.query(api.designDemos.getByToken, { accessToken });
 }
 
-export async function generateDesignDemoScreenshotUploadUrl(
-  accessToken: string,
-) {
-  const client = getConvexClient();
-  if (!client) {
-    throw new Error("NEXT_PUBLIC_CONVEX_URL is not configured.");
-  }
-  return await client.mutation(api.designDemos.generateScreenshotUploadUrl, {
-    accessToken,
-  });
-}
-
 export async function submitDesignDemoComment(input: {
   accessToken: string;
   body: string;
-  xPercent: number;
-  yPercent: number;
   submitterName?: string;
-  screenshotStorageId?: Id<"_storage">;
 }) {
   const client = getConvexClient();
   if (!client) {
