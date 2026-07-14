@@ -262,6 +262,17 @@ export async function addClientNote(input: ClientNoteInput) {
   });
 }
 
+export async function deleteClientNote(input: {
+  clientId: Id<"clients">;
+  noteId: Id<"clientNotes">;
+}) {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.mutation(api.clients.deleteNote, {
+    ingestSecret,
+    ...input,
+  });
+}
+
 export async function getClientFeedbackByToken(feedbackToken: string) {
   const client = getConvexClient();
   if (!client) {

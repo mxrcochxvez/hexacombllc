@@ -388,6 +388,37 @@ export const addNote = mutation({
   },
 });
 
+export const deleteNote = mutation({
+  args: {
+    ingestSecret: v.string(),
+    clientId: v.id("clients"),
+    noteId: v.id("clientNotes"),
+  },
+  returns: v.null(),
+  handler: async (ctx, args) => {
+    assertIngestSecret(args.ingestSecret);
+
+    const note = await ctx.db.get(args.noteId);
+    if (!note || note.clientId !== args.clientId) {
+      throw new Error("Note not found");
+    }
+
+    if (note.parentId === undefined) {
+      const replies = await ctx.db
+        .query("clientNotes")
+        .withIndex("by_parent", (q) => q.eq("parentId", args.noteId))
+        .collect();
+      for (const reply of replies) {
+        await ctx.db.delete(reply._id);
+      }
+    }
+
+    await ctx.db.delete(args.noteId);
+    await ctx.db.patch(args.clientId, { updatedAt: Date.now() });
+    return null;
+  },
+});
+
 export const getByFeedbackToken = query({
   args: {
     feedbackToken: v.string(),

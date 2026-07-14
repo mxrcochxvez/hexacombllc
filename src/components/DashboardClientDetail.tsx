@@ -99,6 +99,7 @@ export function DashboardClientDetail({
   const [replyTo, setReplyTo] = useState<string | null>(null);
   const [replyBody, setReplyBody] = useState("");
   const [replyPending, setReplyPending] = useState(false);
+  const [deletingNoteId, setDeletingNoteId] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
   const rootNotes = notes.filter((n) => !n.parentId);
@@ -192,6 +193,42 @@ export function DashboardClientDetail({
     }
     setNotes((prev) => [...prev, data.note!]);
     return data.note;
+  }
+
+  async function deleteNote(noteId: string, isRoot: boolean) {
+    const label = isRoot ? "note and its replies" : "reply";
+    if (!window.confirm(`Delete this ${label}?`)) return;
+
+    setDeletingNoteId(noteId);
+    setNoteMsg("");
+    try {
+      const res = await fetch(
+        `/api/dashboard/clients/${client._id}/notes/${noteId}`,
+        { method: "DELETE" },
+      );
+      const data = (await res.json()) as { error?: string };
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to delete note.");
+      }
+      setNotes((prev) =>
+        prev.filter((n) => {
+          if (n._id === noteId) return false;
+          if (isRoot && n.parentId === noteId) return false;
+          return true;
+        }),
+      );
+      if (replyTo === noteId) {
+        setReplyTo(null);
+        setReplyBody("");
+      }
+      setNoteMsg(isRoot ? "Note deleted." : "Reply deleted.");
+    } catch (err) {
+      setNoteMsg(
+        err instanceof Error ? err.message : "Failed to delete note.",
+      );
+    } finally {
+      setDeletingNoteId(null);
+    }
   }
 
   async function submitRootNote(e: React.FormEvent) {
@@ -475,6 +512,20 @@ export function DashboardClientDetail({
                             </time>
                           </div>
                           <p className="dash-thread__body">{reply.body}</p>
+                          <div className="dash-actions mt-2">
+                            <button
+                              type="button"
+                              className="btn btn-secondary"
+                              disabled={deletingNoteId === reply._id}
+                              onClick={() =>
+                                void deleteNote(reply._id, false)
+                              }
+                            >
+                              {deletingNoteId === reply._id
+                                ? "Deleting…"
+                                : "Delete"}
+                            </button>
+                          </div>
                         </li>
                       ))}
                     </ul>
@@ -530,6 +581,14 @@ export function DashboardClientDetail({
                         }}
                       >
                         Reply
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        disabled={deletingNoteId === note._id}
+                        onClick={() => void deleteNote(note._id, true)}
+                      >
+                        {deletingNoteId === note._id ? "Deleting…" : "Delete"}
                       </button>
                     </div>
                   )}
