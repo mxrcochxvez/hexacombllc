@@ -88,6 +88,33 @@ export async function sendContractSignedNotification(opts: {
   }
 }
 
+export async function sendDesignDemoInviteEmail(opts: {
+  to: string;
+  leadName: string;
+  clientName: string;
+  title: string;
+  reviewUrl: string;
+}): Promise<void> {
+  const resend = await getResend();
+  const { error } = await resend.emails.send({
+    from: contactFromEmail(),
+    to: [opts.to],
+    subject: `Design review ready: ${opts.title}`,
+    html: `<p>Hi ${escapeHtml(opts.leadName)},</p>
+<p>A new design preview for <strong>${escapeHtml(opts.clientName)}</strong> is ready for your feedback.</p>
+<p><strong>${escapeHtml(opts.title)}</strong></p>
+<p>Open the review link, click anywhere on the preview, and leave a comment.</p>
+<p><a href="${escapeHtml(opts.reviewUrl)}">Review the design preview</a></p>
+<p>If the link does not work, copy and paste this URL into your browser:<br/>
+${escapeHtml(opts.reviewUrl)}</p>
+<p>— Hexacomb LLC</p>`,
+  });
+  if (error) {
+    console.error("Resend design demo invite error:", error);
+    throw new Error("Failed to send design review email.");
+  }
+}
+
 function escapeHtml(value: string): string {
   return value
     .replace(/&/g, "&amp;")

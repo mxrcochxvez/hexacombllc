@@ -2,9 +2,13 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import type { Id } from "@/lib/convex";
 import { isAdminAuthenticated } from "@/lib/adminAuth";
-import { prepareClientDetail } from "@/lib/convex";
+import {
+  listDesignDemoCommentsForClient,
+  listDesignDemosForClient,
+  prepareClientDetail,
+} from "@/lib/convex";
 import { DashboardClientDetail } from "@/components/DashboardClientDetail";
-import type { ClientPhase } from "@/lib/statuses";
+import type { ClientPhase, DesignDemoStatus } from "@/lib/statuses";
 
 export const metadata: Metadata = {
   title: "Client",
@@ -24,8 +28,14 @@ export default async function DashboardClientPage({ params }: PageProps) {
   const clientId = id as Id<"clients">;
 
   let detail;
+  let demos;
+  let demoComments;
   try {
     detail = await prepareClientDetail(clientId);
+    [demos, demoComments] = await Promise.all([
+      listDesignDemosForClient(clientId),
+      listDesignDemoCommentsForClient(clientId),
+    ]);
   } catch (err) {
     console.error("Dashboard client detail failed:", err);
     notFound();
@@ -75,6 +85,25 @@ export default async function DashboardClientPage({ params }: PageProps) {
           rating: item.rating,
           submitterName: item.submitterName,
           createdAt: item.createdAt,
+        }))}
+        demos={demos.map((demo) => ({
+          _id: demo._id,
+          title: demo.title,
+          demoUrl: demo.demoUrl,
+          accessToken: demo.accessToken,
+          status: demo.status as DesignDemoStatus,
+          sentAt: demo.sentAt,
+          createdAt: demo.createdAt,
+        }))}
+        demoComments={demoComments.map((comment) => ({
+          _id: comment._id,
+          demoId: comment.demoId,
+          body: comment.body,
+          xPercent: comment.xPercent,
+          yPercent: comment.yPercent,
+          screenshotUrl: comment.screenshotUrl,
+          submitterName: comment.submitterName,
+          createdAt: comment.createdAt,
         }))}
         feedbackPath={feedbackPath}
       />

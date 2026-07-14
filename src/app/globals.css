@@ -4882,3 +4882,33 @@ body::before {
 .block { display: block; }
 .text-sm { font-size: 0.875rem; }
 .whitespace-pre-wrap { white-space: pre-wrap; }
+
+.demo-comment-shot {
+  position: relative;
+  margin: 0.75rem 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--color-surface, #fff);
+  max-width: 28rem;
+}
+
+.demo-comment-shot__img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.demo-comment-shot__pin {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  margin-left: -7px;
+  margin-top: -7px;
+  border-radius: 50%;
+  background: #c45c26;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 35%);
+  pointer-events: none;
+}
+

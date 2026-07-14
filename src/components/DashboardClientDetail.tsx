@@ -6,7 +6,9 @@ import { useState } from "react";
 import {
   CLIENT_PHASES,
   CLIENT_PHASE_LABELS,
+  DESIGN_DEMO_STATUS_LABELS,
   type ClientPhase,
+  type DesignDemoStatus,
 } from "@/lib/statuses";
 import { DashboardNav } from "@/components/DashboardNav";
 
@@ -48,6 +50,27 @@ type ClientFeedbackItem = {
   createdAt: number;
 };
 
+type DesignDemoItem = {
+  _id: string;
+  title: string;
+  demoUrl: string;
+  accessToken: string;
+  status: DesignDemoStatus;
+  sentAt?: number;
+  createdAt: number;
+};
+
+type DesignDemoCommentItem = {
+  _id: string;
+  demoId: string;
+  body: string;
+  xPercent: number;
+  yPercent: number;
+  screenshotUrl: string | null;
+  submitterName?: string;
+  createdAt: number;
+};
+
 type FormState = {
   name: string;
   phase: ClientPhase;
@@ -72,12 +95,16 @@ export function DashboardClientDetail({
   lead,
   notes: initialNotes,
   feedback: initialFeedback,
+  demos: initialDemos,
+  demoComments: initialDemoComments,
   feedbackPath,
 }: {
   client: ClientDetail;
   lead: LeadSummary;
   notes: ClientNote[];
   feedback: ClientFeedbackItem[];
+  demos: DesignDemoItem[];
+  demoComments: DesignDemoCommentItem[];
   feedbackPath: string;
 }) {
   const router = useRouter();
@@ -90,6 +117,8 @@ export function DashboardClientDetail({
   });
   const [notes, setNotes] = useState(initialNotes);
   const [feedback] = useState(initialFeedback);
+  const [demos, setDemos] = useState(initialDemos);
+  const [demoComments] = useState(initialDemoComments);
   const [msg, setMsg] = useState("");
   const [pending, setPending] = useState(false);
   const [revertPending, setRevertPending] = useState(false);
@@ -101,6 +130,17 @@ export function DashboardClientDetail({
   const [replyPending, setReplyPending] = useState(false);
   const [deletingNoteId, setDeletingNoteId] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [demoTitle, setDemoTitle] = useState("");
+  const [demoUrl, setDemoUrl] = useState("");
+  const [demoPending, setDemoPending] = useState(false);
+  const [demoMsg, setDemoMsg] = useState("");
+  const [demoActionId, setDemoActionId] = useState<string | null>(null);
+  const [copiedDemoId, setCopiedDemoId] = useState<string | null>(null);
+
+  const demoTitleById = demos.reduce<Record<string, string>>((acc, demo) => {
+    acc[demo._id] = demo.title;
+    return acc;
+  }, {});
 
   const rootNotes = notes.filter((n) => !n.parentId);
   const repliesByParent = notes.reduce<Record<string, ClientNote[]>>(
@@ -284,6 +324,126 @@ export function DashboardClientDetail({
     }
   }
 
+  function reviewPathFor(token: string) {
+    return `/review/${token}`;
+  }
+
+  async function copyDemoLink(demo: DesignDemoItem) {
+    try {
+      const path = reviewPathFor(demo.accessToken);
+      const absolute =
+        typeof window !== "undefined"
+          ? `${window.location.origin}${path}`
+          : path;
+      await navigator.clipboard.writeText(absolute);
+      setCopiedDemoId(demo._id);
+      window.setTimeout(() => setCopiedDemoId(null), 2000);
+    } catch {
+      setCopiedDemoId(null);
+    }
+  }
+
+  async function createDemo(e: React.FormEvent) {
+    e.preventDefault();
+    setDemoMsg("");
+    const title = demoTitle.trim();
+    const url = demoUrl.trim();
+    if (!title || !url) {
+      setDemoMsg("Title and demo URL are required.");
+      return;
+    }
+    setDemoPending(true);
+    try {
+      const res = await fetch(`/api/dashboard/clients/${client._id}/demos`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, demoUrl: url }),
+      });
+      const data = (await res.json()) as {
+        error?: string;
+        demo?: DesignDemoItem;
+      };
+      if (!res.ok || !data.demo) {
+        throw new Error(data.error || "Failed to create demo.");
+      }
+      setDemos((prev) => [data.demo!, ...prev]);
+      setDemoTitle("");
+      setDemoUrl("");
+      setDemoMsg("Design demo created.");
+    } catch (err) {
+      setDemoMsg(
+        err instanceof Error ? err.message : "Failed to create demo.",
+      );
+    } finally {
+      setDemoPending(false);
+    }
+  }
+
+  async function sendDemo(demoId: string) {
+    setDemoActionId(demoId);
+    setDemoMsg("");
+    try {
+      const res = await fetch(
+        `/api/dashboard/clients/${client._id}/demos/${demoId}/send`,
+        { method: "POST" },
+      );
+      const data = (await res.json()) as {
+        error?: string;
+        reviewUrl?: string;
+      };
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to email demo.");
+      }
+      setDemos((prev) =>
+        prev.map((d) =>
+          d._id === demoId
+            ? { ...d, status: "sent" as const, sentAt: d.sentAt ?? Date.now() }
+            : d,
+        ),
+      );
+      setDemoMsg(
+        data.reviewUrl
+          ? `Review email sent. Link: ${data.reviewUrl}`
+          : "Review email sent.",
+      );
+    } catch (err) {
+      setDemoMsg(
+        err instanceof Error ? err.message : "Failed to email demo.",
+      );
+    } finally {
+      setDemoActionId(null);
+    }
+  }
+
+  async function closeDemo(demoId: string) {
+    if (!window.confirm("Close this design review link?")) return;
+    setDemoActionId(demoId);
+    setDemoMsg("");
+    try {
+      const res = await fetch(
+        `/api/dashboard/clients/${client._id}/demos/${demoId}`,
+        { method: "PATCH" },
+      );
+      const data = (await res.json()) as {
+        error?: string;
+        demo?: DesignDemoItem;
+      };
+      if (!res.ok || !data.demo) {
+        throw new Error(data.error || "Failed to close demo.");
+      }
+      setDemos((prev) =>
+        prev.map((d) => (d._id === demoId ? { ...d, ...data.demo! } : d)),
+      );
+      setDemoMsg("Design review closed.");
+    } catch (err) {
+      setDemoMsg(
+        err instanceof Error ? err.message : "Failed to close demo.",
+      );
+    } finally {
+      setDemoActionId(null);
+    }
+  }
+
   return (
     <div className="dash-shell">
       <p className="mb-4">
@@ -323,8 +483,9 @@ export function DashboardClientDetail({
       <section className="dash-card mb-8">
         <h2 className="dash-section-title">Client feedback link</h2>
         <p className="dash-muted mb-3">
-          Send this private link so the client can leave feedback. Anyone with
-          the link can submit.
+          Send this private link for overall feedback about their current site
+          or working with Hexacomb. For clickable design previews, use Design
+          demos below.
         </p>
         {feedbackPath ? (
           <>
@@ -475,6 +636,162 @@ export function DashboardClientDetail({
           </p>
         ) : null}
       </form>
+
+      <section className="dash-card mb-8">
+        <h2 className="dash-section-title">Design demos</h2>
+        <p className="dash-muted mb-4">
+          Create a review link for each design iteration. The client opens the
+          link, clicks on the preview, and leaves pin comments with
+          screenshots.
+        </p>
+
+        <form onSubmit={(e) => void createDemo(e)} className="mb-6">
+          <div className="form-group">
+            <label htmlFor="demoTitle">Title</label>
+            <input
+              id="demoTitle"
+              value={demoTitle}
+              disabled={demoPending}
+              onChange={(e) => setDemoTitle(e.target.value)}
+              placeholder="Homepage v2"
+            />
+          </div>
+          <div className="form-group mt-3">
+            <label htmlFor="demoUrlInput">Demo URL</label>
+            <input
+              id="demoUrlInput"
+              type="url"
+              value={demoUrl}
+              disabled={demoPending}
+              onChange={(e) => setDemoUrl(e.target.value)}
+              placeholder="https://preview.example.com/"
+            />
+          </div>
+          <div className="dash-actions mt-3">
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={demoPending}
+            >
+              {demoPending ? "Creating…" : "Create demo"}
+            </button>
+          </div>
+          {demoMsg ? (
+            <p className="mt-3 text-sm" role="status">
+              {demoMsg}
+            </p>
+          ) : null}
+        </form>
+
+        {demos.length === 0 ? (
+          <p className="dash-muted">No design demos yet.</p>
+        ) : (
+          <ul className="dash-thread__list">
+            {demos.map((demo) => {
+              const path = reviewPathFor(demo.accessToken);
+              return (
+                <li key={demo._id} className="dash-thread__item">
+                  <div className="dash-thread__meta">
+                    <span>
+                      {demo.title} · {DESIGN_DEMO_STATUS_LABELS[demo.status]}
+                    </span>
+                    <time dateTime={new Date(demo.createdAt).toISOString()}>
+                      {formatWhen(demo.createdAt)}
+                    </time>
+                  </div>
+                  <p className="dash-muted mb-2">
+                    <a href={demo.demoUrl} target="_blank" rel="noreferrer">
+                      {demo.demoUrl}
+                    </a>
+                  </p>
+                  <p className="mb-3">
+                    <a href={path} target="_blank" rel="noreferrer">
+                      {path}
+                    </a>
+                  </p>
+                  <div className="dash-actions">
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={() => void copyDemoLink(demo)}
+                    >
+                      {copiedDemoId === demo._id ? "Copied" : "Copy link"}
+                    </button>
+                    {demo.status !== "closed" ? (
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        disabled={demoActionId === demo._id}
+                        onClick={() => void sendDemo(demo._id)}
+                      >
+                        {demoActionId === demo._id
+                          ? "Sending…"
+                          : demo.status === "sent"
+                            ? "Resend email"
+                            : "Email client"}
+                      </button>
+                    ) : null}
+                    {demo.status !== "closed" ? (
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        disabled={demoActionId === demo._id}
+                        onClick={() => void closeDemo(demo._id)}
+                      >
+                        Close
+                      </button>
+                    ) : null}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+
+        {demoComments.length > 0 ? (
+          <div className="dash-thread mt-6">
+            <h3 className="dash-thread__heading">Design preview comments</h3>
+            <ul className="dash-thread__list">
+              {demoComments.map((comment) => (
+                <li key={comment._id} className="dash-thread__item">
+                  <div className="dash-thread__meta">
+                    <span>
+                      {demoTitleById[comment.demoId] || "Demo"} ·{" "}
+                      {comment.submitterName?.trim() || "Anonymous"} · pin{" "}
+                      {Math.round(comment.xPercent)}%,{" "}
+                      {Math.round(comment.yPercent)}%
+                    </span>
+                    <time
+                      dateTime={new Date(comment.createdAt).toISOString()}
+                    >
+                      {formatWhen(comment.createdAt)}
+                    </time>
+                  </div>
+                  {comment.screenshotUrl ? (
+                    <div className="demo-comment-shot">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={comment.screenshotUrl}
+                        alt="Screenshot of commented preview"
+                        className="demo-comment-shot__img"
+                      />
+                      <span
+                        className="demo-comment-shot__pin"
+                        style={{
+                          left: `${comment.xPercent}%`,
+                          top: `${comment.yPercent}%`,
+                        }}
+                        aria-hidden
+                      />
+                    </div>
+                  ) : null}
+                  <p className="dash-thread__body">{comment.body}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+      </section>
 
       <section className="dash-card mb-8">
         <h2 className="dash-section-title">Conversation notes</h2>
