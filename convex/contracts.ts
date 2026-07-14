@@ -1,6 +1,7 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { ensureClientForLead } from "./lib/ensureClient";
+import { generateAccessToken } from "./lib/tokens";
 import { contractDocValidator } from "./schema";
 import { statusAfterContractSend, type LeadStatus } from "./statuses";
 
@@ -9,12 +10,6 @@ function assertIngestSecret(ingestSecret: string) {
   if (!expected || ingestSecret !== expected) {
     throw new Error("Unauthorized");
   }
-}
-
-function generateAccessToken(): string {
-  const bytes = new Uint8Array(32);
-  crypto.getRandomValues(bytes);
-  return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
 }
 
 export const upsertDraft = mutation({

@@ -70,7 +70,6 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       designReviewUrl: readOptionalString(body.designReviewUrl),
       productionUrl: readOptionalString(body.productionUrl),
       goalsSummary: readOptionalString(body.goalsSummary),
-      conversationNotes: readOptionalString(body.conversationNotes),
     });
 
     return NextResponse.json({ success: true, client });

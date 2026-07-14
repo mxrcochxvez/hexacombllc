@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 const tiers = [
   {
     name: "Starter",
-    price: "$70",
+    price: "$50",
     period: "/mo",
     label: "Essentials",
     labelDetail: "Get online",
@@ -33,7 +33,7 @@ const tiers = [
   },
   {
     name: "Growing",
-    price: "$119",
+    price: "$70",
     period: "/mo",
     label: "Most popular",
     labelDetail: "Monthly care",
@@ -54,7 +54,7 @@ const tiers = [
   },
   {
     name: "Established",
-    price: "$219",
+    price: "$120",
     period: "/mo",
     label: "Growth-focused",
     labelDetail: "Leads & care",

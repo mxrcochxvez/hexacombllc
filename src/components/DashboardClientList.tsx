@@ -97,7 +97,7 @@ export function DashboardClientList({
     <div className="dash-shell">
       <DashboardNav
         title="Clients"
-        subtitle="Project links, goals, and conversation notes."
+        subtitle="Project links, goals, feedback, and conversation notes."
       />
 
       <div className="dash-actions mb-6">

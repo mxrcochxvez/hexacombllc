@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import type { Id } from "@/lib/convex";
 import { isAdminAuthenticated } from "@/lib/adminAuth";
-import { getClient } from "@/lib/convex";
+import { prepareClientDetail } from "@/lib/convex";
 import { DashboardClientDetail } from "@/components/DashboardClientDetail";
 import type { ClientPhase } from "@/lib/statuses";
 
@@ -25,7 +25,7 @@ export default async function DashboardClientPage({ params }: PageProps) {
 
   let detail;
   try {
-    detail = await getClient(clientId);
+    detail = await prepareClientDetail(clientId);
   } catch (err) {
     console.error("Dashboard client detail failed:", err);
     notFound();
@@ -34,6 +34,10 @@ export default async function DashboardClientPage({ params }: PageProps) {
   if (!detail) {
     notFound();
   }
+
+  const feedbackPath = detail.client.feedbackToken
+    ? `/feedback/${detail.client.feedbackToken}`
+    : "";
 
   return (
     <div className="dash-page">
@@ -47,7 +51,7 @@ export default async function DashboardClientPage({ params }: PageProps) {
           designReviewUrl: detail.client.designReviewUrl,
           productionUrl: detail.client.productionUrl,
           goalsSummary: detail.client.goalsSummary,
-          conversationNotes: detail.client.conversationNotes,
+          feedbackToken: detail.client.feedbackToken,
           createdAt: detail.client.createdAt,
         }}
         lead={{
@@ -58,6 +62,21 @@ export default async function DashboardClientPage({ params }: PageProps) {
           business: detail.lead.business,
           website: detail.lead.website,
         }}
+        notes={detail.notes.map((note) => ({
+          _id: note._id,
+          clientId: note.clientId,
+          parentId: note.parentId,
+          body: note.body,
+          createdAt: note.createdAt,
+        }))}
+        feedback={detail.feedback.map((item) => ({
+          _id: item._id,
+          message: item.message,
+          rating: item.rating,
+          submitterName: item.submitterName,
+          createdAt: item.createdAt,
+        }))}
+        feedbackPath={feedbackPath}
       />
     </div>
   );
