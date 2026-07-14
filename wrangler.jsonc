@@ -51,6 +51,11 @@
 		"binding": "AI",
 		"remote": true
 	},
+	"browser": {
+		// Browser Run for design-demo screenshots; remote required for local/preview
+		"binding": "BROWSER",
+		"remote": true
+	},
 	"images": {
 		// Enable image optimization
 		// see https://opennext.js.org/cloudflare/howtos/image
