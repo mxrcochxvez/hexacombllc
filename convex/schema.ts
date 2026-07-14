@@ -152,6 +152,21 @@ export const designDemoCommentDocValidator = v.object({
   createdAt: v.number(),
 });
 
+/** Query DTO: stored comment fields plus resolved Convex storage URL. */
+export const designDemoCommentWithUrlValidator = v.object({
+  _id: v.id("designDemoComments"),
+  _creationTime: v.number(),
+  demoId: v.id("designDemos"),
+  clientId: v.id("clients"),
+  body: v.string(),
+  xPercent: v.number(),
+  yPercent: v.number(),
+  screenshotStorageId: v.optional(v.id("_storage")),
+  screenshotUrl: v.union(v.string(), v.null()),
+  submitterName: v.optional(v.string()),
+  createdAt: v.number(),
+});
+
 export default defineSchema({
   leads: defineTable({
     name: v.string(),

@@ -5,6 +5,7 @@ import type { QueryCtx } from "./_generated/server";
 import { generateAccessToken } from "./lib/tokens";
 import {
   designDemoCommentDocValidator,
+  designDemoCommentWithUrlValidator,
   designDemoDocValidator,
   designDemoStatus,
 } from "./schema";
@@ -38,20 +39,6 @@ async function listDemosForClient(ctx: QueryCtx, clientId: Id<"clients">) {
     .order("desc")
     .collect();
 }
-
-const commentWithUrlValidator = v.object({
-  _id: v.id("designDemoComments"),
-  _creationTime: v.number(),
-  demoId: v.id("designDemos"),
-  clientId: v.id("clients"),
-  body: v.string(),
-  xPercent: v.number(),
-  yPercent: v.number(),
-  screenshotStorageId: v.optional(v.id("_storage")),
-  screenshotUrl: v.union(v.string(), v.null()),
-  submitterName: v.optional(v.string()),
-  createdAt: v.number(),
-});
 
 async function listCommentsForClientWithUrls(
   ctx: QueryCtx,
@@ -169,7 +156,7 @@ export const listCommentsForClient = query({
     ingestSecret: v.string(),
     clientId: v.id("clients"),
   },
-  returns: v.array(commentWithUrlValidator),
+  returns: v.array(designDemoCommentWithUrlValidator),
   handler: async (ctx, args) => {
     assertIngestSecret(args.ingestSecret);
     const client = await ctx.db.get(args.clientId);
@@ -188,7 +175,7 @@ export const getForAdmin = query({
   returns: v.union(
     v.object({
       demo: designDemoDocValidator,
-      comments: v.array(commentWithUrlValidator),
+      comments: v.array(designDemoCommentWithUrlValidator),
     }),
     v.null(),
   ),
