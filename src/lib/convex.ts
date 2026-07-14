@@ -325,3 +325,84 @@ export async function promoteLeadToClient(
     leadId,
   });
 }
+
+export async function createDesignDemo(input: {
+  clientId: Id<"clients">;
+  title: string;
+  demoUrl: string;
+}) {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.mutation(api.designDemos.create, {
+    ingestSecret,
+    ...input,
+  });
+}
+
+export async function listDesignDemosForClient(clientId: Id<"clients">) {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.query(api.designDemos.listForClient, {
+    ingestSecret,
+    clientId,
+  });
+}
+
+export async function listDesignDemoCommentsForClient(
+  clientId: Id<"clients">,
+) {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.query(api.designDemos.listCommentsForClient, {
+    ingestSecret,
+    clientId,
+  });
+}
+
+export async function sendDesignDemo(demoId: Id<"designDemos">) {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.mutation(api.designDemos.send, {
+    ingestSecret,
+    demoId,
+  });
+}
+
+export async function closeDesignDemo(demoId: Id<"designDemos">) {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.mutation(api.designDemos.close, {
+    ingestSecret,
+    demoId,
+  });
+}
+
+export async function getDesignDemoByToken(accessToken: string) {
+  const client = getConvexClient();
+  if (!client) {
+    throw new Error("NEXT_PUBLIC_CONVEX_URL is not configured.");
+  }
+  return await client.query(api.designDemos.getByToken, { accessToken });
+}
+
+export async function generateDesignDemoScreenshotUploadUrl(
+  accessToken: string,
+) {
+  const client = getConvexClient();
+  if (!client) {
+    throw new Error("NEXT_PUBLIC_CONVEX_URL is not configured.");
+  }
+  return await client.mutation(api.designDemos.generateScreenshotUploadUrl, {
+    accessToken,
+  });
+}
+
+export async function submitDesignDemoComment(input: {
+  accessToken: string;
+  body: string;
+  xPercent: number;
+  yPercent: number;
+  submitterName?: string;
+  screenshotStorageId?: Id<"_storage">;
+}) {
+  const client = getConvexClient();
+  if (!client) {
+    throw new Error("NEXT_PUBLIC_CONVEX_URL is not configured.");
+  }
+  return await client.mutation(api.designDemos.submitComment, input);
+}

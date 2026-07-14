@@ -1,6 +1,7 @@
 import type { Doc, Id } from "../_generated/dataModel";
 import type { MutationCtx } from "../_generated/server";
 import { generateAccessToken } from "./tokens";
+import { removeDesignDemosForClient } from "./removeDesignDemos";
 
 function optionalTrimmed(value: string | undefined): string | undefined {
   if (value === undefined) return undefined;
@@ -107,6 +108,8 @@ export async function removeClientForLead(
   for (const item of feedback) {
     await ctx.db.delete(item._id);
   }
+
+  await removeDesignDemosForClient(ctx, existing._id);
 
   await ctx.db.delete(existing._id);
 }

@@ -122,3 +122,19 @@ export const CLIENT_PHASE_LABELS: Record<ClientPhase, string> = {
 export function isClientPhase(value: string): value is ClientPhase {
   return (CLIENT_PHASES as readonly string[]).includes(value);
 }
+
+export const DESIGN_DEMO_STATUSES = ["draft", "sent", "closed"] as const;
+
+export type DesignDemoStatus = (typeof DESIGN_DEMO_STATUSES)[number];
+
+export const DESIGN_DEMO_STATUS_LABELS: Record<DesignDemoStatus, string> = {
+  draft: "Draft",
+  sent: "Sent",
+  closed: "Closed",
+};
+
+export function isDesignDemoStatus(
+  value: string,
+): value is DesignDemoStatus {
+  return (DESIGN_DEMO_STATUSES as readonly string[]).includes(value);
+}

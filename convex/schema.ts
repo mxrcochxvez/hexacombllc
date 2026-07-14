@@ -3,6 +3,7 @@ import { v } from "convex/values";
 import {
   CLIENT_PHASES,
   CONTRACT_STATUSES,
+  DESIGN_DEMO_STATUSES,
   LEAD_STATUSES,
 } from "./statuses";
 
@@ -33,6 +34,12 @@ export const clientPhase = v.union(
   v.literal(CLIENT_PHASES[2]),
   v.literal(CLIENT_PHASES[3]),
   v.literal(CLIENT_PHASES[4]),
+);
+
+export const designDemoStatus = v.union(
+  v.literal(DESIGN_DEMO_STATUSES[0]),
+  v.literal(DESIGN_DEMO_STATUSES[1]),
+  v.literal(DESIGN_DEMO_STATUSES[2]),
 );
 
 export const leadDocValidator = v.object({
@@ -115,6 +122,32 @@ export const clientFeedbackDocValidator = v.object({
   clientId: v.id("clients"),
   message: v.string(),
   rating: v.optional(v.number()),
+  submitterName: v.optional(v.string()),
+  createdAt: v.number(),
+});
+
+export const designDemoDocValidator = v.object({
+  _id: v.id("designDemos"),
+  _creationTime: v.number(),
+  clientId: v.id("clients"),
+  title: v.string(),
+  demoUrl: v.string(),
+  accessToken: v.string(),
+  status: designDemoStatus,
+  sentAt: v.optional(v.number()),
+  createdAt: v.number(),
+  updatedAt: v.number(),
+});
+
+export const designDemoCommentDocValidator = v.object({
+  _id: v.id("designDemoComments"),
+  _creationTime: v.number(),
+  demoId: v.id("designDemos"),
+  clientId: v.id("clients"),
+  body: v.string(),
+  xPercent: v.number(),
+  yPercent: v.number(),
+  screenshotStorageId: v.optional(v.id("_storage")),
   submitterName: v.optional(v.string()),
   createdAt: v.number(),
 });
@@ -207,4 +240,31 @@ export default defineSchema({
     submitterName: v.optional(v.string()),
     createdAt: v.number(),
   }).index("by_client_and_createdAt", ["clientId", "createdAt"]),
+
+  designDemos: defineTable({
+    clientId: v.id("clients"),
+    title: v.string(),
+    demoUrl: v.string(),
+    accessToken: v.string(),
+    status: designDemoStatus,
+    sentAt: v.optional(v.number()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_client", ["clientId"])
+    .index("by_accessToken", ["accessToken"])
+    .index("by_client_and_createdAt", ["clientId", "createdAt"]),
+
+  designDemoComments: defineTable({
+    demoId: v.id("designDemos"),
+    clientId: v.id("clients"),
+    body: v.string(),
+    xPercent: v.number(),
+    yPercent: v.number(),
+    screenshotStorageId: v.optional(v.id("_storage")),
+    submitterName: v.optional(v.string()),
+    createdAt: v.number(),
+  })
+    .index("by_demo", ["demoId"])
+    .index("by_client_and_createdAt", ["clientId", "createdAt"]),
 });
