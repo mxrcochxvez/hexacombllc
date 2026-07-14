@@ -91,9 +91,32 @@ export const clientDocValidator = v.object({
   designReviewUrl: v.optional(v.string()),
   productionUrl: v.optional(v.string()),
   goalsSummary: v.optional(v.string()),
+  /** @deprecated Prefer clientNotes table; kept for legacy rows. */
   conversationNotes: v.optional(v.string()),
+  /** Unguessable public feedback link token; backfilled for legacy rows. */
+  feedbackToken: v.optional(v.string()),
   createdAt: v.number(),
   updatedAt: v.number(),
+});
+
+export const clientNoteDocValidator = v.object({
+  _id: v.id("clientNotes"),
+  _creationTime: v.number(),
+  clientId: v.id("clients"),
+  parentId: v.optional(v.id("clientNotes")),
+  body: v.string(),
+  createdAt: v.number(),
+  updatedAt: v.number(),
+});
+
+export const clientFeedbackDocValidator = v.object({
+  _id: v.id("clientFeedback"),
+  _creationTime: v.number(),
+  clientId: v.id("clients"),
+  message: v.string(),
+  rating: v.optional(v.number()),
+  submitterName: v.optional(v.string()),
+  createdAt: v.number(),
 });
 
 export default defineSchema({
@@ -154,11 +177,34 @@ export default defineSchema({
     designReviewUrl: v.optional(v.string()),
     productionUrl: v.optional(v.string()),
     goalsSummary: v.optional(v.string()),
+    /** @deprecated Prefer clientNotes table; kept for legacy rows. */
     conversationNotes: v.optional(v.string()),
+    /** Unguessable public feedback link token; backfilled for legacy rows. */
+    feedbackToken: v.optional(v.string()),
     createdAt: v.number(),
     updatedAt: v.number(),
   })
     .index("by_lead", ["leadId"])
     .index("by_createdAt", ["createdAt"])
-    .index("by_phase", ["phase"]),
+    .index("by_phase", ["phase"])
+    .index("by_feedbackToken", ["feedbackToken"]),
+
+  clientNotes: defineTable({
+    clientId: v.id("clients"),
+    parentId: v.optional(v.id("clientNotes")),
+    body: v.string(),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_client", ["clientId"])
+    .index("by_client_and_createdAt", ["clientId", "createdAt"])
+    .index("by_parent", ["parentId"]),
+
+  clientFeedback: defineTable({
+    clientId: v.id("clients"),
+    message: v.string(),
+    rating: v.optional(v.number()),
+    submitterName: v.optional(v.string()),
+    createdAt: v.number(),
+  }).index("by_client_and_createdAt", ["clientId", "createdAt"]),
 });

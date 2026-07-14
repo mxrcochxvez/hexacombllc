@@ -1,5 +1,6 @@
 import type { Doc, Id } from "../_generated/dataModel";
 import type { MutationCtx } from "../_generated/server";
+import { generateAccessToken } from "./tokens";
 
 function optionalTrimmed(value: string | undefined): string | undefined {
   if (value === undefined) return undefined;
@@ -13,6 +14,26 @@ function seedNameFromLead(lead: Doc<"leads">): string {
   return lead.name.trim();
 }
 
+/** Backfill feedbackToken on legacy client rows that predate the field. */
+export async function ensureClientFeedbackToken(
+  ctx: MutationCtx,
+  client: Doc<"clients">,
+): Promise<Doc<"clients">> {
+  if (client.feedbackToken) {
+    return client;
+  }
+  const feedbackToken = generateAccessToken();
+  await ctx.db.patch(client._id, {
+    feedbackToken,
+    updatedAt: Date.now(),
+  });
+  const updated = await ctx.db.get(client._id);
+  if (!updated) {
+    throw new Error("Failed to backfill feedback token");
+  }
+  return updated;
+}
+
 /** Create a client row for a lead if one does not already exist. */
 export async function ensureClientForLead(
   ctx: MutationCtx,
@@ -23,6 +44,7 @@ export async function ensureClientForLead(
     .withIndex("by_lead", (q) => q.eq("leadId", leadId))
     .first();
   if (existing) {
+    await ensureClientFeedbackToken(ctx, existing);
     return existing._id;
   }
 
@@ -38,6 +60,7 @@ export async function ensureClientForLead(
     email: lead.email,
     phase: "design",
     goalsSummary: optionalTrimmed(lead.goal),
+    feedbackToken: generateAccessToken(),
     createdAt: now,
     updatedAt: now,
   });
@@ -56,7 +79,7 @@ export async function ensureMissingClientsForContracted(
   }
 }
 
-/** Remove the client row for a lead if present. */
+/** Delete notes + feedback, then the client row for a lead if present. */
 export async function removeClientForLead(
   ctx: MutationCtx,
   leadId: Id<"leads">,
@@ -65,9 +88,27 @@ export async function removeClientForLead(
     .query("clients")
     .withIndex("by_lead", (q) => q.eq("leadId", leadId))
     .first();
-  if (existing) {
-    await ctx.db.delete(existing._id);
+  if (!existing) return;
+
+  const notes = await ctx.db
+    .query("clientNotes")
+    .withIndex("by_client", (q) => q.eq("clientId", existing._id))
+    .collect();
+  for (const note of notes) {
+    await ctx.db.delete(note._id);
   }
+
+  const feedback = await ctx.db
+    .query("clientFeedback")
+    .withIndex("by_client_and_createdAt", (q) =>
+      q.eq("clientId", existing._id),
+    )
+    .collect();
+  for (const item of feedback) {
+    await ctx.db.delete(item._id);
+  }
+
+  await ctx.db.delete(existing._id);
 }
 
 /**

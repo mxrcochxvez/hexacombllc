@@ -45,7 +45,19 @@ export type ClientUpdateInput = {
   designReviewUrl?: string;
   productionUrl?: string;
   goalsSummary?: string;
-  conversationNotes?: string;
+};
+
+export type ClientNoteInput = {
+  clientId: Id<"clients">;
+  body: string;
+  parentId?: Id<"clientNotes">;
+};
+
+export type ClientFeedbackSubmitInput = {
+  feedbackToken: string;
+  message: string;
+  rating?: number;
+  submitterName?: string;
 };
 
 function getConvexClient(): ConvexHttpClient | null {
@@ -213,6 +225,15 @@ export async function getClient(clientId: Id<"clients">) {
   return await client.query(api.clients.get, { ingestSecret, clientId });
 }
 
+/** Backfill feedback token + migrate legacy notes, then return full detail. */
+export async function prepareClientDetail(clientId: Id<"clients">) {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.mutation(api.clients.prepareDetail, {
+    ingestSecret,
+    clientId,
+  });
+}
+
 export async function getClientByLead(
   leadId: Id<"leads">,
 ): Promise<Doc<"clients"> | null> {
@@ -231,6 +252,32 @@ export async function updateClient(
     ingestSecret,
     ...input,
   });
+}
+
+export async function addClientNote(input: ClientNoteInput) {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.mutation(api.clients.addNote, {
+    ingestSecret,
+    ...input,
+  });
+}
+
+export async function getClientFeedbackByToken(feedbackToken: string) {
+  const client = getConvexClient();
+  if (!client) {
+    throw new Error("NEXT_PUBLIC_CONVEX_URL is not configured.");
+  }
+  return await client.query(api.clients.getByFeedbackToken, {
+    feedbackToken,
+  });
+}
+
+export async function submitClientFeedback(input: ClientFeedbackSubmitInput) {
+  const client = getConvexClient();
+  if (!client) {
+    throw new Error("NEXT_PUBLIC_CONVEX_URL is not configured.");
+  }
+  return await client.mutation(api.clients.submitFeedback, input);
 }
 
 export async function revertClientToLead(

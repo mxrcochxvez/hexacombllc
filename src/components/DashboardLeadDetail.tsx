@@ -73,7 +73,7 @@ export function DashboardLeadDetail({
     maintenanceFeeMonthly:
       contract?.maintenanceFeeMonthly !== undefined
         ? String(contract.maintenanceFeeMonthly)
-        : "70",
+        : "50",
     agreementDate: contract?.agreementDate || "",
     hexacombSignerName: contract?.hexacombSignerName || "",
     hexacombSignerTitle: contract?.hexacombSignerTitle || "Founder",
