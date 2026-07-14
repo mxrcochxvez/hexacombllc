@@ -103,7 +103,7 @@ export async function sendDesignDemoInviteEmail(opts: {
     html: `<p>Hi ${escapeHtml(opts.leadName)},</p>
 <p>A new design preview for <strong>${escapeHtml(opts.clientName)}</strong> is ready for your feedback.</p>
 <p><strong>${escapeHtml(opts.title)}</strong></p>
-<p>Open the review link, click anywhere on the preview, and leave a comment.</p>
+<p>Open the review link, browse the preview, and leave feedback in the chat panel.</p>
 <p><a href="${escapeHtml(opts.reviewUrl)}">Review the design preview</a></p>
 <p>If the link does not work, copy and paste this URL into your browser:<br/>
 ${escapeHtml(opts.reviewUrl)}</p>

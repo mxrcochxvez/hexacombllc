@@ -64,9 +64,6 @@ type DesignDemoCommentItem = {
   _id: string;
   demoId: string;
   body: string;
-  xPercent: number;
-  yPercent: number;
-  screenshotUrl: string | null;
   submitterName?: string;
   createdAt: number;
 };
@@ -484,8 +481,8 @@ export function DashboardClientDetail({
         <h2 className="dash-section-title">Client feedback link</h2>
         <p className="dash-muted mb-3">
           Send this private link for overall feedback about their current site
-          or working with Hexacomb. For clickable design previews, use Design
-          demos below.
+          or working with Hexacomb. For a design preview they can browse and
+          comment on, use Design demos below.
         </p>
         {feedbackPath ? (
           <>
@@ -641,8 +638,8 @@ export function DashboardClientDetail({
         <h2 className="dash-section-title">Design demos</h2>
         <p className="dash-muted mb-4">
           Create a review link for each design iteration. The client opens the
-          link, clicks on the preview, and leaves pin comments with
-          screenshots.
+          link, browses the preview freely, and leaves feedback in a chat
+          panel.
         </p>
 
         <form onSubmit={(e) => void createDemo(e)} className="mb-6">
@@ -757,9 +754,7 @@ export function DashboardClientDetail({
                   <div className="dash-thread__meta">
                     <span>
                       {demoTitleById[comment.demoId] || "Demo"} ·{" "}
-                      {comment.submitterName?.trim() || "Anonymous"} · pin{" "}
-                      {Math.round(comment.xPercent)}%,{" "}
-                      {Math.round(comment.yPercent)}%
+                      {comment.submitterName?.trim() || "Anonymous"}
                     </span>
                     <time
                       dateTime={new Date(comment.createdAt).toISOString()}
@@ -767,24 +762,6 @@ export function DashboardClientDetail({
                       {formatWhen(comment.createdAt)}
                     </time>
                   </div>
-                  {comment.screenshotUrl ? (
-                    <div className="demo-comment-shot">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={comment.screenshotUrl}
-                        alt="Screenshot of commented preview"
-                        className="demo-comment-shot__img"
-                      />
-                      <span
-                        className="demo-comment-shot__pin"
-                        style={{
-                          left: `${comment.xPercent}%`,
-                          top: `${comment.yPercent}%`,
-                        }}
-                        aria-hidden
-                      />
-                    </div>
-                  ) : null}
                   <p className="dash-thread__body">{comment.body}</p>
                 </li>
               ))}
