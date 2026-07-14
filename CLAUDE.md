@@ -24,7 +24,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
   - `/dashboard/clients` and `/dashboard/clients/[id]` — post-sale clients, notes/replies, feedback link, design demos.
   - `/contract/[token]` — client web acceptance of the website agreement (unguessable `accessToken`).
   - `/feedback/[token]` — overall / current-site client feedback form.
-  - `/review/[token]` — design-demo iframe preview with click-to-comment pins.
+  - `/review/[token]` — chrome-free design-demo iframe; floating chat bubble for feedback on that demo.
 - **API routes** exist in `src/app/api/`:
   - `contact/route.ts` — accepts form submissions, verifies Turnstile token, creates a Convex lead (`source: contact`, cool), then sends email via Resend. Convex write failures are logged and do not block email.
   - `intake/route.ts` — project intake submissions; creates a Convex lead (`source: intake`, warm), then emails via Resend.
@@ -33,7 +33,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
   - `dashboard/*` — login/logout, leads, clients, notes (including delete), design demos create/send/close, contract draft + send (session cookie required).
   - `contract/[token]` + `accept` — public token-gated contract read/accept; accept notifies `CONTACT_TO_EMAIL` via Resend.
   - `feedback/[token]` — public client feedback submit.
-  - `review/[token]/comments` — public design-demo pin comments; optionally screenshots via Browser Run, stored in Convex file storage.
+  - `review/[token]/comments` — public design-demo text feedback attached to a demo (no pins/screenshots).
 - **Convex** (`convex/`) stores CRM leads, contracts, clients, notes, feedback, and design demos. Schema is in `convex/schema.ts`. Lead + contract + client phase + design-demo status constants live in `convex/statuses.ts`. Mutations/queries: `convex/leads.ts`, `convex/contracts.ts`, `convex/clients.ts`, `convex/designDemos.ts`. Form/dashboard APIs use `ConvexHttpClient` helpers in `src/lib/convex.ts` (no React `ConvexProvider` yet). Lead pipeline: `fresh` → `contacted` → `qualified` → `proposal_sent` → `negotiating` → `contracted` (terminal), with `lost` / `nurture` side paths; contract send may set `proposal_sent` if not already further along; client accept sets lead to `contracted`.
 - **Interactive client components** live in `src/components/`:
   - `WebsiteAuditTool.tsx` calls `/api/audit` and renders CEO-friendly audit results.
@@ -45,7 +45,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - **OpenNext config**: uses R2 incremental cache (`open-next.config.ts`).
 - **Wrangler config**: `wrangler.jsonc` (JSON with comments). Worker `hexacombllc`, self-reference binding, R2 bucket for cache, image optimization enabled.
 - **Cloudflare Workers AI**: `wrangler.jsonc` defines an `AI` binding with `remote: true`. Route handlers can access it with `getCloudflareContext().env.AI`; keep AI calls optional/failable so core flows still work locally and during demos. Workers AI uses remote Cloudflare resources and may incur usage charges during local preview/dev.
-- **Cloudflare Browser Run**: `wrangler.jsonc` defines a `BROWSER` binding with `remote: true` for design-demo screenshots (`env.BROWSER.quickAction("screenshot", …)`). Keep screenshot capture optional so comments still save if Browser Run is unavailable (plain `npm run dev`). Browser Run incurs usage charges.
+- **App route groups**: `(site)` wraps marketing/dashboard pages with Navbar/Footer; `(bare)` is chrome-free for `/review/[token]`.
 - **Environment**: `.dev.vars` sets `NEXTJS_ENV=development` for Cloudflare local dev. Don't use `.env.local` for app secrets (Convex CLI may write `CONVEX_DEPLOYMENT` / `NEXT_PUBLIC_CONVEX_URL` there — keep `LEAD_INGEST_SECRET` and app secrets in `.dev.vars` as well).
 
 ## Secrets & Env Vars
@@ -79,7 +79,6 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - **Single service**: `npm run dev` starts the entire app (Next.js 16 + Turbopack on port 3000). For lead tracking, also run `npm run convex:dev` (or ensure Convex functions were pushed). No databases, Docker, or other local services are required beyond Convex’s cloud backend.
 - **No test suite**: There are no automated test commands. Validate changes with `npm run lint` and manual browser testing.
 - **Workers AI unavailable locally**: The `AI` binding only works via `wrangler dev` / `npm run preview`. In plain `npm run dev`, Workers AI calls return `undefined` and are caught gracefully — this is expected, not an error.
-- **Browser Run screenshots**: Design-demo comment screenshots need the `BROWSER` binding (`remote: true`). In plain `npm run dev`, screenshot capture is skipped and the comment still saves.
 - **Turnstile & Resend**: The contact form's bot-check and email delivery depend on real API keys in `.dev.vars`. With placeholder keys, the rest of the site still works; only contact form submission will fail validation.
 - **Convex leads**: Contact and intake APIs write leads after Turnstile. Missing `NEXT_PUBLIC_CONVEX_URL` / `LEAD_INGEST_SECRET` logs and skips the write; email still sends. Manage leads at `/dashboard` (requires `ADMIN_PASSWORD`) or in the Convex dashboard. Set the Worker secret with `npx wrangler secret put LEAD_INGEST_SECRET` before production deploys that need lead writes.
 - **Dashboard / contracts**: Set `ADMIN_PASSWORD` in `.dev.vars` locally and `wrangler secret put ADMIN_PASSWORD` for production. Contract invite + signed notification emails need a real `RESEND_API_KEY`.
