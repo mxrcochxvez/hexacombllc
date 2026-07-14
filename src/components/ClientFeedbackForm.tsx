@@ -63,8 +63,9 @@ export function ClientFeedbackForm({
         <p className="dash-muted mb-2">Hexacomb LLC</p>
         <h1 className="dash-title">Share your feedback</h1>
         <p className="dash-muted mt-2">
-          Tell us how things are going for <strong>{clientName}</strong>. Your
-          notes help us improve the site and our support.
+          Tell us how your current site is working and how things are going
+          overall for <strong>{clientName}</strong>. For feedback on a specific
+          design preview, use the review link we emailed you instead.
         </p>
       </header>
 
@@ -106,7 +107,7 @@ export function ClientFeedbackForm({
             value={message}
             disabled={pending}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="What is working well? What could be better?"
+            placeholder="What do you like about the current site? What should we improve?"
           />
         </div>
 
