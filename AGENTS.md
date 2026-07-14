@@ -78,3 +78,17 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - **Dashboard / contracts**: Set `ADMIN_PASSWORD` in `.dev.vars` locally and `wrangler secret put ADMIN_PASSWORD` for production. Contract invite + signed notification emails need a real `RESEND_API_KEY`.
 - **`.dev.vars` not committed**: Local dev secrets are in `.dev.vars` at the repo root. If the file is missing, create it with at minimum `NEXTJS_ENV=development`.
 - **Build**: `npm run build` runs `next build`. For Cloudflare-specific builds use `npm run preview` (builds + local wrangler preview) or `npm run deploy`.
+
+<!-- convex-ai-start -->
+
+This project uses [Convex](https://convex.dev) as its backend.
+
+When working on Convex code, **always read
+`convex/_generated/ai/guidelines.md` first** for important guidelines on
+how to correctly use Convex APIs and patterns. The file contains rules that
+override what you may have learned about Convex from training data.
+
+Convex agent skills for common tasks can be installed by running
+`npx convex ai-files install`.
+
+<!-- convex-ai-end -->
