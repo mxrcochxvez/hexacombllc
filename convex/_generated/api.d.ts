@@ -12,6 +12,7 @@ import type * as clients from "../clients.js";
 import type * as contracts from "../contracts.js";
 import type * as leads from "../leads.js";
 import type * as lib_ensureClient from "../lib/ensureClient.js";
+import type * as lib_tokens from "../lib/tokens.js";
 import type * as statuses from "../statuses.js";
 
 import type {
@@ -25,6 +26,7 @@ declare const fullApi: ApiFromModules<{
   contracts: typeof contracts;
   leads: typeof leads;
   "lib/ensureClient": typeof lib_ensureClient;
+  "lib/tokens": typeof lib_tokens;
   statuses: typeof statuses;
 }>;
 
