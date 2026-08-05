@@ -5,6 +5,7 @@ import Link from "next/link";
 
 const links = [
   { href: "/about", label: "About" },
+  { href: "/how-it-works", label: "How it works" },
   { href: "/pricing", label: "Pricing" },
   { href: "/website-audit", label: "Check your site" },
 ];
@@ -140,10 +141,7 @@ export default function Navbar() {
           htmlFor={toggleId}
         />
         <div className="nav-mobile-panel">
-          <nav
-            className="nav-mobile-menu"
-            aria-label="Mobile"
-          >
+          <nav className="nav-mobile-menu" aria-label="Mobile">
             <ul className="nav-mobile-list" role="list">
               {mobileLinks.map((link, i) => (
                 <li key={link.href}>
