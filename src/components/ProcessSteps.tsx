@@ -7,10 +7,10 @@ export default function ProcessSteps() {
     <section className="growth-proof" aria-labelledby="process-heading">
       <div className="growth-shell proof-layout">
         <div className="report-sheet">
-          <h2 id="process-heading">What happened. What it means. What we change.</h2>
-          <div className="report-signal"><strong>See the signal</strong><p>Search, traffic, and conversion behavior.</p></div>
-          <div className="report-signal"><strong>Choose the move</strong><p>The highest-value improvement gets priority.</p></div>
-          <div className="report-signal report-signal-active"><strong>Ship the change</strong><p>The report becomes work—not homework for you.</p></div>
+          <h2 id="process-heading">What we see. What it means. What we do next.</h2>
+          <div className="report-signal"><strong>See what is happening</strong><p>We review search visibility, website traffic, and how visitors get in touch.</p></div>
+          <div className="report-signal"><strong>Pick the next priority</strong><p>We focus on the change most likely to help your business right now.</p></div>
+          <div className="report-signal report-signal-active"><strong>Make the update</strong><p>We put the plan into action, so it does not become another thing on your list.</p></div>
         </div>
         <div className="founder-proof">
           <div className="founder-image">
@@ -24,8 +24,8 @@ export default function ProcessSteps() {
           </div>
           <div className="founder-copy">
             <MapPin size={20} aria-hidden />
-            <h3>The person reading the data is the person doing the work.</h3>
-            <p>I&rsquo;m Marco. I stay close to your website and explain the decisions plainly.</p>
+            <h3>The person reviewing your website is the person making the improvements.</h3>
+            <p>I&apos;m Marco. I stay close to your website and explain what we are doing in plain language.</p>
             <ul>
               <li><Check size={15} aria-hidden /> Direct access</li><li><Check size={15} aria-hidden /> Clear monthly priorities</li><li><Check size={15} aria-hidden /> No long-term lock-in</li>
             </ul>

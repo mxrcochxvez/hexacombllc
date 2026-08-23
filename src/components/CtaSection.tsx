@@ -1,7 +1,7 @@
 import { ContactFormClient } from "@/components/ContactFormClient";
 import { Check } from "lucide-react";
 
-const trustItems = ["Current site is enough", "Reply within one business day", "No jargon. No pressure."];
+const trustItems = ["Your current website is enough to start", "I reply within one business day", "No jargon. No pressure."];
 
 export default function CtaSection() {
   return (
@@ -9,11 +9,11 @@ export default function CtaSection() {
       <div className="growth-shell growth-close-grid">
         <div className="growth-close-copy">
           <h2 id="contact-heading">
-            Stop carrying the website.
-            <span> Put it on our desk.</span>
+            Need help with your website?
+            <span> Let&apos;s make a plan.</span>
           </h2>
           <p>
-            Tell me what is being ignored. I&rsquo;ll tell you where we should attack first.
+            Tell me what is not working or what you want to improve. I&apos;ll help you identify the best place to start.
           </p>
           <ul className="growth-close-trust" aria-label="What to expect">
             {trustItems.map((item) => (
@@ -32,8 +32,8 @@ export default function CtaSection() {
           aria-label="Contact form"
         >
           <div className="growth-contact-form-head">
-            <span>Hand it over</span>
-            <strong>Tell me about the website</strong>
+            <span>Start here</span>
+            <strong>Tell me about your business and website</strong>
           </div>
           <ContactFormClient />
         </div>
