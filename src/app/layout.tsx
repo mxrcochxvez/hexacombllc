@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Libre_Franklin, Literata } from "next/font/google";
 import "./brand.css";
 import "./globals.css";
@@ -185,6 +186,7 @@ export default function RootLayout({
         <TrackClicks />
         {children}
       </body>
+      <GoogleAnalytics gaId="G-3JYGDR8ZVE" />
     </html>
   );
 }
