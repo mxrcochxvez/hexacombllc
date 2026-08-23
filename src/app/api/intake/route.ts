@@ -108,7 +108,7 @@ function buildEmailHtml(body: Record<string, unknown>): string {
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    const body = (await request.json()) as Record<string, unknown>;
     const { name, email, phone, turnstileToken } = body;
 
     // ── Validate required fields ────────────────────────────────
@@ -142,7 +142,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!turnstileToken) {
+    if (typeof turnstileToken !== "string" || !turnstileToken) {
       return NextResponse.json(
         { error: "Security check required." },
         { status: 400 }

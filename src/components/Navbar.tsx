@@ -8,6 +8,7 @@ const links = [
   { href: "/how-it-works", label: "How it works" },
   { href: "/website-audit", label: "Website audit" },
   { href: "/pricing", label: "Plans" },
+  { href: "/blog", label: "Blog" },
 ];
 
 const mobileLinks = [{ href: "/", label: "Home" }, ...links];

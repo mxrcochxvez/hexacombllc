@@ -19,6 +19,7 @@ export function DashboardNav({
   const onLeads =
     pathname === "/dashboard" || pathname.startsWith("/dashboard/leads");
   const onClients = pathname.startsWith("/dashboard/clients");
+  const onBlog = pathname.startsWith("/dashboard/blog");
 
   async function logout() {
     await fetch("/api/dashboard/logout", { method: "POST" });
@@ -43,6 +44,9 @@ export function DashboardNav({
               }
             >
               Clients
+            </Link>
+            <Link href="/dashboard/blog" className={onBlog ? "dash-nav__link is-active" : "dash-nav__link"}>
+              Blog
             </Link>
           </nav>
         ) : null}

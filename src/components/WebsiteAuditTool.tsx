@@ -88,7 +88,7 @@ export default function WebsiteAuditTool() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url }),
       });
-      const data = await response.json();
+      const data = (await response.json()) as AuditResult & { error?: string };
 
       if (!response.ok) {
         throw new Error(data.error || "We could not audit that site.");

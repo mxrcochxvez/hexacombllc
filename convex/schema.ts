@@ -42,6 +42,40 @@ export const designDemoStatus = v.union(
   v.literal(DESIGN_DEMO_STATUSES[2]),
 );
 
+export const blogPostStatus = v.union(
+  v.literal("draft"),
+  v.literal("published"),
+);
+
+export const blogPostDocValidator = v.object({
+  _id: v.id("blogPosts"),
+  _creationTime: v.number(),
+  title: v.string(),
+  slug: v.string(),
+  excerpt: v.string(),
+  contentMarkdown: v.string(),
+  status: blogPostStatus,
+  author: v.string(),
+  tags: v.array(v.string()),
+  metaTitle: v.optional(v.string()),
+  metaDescription: v.optional(v.string()),
+  publishedAt: v.optional(v.number()),
+  createdAt: v.number(),
+  updatedAt: v.number(),
+});
+
+export const blogApiKeyDocValidator = v.object({
+  _id: v.id("blogApiKeys"),
+  _creationTime: v.number(),
+  name: v.string(),
+  keyHash: v.string(),
+  keyPrefix: v.string(),
+  canPublish: v.boolean(),
+  lastUsedAt: v.optional(v.number()),
+  revokedAt: v.optional(v.number()),
+  createdAt: v.number(),
+});
+
 export const leadDocValidator = v.object({
   _id: v.id("leads"),
   _creationTime: v.number(),
@@ -286,4 +320,34 @@ export default defineSchema({
   })
     .index("by_demo", ["demoId"])
     .index("by_client_and_createdAt", ["clientId", "createdAt"]),
+
+  blogPosts: defineTable({
+    title: v.string(),
+    slug: v.string(),
+    excerpt: v.string(),
+    contentMarkdown: v.string(),
+    status: blogPostStatus,
+    author: v.string(),
+    tags: v.array(v.string()),
+    metaTitle: v.optional(v.string()),
+    metaDescription: v.optional(v.string()),
+    publishedAt: v.optional(v.number()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_slug", ["slug"])
+    .index("by_status_and_publishedAt", ["status", "publishedAt"])
+    .index("by_updatedAt", ["updatedAt"]),
+
+  blogApiKeys: defineTable({
+    name: v.string(),
+    keyHash: v.string(),
+    keyPrefix: v.string(),
+    canPublish: v.boolean(),
+    lastUsedAt: v.optional(v.number()),
+    revokedAt: v.optional(v.number()),
+    createdAt: v.number(),
+  })
+    .index("by_keyHash", ["keyHash"])
+    .index("by_createdAt", ["createdAt"]),
 });

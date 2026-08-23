@@ -60,6 +60,20 @@ export type ClientFeedbackSubmitInput = {
   submitterName?: string;
 };
 
+export type BlogPostInput = {
+  title: string;
+  slug?: string;
+  excerpt: string;
+  contentMarkdown: string;
+  status: "draft" | "published";
+  author?: string;
+  tags?: string[];
+  metaTitle?: string;
+  metaDescription?: string;
+};
+
+export type BlogPostUpdateInput = Partial<BlogPostInput>;
+
 function getConvexClient(): ConvexHttpClient | null {
   const url = process.env.NEXT_PUBLIC_CONVEX_URL;
   if (!url) {
@@ -90,6 +104,12 @@ function requireClientAndSecret(): {
     );
   }
   return { client, ingestSecret };
+}
+
+function requireClient(): ConvexHttpClient {
+  const client = getConvexClient();
+  if (!client) throw new Error("NEXT_PUBLIC_CONVEX_URL is not configured.");
+  return client;
 }
 
 /**
@@ -390,4 +410,96 @@ export async function submitDesignDemoComment(input: {
     throw new Error("NEXT_PUBLIC_CONVEX_URL is not configured.");
   }
   return await client.mutation(api.designDemos.submitComment, input);
+}
+
+export async function listPublishedBlogPosts(limit = 50) {
+  const client = getConvexClient();
+  if (!client) throw new Error("NEXT_PUBLIC_CONVEX_URL is not configured.");
+  return await client.query(api.blogPosts.listPublished, { limit });
+}
+
+export async function getPublishedBlogPost(slug: string) {
+  const client = getConvexClient();
+  if (!client) throw new Error("NEXT_PUBLIC_CONVEX_URL is not configured.");
+  return await client.query(api.blogPosts.getPublishedBySlug, { slug });
+}
+
+export async function listAdminBlogPosts(limit = 100) {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.query(api.blogPosts.adminList, { ingestSecret, limit });
+}
+
+export async function getAdminBlogPost(postId: Id<"blogPosts">) {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.query(api.blogPosts.adminGet, { ingestSecret, postId });
+}
+
+export async function createAdminBlogPost(input: BlogPostInput) {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.mutation(api.blogPosts.adminCreate, { ingestSecret, ...input });
+}
+
+export async function updateAdminBlogPost(
+  postId: Id<"blogPosts">,
+  input: BlogPostUpdateInput,
+) {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.mutation(api.blogPosts.adminUpdate, {
+    ingestSecret,
+    postId,
+    ...input,
+  });
+}
+
+export async function listBlogApiKeys() {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.query(api.blogApiKeys.list, { ingestSecret });
+}
+
+export async function createBlogApiKey(input: {
+  name: string;
+  keyHash: string;
+  keyPrefix: string;
+  canPublish: boolean;
+}) {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.mutation(api.blogApiKeys.create, { ingestSecret, ...input });
+}
+
+export async function revokeBlogApiKey(keyId: Id<"blogApiKeys">) {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.mutation(api.blogApiKeys.revoke, { ingestSecret, keyId });
+}
+
+export async function authenticateBlogApiKey(keyHash: string) {
+  const client = requireClient();
+  return await client.mutation(api.blogApiKeys.authenticate, { keyHash });
+}
+
+export async function listAgentBlogPosts(keyHash: string, limit = 50) {
+  const client = requireClient();
+  return await client.query(api.blogPosts.agentList, { keyHash, limit });
+}
+
+export async function getAgentBlogPost(keyHash: string, slug: string) {
+  const client = requireClient();
+  return await client.query(api.blogPosts.agentGetBySlug, { keyHash, slug });
+}
+
+export async function createAgentBlogPost(keyHash: string, input: BlogPostInput) {
+  const client = requireClient();
+  return await client.mutation(api.blogPosts.agentCreate, { keyHash, ...input });
+}
+
+export async function updateAgentBlogPost(
+  keyHash: string,
+  currentSlug: string,
+  input: BlogPostUpdateInput,
+) {
+  const client = requireClient();
+  return await client.mutation(api.blogPosts.agentUpdateBySlug, {
+    keyHash,
+    currentSlug,
+    ...input,
+  });
 }
