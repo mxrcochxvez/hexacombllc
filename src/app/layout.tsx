@@ -1,26 +1,25 @@
 import type { Metadata, Viewport } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { Libre_Franklin, Literata } from "next/font/google";
+import { Archivo_Black, Public_Sans } from "next/font/google";
 import "./brand.css";
 import "./globals.css";
 import CloudflareAnalytics from "@/components/CloudflareAnalytics";
 import TrackClicks from "@/components/TrackClicks";
 
-const libreFranklin = Libre_Franklin({
-  variable: "--font-libre-franklin",
+const archivoBlack = Archivo_Black({
+  variable: "--font-archivo-black",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: "400",
 });
 
-const literata = Literata({
-  variable: "--font-literata",
+const publicSans = Public_Sans({
+  variable: "--font-public-sans",
   subsets: ["latin"],
-  weight: ["400", "500"],
 });
 
 const siteUrl = "https://hexacombllc.com";
 const siteDescription =
-  "Websites, software, and IT for Fresno and Clovis small businesses. Built fast by a local developer you can actually call. No templates, no jargon.";
+  "Ongoing website management, local SEO, analytics, and conversion copy for Fresno and Clovis small businesses. One local partner focused on making your website work harder every month.";
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -38,12 +37,12 @@ const structuredData = {
         { "@type": "AdministrativeArea", name: "California Central Valley" },
       ],
       knowsAbout: [
-        "Web development",
-        "Web design",
-        "Custom software development",
+        "Website management",
+        "Website optimization",
         "Search engine optimization",
-        "Web accessibility",
-        "Small business technology",
+        "Web analytics",
+        "Conversion copywriting",
+        "Local search marketing",
       ],
     },
     {
@@ -66,24 +65,24 @@ const structuredData = {
       areaServed: ["Fresno, CA", "Clovis, CA", "Central Valley, CA"],
       provider: { "@id": `${siteUrl}/#organization` },
       serviceType: [
-        "Website design and development",
-        "Custom software development",
-        "IT consulting",
-        "Website accessibility",
+        "Ongoing website management",
         "Search engine optimization",
+        "Website analytics",
+        "Conversion copywriting",
+        "Website design and development",
       ],
     },
   ],
 };
 
 export const viewport: Viewport = {
-  themeColor: "oklch(98.5% 0.008 75)",
+  themeColor: "#f6f7f3",
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Hexacomb: websites and tech for Fresno & Clovis small businesses",
+    default: "Hexacomb: your ongoing website growth partner",
     template: "%s | Hexacomb",
   },
   description: siteDescription,
@@ -91,16 +90,14 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   keywords: [
-    "web development",
+    "website management",
     "Fresno",
     "Clovis",
     "Central Valley",
-    "custom websites",
-    "web design",
+    "website optimization",
+    "conversion copywriting",
+    "web analytics",
     "SEO",
-    "accessibility",
-    "WCAG",
-    "modern websites",
     "small business",
     "local business",
   ],
@@ -134,20 +131,20 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteUrl,
     siteName: "Hexacomb",
-    title: "Hexacomb: websites and tech for Fresno & Clovis small businesses",
+    title: "Hexacomb: your ongoing website growth partner",
     description: siteDescription,
     images: [
       {
         url: "/hexacomb_logo_wordmark.png",
         width: 1200,
         height: 630,
-        alt: "Hexacomb: technology for Fresno and Clovis small businesses",
+        alt: "Hexacomb: ongoing website growth for Fresno and Clovis small businesses",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hexacomb: websites and tech for Fresno & Clovis small businesses",
+    title: "Hexacomb: your ongoing website growth partner",
     description: siteDescription,
     images: ["/hexacomb_logo_wordmark.png"],
   },
@@ -175,7 +172,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${libreFranklin.variable} ${literata.variable}`}
+      className={`${archivoBlack.variable} ${publicSans.variable}`}
     >
       <body>
         <script

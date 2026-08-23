@@ -1,39 +1,23 @@
-const points = [
-  {
-    title: "We explain things clearly",
-    body: "You always know what we are doing, why it matters, and what it costs before we start.",
-  },
-  {
-    title: "We do the work for you",
-    body: "You do not need to manage servers or fix plugins. That is our job.",
-  },
-  {
-    title: "We stay after launch",
-    body: "We keep things running and help when something breaks.",
-  },
+const workstreams = [
+  ["MANAGE", "Keep it sharp", "Updates, performance, security, and technical upkeep."],
+  ["RANK", "Push for visibility", "Local SEO and content built around real searches."],
+  ["MEASURE", "Watch behavior", "Clear reporting on what visitors actually do."],
+  ["IMPROVE", "Make the next move", "Copy and pages changed from evidence—not guesses."],
 ];
 
 export default function WhyHexacomb() {
   return (
-    <section style={{ padding: 0 }} className="bg-canvas" aria-labelledby="why-heading">
-      <div className="mx-auto max-w-6xl px-5 py-20 sm:px-6 sm:py-28">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
-          <h2
-            id="why-heading"
-            className="font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-semibold leading-tight tracking-tight lg:sticky lg:top-28 lg:self-start"
-          >
-            Built for owners who want it handled
-          </h2>
-
-          <dl className="space-y-10">
-            {points.map((point) => (
-              <div key={point.title}>
-                <dt className="font-display text-lg font-semibold text-ink">{point.title}</dt>
-                <dd className="mt-2 text-base leading-relaxed text-ink-muted">{point.body}</dd>
-              </div>
-            ))}
-          </dl>
+    <section id="growth-system" className="growth-system" aria-labelledby="why-heading">
+      <div className="growth-shell growth-system-grid">
+        <div className="growth-system-intro">
+          <h2 id="why-heading">We keep pressure on the website.</h2>
+          <p>Not four vendors. Not another dashboard for you to manage. One continuous operating loop.</p>
         </div>
+        <ol className="workstream-ledger">
+          {workstreams.map(([code, title, body]) => (
+            <li key={code} className="workstream-row"><span className="workstream-code">{code}</span><div><h3>{title}</h3><p>{body}</p></div></li>
+          ))}
+        </ol>
       </div>
     </section>
   );

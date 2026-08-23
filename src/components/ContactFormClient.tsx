@@ -10,7 +10,7 @@ const ContactFormClient = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div aria-label="Loading contact form" aria-busy="true">
+      <div role="status" aria-label="Loading contact form" aria-busy="true">
         {/* Name + Email row */}
         <div className="mb-4 sm:grid sm:grid-cols-2 sm:gap-4">
           <div className="mb-4 sm:mb-0">

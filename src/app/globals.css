@@ -24,10 +24,10 @@
   --gray-light: var(--color-border);
   --radius: 8px;
   --radius-lg: 12px;
-  --font-body: var(--font-dm-sans), "DM Sans", system-ui, sans-serif;
-  --font-display: var(--font-dm-sans), "DM Sans", system-ui, sans-serif;
-  --font-hero: var(--font-dm-sans), "DM Sans", system-ui, sans-serif;
-  --font-soft: var(--font-dm-sans), "DM Sans", system-ui, sans-serif;
+  --font-body: var(--font-public-sans), system-ui, sans-serif;
+  --font-display: var(--font-archivo-black), "Arial Narrow", sans-serif;
+  --font-hero: var(--font-archivo-black), "Arial Narrow", sans-serif;
+  --font-soft: var(--font-public-sans), system-ui, sans-serif;
   --font-mono-stack: var(--font-jetbrains-mono), ui-monospace, monospace;
   --max-width: 960px;
   --transition: 0.2s ease;

@@ -1,33 +1,24 @@
 import { ContactFormClient } from "@/components/ContactFormClient";
+import { Check } from "lucide-react";
 
-const trustItems = [
-  "Reply within one business day",
-  "Fresno-based, no offshore handoffs",
-  "Straight answers, no jargon or pressure",
-];
+const trustItems = ["Current site is enough", "Reply within one business day", "No jargon. No pressure."];
 
 export default function CtaSection() {
   return (
-    <section id="contact" style={{ padding: 0 }} className="bg-deep" aria-labelledby="contact-heading">
-      <div className="mx-auto grid max-w-6xl gap-12 px-5 py-20 sm:px-6 sm:py-28 lg:grid-cols-2 lg:gap-20 lg:items-start">
-        <div className="lg:pt-3">
-          <h2
-            id="contact-heading"
-            className="font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-semibold leading-tight tracking-tight text-on-deep"
-          >
-            Let&rsquo;s talk about your business
+    <section id="contact" className="growth-close" aria-labelledby="contact-heading">
+      <div className="growth-shell growth-close-grid">
+        <div className="growth-close-copy">
+          <h2 id="contact-heading">
+            Stop carrying the website.
+            <span> Put it on our desk.</span>
           </h2>
-          <p className="mt-4 max-w-md text-base leading-relaxed text-on-deep-muted">
-            Tell us what you&rsquo;re dealing with. We come back with honest next steps, not a
-            sales pitch.
+          <p>
+            Tell me what is being ignored. I&rsquo;ll tell you where we should attack first.
           </p>
-          <ul className="mt-8 space-y-3" aria-label="What to expect">
+          <ul className="growth-close-trust" aria-label="What to expect">
             {trustItems.map((item) => (
-              <li key={item} className="flex items-center gap-3 text-sm text-on-deep-muted">
-                <span
-                  className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent"
-                  aria-hidden="true"
-                />
+              <li key={item}>
+                <Check size={16} strokeWidth={2.8} aria-hidden />
                 {item}
               </li>
             ))}
@@ -36,10 +27,14 @@ export default function CtaSection() {
 
         <div
           id="consultation-form"
-          className="rounded-lg border border-on-deep/10 bg-canvas p-6 shadow-[0_24px_60px_-30px_oklch(15%_0.03_265/0.6)] sm:p-8"
+          className="growth-contact-form"
           role="region"
           aria-label="Contact form"
         >
+          <div className="growth-contact-form-head">
+            <span>Hand it over</span>
+            <strong>Tell me about the website</strong>
+          </div>
           <ContactFormClient />
         </div>
       </div>

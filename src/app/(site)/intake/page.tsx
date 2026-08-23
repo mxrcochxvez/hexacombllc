@@ -10,17 +10,15 @@ export const metadata: Metadata = {
 
 export default function IntakePage() {
   return (
-    <main className="mx-auto max-w-2xl px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mb-10">
-        <h1 className="font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-          Tell us about your project
-        </h1>
-        <p className="mt-3 text-base leading-relaxed text-ink-muted">
-          Fill out the details below so we can understand your needs and put
-          together a tailored plan. This usually takes about 3&ndash;5 minutes.
-        </p>
+    <main id="main-content" className="growth-page growth-intake">
+      <div className="growth-shell growth-intake-grid">
+      <div className="growth-intake-copy">
+        <h1>Put the website on our desk.</h1>
+        <p>Give us the business context once. We&rsquo;ll use it to shape the site, the search strategy, and the work ahead.</p>
+        <small>About 3–5 minutes.</small>
       </div>
-      <IntakeForm />
+      <div className="growth-intake-form"><IntakeForm /></div>
+      </div>
     </main>
   );
 }

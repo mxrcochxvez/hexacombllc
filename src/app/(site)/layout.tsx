@@ -1,7 +1,8 @@
-import PromoBanner from "@/components/PromoBanner";
 import Navbar from "@/components/Navbar";
 import CookieBanner from "@/components/CookieBanner";
 import Footer from "@/components/Footer";
+import SiteMotion from "@/components/SiteMotion";
+import SiteSignalDecorations from "@/components/SiteSignalDecorations";
 
 export default function SiteLayout({
   children,
@@ -14,10 +15,11 @@ export default function SiteLayout({
         Skip to main content
       </a>
       <header className="sticky top-0 z-[90]">
-        <PromoBanner />
         <Navbar />
       </header>
-      <main id="main-content">{children}</main>
+      <SiteMotion />
+      <SiteSignalDecorations />
+      <div>{children}</div>
       <CookieBanner />
       <Footer />
     </>
