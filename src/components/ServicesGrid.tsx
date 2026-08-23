@@ -1,7 +1,7 @@
 const problems = [
-  ["The site gets stale", "Offers change. Services change. The website does not keep up."],
-  ["Search keeps moving", "Competitors publish while your rankings slowly give ground."],
-  ["Reports go unread", "You get numbers, but nobody turns them into the next move."],
+  ["The site gets outdated", "Your offers, services, and business change. Your website should keep up."],
+  ["Customers have trouble finding you", "If your business is hard to find in search, potential customers can end up choosing someone else."],
+  ["It is hard to know what is working", "You may see website numbers, but not what they mean or what to do next."],
 ];
 
 export default function ServicesGrid() {
@@ -9,8 +9,8 @@ export default function ServicesGrid() {
     <section className="growth-problem" aria-labelledby="services-heading">
       <div className="growth-shell">
         <div className="growth-problem-heading">
-          <div><h2 id="services-heading">The website never stays finished.</h2></div>
-          <p>You already have a company to run. Your website still needs someone watching it.</p>
+          <div><h2 id="services-heading">Your website needs ongoing care.</h2></div>
+          <p>You already have a business to run. We make sure your website keeps doing its job.</p>
         </div>
         <ul className="problem-strip">
           {problems.map(([title, body]) => (
