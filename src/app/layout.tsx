@@ -32,11 +32,15 @@ const structuredData = {
       logo: `${siteUrl}/hexacomb_logo_wordmark.png`,
       description: siteDescription,
       foundingDate: "2025",
-      areaServed: {
-        "@type": "City",
-        name: "Fresno",
-        sameAs: "https://en.wikipedia.org/wiki/Fresno,_California",
-      },
+      areaServed: [
+        {
+          "@type": "City",
+          name: "Fresno",
+          sameAs: "https://en.wikipedia.org/wiki/Fresno,_California",
+        },
+        { "@type": "City", name: "Clovis" },
+        { "@type": "AdministrativeArea", name: "California Central Valley" },
+      ],
       knowsAbout: [
         "Website management",
         "Website optimization",
@@ -81,7 +85,7 @@ const structuredData = {
       "@type": "WebSite",
       "@id": `${siteUrl}/#website`,
       url: siteUrl,
-      name: "Hexacomb",
+      name: "Hexacomb: ongoing website growth for local businesses",
       description: siteDescription,
       publisher: { "@id": `${siteUrl}/#organization` },
       inLanguage: "en-US",
