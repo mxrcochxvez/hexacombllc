@@ -2,10 +2,15 @@ import type { Metadata } from "next";
 import { IntakeForm } from "@/components/IntakeForm";
 
 export const metadata: Metadata = {
-  title: "Project Intake | Hexacomb",
+  title: {
+    absolute: "Project Intake | Hexacomb",
+  },
   description:
     "Tell us about your project so we can provide a tailored recommendation.",
   robots: { index: false, follow: false },
+  alternates: {
+    canonical: "https://hexacombllc.com/intake",
+  },
 };
 
 export default function IntakePage() {
