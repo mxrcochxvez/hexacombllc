@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef } from "react";
 import { Turnstile } from "@marsidev/react-turnstile";
+import { track, trackGA4 } from "@/lib/analytics";
 
 const SITE_KEY =
   process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "0x4AAAAAADC6NwtGoO-9AuVg";
@@ -221,6 +222,8 @@ export function IntakeForm() {
       }
 
       setStatus("success");
+      track("intake_form_success");
+      trackGA4("generate_lead");
     } catch (err) {
       setStatus("error");
       setErrorMsg(

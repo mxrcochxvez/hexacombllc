@@ -43,3 +43,23 @@ export function track(
     // silently fail
   }
 }
+
+/**
+ * Fire a GA4 event using window.gtag if available.
+ * Only sends if the user has accepted cookies.
+ */
+export function trackGA4(
+  event: string,
+  params?: Record<string, unknown>
+): void {
+  if (typeof window === "undefined") return;
+  if (getConsent() !== "accepted") return;
+
+  try {
+    if (typeof window.gtag === "function") {
+      window.gtag("event", event, params ?? {});
+    }
+  } catch {
+    // silently fail — analytics should never break the UX
+  }
+}

@@ -31,6 +31,7 @@ const structuredData = {
       url: siteUrl,
       logo: `${siteUrl}/hexacomb_logo_wordmark.png`,
       description: siteDescription,
+      foundingDate: "2025",
       areaServed: [
         { "@type": "City", name: "Fresno" },
         { "@type": "City", name: "Clovis" },
@@ -44,6 +45,37 @@ const structuredData = {
         "Conversion copywriting",
         "Local search marketing",
       ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "sales",
+        areaServed: ["US-CA"],
+        availableLanguage: ["English"],
+      },
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": `${siteUrl}/#localbusiness`,
+      name: "Hexacomb LLC",
+      url: siteUrl,
+      image: `${siteUrl}/hexacomb_logo_wordmark.png`,
+      description:
+        "Local website growth partner serving Fresno, Clovis, and Central Valley businesses.",
+      areaServed: {
+        "@type": "GeoCircle",
+        geoMidpoint: {
+          "@type": "GeoCoordinates",
+          latitude: 36.7378,
+          longitude: -119.7871,
+        },
+        geoRadius: "100000",
+      },
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Fresno",
+        addressRegion: "CA",
+        addressCountry: "US",
+      },
+      priceRange: "$$",
     },
     {
       "@type": "WebSite",
