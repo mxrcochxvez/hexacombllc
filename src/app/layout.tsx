@@ -32,11 +32,11 @@ const structuredData = {
       logo: `${siteUrl}/hexacomb_logo_wordmark.png`,
       description: siteDescription,
       foundingDate: "2025",
-      areaServed: [
-        { "@type": "City", name: "Fresno" },
-        { "@type": "City", name: "Clovis" },
-        { "@type": "AdministrativeArea", name: "California Central Valley" },
-      ],
+      areaServed: {
+        "@type": "City",
+        name: "Fresno",
+        sameAs: "https://en.wikipedia.org/wiki/Fresno,_California",
+      },
       knowsAbout: [
         "Website management",
         "Website optimization",
