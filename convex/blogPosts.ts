@@ -10,7 +10,7 @@ function assertIngestSecret(ingestSecret: string) {
   if (!expected || ingestSecret !== expected) throw new Error("Unauthorized");
 }
 
-async function assertApiKey(ctx: ReadCtx, keyHash: string, needsPublish = false) {
+export async function assertBlogApiKey(ctx: ReadCtx, keyHash: string, needsPublish = false) {
   const key = await ctx.db
     .query("blogApiKeys")
     .withIndex("by_keyHash", (q) => q.eq("keyHash", keyHash))
@@ -112,7 +112,7 @@ export const agentList = query({
   args: { keyHash: v.string(), limit: v.optional(v.number()) },
   returns: v.array(blogPostDocValidator),
   handler: async (ctx, args) => {
-    await assertApiKey(ctx, args.keyHash);
+    await assertBlogApiKey(ctx, args.keyHash);
     const limit = Math.min(Math.max(args.limit ?? 50, 1), 100);
     return await ctx.db
       .query("blogPosts")
@@ -126,7 +126,7 @@ export const agentGetBySlug = query({
   args: { keyHash: v.string(), slug: v.string() },
   returns: v.union(blogPostDocValidator, v.null()),
   handler: async (ctx, args) => {
-    await assertApiKey(ctx, args.keyHash);
+    await assertBlogApiKey(ctx, args.keyHash);
     return await ctx.db
       .query("blogPosts")
       .withIndex("by_slug", (q) => q.eq("slug", cleanSlug(args.slug)))
@@ -202,7 +202,7 @@ export const agentCreate = mutation({
   args: { keyHash: v.string(), ...createArgs },
   returns: v.id("blogPosts"),
   handler: async (ctx, args) => {
-    await assertApiKey(ctx, args.keyHash, args.status === "published");
+    await assertBlogApiKey(ctx, args.keyHash, args.status === "published");
     return await createPost(ctx, args);
   },
 });
@@ -292,7 +292,7 @@ export const agentUpdateBySlug = mutation({
   args: { keyHash: v.string(), currentSlug: v.string(), ...updateArgs },
   returns: v.id("blogPosts"),
   handler: async (ctx, args) => {
-    await assertApiKey(ctx, args.keyHash, args.status !== undefined);
+    await assertBlogApiKey(ctx, args.keyHash, args.status !== undefined);
     const post = await ctx.db
       .query("blogPosts")
       .withIndex("by_slug", (q) => q.eq("slug", cleanSlug(args.currentSlug)))

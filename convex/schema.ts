@@ -78,6 +78,15 @@ export const blogApiKeyDocValidator = v.object({
   createdAt: v.number(),
 });
 
+export const blogImageDocValidator = v.object({
+  _id: v.id("blogImages"),
+  _creationTime: v.number(),
+  storageId: v.id("_storage"),
+  filename: v.string(),
+  contentType: v.string(),
+  createdAt: v.number(),
+});
+
 export const leadDocValidator = v.object({
   _id: v.id("leads"),
   _creationTime: v.number(),
@@ -354,4 +363,11 @@ export default defineSchema({
   })
     .index("by_keyHash", ["keyHash"])
     .index("by_createdAt", ["createdAt"]),
+
+  blogImages: defineTable({
+    storageId: v.id("_storage"),
+    filename: v.string(),
+    contentType: v.string(),
+    createdAt: v.number(),
+  }).index("by_createdAt", ["createdAt"]),
 });

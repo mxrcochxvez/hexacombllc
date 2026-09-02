@@ -6,6 +6,7 @@ import {
   getAgentBlogPost,
   listAgentBlogPosts,
   updateAgentBlogPost,
+  uploadAgentBlogImage,
   type BlogPostInput,
   type BlogPostUpdateInput,
 } from "@/lib/convex";
@@ -62,7 +63,7 @@ const tools = [
         tags: { type: "array", items: { type: "string" }, maxItems: 12 },
         metaTitle: { type: "string", description: "Optional SEO title, ideally 50–60 characters." },
         metaDescription: { type: "string", description: "Optional SEO description, ideally 140–160 characters." },
-        coverImageUrl: { type: "string", description: "Optional cover image. Use a site path such as /images/blog/post.jpg or an https URL. Shown to the right of the excerpt on the blog index." },
+        coverImageUrl: { type: "string", description: "Optional cover image. Use a site path from blog_upload_image such as /blog/media/…, or an https URL. Shown to the right of the excerpt on the blog index." },
         coverImageAlt: { type: "string", description: "Alt text for the cover image." },
       },
       required: ["title", "excerpt", "contentMarkdown"],
@@ -118,6 +119,23 @@ const tools = [
       additionalProperties: false,
     },
     annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false },
+  },
+  {
+    name: "blog_upload_image",
+    title: "Upload a blog image",
+    description: "Upload a JPEG, PNG, WebP, GIF, or AVIF image (max 4.5 MB) and get a site URL. Call this before creating or updating a post. Put the returned url in coverImageUrl, or use markdown: ![alt](url).",
+    inputSchema: {
+      type: "object",
+      properties: {
+        filename: { type: "string", description: "File name including extension, for example cover.jpg" },
+        mimeType: { type: "string", description: "image/jpeg, image/png, image/webp, image/gif, or image/avif" },
+        dataBase64: { type: "string", description: "The image bytes as base64. A data URL prefix is allowed." },
+        alt: { type: "string", description: "Optional alt text. Returned in a ready-to-paste Markdown snippet." },
+      },
+      required: ["filename", "mimeType", "dataBase64"],
+      additionalProperties: false,
+    },
+    annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
   },
 ] as const;
 
@@ -204,12 +222,28 @@ function toolResult(data: unknown) {
   };
 }
 
-async function callTool(name: string, args: Record<string, unknown>, keyHash: string) {
+function decodeImagePayload(raw: string): Uint8Array {
+  const trimmed = raw.trim();
+  const comma = trimmed.indexOf(",");
+  const base64 = trimmed.startsWith("data:") && comma >= 0 ? trimmed.slice(comma + 1) : trimmed;
+  const binary = atob(base64.replace(/\s/g, ""));
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
+  return bytes;
+}
+
+function normalizeMimeType(value: string): string {
+  const mime = value.trim().toLowerCase();
+  if (mime === "image/jpg") return "image/jpeg";
+  return mime;
+}
+
+async function callTool(name: string, args: Record<string, unknown>, keyHash: string, origin: string) {
   switch (name) {
     case "blog_list_posts": {
       const rawLimit = typeof args.limit === "number" ? args.limit : 50;
       const posts = await listAgentBlogPosts(keyHash, Math.min(Math.max(Math.floor(rawLimit), 1), 100));
-      return toolResult(posts);
+      return toolResult({ posts });
     }
     case "blog_get_post": {
       const slug = requiredString(args, "slug");
@@ -238,12 +272,32 @@ async function callTool(name: string, args: Record<string, unknown>, keyHash: st
       const postId = await updateAgentBlogPost(keyHash, slug, { status: "draft" });
       return toolResult({ success: true, postId, status: "draft" });
     }
+    case "blog_upload_image": {
+      const filename = requiredString(args, "filename");
+      const mimeType = normalizeMimeType(requiredString(args, "mimeType"));
+      const dataBase64 = requiredString(args, "dataBase64");
+      const bytes = decodeImagePayload(dataBase64).slice();
+      const imageId = await uploadAgentBlogImage(keyHash, {
+        filename,
+        contentType: mimeType,
+        bytes: bytes.buffer,
+      });
+      const url = `/blog/media/${imageId}`;
+      const alt = optionalString(args, "alt")?.trim() || filename.replace(/\.[^.]+$/, "").replace(/[-_]/g, " ");
+      return toolResult({
+        success: true,
+        imageId,
+        url,
+        absoluteUrl: `${origin}${url}`,
+        markdown: `![${alt}](${url})`,
+      });
+    }
     default:
       throw new Error(`Unknown tool: ${name}`);
   }
 }
 
-async function handleMessage(message: JsonRpcRequest, keyHash: string) {
+async function handleMessage(message: JsonRpcRequest, keyHash: string, origin: string) {
   const id = message.id ?? null;
   if (message.jsonrpc !== "2.0" || typeof message.method !== "string") {
     return rpcError(id, -32600, "Invalid Request");
@@ -259,7 +313,7 @@ async function handleMessage(message: JsonRpcRequest, keyHash: string) {
         version: "1.0.0",
         description: "Create, edit, review, and publish Hexacomb blog posts.",
       },
-      instructions: "Use drafts by default. Review existing posts before proposing a topic. Never invent client results, testimonials, or business claims.",
+        instructions: "Use drafts by default. Review existing posts before proposing a topic. Upload images with blog_upload_image and use the returned url in coverImageUrl or Markdown. Never invent client results, testimonials, or business claims.",
     });
   }
   if (message.method === "notifications/initialized") return null;
@@ -269,7 +323,7 @@ async function handleMessage(message: JsonRpcRequest, keyHash: string) {
     const params = objectArgs(message.params);
     if (typeof params.name !== "string") return rpcError(id, -32602, "Tool name is required");
     try {
-      return rpcResult(id, await callTool(params.name, objectArgs(params.arguments), keyHash));
+      return rpcResult(id, await callTool(params.name, objectArgs(params.arguments), keyHash, origin));
     } catch (error) {
       const text = error instanceof Error ? error.message : "Tool call failed";
       return rpcResult(id, { content: [{ type: "text", text }], isError: true });
@@ -315,13 +369,15 @@ export async function POST(request: NextRequest) {
     return jsonResponse(rpcError(null, -32700, "Parse error"), 400);
   }
 
+  const origin = (process.env.NEXT_PUBLIC_SITE_URL || new URL(request.url).origin).replace(/\/$/, "");
+
   if (Array.isArray(body)) {
     if (body.length === 0) return jsonResponse(rpcError(null, -32600, "Invalid Request"), 400);
-    const responses = (await Promise.all(body.map((item) => handleMessage(objectArgs(item), keyHash)))).filter(Boolean);
+    const responses = (await Promise.all(body.map((item) => handleMessage(objectArgs(item), keyHash, origin)))).filter(Boolean);
     return responses.length ? jsonResponse(responses) : new Response(null, { status: 202 });
   }
 
-  const response = await handleMessage(objectArgs(body), keyHash);
+  const response = await handleMessage(objectArgs(body), keyHash, origin);
   return response ? jsonResponse(response) : new Response(null, { status: 202 });
 }
 
