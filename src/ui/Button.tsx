@@ -6,7 +6,7 @@ export function Button(props: ButtonProps) {
   const pending = props.pending ?? false;
   const className = `ui-button ui-button--${intent}${props.fill ? " ui-button--fill" : ""}`;
 
-  if (props.href) {
+  if ("href" in props && props.href) {
     return (
       <Link
         href={props.href}
