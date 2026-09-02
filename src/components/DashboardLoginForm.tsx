@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button, Field, Page, Panel, Section, Stack } from "@/ui";
 
 export function DashboardLoginForm() {
   const router = useRouter();
@@ -33,32 +34,29 @@ export function DashboardLoginForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="dash-card max-w-md">
-      <h1 className="dash-title">Dashboard</h1>
-      <p className="dash-muted mb-6">
-        Enter the admin password to manage leads and agreements.
-      </p>
-      <div className="form-group">
-        <label htmlFor="admin-password">Password</label>
-        <input
-          id="admin-password"
-          type="password"
-          name="password"
-          autoComplete="current-password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          disabled={pending}
-        />
-      </div>
-      {error ? (
-        <p className="field-error" role="alert">
-          {error}
-        </p>
-      ) : null}
-      <button type="submit" className="btn btn-primary" disabled={pending}>
-        {pending ? "Signing in…" : "Sign in"}
-      </button>
-    </form>
+    <Page density="operate" width="narrow">
+      <Section>
+        <Panel>
+          <Stack as="form" onSubmit={onSubmit}>
+            <h1>Dashboard</h1>
+            <p>Enter the admin password to manage leads and agreements.</p>
+            <Field label="Password" error={error}>
+              <input
+                type="password"
+                name="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                disabled={pending}
+              />
+            </Field>
+            <Button type="submit" intent="solid" pending={pending} fill>
+              {pending ? "Signing in…" : "Sign in"}
+            </Button>
+          </Stack>
+        </Panel>
+      </Section>
+    </Page>
   );
 }

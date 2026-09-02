@@ -19,11 +19,7 @@ export default async function DashboardClientsPage() {
   const authed = await isAdminAuthenticated();
 
   if (!authed) {
-    return (
-      <div className="dash-page">
-        <DashboardLoginForm />
-      </div>
-    );
+    return <DashboardLoginForm />;
   }
 
   let clients: Awaited<ReturnType<typeof listClients>> = [];

@@ -3,6 +3,8 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { Archivo_Black, Public_Sans } from "next/font/google";
 import "./brand.css";
 import "./globals.css";
+import "../ui/space.theme.css";
+import "../ui/kit.css";
 import CloudflareAnalytics from "@/components/CloudflareAnalytics";
 import TrackClicks from "@/components/TrackClicks";
 

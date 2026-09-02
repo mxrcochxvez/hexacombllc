@@ -10,7 +10,7 @@ export const metadata: Metadata = { title: "Edit blog post", robots: { index: fa
 export const dynamic = "force-dynamic";
 
 export default async function EditBlogPostPage({ params }: { params: Promise<{ id: string }> }) {
-  if (!(await isAdminAuthenticated())) return <div className="dash-page"><DashboardLoginForm /></div>;
+  if (!(await isAdminAuthenticated())) return <DashboardLoginForm />;
   const { id } = await params;
   let post;
   try { post = await getAdminBlogPost(id as Id<"blogPosts">); } catch { notFound(); }
