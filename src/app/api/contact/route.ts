@@ -74,15 +74,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    await createLead({
+    const leadInput = {
       name: name.trim(),
       email: email.trim(),
       phone: typeof phone === "string" ? phone : undefined,
       business: typeof business === "string" ? business : undefined,
       website: typeof website === "string" ? website : undefined,
       message: typeof message === "string" ? message : undefined,
-      source: "contact",
-    });
+      source: "contact" as const,
+    };
+    const leadId = await createLead(leadInput);
+    const { syncLeadToSysteme } = await import("@/lib/systeme");
+    await syncLeadToSysteme({ lead: leadInput, leadId, status: "fresh" });
 
     const resend = await getResend();
     const { error } = await resend.emails.send({

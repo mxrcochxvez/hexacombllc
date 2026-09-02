@@ -46,6 +46,14 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
     }
 
     await updateLeadStatus(leadId, to);
+
+    const { setSystemeLeadStatus } = await import("@/lib/systeme");
+    await setSystemeLeadStatus({
+      email: lead.email,
+      status: to,
+      leadId,
+    });
+
     return NextResponse.json({ success: true, status: to });
   } catch (err) {
     console.error("Dashboard update status error:", err);

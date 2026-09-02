@@ -57,6 +57,13 @@ export async function POST(request: NextRequest, context: RouteContext) {
       // Acceptance already saved — do not fail the client response
     }
 
+    const { setSystemeLeadStatus } = await import("@/lib/systeme");
+    await setSystemeLeadStatus({
+      email: result.leadEmail,
+      status: "contracted",
+      leadId: result.leadId,
+    });
+
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("Accept contract error:", err);

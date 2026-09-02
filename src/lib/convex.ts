@@ -169,6 +169,29 @@ export async function updateLeadStatus(
   });
 }
 
+export async function getLeadsByEmail(
+  email: string,
+): Promise<Doc<"leads">[]> {
+  const { client, ingestSecret } = requireClientAndSecret();
+  return await client.query(api.leads.getByEmail, {
+    ingestSecret,
+    email,
+  });
+}
+
+/** Trusted systeme webhook sync — skips pipeline transition checks. */
+export async function syncLeadStatusFromExternal(
+  leadId: Id<"leads">,
+  status: LeadStatus,
+): Promise<void> {
+  const { client, ingestSecret } = requireClientAndSecret();
+  await client.mutation(api.leads.syncStatusFromExternal, {
+    ingestSecret,
+    leadId,
+    status,
+  });
+}
+
 export async function getContractByLead(
   leadId: Id<"leads">,
 ): Promise<Doc<"contracts"> | null> {

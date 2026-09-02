@@ -178,13 +178,13 @@ export async function POST(request: NextRequest) {
       ? body.features.filter((f: unknown): f is string => typeof f === "string")
       : undefined;
 
-    await createLead({
+    const leadInput = {
       name: name.trim(),
       email: email.trim(),
       phone: phone.trim(),
       business: typeof body.business === "string" ? body.business : undefined,
       website: typeof body.website === "string" ? body.website : undefined,
-      source: "intake",
+      source: "intake" as const,
       industry: typeof body.industry === "string" ? body.industry : undefined,
       hasExistingWebsite:
         typeof body.hasExistingWebsite === "string"
@@ -196,7 +196,10 @@ export async function POST(request: NextRequest) {
       features,
       timeline: typeof body.timeline === "string" ? body.timeline : undefined,
       notes: typeof body.notes === "string" ? body.notes : undefined,
-    });
+    };
+    const leadId = await createLead(leadInput);
+    const { syncLeadToSysteme } = await import("@/lib/systeme");
+    await syncLeadToSysteme({ lead: leadInput, leadId, status: "fresh" });
 
     // ── Send email via Resend ───────────────────────────────────
     const resend = await getResend();

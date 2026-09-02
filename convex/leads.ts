@@ -177,3 +177,45 @@ export const getByEmail = query({
       .take(50);
   },
 });
+
+/**
+ * Trusted sync from systeme.io webhooks — sets status without pipeline
+ * transition checks so stage tags can jump freely.
+ */
+export const syncStatusFromExternal = mutation({
+  args: {
+    ingestSecret: v.string(),
+    leadId: v.id("leads"),
+    status: leadStatus,
+  },
+  returns: v.null(),
+  handler: async (ctx, args) => {
+    assertIngestSecret(args.ingestSecret);
+
+    const lead = await ctx.db.get(args.leadId);
+    if (!lead) {
+      throw new Error("Lead not found");
+    }
+
+    const from = lead.status as LeadStatus;
+    const to = args.status as LeadStatus;
+    if (from === to) {
+      return null;
+    }
+
+    const now = Date.now();
+    await ctx.db.patch(args.leadId, {
+      status: args.status,
+      updatedAt: now,
+      statusChangedAt: now,
+    });
+
+    if (to === "contracted") {
+      await ensureClientForLead(ctx, args.leadId);
+    } else if (from === "contracted") {
+      await removeClientForLead(ctx, args.leadId);
+    }
+
+    return null;
+  },
+});

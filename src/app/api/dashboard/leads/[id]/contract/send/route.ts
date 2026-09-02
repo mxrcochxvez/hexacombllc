@@ -64,6 +64,13 @@ export async function POST(request: NextRequest, context: RouteContext) {
       contractUrl,
     });
 
+    const { setSystemeLeadStatus } = await import("@/lib/systeme");
+    await setSystemeLeadStatus({
+      email: result.leadEmail,
+      status: "proposal_sent",
+      leadId: id,
+    });
+
     return NextResponse.json({
       success: true,
       contractId: result.contractId,
