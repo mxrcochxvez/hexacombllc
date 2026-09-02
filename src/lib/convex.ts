@@ -505,3 +505,38 @@ export async function updateAgentBlogPost(
     ...input,
   });
 }
+
+const MAX_BLOG_IMAGE_BYTES = 4_500_000;
+
+export async function uploadAgentBlogImage(
+  keyHash: string,
+  input: { filename: string; contentType: string; bytes: ArrayBuffer },
+) {
+  const client = requireClient();
+  if (input.bytes.byteLength === 0) throw new Error("Image data is empty");
+  if (input.bytes.byteLength > MAX_BLOG_IMAGE_BYTES) {
+    throw new Error("Image must be 4.5 MB or smaller");
+  }
+  const uploadUrl = await client.mutation(api.blogImages.agentGenerateUploadUrl, { keyHash });
+  const uploaded = await fetch(uploadUrl, {
+    method: "POST",
+    headers: { "Content-Type": input.contentType },
+    body: input.bytes,
+  });
+  if (!uploaded.ok) throw new Error("Could not store the image");
+  const payload = (await uploaded.json()) as { storageId?: string };
+  if (!payload.storageId) throw new Error("Upload did not return a storage id");
+  const imageId = await client.mutation(api.blogImages.agentSave, {
+    keyHash,
+    storageId: payload.storageId as Id<"_storage">,
+    filename: input.filename,
+    contentType: input.contentType,
+  });
+  return imageId;
+}
+
+export async function getPublicBlogImage(imageId: Id<"blogImages">) {
+  const client = getConvexClient();
+  if (!client) throw new Error("NEXT_PUBLIC_CONVEX_URL is not configured.");
+  return await client.query(api.blogImages.getPublic, { imageId });
+}

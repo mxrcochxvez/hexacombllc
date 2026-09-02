@@ -9,6 +9,7 @@
  */
 
 import type * as blogApiKeys from "../blogApiKeys.js";
+import type * as blogImages from "../blogImages.js";
 import type * as blogPosts from "../blogPosts.js";
 import type * as clients from "../clients.js";
 import type * as contracts from "../contracts.js";
@@ -27,6 +28,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   blogApiKeys: typeof blogApiKeys;
+  blogImages: typeof blogImages;
   blogPosts: typeof blogPosts;
   clients: typeof clients;
   contracts: typeof contracts;

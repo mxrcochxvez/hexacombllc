@@ -95,8 +95,8 @@ export function BlogPostEditor({ initialPost }: { initialPost?: BlogPostEditorVa
       <div className="dash-grid">
         <div className="form-group">
           <label htmlFor="blogCover">Cover image URL</label>
-          <input id="blogCover" value={post.coverImageUrl ?? ""} placeholder="/images/blog/your-post.jpg" onChange={(event) => setField("coverImageUrl", event.target.value)} disabled={pending} />
-          <small>Shown to the right of the excerpt on the blog index.</small>
+          <input id="blogCover" value={post.coverImageUrl ?? ""} placeholder="/blog/media/…" onChange={(event) => setField("coverImageUrl", event.target.value)} disabled={pending} />
+          <small>Shown to the right of the excerpt. MCP uploads return a /blog/media/ URL.</small>
         </div>
         <div className="form-group">
           <label htmlFor="blogCoverAlt">Cover image alt text</label>

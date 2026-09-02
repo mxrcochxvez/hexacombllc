@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArrowUpRight, Check } from "lucide-react";
 import { MarkdownContent } from "@/components/MarkdownContent";
-import { getBlogCover, stripLeadingCoverImage } from "@/lib/blogCover";
+import { getBlogCover, stripLeadingCoverImage, useUnoptimizedCover } from "@/lib/blogCover";
 import { getPublishedBlogPost } from "@/lib/convex";
+import { Button } from "@/ui";
 
 export const dynamic = "force-dynamic";
 type Props = { params: Promise<{ slug: string }> };
@@ -71,7 +73,7 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
           {cover ? (
             <figure className="blog-post__cover">
-              {cover.url.startsWith("/") ? (
+              {!useUnoptimizedCover(cover.url) ? (
                 <Image src={cover.url} alt={cover.alt} fill sizes="(max-width: 700px) 100vw, 320px" style={{ objectFit: "cover" }} />
               ) : (
                 <img src={cover.url} alt={cover.alt} />
@@ -80,9 +82,15 @@ export default async function BlogPostPage({ params }: Props) {
           ) : null}
         </header>
         <MarkdownContent markdown={stripLeadingCoverImage(post.contentMarkdown)} />
-        <footer className="blog-post__footer">
-          <p>Want your website to work harder without adding more to your plate?</p>
-          <Link className="btn btn-primary" href="/#contact">Talk with Hexacomb</Link>
+        <footer className="growth-inline-close">
+          <div>
+            <Check size={20} aria-hidden />
+            <strong>Want the website off your plate?</strong>
+            <p>We keep it updated, findable, and clear for the people ready to become customers.</p>
+          </div>
+          <Button href="/#contact" intent="signal">
+            Talk with Hexacomb <ArrowUpRight size={17} aria-hidden />
+          </Button>
         </footer>
       </article>
     </main>
