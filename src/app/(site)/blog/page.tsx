@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import { getBlogCover } from "@/lib/blogCover";
 import { listPublishedBlogPosts } from "@/lib/convex";
 
 export const metadata: Metadata = {
@@ -9,8 +11,58 @@ export const metadata: Metadata = {
 };
 export const dynamic = "force-dynamic";
 
+function CoverImage({ src, alt }: { src: string; alt: string }) {
+  const isLocal = src.startsWith("/");
+  if (isLocal) {
+    return <Image src={src} alt={alt} fill sizes="(max-width: 700px) 100vw, 38vw" style={{ objectFit: "cover" }} />;
+  }
+  return <img src={src} alt={alt} />;
+}
+
 export default async function BlogPage() {
   let posts: Awaited<ReturnType<typeof listPublishedBlogPosts>> = [];
   try { posts = await listPublishedBlogPosts(100); } catch (error) { console.error("Public blog load failed:", error); }
-  return <main id="main-content" className="blog-index"><div className="growth-shell"><header className="blog-index__header"><p className="growth-eyebrow">Practical guidance</p><h1>A better website, explained plainly.</h1><p>Useful ideas for small-business owners who want their website to earn more trust, calls, and customers.</p></header>{posts.length ? <div className="blog-grid">{posts.map((post) => <article className="blog-card" key={post._id}><div className="blog-card__meta"><time dateTime={new Date(post.publishedAt ?? post.createdAt).toISOString()}>{new Date(post.publishedAt ?? post.createdAt).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</time>{post.tags[0] ? <span>{post.tags[0]}</span> : null}</div><h2><Link href={`/blog/${post.slug}`}>{post.title}</Link></h2><p>{post.excerpt}</p><Link className="blog-card__link" href={`/blog/${post.slug}`}>Read article <span aria-hidden>→</span></Link></article>)}</div> : <div className="blog-empty"><h2>Good things are brewing.</h2><p>Our first practical website guide will be here soon.</p></div>}</div></main>;
+  return (
+    <main id="main-content" className="blog-index">
+      <div className="growth-shell">
+        <header className="blog-index__header">
+          <p className="growth-eyebrow">Practical guidance</p>
+          <h1>A better website, explained plainly.</h1>
+          <p>Useful ideas for small-business owners who want their website to earn more trust, calls, and customers.</p>
+        </header>
+        {posts.length ? (
+          <div className="blog-grid">
+            {posts.map((post) => {
+              const cover = getBlogCover(post);
+              return (
+              <article className={cover ? "blog-card blog-card--with-image" : "blog-card"} key={post._id}>
+                <div className="blog-card__body">
+                  <div className="blog-card__meta">
+                    <time dateTime={new Date(post.publishedAt ?? post.createdAt).toISOString()}>
+                      {new Date(post.publishedAt ?? post.createdAt).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+                    </time>
+                    {post.tags[0] ? <span>{post.tags[0]}</span> : null}
+                  </div>
+                  <h2><Link href={`/blog/${post.slug}`}>{post.title}</Link></h2>
+                  <p>{post.excerpt}</p>
+                  <Link className="blog-card__link" href={`/blog/${post.slug}`}>Read article <span aria-hidden>→</span></Link>
+                </div>
+                {cover ? (
+                  <Link className="blog-card__media" href={`/blog/${post.slug}`} aria-hidden tabIndex={-1}>
+                    <CoverImage src={cover.url} alt="" />
+                  </Link>
+                ) : null}
+              </article>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="blog-empty">
+            <h2>Good things are brewing.</h2>
+            <p>Our first practical website guide will be here soon.</p>
+          </div>
+        )}
+      </div>
+    </main>
+  );
 }

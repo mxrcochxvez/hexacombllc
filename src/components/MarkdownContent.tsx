@@ -58,6 +58,13 @@ export function MarkdownContent({ markdown }: { markdown: string }) {
       continue;
     }
     if (/^---+$/.test(line.trim())) { blocks.push(<hr key={`hr-${index}`} />); index += 1; continue; }
+    const image = /^!\[([^\]]*)\]\(([^)]+)\)$/.exec(line.trim());
+    if (image) {
+      const href = safeHref(image[2]);
+      blocks.push(href ? <p key={`img-${index}`}><img src={href} alt={image[1]} /></p> : <p key={`img-${index}`}>{image[1]}</p>);
+      index += 1;
+      continue;
+    }
     if (line.startsWith("> ")) { blocks.push(<blockquote key={`quote-${index}`}>{inline(line.slice(2))}</blockquote>); index += 1; continue; }
     if (/^[-*]\s+/.test(line)) {
       const items: string[] = [];
@@ -73,7 +80,7 @@ export function MarkdownContent({ markdown }: { markdown: string }) {
     }
     const paragraph = [line.trim()];
     index += 1;
-    while (index < lines.length && lines[index].trim() && !/^(#{2,6})\s+|^```|^> |^[-*]\s+|^\d+\.\s+|^---+$/.test(lines[index])) { paragraph.push(lines[index].trim()); index += 1; }
+    while (index < lines.length && lines[index].trim() && !/^(#{2,6})\s+|^```|^> |^[-*]\s+|^\d+\.\s+|^---+$|^!\[[^\]]*\]\([^)]+\)$/.test(lines[index])) { paragraph.push(lines[index].trim()); index += 1; }
     blocks.push(<p key={`p-${index}`}>{inline(paragraph.join(" "))}</p>);
   }
   return <div className="blog-prose">{blocks}</div>;

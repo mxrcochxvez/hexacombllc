@@ -62,6 +62,8 @@ const tools = [
         tags: { type: "array", items: { type: "string" }, maxItems: 12 },
         metaTitle: { type: "string", description: "Optional SEO title, ideally 50–60 characters." },
         metaDescription: { type: "string", description: "Optional SEO description, ideally 140–160 characters." },
+        coverImageUrl: { type: "string", description: "Optional cover image. Use a site path such as /images/blog/post.jpg or an https URL. Shown to the right of the excerpt on the blog index." },
+        coverImageAlt: { type: "string", description: "Alt text for the cover image." },
       },
       required: ["title", "excerpt", "contentMarkdown"],
       additionalProperties: false,
@@ -85,6 +87,8 @@ const tools = [
         tags: { type: "array", items: { type: "string" }, maxItems: 12 },
         metaTitle: { type: "string" },
         metaDescription: { type: "string" },
+        coverImageUrl: { type: "string" },
+        coverImageAlt: { type: "string" },
       },
       required: ["currentSlug"],
       additionalProperties: false,
@@ -175,12 +179,14 @@ function postInput(args: Record<string, unknown>): BlogPostInput {
     tags: optionalTags(args),
     metaTitle: optionalString(args, "metaTitle"),
     metaDescription: optionalString(args, "metaDescription"),
+    coverImageUrl: optionalString(args, "coverImageUrl"),
+    coverImageAlt: optionalString(args, "coverImageAlt"),
   };
 }
 
 function postUpdate(args: Record<string, unknown>): BlogPostUpdateInput {
   const update: BlogPostUpdateInput = {};
-  for (const field of ["title", "slug", "excerpt", "contentMarkdown", "author", "metaTitle", "metaDescription"] as const) {
+  for (const field of ["title", "slug", "excerpt", "contentMarkdown", "author", "metaTitle", "metaDescription", "coverImageUrl", "coverImageAlt"] as const) {
     const value = optionalString(args, field);
     if (value !== undefined) update[field] = value;
   }

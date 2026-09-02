@@ -31,6 +31,8 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
       tags: Array.isArray(body.tags) ? body.tags.filter((tag): tag is string => typeof tag === "string") : undefined,
       metaTitle: typeof body.metaTitle === "string" ? body.metaTitle : undefined,
       metaDescription: typeof body.metaDescription === "string" ? body.metaDescription : undefined,
+      coverImageUrl: typeof body.coverImageUrl === "string" ? body.coverImageUrl : undefined,
+      coverImageAlt: typeof body.coverImageAlt === "string" ? body.coverImageAlt : undefined,
     });
     return NextResponse.json({ success: true });
   } catch (error) {
