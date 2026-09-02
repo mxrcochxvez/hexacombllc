@@ -34,6 +34,18 @@ function cleanTags(tags: string[]): string[] {
   return [...new Set(tags.map((tag) => tag.trim()).filter(Boolean))].slice(0, 12);
 }
 
+function cleanOptionalText(value: string | undefined): string | undefined {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : undefined;
+}
+
+function cleanCoverImageUrl(value: string | undefined): string | undefined {
+  const url = cleanOptionalText(value);
+  if (!url) return undefined;
+  if (url.startsWith("/") || url.startsWith("https://")) return url;
+  throw new Error("Cover image must be a site path or an https URL");
+}
+
 async function assertUniqueSlug(
   ctx: ReadCtx,
   slug: string,
@@ -132,6 +144,8 @@ const createArgs = {
   tags: v.optional(v.array(v.string())),
   metaTitle: v.optional(v.string()),
   metaDescription: v.optional(v.string()),
+  coverImageUrl: v.optional(v.string()),
+  coverImageAlt: v.optional(v.string()),
 };
 
 async function createPost(
@@ -146,6 +160,8 @@ async function createPost(
     tags?: string[];
     metaTitle?: string;
     metaDescription?: string;
+    coverImageUrl?: string;
+    coverImageAlt?: string;
   },
 ) {
   const title = args.title.trim();
@@ -163,8 +179,10 @@ async function createPost(
     status: args.status,
     author: args.author?.trim() || "Hexacomb",
     tags: cleanTags(args.tags ?? []),
-    metaTitle: args.metaTitle?.trim() || undefined,
-    metaDescription: args.metaDescription?.trim() || undefined,
+    metaTitle: cleanOptionalText(args.metaTitle),
+    metaDescription: cleanOptionalText(args.metaDescription),
+    coverImageUrl: cleanCoverImageUrl(args.coverImageUrl),
+    coverImageAlt: cleanOptionalText(args.coverImageAlt),
     publishedAt: args.status === "published" ? now : undefined,
     createdAt: now,
     updatedAt: now,
@@ -199,6 +217,8 @@ const updateArgs = {
   tags: v.optional(v.array(v.string())),
   metaTitle: v.optional(v.string()),
   metaDescription: v.optional(v.string()),
+  coverImageUrl: v.optional(v.string()),
+  coverImageAlt: v.optional(v.string()),
 };
 
 async function updatePost(
@@ -214,6 +234,8 @@ async function updatePost(
     tags?: string[];
     metaTitle?: string;
     metaDescription?: string;
+    coverImageUrl?: string;
+    coverImageAlt?: string;
   },
 ) {
   const post = await ctx.db.get(postId);
@@ -238,6 +260,14 @@ async function updatePost(
       args.metaDescription === undefined
         ? post.metaDescription
         : args.metaDescription.trim() || undefined,
+    coverImageUrl:
+      args.coverImageUrl === undefined
+        ? post.coverImageUrl
+        : cleanCoverImageUrl(args.coverImageUrl),
+    coverImageAlt:
+      args.coverImageAlt === undefined
+        ? post.coverImageAlt
+        : cleanOptionalText(args.coverImageAlt),
     publishedAt:
       args.status === "published" && !post.publishedAt
         ? now

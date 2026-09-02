@@ -14,6 +14,8 @@ export type BlogPostEditorValue = {
   tags: string[];
   metaTitle?: string;
   metaDescription?: string;
+  coverImageUrl?: string;
+  coverImageAlt?: string;
 };
 
 const emptyPost: BlogPostEditorValue = {
@@ -89,6 +91,17 @@ export function BlogPostEditor({ initialPost }: { initialPost?: BlogPostEditorVa
         <label htmlFor="blogExcerpt">Excerpt</label>
         <textarea id="blogExcerpt" rows={3} required value={post.excerpt} onChange={(event) => setField("excerpt", event.target.value)} disabled={pending} />
         <small>One or two sentences shown on the blog page.</small>
+      </div>
+      <div className="dash-grid">
+        <div className="form-group">
+          <label htmlFor="blogCover">Cover image URL</label>
+          <input id="blogCover" value={post.coverImageUrl ?? ""} placeholder="/images/blog/your-post.jpg" onChange={(event) => setField("coverImageUrl", event.target.value)} disabled={pending} />
+          <small>Shown to the right of the excerpt on the blog index.</small>
+        </div>
+        <div className="form-group">
+          <label htmlFor="blogCoverAlt">Cover image alt text</label>
+          <input id="blogCoverAlt" value={post.coverImageAlt ?? ""} onChange={(event) => setField("coverImageAlt", event.target.value)} disabled={pending} />
+        </div>
       </div>
       <div className="form-group">
         <label htmlFor="blogContent">Post content (Markdown)</label>

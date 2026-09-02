@@ -15,5 +15,5 @@ export default async function EditBlogPostPage({ params }: { params: Promise<{ i
   let post;
   try { post = await getAdminBlogPost(id as Id<"blogPosts">); } catch { notFound(); }
   if (!post) notFound();
-  return <div className="dash-page"><div className="dash-shell"><DashboardNav title="Edit post" subtitle={`Last updated ${new Date(post.updatedAt).toLocaleString()}`} showSectionNav={false} /><BlogPostEditor initialPost={{ _id: post._id, title: post.title, slug: post.slug, excerpt: post.excerpt, contentMarkdown: post.contentMarkdown, status: post.status, author: post.author, tags: post.tags, metaTitle: post.metaTitle, metaDescription: post.metaDescription }} /></div></div>;
+  return <div className="dash-page"><div className="dash-shell"><DashboardNav title="Edit post" subtitle={`Last updated ${new Date(post.updatedAt).toLocaleString()}`} showSectionNav={false} /><BlogPostEditor initialPost={{ _id: post._id, title: post.title, slug: post.slug, excerpt: post.excerpt, contentMarkdown: post.contentMarkdown, status: post.status, author: post.author, tags: post.tags, metaTitle: post.metaTitle, metaDescription: post.metaDescription, coverImageUrl: post.coverImageUrl, coverImageAlt: post.coverImageAlt }} /></div></div>;
 }

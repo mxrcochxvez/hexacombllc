@@ -70,6 +70,8 @@ export type BlogPostInput = {
   tags?: string[];
   metaTitle?: string;
   metaDescription?: string;
+  coverImageUrl?: string;
+  coverImageAlt?: string;
 };
 
 export type BlogPostUpdateInput = Partial<BlogPostInput>;
