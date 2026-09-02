@@ -4,6 +4,7 @@ import { listLeads } from "@/lib/convex";
 import { DashboardLoginForm } from "@/components/DashboardLoginForm";
 import { DashboardLeadList } from "@/components/DashboardLeadList";
 import type { LeadStatus } from "@/lib/statuses";
+import { OperatePage } from "@/ui";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -16,11 +17,7 @@ export default async function DashboardPage() {
   const authed = await isAdminAuthenticated();
 
   if (!authed) {
-    return (
-      <div className="dash-page">
-        <DashboardLoginForm />
-      </div>
-    );
+    return <DashboardLoginForm />;
   }
 
   let leads: Awaited<ReturnType<typeof listLeads>> = [];
@@ -33,8 +30,8 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="dash-page">
-      {loadError ? <p className="field-error mb-4">{loadError}</p> : null}
+    <OperatePage>
+      {loadError ? <p className="ui-field__error">{loadError}</p> : null}
       <DashboardLeadList
         leads={leads.map((lead) => ({
           _id: lead._id,
@@ -47,6 +44,6 @@ export default async function DashboardPage() {
           createdAt: lead.createdAt,
         }))}
       />
-    </div>
+    </OperatePage>
   );
 }

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { Button } from "@/ui";
 
 export function DashboardNav({
   title,
@@ -10,14 +11,12 @@ export function DashboardNav({
 }: {
   title: string;
   subtitle: string;
-  /** Leads/Clients tabs — list pages only, not detail pages. */
   showSectionNav?: boolean;
 }) {
   const pathname = usePathname();
   const router = useRouter();
 
-  const onLeads =
-    pathname === "/dashboard" || pathname.startsWith("/dashboard/leads");
+  const onLeads = pathname === "/dashboard" || pathname.startsWith("/dashboard/leads");
   const onClients = pathname.startsWith("/dashboard/clients");
   const onBlog = pathname.startsWith("/dashboard/blog");
 
@@ -27,25 +26,17 @@ export function DashboardNav({
   }
 
   return (
-    <div className="dash-toolbar">
+    <div className="ui-toolbar">
       <div>
         {showSectionNav ? (
-          <nav className="dash-nav" aria-label="Dashboard sections">
-            <Link
-              href="/dashboard"
-              className={onLeads ? "dash-nav__link is-active" : "dash-nav__link"}
-            >
+          <nav className="ui-nav" aria-label="Dashboard sections">
+            <Link href="/dashboard" className="ui-nav-link" data-active={onLeads ? "true" : undefined}>
               Leads
             </Link>
-            <Link
-              href="/dashboard/clients"
-              className={
-                onClients ? "dash-nav__link is-active" : "dash-nav__link"
-              }
-            >
+            <Link href="/dashboard/clients" className="ui-nav-link" data-active={onClients ? "true" : undefined}>
               Clients
             </Link>
-            <Link href="/dashboard/blog" className={onBlog ? "dash-nav__link is-active" : "dash-nav__link"}>
+            <Link href="/dashboard/blog" className="ui-nav-link" data-active={onBlog ? "true" : undefined}>
               Blog
             </Link>
           </nav>
@@ -53,9 +44,9 @@ export function DashboardNav({
         <h1 className="dash-title">{title}</h1>
         <p className="dash-muted">{subtitle}</p>
       </div>
-      <button type="button" className="btn btn-secondary" onClick={logout}>
+      <Button type="button" intent="ghost" onClick={logout}>
         Log out
-      </button>
+      </Button>
     </div>
   );
 }

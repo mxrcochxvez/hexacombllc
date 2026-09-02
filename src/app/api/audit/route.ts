@@ -138,6 +138,133 @@ function summarize(score: number, good: string, warning: string, bad: string) {
   return bad;
 }
 
+type Priority = {
+  title: string;
+  why: string;
+  ifYouWait: string;
+  owner: "you" | "hexacomb";
+};
+
+function hasTelLink(html: string) {
+  return /href=["']tel:/i.test(html);
+}
+
+function hasMailLink(html: string) {
+  return /href=["']mailto:/i.test(html);
+}
+
+function hasForm(html: string) {
+  return /<form\b/i.test(html);
+}
+
+function hasContactPath(html: string) {
+  return /href=["'][^"']*(contact|book|schedule|quote|appointment)[^"']*["']/i.test(html);
+}
+
+function buildPriorities(args: {
+  overall: number;
+  title: string;
+  description: string;
+  checks: AuditCheck[];
+}): Priority[] {
+  const byLabel = new Map(args.checks.map((check) => [check.label, check]));
+  const catalog: Array<{ label: string; title: string; why: string; ifYouWait: string; owner: Priority["owner"] }> = [
+    {
+      label: "Search visibility",
+      title: "Google may be told not to show this page",
+      why: "If the page is blocked from search, new customers will not find you even when they type your name.",
+      ifYouWait: "You keep paying for a site that search engines are asked to ignore.",
+      owner: "hexacomb",
+    },
+    {
+      label: "Secure connection",
+      title: "The browser may warn people before they read a word",
+      why: "A security warning feels like a scam. Most people leave.",
+      ifYouWait: "You lose the visit before your offer has a chance.",
+      owner: "hexacomb",
+    },
+    {
+      label: "Google result title",
+      title: "Your Google listing does not name the business clearly",
+      why: "That line is the first sales pitch. If it is missing or sloppy, the competitor underneath you gets the tap.",
+      ifYouWait: "You show up looking unfinished next to businesses who wrote a real title.",
+      owner: "hexacomb",
+    },
+    {
+      label: "Search description",
+      title: "Google has no short pitch to show under your name",
+      why: "If you do not write the sentence under the blue link, Google invents one. It is rarely the sentence that gets a call.",
+      ifYouWait: "People skip you because they cannot tell what you do.",
+      owner: "hexacomb",
+    },
+    {
+      label: "Click-to-call",
+      title: "A phone visitor cannot tap to call",
+      why: "On a phone, the easiest next step is a tap. If the number is not a link, many people will not bother.",
+      ifYouWait: "You make the hottest leads work for it.",
+      owner: "you",
+    },
+    {
+      label: "First response",
+      title: "The page feels late before it even appears",
+      why: "People decide in a couple of seconds whether this looks like a real business. Delay reads as neglect.",
+      ifYouWait: "Phone visitors bounce and call the next listing.",
+      owner: "hexacomb",
+    },
+    {
+      label: "Main page headline",
+      title: "The first headline does not say what you do",
+      why: "A stranger should know the offer in one line. If they have to hunt, they leave.",
+      ifYouWait: "The site stays a brochure instead of a door.",
+      owner: "you",
+    },
+    {
+      label: "A way to reach you",
+      title: "There is no obvious way to get in touch",
+      why: "If there is no form, email, or contact page on the first page, the visit dead-ends.",
+      ifYouWait: "People screenshot the page and forget to follow up.",
+      owner: "you",
+    },
+  ];
+
+  const picked: Priority[] = [];
+  for (const item of catalog) {
+    const check = byLabel.get(item.label);
+    if (!check || check.status === "good") continue;
+    picked.push({
+      title: item.title,
+      why: item.why,
+      ifYouWait: item.ifYouWait,
+      owner: item.owner,
+    });
+    if (picked.length === 3) break;
+  }
+
+  if (picked.length === 0) {
+    picked.push({
+      title: "The basics are in place. The next gain is conversion.",
+      why: "Search, speed, and trust look decent from this first pass. The work now is making the page ask for the call more clearly.",
+      ifYouWait: "A fine website stays average while a sharper one takes the inquiry.",
+      owner: "hexacomb",
+    });
+  }
+
+  return picked;
+}
+
+function buildShareText(args: {
+  hostname: string;
+  overall: number;
+  headline: string;
+  previewTitle: string;
+  priorities: Priority[];
+}) {
+  const week = args.priorities
+    .map((item, index) => `${index + 1}. ${item.title} (${item.owner === "you" ? "you can start" : "we would handle"})`)
+    .join("\n");
+  return `Hexacomb first-pass for ${args.hostname}\nScore: ${args.overall} / 100\n${args.headline}\nGoogle title shown: ${args.previewTitle}\n\nFix first:\n${week}\n\nThis is a first look at one public page, not a full crawl.`;
+}
+
 function analyzeSite(url: URL, html: string, loadMs: number, status: number) {
   const title = getTagContent(html, /<title[^>]*>([\s\S]*?)<\/title>/i);
   const description = getTagContent(
@@ -327,24 +454,82 @@ function analyzeSite(url: URL, html: string, loadMs: number, status: number) {
           status: "warning",
           message: "The page may look weak when shared by text, email, or social apps.",
         },
+    hasTelLink(html)
+      ? {
+          label: "Click-to-call",
+          status: "good",
+          message: "A visitor on a phone can tap a number to call.",
+        }
+      : {
+          label: "Click-to-call",
+          status: "warning",
+          message: "No tap-to-call number showed up on this page. Phone visitors have to copy a number by hand.",
+        },
+    hasForm(html) || hasMailLink(html) || hasContactPath(html)
+      ? {
+          label: "A way to reach you",
+          status: "good",
+          message: hasForm(html)
+            ? "There is a form on this page, so a visitor can ask for help without hunting."
+            : "There is an email or contact path on this page.",
+        }
+      : {
+          label: "A way to reach you",
+          status: "bad",
+          message: "This page does not show a form, email link, or contact page. A stranger has no next step.",
+        },
   ];
 
   const seoScore = scoreFromChecks(seoChecks);
   const speedScore = scoreFromChecks(speedChecks);
   const issueScore = scoreFromChecks(issueChecks);
   const overall = Math.round((seoScore + speedScore + issueScore) / 3);
+  const allChecks = [...seoChecks, ...speedChecks, ...issueChecks];
+  const firstParagraph = stripTags(getTagContent(html, /<p[^>]*>([\s\S]*?)<\/p>/i));
+  const siteName =
+    getTagContent(html, /<meta[^>]+property=["']og:site_name["'][^>]+content=["']([^"']*)["'][^>]*>/i) ||
+    url.hostname.replace(/^www\./, "");
+  const snippetSource = description || firstParagraph;
+  const previewTitle = title || siteName;
+  const previewDescription = snippetSource
+    ? snippetSource.length > 157
+      ? `${snippetSource.slice(0, 157).trimEnd()}...`
+      : snippetSource
+    : "No description on the page. Google will pull a random sentence instead.";
+  const headline =
+    overall >= 80
+      ? "The basics work. The next job is getting more of these visits to turn into calls."
+      : overall >= 55
+        ? "Customers can reach the site, but it is making them work too hard."
+        : "This site is asking customers to trust a page that still looks unfinished.";
+  const priorities = buildPriorities({
+    overall,
+    title,
+    description,
+    checks: allChecks,
+  });
 
   return {
     url: url.toString(),
     finalUrl: url.toString(),
     scannedAt: new Date().toISOString(),
     overall,
-    headline:
-      overall >= 80
-        ? "This site is in decent shape, with room to sharpen conversion."
-        : overall >= 55
-          ? "This site is probably leaving money on the table."
-          : "This site is making customers work too hard.",
+    headline,
+    preview: {
+      title: previewTitle,
+      description: previewDescription,
+      displayUrl: url.hostname.replace(/^www\./, ""),
+      siteName,
+      href: `${url.protocol}//${url.hostname}${url.pathname === "/" ? "" : url.pathname}`,
+    },
+    priorities,
+    shareText: buildShareText({
+      hostname: url.hostname.replace(/^www\./, ""),
+      overall,
+      headline,
+      previewTitle,
+      priorities,
+    }),
     sections: {
       seo: {
         score: seoScore,

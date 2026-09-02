@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: "Blog dashboard", robots: { index: fa
 export const dynamic = "force-dynamic";
 
 export default async function DashboardBlogPage() {
-  if (!(await isAdminAuthenticated())) return <div className="dash-page"><DashboardLoginForm /></div>;
+  if (!(await isAdminAuthenticated())) return <DashboardLoginForm />;
   let posts: Awaited<ReturnType<typeof listAdminBlogPosts>> = [];
   let apiKeys: Awaited<ReturnType<typeof listBlogApiKeys>> = [];
   let loadError = "";
