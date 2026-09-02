@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getBlogCover } from "@/lib/blogCover";
+import { getBlogCover, useUnoptimizedCover } from "@/lib/blogCover";
 import { listPublishedBlogPosts } from "@/lib/convex";
 
 export const metadata: Metadata = {
@@ -12,8 +12,7 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 function CoverImage({ src, alt }: { src: string; alt: string }) {
-  const isLocal = src.startsWith("/");
-  if (isLocal) {
+  if (!useUnoptimizedCover(src)) {
     return <Image src={src} alt={alt} fill sizes="(max-width: 700px) 100vw, 38vw" style={{ objectFit: "cover" }} />;
   }
   return <img src={src} alt={alt} />;
