@@ -49,7 +49,7 @@ type ButtonShared = {
 
 export type ButtonAsButton = ButtonShared &
   Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "className"> & {
-    href?: undefined;
+    href?: never;
   };
 
 export type ButtonAsLink = ButtonShared & {
