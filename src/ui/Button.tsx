@@ -1,12 +1,16 @@
 import Link from "next/link";
-import type { ButtonProps } from "./types";
+import type { ButtonAsLink, ButtonProps } from "./types";
+
+function isLinkButton(props: ButtonProps): props is ButtonAsLink {
+  return typeof props.href === "string";
+}
 
 export function Button(props: ButtonProps) {
   const intent = props.intent ?? "solid";
   const pending = props.pending ?? false;
   const className = `ui-button ui-button--${intent}${props.fill ? " ui-button--fill" : ""}`;
 
-  if ("href" in props && props.href) {
+  if (isLinkButton(props)) {
     return (
       <Link
         href={props.href}
