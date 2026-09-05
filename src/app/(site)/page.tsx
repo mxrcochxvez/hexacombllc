@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import CauseNote from "@/components/CauseNote";
 import CtaSection from "@/components/CtaSection";
 import HeroSection from "@/components/HeroSection";
 import ProcessSteps from "@/components/ProcessSteps";
@@ -41,6 +42,7 @@ export default function Home() {
       <ServicesGrid />
       <WhyHexacomb />
       <ProcessSteps />
+      <CauseNote />
       <CtaSection />
     </main>
   );

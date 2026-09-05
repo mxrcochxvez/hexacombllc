@@ -17,7 +17,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 ## Architecture
 - **Next.js 16 App Router** (`src/app/`), deployed to **Cloudflare Workers** via `@opennextjs/cloudflare`, not Vercel.
-- **Public routes** currently include `/`, `/about`, `/pricing`, `/website-audit`, and `/intake`.
+- **Public routes** currently include `/`, `/about`, `/pricing`, `/website-audit`, `/human-rights`, and `/intake`.
 - **Internal / noindex routes** (not in Navbar or sitemap):
   - `/dashboard` — password-gated lead list + login (`ADMIN_PASSWORD` cookie session).
   - `/dashboard/leads/[id]` — lead detail, typed status changes, contract draft / “Submit for review”.
