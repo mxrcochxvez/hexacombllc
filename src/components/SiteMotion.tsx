@@ -8,6 +8,7 @@ const motionTargets = [
   ".growth-problem",
   ".growth-system",
   ".growth-proof",
+  ".growth-cause-note",
   ".growth-close",
   ".growth-page-hero",
   ".growth-page-dark",

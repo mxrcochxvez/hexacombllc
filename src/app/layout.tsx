@@ -50,6 +50,8 @@ const structuredData = {
         "Web analytics",
         "Conversion copywriting",
         "Local search marketing",
+        "Nonprofit websites",
+        "Human rights organization websites",
       ],
       contactPoint: {
         "@type": "ContactPoint",
@@ -138,6 +140,8 @@ export const metadata: Metadata = {
     "SEO",
     "small business",
     "local business",
+    "nonprofit website",
+    "human rights organization website",
   ],
   authors: [{ name: "Hexacomb LLC", url: siteUrl }],
   creator: "Hexacomb LLC",
