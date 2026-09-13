@@ -27,6 +27,8 @@ export default function HeroSection() {
     const panels = Array.from(track.querySelectorAll<HTMLElement>(".website-beat"));
     const stage = track.querySelector<HTMLElement>(".website-stage");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const compact = window.matchMedia("(max-width: 760px)");
+    const stacked = () => reduced.matches || compact.matches || !available;
     let frame = 0;
     let target = 0;
     let last = 0;
@@ -42,15 +44,16 @@ export default function HeroSection() {
       const hue = hues[segment] + (hues[segment + 1] - hues[segment]) * (p - segment);
       stage?.style.setProperty("--scene-hue", String(hue));
       stage?.style.setProperty("--scene-shift", `${Math.sin(p * 1.6) * 12}%`);
+      const stackedNow = stacked();
 
       panels.forEach((panel, index) => {
         const distance = Math.abs(p - index);
-        const opacity = Math.max(0, Math.min(1, (0.64 - distance) / .24));
+        const opacity = stackedNow ? 1 : Math.max(0, Math.min(1, (0.64 - distance) / .24));
         panel.style.opacity = String(opacity);
-        panel.style.transform = `translateY(${(index - p) * 24}px)`;
-        panel.dataset.active = String(opacity >= .5 || reduced.matches || !available);
+        panel.style.transform = stackedNow ? "none" : `translateY(${(index - p) * 24}px)`;
+        panel.dataset.active = String(opacity >= .5);
         const link = panel.querySelector("a");
-        if (link) link.tabIndex = opacity >= .5 || reduced.matches || !available ? 0 : -1;
+        if (link) link.tabIndex = opacity >= .5 ? 0 : -1;
       });
       renderSceneRef.current();
       if (Math.abs(target - p) > .0001) frame = requestAnimationFrame(draw);
@@ -58,14 +61,15 @@ export default function HeroSection() {
     const update = () => {
       const rect = track.getBoundingClientRect();
       const journey = Math.max(1, rect.height - window.innerHeight);
-      target = reduced.matches ? 0 : Math.max(0, Math.min(4, -rect.top / journey * 4));
+      target = stacked() ? 0 : Math.max(0, Math.min(4, -rect.top / journey * 4));
       if (!frame) { last = 0; frame = requestAnimationFrame(draw); }
     };
     update();
     window.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
     reduced.addEventListener("change", update);
-    return () => { cancelAnimationFrame(frame); window.removeEventListener("scroll", update); window.removeEventListener("resize", update); reduced.removeEventListener("change", update); };
+    compact.addEventListener("change", update);
+    return () => { cancelAnimationFrame(frame); window.removeEventListener("scroll", update); window.removeEventListener("resize", update); reduced.removeEventListener("change", update); compact.removeEventListener("change", update); };
   }, [available]);
   return (
     <div className="website-journey" ref={trackRef} data-static={!available}>

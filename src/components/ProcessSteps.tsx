@@ -20,10 +20,11 @@ export default function ProcessSteps() {
     const track = trackRef.current;
     if (!track) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const compact = window.matchMedia("(max-width: 900px)");
     let frame = 0;
     const update = () => {
       frame = 0;
-      if (reduced.matches) { setScene(0); return; }
+      if (reduced.matches || compact.matches) { setScene(0); return; }
       const rect = track.getBoundingClientRect();
       const range = Math.max(1, rect.height - window.innerHeight);
       setScene(Math.round(Math.max(0, Math.min(3, -rect.top / range * 3))));
@@ -33,7 +34,8 @@ export default function ProcessSteps() {
     window.addEventListener("scroll", queue, { passive: true });
     window.addEventListener("resize", queue);
     reduced.addEventListener("change", queue);
-    return () => { cancelAnimationFrame(frame); window.removeEventListener("scroll", queue); window.removeEventListener("resize", queue); reduced.removeEventListener("change", queue); };
+    compact.addEventListener("change", queue);
+    return () => { cancelAnimationFrame(frame); window.removeEventListener("scroll", queue); window.removeEventListener("resize", queue); reduced.removeEventListener("change", queue); compact.removeEventListener("change", queue); };
   }, []);
 
   return (
