@@ -2032,7 +2032,7 @@ html.page-hidden .site-signal-packet,
 
 .growth-audit-report {
   display: grid;
-  gap: clamp(2.5rem, 5vw, 4.25rem);
+  gap: clamp(2rem, 3.5vw, 3rem);
   scroll-margin-top: 6rem;
 }
 
@@ -2224,8 +2224,8 @@ html.page-hidden .site-signal-packet,
 .growth-audit-ledger {
   display: grid;
   gap: clamp(2rem, 4vw, 3.25rem);
-  padding-top: clamp(1.5rem, 3vw, 2.25rem);
   border-top: 1px solid var(--color-border);
+  padding-top: 0.15rem;
 }
 
 .growth-audit-ledger > section > p {
@@ -2271,6 +2271,19 @@ html.page-hidden .site-signal-packet,
 
 .growth-audit-extra li + li {
   margin-top: 0.55rem;
+}
+
+.growth-audit-form .growth-button,
+.growth-audit-actions button {
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.growth-audit-form .growth-button:disabled {
+  opacity: 0.58;
+  transform: none;
+  cursor: wait;
 }
 
 .growth-audit-actions {

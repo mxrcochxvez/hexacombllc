@@ -120,7 +120,7 @@ export default function WebsiteAuditTool() {
           <input
             id="audit-url"
             name="url"
-            type="url"
+            type="text"
             inputMode="url"
             autoComplete="url"
             placeholder="https://yourbusiness.com"
@@ -160,6 +160,7 @@ export default function WebsiteAuditTool() {
             <h2 id="audit-results-heading">{result.headline}</h2>
             <p>
               First page at {result.preview.displayUrl}. Not a crawl of the whole site.
+              <span className="sr-only"> First look: {result.overall} of 100.</span>
             </p>
           </header>
 
