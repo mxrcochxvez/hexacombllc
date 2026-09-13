@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getBlogCover, useUnoptimizedCover } from "@/lib/blogCover";
+import CtaSection from "@/components/CtaSection";
+import { getBlogCover, isUnoptimizedCover } from "@/lib/blogCover";
 import { listPublishedBlogPosts } from "@/lib/convex";
 
 export const metadata: Metadata = {
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 function CoverImage({ src, alt }: { src: string; alt: string }) {
-  if (!useUnoptimizedCover(src)) {
+  if (!isUnoptimizedCover(src)) {
     return <Image src={src} alt={alt} fill sizes="(max-width: 700px) 100vw, 38vw" style={{ objectFit: "cover" }} />;
   }
   return <img src={src} alt={alt} />;
@@ -22,10 +23,9 @@ export default async function BlogPage() {
   let posts: Awaited<ReturnType<typeof listPublishedBlogPosts>> = [];
   try { posts = await listPublishedBlogPosts(100); } catch (error) { console.error("Public blog load failed:", error); }
   return (
-    <main id="main-content" className="blog-index">
+    <main id="main-content" className="growth-page blog-index">
       <div className="growth-shell">
         <header className="blog-index__header">
-          <p className="growth-eyebrow">Practical guidance</p>
           <h1>A better website, explained plainly.</h1>
           <p>Useful ideas for small-business owners who want their website to earn more trust, calls, and customers.</p>
         </header>
@@ -62,6 +62,7 @@ export default async function BlogPage() {
           </div>
         )}
       </div>
+      <CtaSection />
     </main>
   );
 }

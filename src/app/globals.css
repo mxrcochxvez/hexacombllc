@@ -11,7 +11,7 @@
   --color-cream: #0f172a;
   --color-cream-muted: #475569;
   --color-brown-mid: #b45309;
-  --color-border: #e2e8f0;
+  --color-border: oklch(82% 0.025 210);
   --color-grain: none;
   --honey: var(--color-amber);
   --honey-light: var(--color-amber-light);
@@ -24,10 +24,10 @@
   --gray-light: var(--color-border);
   --radius: 8px;
   --radius-lg: 12px;
-  --font-body: var(--font-public-sans), system-ui, sans-serif;
-  --font-display: var(--font-archivo-black), "Arial Narrow", sans-serif;
-  --font-hero: var(--font-archivo-black), "Arial Narrow", sans-serif;
-  --font-soft: var(--font-public-sans), system-ui, sans-serif;
+  --font-body: var(--font-atkinson), system-ui, sans-serif;
+  --font-display: var(--font-geologica), system-ui, sans-serif;
+  --font-hero: var(--font-geologica), system-ui, sans-serif;
+  --font-soft: var(--font-atkinson), system-ui, sans-serif;
   --font-mono-stack: var(--font-jetbrains-mono), ui-monospace, monospace;
   --max-width: 960px;
   --transition: 0.2s ease;

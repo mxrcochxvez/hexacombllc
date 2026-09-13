@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight, Check } from "lucide-react";
+import CtaSection from "@/components/CtaSection";
 
 export const metadata: Metadata = {
   title: "Website Care Plans",
@@ -28,7 +29,7 @@ export default function PricingPage() {
             <article key={tier.name} className={`growth-price-card ${tier.growth ? "growth-price-card-featured" : ""}`}>
               <div className="growth-price-head">{tier.popular && <span>Popular</span>}{tier.growth && <span>Best for growing businesses</span>}<h3>{tier.name}</h3><p>{tier.note}</p><strong>{tier.price}{tier.price !== "Custom" && <small>/mo</small>}</strong></div>
               <ul>{tier.features.map((feature) => <li key={feature}><Check size={15} aria-hidden />{feature}</li>)}</ul>
-              <Link href="/#contact" className="growth-button">Ask about {tier.name} <ArrowUpRight size={16} aria-hidden /></Link>
+              <Link href="#contact" className="growth-button">Ask about {tier.name} <ArrowUpRight size={16} aria-hidden /></Link>
             </article>
           ))}
         </div></div>
@@ -37,6 +38,7 @@ export default function PricingPage() {
         <div className="growth-page-heading"><h2>Clear scope. Easy upgrades. No annual lock-in.</h2></div>
         <div className="growth-terms-mini"><p><strong>Every plan includes</strong> hosting, SSL, maintenance, backups, and support.</p><p><strong>Need more help later?</strong> Move up when you are ready for more updates, reporting, or search support.</p><p><strong>Need something outside your plan?</strong> You will see the quote before the work starts.</p></div>
       </section>
+      <CtaSection />
     </main>
   );
 }

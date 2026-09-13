@@ -17,6 +17,6 @@ export function stripLeadingCoverImage(markdown: string): string {
   return markdown.replace(/^\s*!\[([^\]]*)\]\(([^)]+)\)\s*/, "");
 }
 
-export function useUnoptimizedCover(url: string): boolean {
+export function isUnoptimizedCover(url: string): boolean {
   return !url.startsWith("/") || url.startsWith("/blog/media/");
 }

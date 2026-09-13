@@ -27,7 +27,7 @@ export default function CookieBanner() {
   return (
     <div
       ref={bannerRef}
-      className="fixed inset-x-0 bottom-0 z-[60] border-t border-border bg-canvas p-4 shadow-[0_-8px_30px_oklch(22%_0.025_265/0.08)] sm:p-5"
+      className="cookie-banner fixed inset-x-0 bottom-0 z-[60] border-t border-border bg-canvas p-4 shadow-[0_-8px_30px_oklch(22%_0.025_265/0.08)] sm:p-5"
       role="dialog"
       aria-live="polite"
       aria-label="Cookie consent"

@@ -3,8 +3,6 @@ import CauseNote from "@/components/CauseNote";
 import CtaSection from "@/components/CtaSection";
 import HeroSection from "@/components/HeroSection";
 import ProcessSteps from "@/components/ProcessSteps";
-import ServicesGrid from "@/components/ServicesGrid";
-import WhyHexacomb from "@/components/WhyHexacomb";
 
 const baseUrl = "https://hexacombllc.com";
 
@@ -39,8 +37,6 @@ export default function Home() {
   return (
     <main id="main-content">
       <HeroSection />
-      <ServicesGrid />
-      <WhyHexacomb />
       <ProcessSteps />
       <CauseNote />
       <CtaSection />

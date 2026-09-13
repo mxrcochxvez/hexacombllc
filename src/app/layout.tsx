@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { Archivo_Black, Public_Sans } from "next/font/google";
+import { Atkinson_Hyperlegible, Geologica } from "next/font/google";
 import "./brand.css";
 import "./globals.css";
 import "../ui/space.theme.css";
@@ -8,15 +8,16 @@ import "../ui/kit.css";
 import CloudflareAnalytics from "@/components/CloudflareAnalytics";
 import TrackClicks from "@/components/TrackClicks";
 
-const archivoBlack = Archivo_Black({
-  variable: "--font-archivo-black",
+const geologica = Geologica({
+  variable: "--font-geologica",
   subsets: ["latin"],
-  weight: "400",
+  weight: ["400", "500", "600", "700"],
 });
 
-const publicSans = Public_Sans({
-  variable: "--font-public-sans",
+const atkinson = Atkinson_Hyperlegible({
+  variable: "--font-atkinson",
   subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 const siteUrl = "https://hexacombllc.com";
@@ -116,7 +117,7 @@ const structuredData = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f6f7f3",
+  themeColor: "#080910",
 };
 
 export const metadata: Metadata = {
@@ -214,9 +215,17 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${archivoBlack.variable} ${publicSans.variable}`}
+      className={`${geologica.variable} ${atkinson.variable}`}
     >
       <body>
+        {/*
+          THESIS: Continuous website ownership keeps the search→site→call flow open—not a static brochure site.
+          OWN-WORLD: Irrigation Canal Blueprint — sun-bleached concrete canvas, canal-teal surfaces, blueprint navy ink, citrus sluice-gate CTAs, condensed Geologica + Atkinson.
+          STORY: Visitor feels neglect as a dry field, believes Hexacomb keeps care flowing, starts a conversation.
+          FIRST VIEWPORT: Hero-scale HEXACOMB title block left, cycling local outcomes, one citrus CTA, live flow diagram right.
+          FORM: Irrigation Canal Blueprint (grounded #3, seed 5fa491f1).
+          FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+        */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}

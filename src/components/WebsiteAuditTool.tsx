@@ -1,9 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { ArrowUpRight, CheckCircle2, AlertTriangle, Search, ShieldAlert, Timer, XCircle } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { track } from "@/lib/analytics";
-import { Button, Cluster, Field } from "@/ui";
 
 type AuditStatus = "good" | "warning" | "bad";
 
@@ -49,46 +48,16 @@ interface AuditResult {
   };
 }
 
-const sectionMeta = {
-  seo: {
-    title: "Can customers find you?",
-    label: "Find you",
-    icon: Search,
-  },
-  speed: {
-    title: "Does it feel late?",
-    label: "Feel",
-    icon: Timer,
-  },
-  issues: {
-    title: "Would they trust it?",
-    label: "Trust",
-    icon: ShieldAlert,
-  },
+const sectionCopy = {
+  seo: "Can customers find you?",
+  speed: "Does it feel late?",
+  issues: "Would they trust it?",
 } as const;
 
-function statusIcon(status: AuditStatus) {
-  if (status === "good") return <CheckCircle2 size={18} strokeWidth={2} aria-hidden="true" />;
-  if (status === "warning") return <AlertTriangle size={18} strokeWidth={2} aria-hidden="true" />;
-  return <XCircle size={18} strokeWidth={2} aria-hidden="true" />;
-}
-
-function statusLabel(status: AuditStatus) {
-  if (status === "good") return "Good";
+function statusWord(status: AuditStatus) {
+  if (status === "good") return "Clear";
   if (status === "warning") return "Watch";
   return "Fix";
-}
-
-function scoreLabel(score: number) {
-  if (score >= 80) return "Holding";
-  if (score >= 55) return "Leaky";
-  return "Leaking leads";
-}
-
-function scoreTone(score: number) {
-  if (score >= 80) return "hold";
-  if (score >= 55) return "leak";
-  return "loss";
 }
 
 export default function WebsiteAuditTool() {
@@ -146,8 +115,10 @@ export default function WebsiteAuditTool() {
   return (
     <div className="growth-audit-tool">
       <form className="growth-audit-form" onSubmit={handleSubmit} aria-label="Website audit form">
-        <Field label="Your website" hint="One public page. We translate what a stranger would notice.">
+        <label htmlFor="audit-url">Your website</label>
+        <div className="growth-audit-row">
           <input
+            id="audit-url"
             name="url"
             type="url"
             inputMode="url"
@@ -158,11 +129,13 @@ export default function WebsiteAuditTool() {
             disabled={status === "loading"}
             required
             aria-required="true"
+            aria-describedby="audit-url-hint"
           />
-        </Field>
-        <Button type="submit" intent="signal" pending={status === "loading"}>
-          {status === "loading" ? "Reading the page…" : "Check my website"}
-        </Button>
+          <button type="submit" className="growth-button growth-button-signal" disabled={status === "loading"} aria-busy={status === "loading" || undefined}>
+            {status === "loading" ? "Reading the page…" : "Check my website"}
+          </button>
+        </div>
+        <p id="audit-url-hint">One public page. Written for the person who owns the business.</p>
         {status === "error" ? (
           <p className="growth-audit-error" role="alert" aria-live="assertive">
             {error}
@@ -184,23 +157,15 @@ export default function WebsiteAuditTool() {
           tabIndex={-1}
         >
           <header className="growth-audit-verdict">
-            <p className="growth-audit-score" aria-label={`Overall score ${result.overall} out of 100`}>
-              <strong>{result.overall}</strong>
-              <span>/100</span>
+            <h2 id="audit-results-heading">{result.headline}</h2>
+            <p>
+              First page at {result.preview.displayUrl}. Not a crawl of the whole site.
             </p>
-            <div>
-              <p className="growth-audit-kicker">First-pass briefing</p>
-              <h2 id="audit-results-heading">{result.headline}</h2>
-              <p>
-                Scanned {result.preview.displayUrl}. This is the homepage a stranger lands on, not a full crawl of
-                every page.
-              </p>
-            </div>
           </header>
 
-          <div className="growth-audit-split">
-            <article className="growth-google" aria-labelledby="serp-heading">
-              <h3 id="serp-heading">What a customer sees in Google</h3>
+          <div className="growth-audit-brief">
+            <figure className="growth-audit-listing">
+              <figcaption>This is the listing a stranger sees.</figcaption>
               <div
                 className="growth-google-window"
                 role="img"
@@ -240,85 +205,67 @@ export default function WebsiteAuditTool() {
                   <p className="growth-google-snippet">{result.preview.description}</p>
                 </div>
               </div>
-              <p className="growth-audit-note">
-                If you would not click that, a stranger looking for your kind of business will not click it either.
-              </p>
-            </article>
+              <p>If you would not click that, a stranger looking for your kind of business will not click it either.</p>
+            </figure>
 
-            <ol className="growth-audit-week" aria-labelledby="week-heading">
-              <li className="growth-audit-week-head">
-                <h3 id="week-heading">Fix these first</h3>
-                <p>Three moves ranked by lost calls, not by technical trivia.</p>
-              </li>
-              {result.priorities.map((item, index) => (
-                <li key={item.title}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <div>
-                    <h4>{item.title}</h4>
-                    <p>{item.why}</p>
-                    <p>
-                      <strong>{item.owner === "you" ? "You can start this." : "We would handle this."}</strong>{" "}
-                      {item.ifYouWait}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ol>
+            {result.priorities.length ? (
+              <div className="growth-audit-work">
+                <h3>What to fix first</h3>
+                <ol>
+                  {result.priorities.map((item) => (
+                    <li key={item.title}>
+                      <h4>{item.title}</h4>
+                      <p>{item.why}</p>
+                      <p>
+                        <strong>{item.owner === "you" ? "You can start this." : "We would handle this."}</strong>{" "}
+                        {item.ifYouWait}
+                      </p>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            ) : null}
           </div>
 
-          <div className="growth-audit-sections">
-            {Object.entries(result.sections).map(([key, section]) => {
-              const meta = sectionMeta[key as keyof typeof sectionMeta];
-              const Icon = meta.icon;
-              return (
-                <article key={key} className="growth-audit-card" data-tone={scoreTone(section.score)}>
-                  <div className="growth-audit-card-head">
-                    <Icon size={22} strokeWidth={1.8} aria-hidden />
-                    <div>
-                      <span>{meta.label}</span>
-                      <h3>{meta.title}</h3>
-                    </div>
-                    <strong>{scoreLabel(section.score)}</strong>
-                  </div>
-                  <p>{section.summary}</p>
-                  <ul>
-                    {section.checks.map((check) => (
-                      <li key={check.label} data-status={check.status}>
-                        <span aria-hidden="true">{statusIcon(check.status)}</span>
-                        <div>
-                          <strong>
-                            <span className="sr-only">{statusLabel(check.status)}: </span>
-                            {check.label}
-                          </strong>
-                          <p>{check.message}</p>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </article>
-              );
-            })}
+          <div className="growth-audit-ledger">
+            {Object.entries(result.sections).map(([key, section]) => (
+              <section key={key}>
+                <h3>{sectionCopy[key as keyof typeof sectionCopy]}</h3>
+                <p>{section.summary}</p>
+                <ul>
+                  {section.checks.map((check) => (
+                    <li key={check.label} data-status={check.status}>
+                      <p>
+                        <strong>{check.label}</strong>
+                        <span className="sr-only"> {statusWord(check.status)}.</span>
+                      </p>
+                      <p>{check.message}</p>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))}
           </div>
 
           {result.recommendations && result.recommendations.length > 0 ? (
-            <aside className="growth-audit-extra" aria-labelledby="audit-recommendations-heading">
-              <h3 id="audit-recommendations-heading">If we sat down today</h3>
-              <ol>
+            <div className="growth-audit-extra">
+              <h3>If we sat down today</h3>
+              <ul>
                 {result.recommendations.map((recommendation) => (
                   <li key={recommendation}>{recommendation}</li>
                 ))}
-              </ol>
-            </aside>
+              </ul>
+            </div>
           ) : null}
 
-          <Cluster>
-            <Button href="/#contact" intent="signal" data-track="audit_talk_through_report">
+          <div className="growth-audit-actions">
+            <a href="#contact" className="growth-button growth-button-signal" data-track="audit_talk_through_report">
               Talk through this report <ArrowUpRight size={17} aria-hidden />
-            </Button>
-            <Button type="button" intent="ghost" onClick={() => void copyBrief()}>
+            </a>
+            <button type="button" className="growth-text-link" onClick={() => void copyBrief()}>
               {copied ? "Copied. Send it to whoever owns the site." : "Copy a note for your web person"}
-            </Button>
-          </Cluster>
+            </button>
+          </div>
         </section>
       ) : null}
     </div>

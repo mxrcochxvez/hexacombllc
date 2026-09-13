@@ -2,8 +2,9 @@ import Link from "next/link";
 
 const links = [
   { href: "/about", label: "About" },
+  { href: "/how-it-works", label: "How it works" },
   { href: "/pricing", label: "Plans" },
-  { href: "/website-audit", label: "Website check" },
+  { href: "/website-audit", label: "Website audit" },
   { href: "/blog", label: "Blog" },
   { href: "/human-rights", label: "Human rights" },
   { href: "/#contact", label: "Contact" },
@@ -13,7 +14,7 @@ const year = new Date().getFullYear();
 
 export default function Footer() {
   return (
-    <footer className="growth-footer">
+    <footer className="growth-footer canal-footer">
       <div className="growth-shell growth-footer-grid">
         <div>
           <Link href="/" className="growth-wordmark" aria-label="Hexacomb — Home">
@@ -25,16 +26,9 @@ export default function Footer() {
           <p className="growth-footer-copy">&copy; {year} Hexacomb LLC</p>
         </div>
         <div className="growth-footer-links">
-          <nav
-            className="growth-footer-nav"
-            aria-label="Footer"
-          >
+          <nav className="growth-footer-nav" aria-label="Footer">
             {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="growth-nav-link"
-              >
+              <Link key={link.href} href={link.href} className="growth-nav-link">
                 {link.label}
               </Link>
             ))}
@@ -55,9 +49,7 @@ export default function Footer() {
               <circle cx="12" cy="12" r="10" />
               <path d="M9 12l2 2 4-4" />
             </svg>
-            <span>
-              WCAG 2.1 AA
-            </span>
+            <span>WCAG 2.1 AA</span>
           </div>
         </div>
       </div>

@@ -1,19 +1,23 @@
 import { ContactFormClient } from "@/components/ContactFormClient";
 import { Check } from "lucide-react";
 
-const trustItems = ["Your current website is enough to start", "I reply within one business day", "No jargon. No pressure."];
+const trustItems = [
+  "A new idea or an existing website",
+  "I reply within one business day",
+  "No jargon. No pressure.",
+];
 
 export default function CtaSection() {
   return (
-    <section id="contact" className="growth-close" aria-labelledby="contact-heading">
+    <section id="contact" className="growth-close canal-close" aria-labelledby="contact-heading">
       <div className="growth-shell growth-close-grid">
         <div className="growth-close-copy">
           <h2 id="contact-heading">
-            Need help with your website?
-            <span> Let&apos;s make a plan.</span>
+            Your business deserves a great website.
+            <span> Let&apos;s build it.</span>
           </h2>
           <p>
-            Tell me what is not working or what you want to improve. I&apos;ll help you identify the best place to start.
+            Starting fresh or ready for something better? Tell me about your business. I’ll help you work out what your website needs and where to begin.
           </p>
           <ul className="growth-close-trust" aria-label="What to expect">
             {trustItems.map((item) => (

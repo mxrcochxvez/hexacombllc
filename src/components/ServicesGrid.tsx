@@ -1,20 +1,32 @@
-const problems = [
-  ["The site gets outdated", "Your offers, services, and business change. Your website should keep up."],
-  ["Customers have trouble finding you", "If your business is hard to find in search, potential customers can end up choosing someone else."],
-  ["It is hard to know what is working", "You may see website numbers, but not what they mean or what to do next."],
+const breaks = [
+  {
+    title: "The site gets outdated",
+    body: "Your offers and services change. A neglected site still shows last year’s picture.",
+  },
+  {
+    title: "Customers have trouble finding you",
+    body: "If you are hard to find in search, people ready to buy can land on someone else.",
+  },
+  {
+    title: "It is hard to know what is working",
+    body: "You may see numbers, but not what they mean or what to do next.",
+  },
 ];
 
 export default function ServicesGrid() {
   return (
-    <section className="growth-problem" aria-labelledby="services-heading">
-      <div className="growth-shell">
-        <div className="growth-problem-heading">
-          <div><h2 id="services-heading">Your website needs ongoing care.</h2></div>
-          <p>You already have a business to run. We make sure your website keeps doing its job.</p>
+    <section id="website-care" className="growth-problem canal-problem" aria-labelledby="services-heading">
+      <div className="growth-shell canal-sticky-shell">
+        <div className="canal-sticky-copy">
+          <h2 id="services-heading">When care stops, the field goes dry.</h2>
+          <p>Your website needs ongoing attention. You already have a business to run — we keep the flow moving.</p>
         </div>
-        <ul className="problem-strip">
-          {problems.map(([title, body]) => (
-            <li key={title}><h3>{title}</h3><p>{body}</p></li>
+        <ul className="problem-strip canal-breaks">
+          {breaks.map((item) => (
+            <li key={item.title}>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </li>
           ))}
         </ul>
       </div>

@@ -1,37 +1,64 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Check, MapPin } from "lucide-react";
+import { ArrowRight, ArrowUpRight, MapPin, Search, Send } from "lucide-react";
+
+const chapters = [
+  { title: "The moment they need you.", body: "Someone searches for exactly what your business does. Your website needs to give them a reason to stop here." },
+  { title: "A first impression with somewhere to go.", body: "Clear words, useful pages, and a design that feels like your business make the next click feel easy." },
+  { title: "Interest becomes a conversation.", body: "The path ends with a simple next step: a person who is ready to reach out can do it without hunting for a way in." },
+  { title: "Then I stay in the picture.", body: "I’m Marco. I build your website, watch what happens next, and keep making it better as your business grows." },
+];
 
 export default function ProcessSteps() {
+  const trackRef = useRef<HTMLElement>(null);
+  const [scene, setScene] = useState(0);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      if (reduced.matches) { setScene(0); return; }
+      const rect = track.getBoundingClientRect();
+      const range = Math.max(1, rect.height - window.innerHeight);
+      setScene(Math.round(Math.max(0, Math.min(3, -rect.top / range * 3))));
+    };
+    const queue = () => { if (!frame) frame = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", queue, { passive: true });
+    window.addEventListener("resize", queue);
+    reduced.addEventListener("change", queue);
+    return () => { cancelAnimationFrame(frame); window.removeEventListener("scroll", queue); window.removeEventListener("resize", queue); reduced.removeEventListener("change", queue); };
+  }, []);
+
   return (
-    <section className="growth-proof" aria-labelledby="process-heading">
-      <div className="growth-shell proof-layout">
-        <div className="report-sheet">
-          <h2 id="process-heading">What we see. What it means. What we do next.</h2>
-          <div className="report-signal"><strong>See what is happening</strong><p>We review search visibility, website traffic, and how visitors get in touch.</p></div>
-          <div className="report-signal"><strong>Pick the next priority</strong><p>We focus on the change most likely to help your business right now.</p></div>
-          <div className="report-signal report-signal-active"><strong>Make the update</strong><p>We put the plan into action, so it does not become another thing on your list.</p></div>
-        </div>
-        <div className="founder-proof">
-          <div className="founder-image">
-            <Image
-              src="/images/marco-portrait.jpg"
-              alt="Marco Chavez, founder of Hexacomb"
-              fill
-              sizes="(max-width: 900px) calc(100vw - 2.5rem), 36vw"
-            />
-            <span>Founder-led</span>
+    <section ref={trackRef} className="customer-journey" data-scene={scene} aria-labelledby="journey-heading">
+      <div className="customer-journey-stage">
+        <div className="growth-shell customer-journey-shell">
+          <div className="customer-journey-copy">
+            {chapters.map((chapter, index) => (
+              <article className="journey-chapter" data-active={scene === index} key={chapter.title}>
+                {index === 0 ? <h2 id="journey-heading">{chapter.title}</h2> : <h3>{chapter.title}</h3>}
+                <p>{chapter.body}</p>
+                {index === 3 && <Link href="/about" className="journey-link">Meet your website partner <ArrowUpRight size={17} aria-hidden /></Link>}
+              </article>
+            ))}
           </div>
-          <div className="founder-copy">
-            <MapPin size={20} aria-hidden />
-            <h3>The person reviewing your website is the person making the improvements.</h3>
-            <p>I&apos;m Marco. I stay close to your website and explain what we are doing in plain language.</p>
-            <ul>
-              <li><Check size={15} aria-hidden /> Direct access</li><li><Check size={15} aria-hidden /> Clear monthly priorities</li><li><Check size={15} aria-hidden /> No long-term lock-in</li>
-            </ul>
-            <Link href="/about" className="growth-text-link">Meet your website partner <ArrowUpRight size={16} aria-hidden /></Link>
+          <div className="journey-visual" aria-hidden="true">
+            <div className="journey-search"><Search size={19} strokeWidth={2.5} /><span>website designer near me</span><i /></div>
+            <div className="journey-result"><span className="journey-result-dot" /><div><strong>YOUR BUSINESS</strong><small>Thoughtful work. Close to home.</small></div><ArrowRight size={18} /></div>
+            <div className="journey-site"><div className="journey-site-bar"><span>YOUR BUSINESS</span><i /><i /><i /></div><strong>Made for the<br />way you live.</strong><p>Clear work. A clear next step.</p><button type="button">Explore services <ArrowRight size={14} /></button><span className="journey-site-shape" /></div>
+            <div className="journey-message"><span>Hi — I’d love to learn more.</span><Send size={15} /></div>
+            <div className="journey-maker"><Image src="/images/marco-portrait.jpg" alt="" fill sizes="(max-width: 900px) 58vw, 22vw" /><span><MapPin size={15} /> Fresno, California</span></div>
+            <span className="journey-orbit journey-orbit-one" /><span className="journey-orbit journey-orbit-two" />
           </div>
         </div>
+        <p className="journey-footnote">A website should make the right next step feel natural.</p>
       </div>
     </section>
   );

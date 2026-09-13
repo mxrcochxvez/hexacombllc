@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const links = [
   { href: "/about", label: "About" },
@@ -14,6 +15,7 @@ const links = [
 const mobileLinks = [{ href: "/", label: "Home" }, ...links];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const menuId = useId();
   const toggleRef = useRef<HTMLButtonElement>(null);
@@ -63,11 +65,11 @@ export default function Navbar() {
 
         <nav className="growth-nav-desktop" aria-label="Main">
           {links.map((link) => (
-            <Link key={link.href} href={link.href} className="growth-nav-link" data-track={`nav_${link.label.toLowerCase().replace(/\s+/g, "_")}`}>
+            <Link key={link.href} href={link.href} className="growth-nav-link" aria-current={pathname === link.href ? "page" : undefined} data-track={`nav_${link.label.toLowerCase().replace(/\s+/g, "_")}`}>
               {link.label}
             </Link>
           ))}
-          <Link href="/#contact" className="growth-nav-cta" data-track="nav_cta_contact">Take it off my plate</Link>
+          <Link href="/#contact" className="growth-nav-cta" data-track="nav_cta_contact">Keep it flowing</Link>
         </nav>
 
         <button
@@ -89,12 +91,12 @@ export default function Navbar() {
         <div id={menuId} ref={panelRef} className="growth-mobile-panel" role="dialog" aria-modal="true" aria-label="Navigation menu">
           <nav aria-label="Mobile">
             {mobileLinks.map((link) => (
-              <Link key={link.href} href={link.href} onClick={close} className="growth-mobile-link" tabIndex={isOpen ? 0 : -1}>
+              <Link key={link.href} href={link.href} onClick={close} className="growth-mobile-link" aria-current={pathname === link.href ? "page" : undefined} tabIndex={isOpen ? 0 : -1}>
                 {link.label}
               </Link>
             ))}
             <Link href="/#contact" onClick={close} className="growth-mobile-link growth-mobile-link-cta" tabIndex={isOpen ? 0 : -1} data-track="nav_mobile_contact">
-              Take it off my plate
+              Keep it flowing
             </Link>
           </nav>
         </div>

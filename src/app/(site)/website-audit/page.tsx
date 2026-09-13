@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { ArrowUpRight } from "lucide-react";
+import CtaSection from "@/components/CtaSection";
 import WebsiteAuditTool from "@/components/WebsiteAuditTool";
-import { Button } from "@/ui";
 
 export const metadata: Metadata = {
   title: "Free Website Audit",
@@ -34,13 +33,7 @@ export default function WebsiteAuditPage() {
           <WebsiteAuditTool />
         </div>
       </section>
-      <section className="growth-shell growth-page-section growth-audit-close">
-        <h2>We turn the findings into work.</h2>
-        <p>Hexacomb owns the fixes, watches the response, and keeps improving the site.</p>
-        <Button href="/#contact" intent="signal">
-          Talk through my website <ArrowUpRight size={18} aria-hidden />
-        </Button>
-      </section>
+      <CtaSection />
     </main>
   );
 }
