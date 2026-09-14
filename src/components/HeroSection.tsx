@@ -27,8 +27,7 @@ export default function HeroSection() {
     const panels = Array.from(track.querySelectorAll<HTMLElement>(".website-beat"));
     const stage = track.querySelector<HTMLElement>(".website-stage");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const compact = window.matchMedia("(max-width: 760px)");
-    const stacked = () => reduced.matches || compact.matches || !available;
+    const stacked = () => reduced.matches || !available;
     let frame = 0;
     let target = 0;
     let last = 0;
@@ -68,8 +67,7 @@ export default function HeroSection() {
     window.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
     reduced.addEventListener("change", update);
-    compact.addEventListener("change", update);
-    return () => { cancelAnimationFrame(frame); window.removeEventListener("scroll", update); window.removeEventListener("resize", update); reduced.removeEventListener("change", update); compact.removeEventListener("change", update); };
+    return () => { cancelAnimationFrame(frame); window.removeEventListener("scroll", update); window.removeEventListener("resize", update); reduced.removeEventListener("change", update); };
   }, [available]);
   return (
     <div className="website-journey" ref={trackRef} data-static={!available}>
@@ -91,7 +89,7 @@ export default function HeroSection() {
         <span className="website-art-note">Illustrative website design</span>
         <span className="website-scroll-prompt">Discover what’s possible <ArrowDown size={14} aria-hidden /></span>
       </div>
-      <div className="website-anchors" aria-hidden="true">{scenes.map((scene, i) => <span key={scene.id} id={scene.id} style={{top: `${i * 20}%`}} />)}</div>
+      <div className="website-anchors" aria-hidden="true">{scenes.map((scene, i) => <span key={scene.id} id={scene.id} style={{ top: `${i * 20}%` }} />)}</div>
     </div>
   );
 }

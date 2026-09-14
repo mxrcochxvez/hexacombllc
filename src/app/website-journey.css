@@ -21,20 +21,22 @@
 .website-art-note { position: absolute; right: 2rem; bottom: 1.5rem; color: #74817c; font-size: .65rem; }
 .website-scroll-prompt { position: absolute; left: 2rem; bottom: 1.5rem; display: flex; align-items: center; gap: .6rem; font-size: .7rem; color: #74817c; opacity: var(--intro); }
 .website-anchors { position: absolute; inset: 0; pointer-events: none; }
-.website-anchors span { position: absolute; scroll-margin-top: 4.5rem; }
+.website-anchors span { position: absolute; left: 0; right: 0; height: 20%; scroll-margin-top: 4.5rem; }
 @media (max-width: 760px) {
- .website-journey { height: auto; overflow-x: clip; }
- .website-stage { position: relative; top: 0; height: auto; min-height: 0; overflow: hidden; }
- .website-stage-art { position: relative; height: 28rem; }
- .website-beats { position: relative; }
- .website-beat { position: relative; align-items: start; opacity: 1 !important; transform: none !important; padding: 3rem 1.5rem; text-align: left; }
- .website-beat-copy { width: 100%; max-width: 45rem; }
+ .website-journey { height: 500svh; touch-action: pan-y; }
+ .website-stage { top: 4rem; height: calc(100svh - 4rem); min-height: 0; overflow: hidden; }
+ .website-stage::after { background: linear-gradient(180deg, transparent 42%, #080910ee 82%); }
+ .website-stage-art { pointer-events: none; touch-action: pan-y; }
+ .website-beat { align-items: end; padding: 0 1.5rem 4.5rem; }
+ .website-beat-copy { width: 100%; max-width: 32rem; }
  .website-beat h1, .website-beat h2 { font-size: clamp(2.4rem, 8.5vw, 3.6rem); }
  .website-beat-body { font-size: 1rem; }
  .website-intro { align-items: start; padding: 2.3rem 1.5rem; }
  .website-intro h1 { font-size: 2.9rem; }
  .website-intro .website-beat-body { max-width: 29ch; margin-inline: 0; }
- .website-art-note, .website-scroll-prompt, .website-anchors { display: none; }
+ .website-art-note { right: 1.5rem; bottom: 1rem; }
+ .website-scroll-prompt { left: 1.5rem; bottom: 1rem; }
+ .website-anchors span { scroll-margin-top: 4rem; }
 }
 @media (prefers-reduced-motion: reduce) {
  .website-journey { height: auto; }
@@ -52,7 +54,7 @@
 .website-journey[data-static="true"] .website-beats { position: relative; }
 .website-journey[data-static="true"] .website-beat { position: relative; opacity: 1 !important; transform: none !important; padding: 3rem 6vw; text-align: left; }
 .website-journey[data-static="true"] .website-beat-copy { width: 100%; max-width: 45rem; }
-.website-journey[data-static="true"] .website-art-note, .website-journey[data-static="true"] .website-scroll-prompt { display: none; }
+.website-journey[data-static="true"] .website-art-note, .website-journey[data-static="true"] .website-scroll-prompt, .website-journey[data-static="true"] .website-anchors { display: none; }
 /* Scroll color is driven by the same clock as the camera and typography. */
 .website-journey { background: #080910; color: #fff; }
 .website-stage { --scene-hue: 275; --scene-turn: 0deg; --scene-shift: 0%; background: #080910; }
