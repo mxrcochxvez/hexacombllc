@@ -1,0 +1,72 @@
+{
+  "title": "Choose Hexacomb’s new visual world",
+  "question": "Service Dispatch is the strongest fit: sleek, local, and built around one accountable technology partner. Keep it, take an alternate, or re-roll.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Service Dispatch",
+      "kicker": "RECOMMENDED DIRECTION",
+      "lineage": "Central Valley utility dispatch boards and work-order packets",
+      "thesis": "One local desk receives every technology problem, routes it, and owns it through resolution.",
+      "palette": ["#123F73", "#1E6BE3", "#F4B942", "#F7F8F3", "#17212B"],
+      "materials": ["powder-coated enamel", "carbon-copy tickets", "route-map vinyl"],
+      "viewport": "A crisp dispatch board turns websites, software, AI, and IT into four routed work orders beside a direct local promise and one primary call action.",
+      "risk": "Could feel municipal if Marco’s human presence and plain voice are too quiet.",
+      "sketch": ".impeccable/sketches/service-dispatch.webp"
+    },
+    {
+      "id": "challenger-vu",
+      "label": "Signal Bridge",
+      "lineage": "analog VU-meter bridges in recording studios",
+      "thesis": "Every business system stays visible, balanced, and out of the red.",
+      "case": "Strong product clarity, but owners may read studio equipment before local business support.",
+      "palette": ["#F2E7C8", "#342D29", "#9A2F25", "#70777A"],
+      "materials": ["warm meter glass", "walnut", "brushed steel"],
+      "viewport": "A row of four instrument meters names the four services while the promise and call action sit on the mixing-desk label strip.",
+      "risk": "The audio metaphor can narrow a broad technology offer.",
+      "sketch": ".impeccable/sketches/signal-bridge.webp",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-vu-meter-bridge-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/signals-instruments-vu-meter-bridge.webp"
+    },
+    {
+      "id": "challenger-papercut",
+      "label": "Layered Service Map",
+      "lineage": "folded and layered Łowicz paper-cut systems",
+      "thesis": "Each service is a distinct layer that becomes one complete operating picture.",
+      "case": "Memorable and human, but the craft language weakens dependable technical authority.",
+      "palette": ["#143B5D", "#E23D46", "#F2B84B", "#2A8C75", "#F7F1E5"],
+      "materials": ["flat cut paper", "visible overlap", "fold symmetry"],
+      "viewport": "A precise layered roundel becomes a live service map around a plain-language offer and direct call action.",
+      "risk": "It can drift toward festival branding instead of a serious operating partner.",
+      "sketch": ".impeccable/sketches/layered-service-map.webp",
+      "hero": "https://impeccable.style/worlds/cards/craft-making-lowicz-layered-papercut-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/craft-making-lowicz-layered-papercut.webp"
+    },
+    {
+      "id": "challenger-zine",
+      "label": "Local Paste-up",
+      "lineage": "photocopied punk zines and neighborhood handbills",
+      "thesis": "Technology advice with the human fingerprints and directness of a local operator.",
+      "case": "High local personality, but its deliberate disorder conflicts with calm dependability.",
+      "palette": ["#F7F4EC", "#181818", "#FF3F87", "#B8B8B0"],
+      "materials": ["xerox toner", "torn paper", "biro annotations"],
+      "viewport": "A paste-up front page leads with the real offer, Marco’s portrait, and torn service tickets pinned in reading order.",
+      "risk": "The grit can look improvised where the business needs controlled confidence.",
+      "sketch": ".impeccable/sketches/local-paste-up.webp",
+      "hero": "https://impeccable.style/worlds/cards/design-canon-punk-pasteup-table-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/design-canon-punk-pasteup-table.webp"
+    }
+  ],
+  "reroll": true,
+  "canon": true,
+  "canonCard": {
+    "label": "The polished agency standard",
+    "thesis": "A familiar premium service site with a clean hero, proof row, service blocks, process, and contact form.",
+    "palette": ["#F8F7F2", "#152033", "#2962FF", "#DDE4EF"],
+    "materials": ["clean digital canvas", "soft dividers", "editorial photography"],
+    "viewport": "A strong two-column hero with a business photo, concise promise, dual calls to action, and compact trust proof.",
+    "risk": "Clear and credible, but easier to confuse with another modern web agency.",
+    "sketch": ".impeccable/sketches/canon-agency.webp"
+  },
+  "steer": true
+}
