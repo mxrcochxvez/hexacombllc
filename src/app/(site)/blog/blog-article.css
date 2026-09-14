@@ -3,6 +3,17 @@
    Colors are owned here so marketing dark-theme overrides cannot
    wash body copy into the background. */
 
+.site-chrome:has(.blog-article) .hobro-header {
+  background: var(--c-paper-soft, #f4f1ea);
+}
+
+.site-chrome:has(.blog-article) .hobro-header-left,
+.site-chrome:has(.blog-article) .hobro-header-right,
+.site-chrome:has(.blog-article) .hobro-header-mobile {
+  mix-blend-mode: normal;
+  color: #161513;
+}
+
 .site-chrome .hobro-page .blog-article {
   --article-bg: var(--c-paper-soft, #f4f1ea);
   --article-ink: #161513;
