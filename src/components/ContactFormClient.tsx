@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 const skeletonLabel = "mb-1.5 block h-3.5 w-24 rounded-sm bg-ink/8 font-display text-sm font-semibold";
 const skeletonInput = "h-10 w-full rounded-md border border-border bg-surface";
 
-const ContactFormClient = dynamic(
+const ContactFormInner = dynamic(
   () => import("@/components/ContactForm").then((mod) => mod.ContactForm),
   {
     ssr: false,
@@ -52,4 +52,6 @@ const ContactFormClient = dynamic(
   }
 );
 
-export { ContactFormClient };
+export function ContactFormClient({ initialMessage }: { initialMessage?: string }) {
+  return <ContactFormInner initialMessage={initialMessage} />;
+}

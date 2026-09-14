@@ -15,15 +15,23 @@ export const metadata: Metadata = {
 
 export default function IntakePage() {
   return (
-    <main id="main-content" className="growth-page growth-intake">
-      <div className="growth-shell growth-intake-grid">
-      <div className="growth-intake-copy">
-        <h1>Put the website on our desk.</h1>
-        <p>Give us the business context once. We&rsquo;ll use it to shape the site, the search strategy, and the work ahead.</p>
-        <small>About 3–5 minutes.</small>
-      </div>
-      <div className="growth-intake-form"><IntakeForm /></div>
-      </div>
+    <main id="main-content" className="hobro-page">
+      <section className="hobro-page-hero">
+        <div className="hobro-shell hobro-intake-grid">
+          <div className="hobro-intake-copy">
+            <p className="hobro-kicker">Intake</p>
+            <h1 className="hobro-page-title">Put the website on our desk.</h1>
+            <p className="hobro-page-lead">
+              Give us the business context once. We&rsquo;ll use it to shape the
+              site, the search strategy, and the work ahead.
+            </p>
+            <small>About 3–5 minutes.</small>
+          </div>
+          <div className="growth-intake-form">
+            <IntakeForm />
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

@@ -36,7 +36,7 @@ Never pure `#000` / `#fff`. Neutrals lean warm concrete or cool canal.
 - **Problem section:** open two-column explanation; no hold gesture required
 - **Call flow diagram:** interactive Search → Site → Call
 - **Report hotspots:** plain-English callouts, not fake analytics
-- **Hero devices:** detailed rounded laptop and phone, matching illustrative screens, studio environment lighting; desktop scroll shifts emphasis to phone; static mobile layout and reduced-motion rendering
+- **Hero devices:** detailed rounded laptop and phone, matching illustrative screens, studio environment lighting; scroll shifts emphasis scene by scene on desktop and phones; reduced-motion and no-WebGL stay static
 - **Subpages:** same dark canvas, Geologica titles, muted body, pill CTAs, and contact close as the homepage. No WebGL journey.
 
 ## Layout
@@ -49,17 +49,10 @@ Never pure `#000` / `#fff`. Neutrals lean warm concrete or cool canal.
 
 ## Motion
 
-- Native scroll with one short pinned desktop device scene on the homepage; regular document flow on mobile and subpages
+- Native scroll with a pinned homepage journey on desktop and phones. Each scene holds until you scroll out of it, then the next scene takes over. Subpages stay regular document flow.
 - Render 3D on demand; pause offscreen or in a hidden tab
 - Respect `prefers-reduced-motion` with a static device composition and no pinned scroll track
 - No site-wide reveal animations or floating signal decorations
-
-## Motion
-
-- Native scroll with one short pinned desktop device scene; regular document flow on mobile.
-- Render 3D on demand; pause offscreen or in a hidden tab.
-- Respect `prefers-reduced-motion` with a static device composition and no pinned scroll track.
-- No site-wide reveal animations or floating signal decorations.
 
 ## Seed
 

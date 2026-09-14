@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { ArrowUpRight } from "lucide-react";
 import { track } from "@/lib/analytics";
 
 type AuditStatus = "good" | "warning" | "bad";
@@ -60,6 +59,16 @@ function statusWord(status: AuditStatus) {
   return "Fix";
 }
 
+function scoreTone(score: number): AuditStatus {
+  if (score >= 80) return "good";
+  if (score >= 55) return "warning";
+  return "bad";
+}
+
+function statusClass(status: AuditStatus) {
+  return `hobro-audit-status hobro-audit-status-${status}`;
+}
+
 export default function WebsiteAuditTool() {
   const [url, setUrl] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -113,10 +122,10 @@ export default function WebsiteAuditTool() {
   }
 
   return (
-    <div className="growth-audit-tool">
-      <form className="growth-audit-form" onSubmit={handleSubmit} aria-label="Website audit form">
+    <div className="hobro-audit">
+      <form className="hobro-audit-form" onSubmit={handleSubmit} aria-label="Website audit form">
         <label htmlFor="audit-url">Your website</label>
-        <div className="growth-audit-row">
+        <div className="hobro-audit-row">
           <input
             id="audit-url"
             name="url"
@@ -131,20 +140,25 @@ export default function WebsiteAuditTool() {
             aria-required="true"
             aria-describedby="audit-url-hint"
           />
-          <button type="submit" className="growth-button growth-button-signal" disabled={status === "loading"} aria-busy={status === "loading" || undefined}>
+          <button
+            type="submit"
+            className="hobro-deck-btn hobro-deck-btn-solid"
+            disabled={status === "loading"}
+            aria-busy={status === "loading" || undefined}
+          >
             {status === "loading" ? "Reading the page…" : "Check my website"}
           </button>
         </div>
         <p id="audit-url-hint">One public page. Written for the person who owns the business.</p>
         {status === "error" ? (
-          <p className="growth-audit-error" role="alert" aria-live="assertive">
+          <p className="hobro-audit-error" role="alert" aria-live="assertive">
             {error}
           </p>
         ) : null}
       </form>
 
       {status === "loading" ? (
-        <div className="growth-audit-loading" role="status" aria-live="polite" aria-busy="true">
+        <div className="hobro-audit-loading" role="status" aria-live="polite" aria-busy="true">
           <p>Checking the page a customer sees first…</p>
         </div>
       ) : null}
@@ -152,11 +166,15 @@ export default function WebsiteAuditTool() {
       {result ? (
         <section
           ref={resultsRef}
-          className="growth-audit-report"
+          className="hobro-audit-report"
           aria-labelledby="audit-results-heading"
           tabIndex={-1}
         >
-          <header className="growth-audit-verdict">
+          <header className="hobro-audit-verdict" data-status={scoreTone(result.overall)}>
+            <p className="hobro-kicker">First look</p>
+            <p className="hobro-audit-mark" aria-hidden="true">
+              {result.overall}
+            </p>
             <h2 id="audit-results-heading">{result.headline}</h2>
             <p>
               First page at {result.preview.displayUrl}. Not a crawl of the whole site.
@@ -164,9 +182,10 @@ export default function WebsiteAuditTool() {
             </p>
           </header>
 
-          <div className="growth-audit-brief">
-            <figure className="growth-audit-listing">
-              <figcaption>This is the listing a stranger sees.</figcaption>
+          <div className="hobro-audit-brief">
+            <figure className="hobro-audit-listing">
+              <p className="hobro-kicker">What Google shows</p>
+              <figcaption className="sr-only">This is the listing a stranger sees.</figcaption>
               <div
                 className="growth-google-window"
                 role="img"
@@ -210,12 +229,13 @@ export default function WebsiteAuditTool() {
             </figure>
 
             {result.priorities.length ? (
-              <div className="growth-audit-work">
-                <h3>What to fix first</h3>
+              <div className="hobro-audit-work">
+                <p className="hobro-kicker">What to fix first</p>
                 <ol>
                   {result.priorities.map((item) => (
-                    <li key={item.title}>
-                      <h4>{item.title}</h4>
+                    <li key={item.title} data-status="bad">
+                      <span className={statusClass("bad")}>Fix</span>
+                      <h3>{item.title}</h3>
                       <p>{item.why}</p>
                       <p>
                         <strong>{item.owner === "you" ? "You can start this." : "We would handle this."}</strong>{" "}
@@ -228,29 +248,43 @@ export default function WebsiteAuditTool() {
             ) : null}
           </div>
 
-          <div className="growth-audit-ledger">
-            {Object.entries(result.sections).map(([key, section]) => (
-              <section key={key}>
-                <h3>{sectionCopy[key as keyof typeof sectionCopy]}</h3>
-                <p>{section.summary}</p>
-                <ul>
-                  {section.checks.map((check) => (
-                    <li key={check.label} data-status={check.status}>
-                      <p>
-                        <strong>{check.label}</strong>
-                        <span className="sr-only"> {statusWord(check.status)}.</span>
-                      </p>
-                      <p>{check.message}</p>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            ))}
+          <div className="hobro-audit-checks">
+            <div className="hobro-audit-key" aria-hidden="true">
+              <span className={statusClass("good")}>Clear</span>
+              <span className={statusClass("warning")}>Watch</span>
+              <span className={statusClass("bad")}>Fix</span>
+            </div>
+
+            <div className="hobro-audit-ledger">
+              {Object.entries(result.sections).map(([key, section]) => (
+                <article key={key} data-status={scoreTone(section.score)}>
+                  <div className="hobro-audit-ledger-head">
+                    <h3>{sectionCopy[key as keyof typeof sectionCopy]}</h3>
+                    <p className="hobro-audit-mark">{section.score}</p>
+                  </div>
+                  <p>{section.summary}</p>
+                  <ul>
+                    {section.checks.map((check) => (
+                      <li key={check.label} data-status={check.status}>
+                        <span className={statusClass(check.status)} aria-hidden="true">
+                          {statusWord(check.status)}
+                        </span>
+                        <strong>
+                          {check.label}
+                          <span className="sr-only"> {statusWord(check.status)}.</span>
+                        </strong>
+                        <p>{check.message}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
           </div>
 
           {result.recommendations && result.recommendations.length > 0 ? (
-            <div className="growth-audit-extra">
-              <h3>If we sat down today</h3>
+            <div className="hobro-audit-extra">
+              <p className="hobro-kicker">If we sat down today</p>
               <ul>
                 {result.recommendations.map((recommendation) => (
                   <li key={recommendation}>{recommendation}</li>
@@ -259,11 +293,25 @@ export default function WebsiteAuditTool() {
             </div>
           ) : null}
 
-          <div className="growth-audit-actions">
-            <a href="#contact" className="growth-button growth-button-signal" data-track="audit_talk_through_report">
-              Talk through this report <ArrowUpRight size={17} aria-hidden />
+          <div className="hobro-audit-actions">
+            <a
+              href="#contact"
+              className="hobro-deck-btn hobro-deck-btn-solid"
+              data-track="audit_talk_through_report"
+              onClick={() => {
+                try {
+                  const context = result.shareText
+                    ? `I ran the free audit on ${result.finalUrl}. ${result.headline} Here's what it gave me to share:\n\n${result.shareText}\n\nWhat would you do first?`
+                    : `I ran the free audit on ${result.finalUrl}. ${result.headline} What would you do first?`;
+                  sessionStorage.setItem("hexacomb-contact-context", context);
+                } catch {
+                  /* storage unavailable; contact form still works */
+                }
+              }}
+            >
+              Talk through this report
             </a>
-            <button type="button" className="growth-text-link" onClick={() => void copyBrief()}>
+            <button type="button" className="hobro-text-link" onClick={() => void copyBrief()}>
               {copied ? "Copied. Send it to whoever owns the site." : "Copy a note for your web person"}
             </button>
           </div>

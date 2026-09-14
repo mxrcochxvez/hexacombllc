@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { track, trackGA4 } from "@/lib/analytics";
 
@@ -52,13 +52,29 @@ function validateWebsite(value: string): string | undefined {
   }
 }
 
-export function ContactForm() {
+export function ContactForm({ initialMessage }: { initialMessage?: string }) {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const statusRef = useRef<HTMLDivElement>(null);
+  const messageRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (messageRef.current && !messageRef.current.value) {
+      try {
+        const stored = sessionStorage.getItem("hexacomb-contact-context");
+        const prefill = initialMessage ?? (stored ? stored : undefined);
+        if (prefill) {
+          messageRef.current.value = prefill;
+          if (stored && !initialMessage) sessionStorage.removeItem("hexacomb-contact-context");
+        }
+      } catch {
+        if (initialMessage && messageRef.current) messageRef.current.value = initialMessage;
+      }
+    }
+  }, [initialMessage]);
 
   const validateField = useCallback((name: string, value: string) => {
     let error: string | undefined;
@@ -341,7 +357,9 @@ export function ContactForm() {
         <textarea
           id="message"
           name="message"
+          ref={messageRef}
           rows={3}
+          defaultValue={initialMessage}
           placeholder="Describe what you're trying to get done…"
           disabled={status === "sending"}
           maxLength={1000}

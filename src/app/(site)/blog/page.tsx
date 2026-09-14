@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { AgencyPageHero } from "@/components/AgencyHero";
 import CtaSection from "@/components/CtaSection";
 import { getBlogCover, isUnoptimizedCover } from "@/lib/blogCover";
 import { listPublishedBlogPosts } from "@/lib/convex";
@@ -23,45 +24,48 @@ export default async function BlogPage() {
   let posts: Awaited<ReturnType<typeof listPublishedBlogPosts>> = [];
   try { posts = await listPublishedBlogPosts(100); } catch (error) { console.error("Public blog load failed:", error); }
   return (
-    <main id="main-content" className="growth-page blog-index">
-      <div className="growth-shell">
-        <header className="blog-index__header">
-          <h1>A better website, explained plainly.</h1>
-          <p>Useful ideas for small-business owners who want their website to earn more trust, calls, and customers.</p>
-        </header>
-        {posts.length ? (
-          <div className="blog-grid">
-            {posts.map((post) => {
-              const cover = getBlogCover(post);
-              return (
-              <article className={cover ? "blog-card blog-card--with-image" : "blog-card"} key={post._id}>
-                <div className="blog-card__body">
-                  <div className="blog-card__meta">
-                    <time dateTime={new Date(post.publishedAt ?? post.createdAt).toISOString()}>
-                      {new Date(post.publishedAt ?? post.createdAt).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
-                    </time>
-                    {post.tags[0] ? <span>{post.tags[0]}</span> : null}
-                  </div>
-                  <h2><Link href={`/blog/${post.slug}`}>{post.title}</Link></h2>
-                  <p>{post.excerpt}</p>
-                  <Link className="blog-card__link" href={`/blog/${post.slug}`}>Read article <span aria-hidden>→</span></Link>
-                </div>
-                {cover ? (
-                  <Link className="blog-card__media" href={`/blog/${post.slug}`} aria-hidden tabIndex={-1}>
-                    <CoverImage src={cover.url} alt="" />
-                  </Link>
-                ) : null}
-              </article>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="blog-empty">
-            <h2>Good things are brewing.</h2>
-            <p>Our first practical website guide will be here soon.</p>
-          </div>
-        )}
-      </div>
+    <main id="main-content" className="hobro-page">
+      <AgencyPageHero
+        kicker="Blog"
+        title="A better website, explained plainly."
+        lead="Useful ideas for small-business owners who want their website to earn more trust, calls, and customers."
+      />
+      <section className="hobro-white hobro-band">
+        <div className="hobro-shell">
+          {posts.length ? (
+            <div className="blog-grid">
+              {posts.map((post) => {
+                const cover = getBlogCover(post);
+                return (
+                  <article className={cover ? "blog-card blog-card--with-image" : "blog-card"} key={post._id}>
+                    <div className="blog-card__body">
+                      <div className="blog-card__meta">
+                        <time dateTime={new Date(post.publishedAt ?? post.createdAt).toISOString()}>
+                          {new Date(post.publishedAt ?? post.createdAt).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+                        </time>
+                        {post.tags[0] ? <span>{post.tags[0]}</span> : null}
+                      </div>
+                      <h2><Link href={`/blog/${post.slug}`}>{post.title}</Link></h2>
+                      <p>{post.excerpt}</p>
+                      <Link className="blog-card__link" href={`/blog/${post.slug}`}>Read article <span aria-hidden>→</span></Link>
+                    </div>
+                    {cover ? (
+                      <Link className="blog-card__media" href={`/blog/${post.slug}`} aria-hidden tabIndex={-1}>
+                        <CoverImage src={cover.url} alt="" />
+                      </Link>
+                    ) : null}
+                  </article>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="blog-empty">
+              <h2>Good things are brewing.</h2>
+              <p>Our first practical website guide will be here soon.</p>
+            </div>
+          )}
+        </div>
+      </section>
       <CtaSection />
     </main>
   );

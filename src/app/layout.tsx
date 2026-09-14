@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { Atkinson_Hyperlegible, Geologica } from "next/font/google";
+import { Archivo_Narrow, Atkinson_Hyperlegible, Geologica, Instrument_Serif } from "next/font/google";
 import "./brand.css";
 import "./globals.css";
+import "./hobro-agency.css";
 import "../ui/space.theme.css";
 import "../ui/kit.css";
 import CloudflareAnalytics from "@/components/CloudflareAnalytics";
@@ -11,13 +12,26 @@ import TrackClicks from "@/components/TrackClicks";
 const geologica = Geologica({
   variable: "--font-geologica",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 const atkinson = Atkinson_Hyperlegible({
   variable: "--font-atkinson",
   subsets: ["latin"],
   weight: ["400", "700"],
+});
+
+const instrument = Instrument_Serif({
+  variable: "--font-instrument",
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+});
+
+const archivo = Archivo_Narrow({
+  variable: "--font-condensed",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
 });
 
 const siteUrl = "https://hexacombllc.com";
@@ -215,7 +229,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${geologica.variable} ${atkinson.variable}`}
+      className={`${geologica.variable} ${atkinson.variable} ${instrument.variable} ${archivo.variable}`}
     >
       <body>
         {/*

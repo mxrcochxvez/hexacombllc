@@ -1,19 +1,31 @@
 /* Site-wide marketing chrome, lifted from the homepage journey. */
 
+/* Custom properties only inherit downward: html/body rules below cannot see
+   values set on .site-chrome (their descendant), so the canvas defaults must
+   live on :root or every overscroll edge flashes white. */
+:root {
+  --site-bg: #000000;
+  --site-ink: #ffffff;
+}
+
+.site-chrome > header {
+  background: transparent;
+}
+
 .site-chrome {
-  --scene-hue: 275;
-  --site-bg: #080910;
-  --site-raised: #10101b;
-  --site-ink: #f6f4fb;
-  --site-muted: #c3c1d0;
-  --site-faint: #b4aabf;
+  --scene-hue: 45;
+  --site-bg: #000000;
+  --site-raised: #0a0a0a;
+  --site-ink: #ffffff;
+  --site-muted: #c8c8c8;
+  --site-faint: #9a9a9a;
   --site-line: #ffffff22;
-  --site-glow: hsl(var(--scene-hue) 100% 55% / 0.55);
-  --site-accent: hsl(var(--scene-hue) 100% 78%);
-  --site-cta: #f3e8ff;
-  --site-cta-ink: #090912;
-  --site-pink: #f0a8df;
-  --site-pink-ink: #25112a;
+  --site-glow: rgba(245, 158, 11, 0.35);
+  --site-accent: #f59e0b;
+  --site-cta: #ffffff;
+  --site-cta-ink: #000000;
+  --site-pink: #f59e0b;
+  --site-pink-ink: #000000;
   background: var(--site-bg);
   color: var(--site-ink);
   min-height: 100%;
@@ -26,7 +38,7 @@ body:has(.site-chrome) {
 }
 
 .site-chrome :focus-visible {
-  outline: 2px solid #f3a1e1;
+  outline: 2px solid #ffffff;
   outline-offset: 3px;
 }
 
@@ -189,15 +201,7 @@ body:has(.site-chrome) {
 }
 
 .site-chrome .growth-page::before {
-  content: "";
-  position: absolute;
-  inset: -10% 0 auto;
-  z-index: -1;
-  height: 42rem;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse at 78% 8%, hsl(var(--scene-hue) 100% 55% / 0.42), transparent 42%),
-    radial-gradient(ellipse at 12% 70%, hsl(calc(var(--scene-hue) + 65) 100% 52% / 0.22), transparent 36%);
+  display: none;
 }
 
 .site-chrome .growth-page-hero h1,
@@ -246,9 +250,7 @@ body:has(.site-chrome) {
 
 .site-chrome .growth-page-dark {
   color: var(--site-ink);
-  background:
-    radial-gradient(ellipse at 0% 100%, hsl(var(--scene-hue) 80% 24% / 0.55), transparent 58%),
-    var(--site-raised);
+  background: #0a0a0a;
 }
 
 .site-chrome .growth-page-dark h2,
@@ -286,22 +288,39 @@ body:has(.site-chrome) {
   margin-top: 0;
   color: #fff;
 }
+.site-chrome .growth-faq {
+  border-color: var(--site-line);
+}
+.site-chrome .growth-faq > div,
+.site-chrome .growth-faq > details {
+  border-color: var(--site-line);
+}
+.site-chrome .growth-faq h3,
+.site-chrome .growth-faq summary > span {
+  color: #fff;
+}
+.site-chrome .growth-faq p {
+  color: var(--site-muted);
+}
+.site-chrome .growth-faq summary::after {
+  color: var(--site-accent);
+}
 
 .site-chrome .growth-loop li {
   color: #fff;
-  background: #171120;
-  border: 1px solid #72588166;
-  box-shadow: 0 24px 60px -42px #000;
-  border-radius: 1.5rem;
+  background: #0c0c0c;
+  border: 1px solid #ffffff1a;
+  box-shadow: none;
+  border-radius: 0;
 }
 
 .site-chrome .growth-loop li:nth-child(2) {
-  background: #21182c;
+  background: #111;
 }
 
 .site-chrome .growth-loop li:nth-child(3) {
   color: #fff;
-  background: #a845ff22;
+  background: #161616;
 }
 
 .site-chrome .growth-loop h3 {
@@ -388,14 +407,15 @@ body:has(.site-chrome) {
 
 .site-chrome .growth-price-card-featured {
   color: #fff;
-  background: #a845ff22;
-  border-radius: 1.5rem;
+  background: #161616;
+  border-radius: 0;
+  border: 1px solid #fff;
 }
 
 .site-chrome .growth-price-card-featured .growth-price-head h3,
 .site-chrome .growth-price-card-featured .growth-price-head p,
 .site-chrome .growth-price-card-featured li {
-  color: #f8e9ff !important;
+  color: #fff !important;
 }
 
 .site-chrome .growth-price-card .growth-button {

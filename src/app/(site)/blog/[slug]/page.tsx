@@ -52,8 +52,9 @@ export default async function BlogPostPage({ params }: Props) {
     mainEntityOfPage: `https://hexacombllc.com/blog/${post.slug}`,
   };
   return (
-    <main id="main-content" className="growth-page">
-      <article className="blog-post">
+    <main id="main-content" className="hobro-page">
+      <article className="blog-post hobro-article hobro-band">
+        <div className="hobro-shell">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
         <header className={cover ? "blog-post__header blog-post__header--with-image" : "blog-post__header"}>
           <div>
@@ -81,6 +82,7 @@ export default async function BlogPostPage({ params }: Props) {
           ) : null}
         </header>
         <MarkdownContent markdown={stripLeadingCoverImage(post.contentMarkdown)} />
+        </div>
       </article>
       <CtaSection />
     </main>
