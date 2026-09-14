@@ -2049,31 +2049,17 @@ dialog.hobro-modal::backdrop {
 
 .site-chrome .hobro-white .blog-card h2 a,
 .site-chrome .hobro-white .blog-card__link,
-.site-chrome .hobro-white .blog-empty,
-.site-chrome .hobro-article .blog-back,
-.site-chrome .hobro-article .blog-post__header h1,
-.site-chrome .hobro-article .blog-card__meta {
+.site-chrome .hobro-white .blog-empty {
   color: var(--c-ink);
 }
 
-.site-chrome .hobro-white .blog-card__meta,
-.site-chrome .hobro-article .blog-post__header p {
+.site-chrome .hobro-white .blog-card__meta {
   color: var(--c-muted);
 }
 
 .site-chrome .hobro-page .growth-intake-form .text-ink,
 .site-chrome .hobro-page .growth-intake-form label {
   color: #fff;
-}
-
-.site-chrome .hobro-article .blog-prose,
-.site-chrome .hobro-article .blog-prose h2,
-.site-chrome .hobro-article .blog-prose h3,
-.site-chrome .hobro-article .blog-prose h4,
-.site-chrome .hobro-article .blog-prose strong,
-.site-chrome .hobro-article .blog-prose a,
-.site-chrome .hobro-article .blog-prose blockquote {
-  color: var(--c-ink);
 }
 
 .site-chrome .hobro-white .blog-empty {
