@@ -65,6 +65,10 @@ function scoreTone(score: number): AuditStatus {
   return "bad";
 }
 
+function statusClass(status: AuditStatus) {
+  return `hobro-audit-status hobro-audit-status-${status}`;
+}
+
 export default function WebsiteAuditTool() {
   const [url, setUrl] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -230,7 +234,7 @@ export default function WebsiteAuditTool() {
                 <ol>
                   {result.priorities.map((item) => (
                     <li key={item.title} data-status="bad">
-                      <span className="hobro-audit-status">Fix</span>
+                      <span className={statusClass("bad")}>Fix</span>
                       <h3>{item.title}</h3>
                       <p>{item.why}</p>
                       <p>
@@ -246,9 +250,9 @@ export default function WebsiteAuditTool() {
 
           <div className="hobro-audit-checks">
             <div className="hobro-audit-key" aria-hidden="true">
-              <span data-status="good">Clear</span>
-              <span data-status="warning">Watch</span>
-              <span data-status="bad">Fix</span>
+              <span className={statusClass("good")}>Clear</span>
+              <span className={statusClass("warning")}>Watch</span>
+              <span className={statusClass("bad")}>Fix</span>
             </div>
 
             <div className="hobro-audit-ledger">
@@ -262,7 +266,7 @@ export default function WebsiteAuditTool() {
                   <ul>
                     {section.checks.map((check) => (
                       <li key={check.label} data-status={check.status}>
-                        <span className="hobro-audit-status" aria-hidden="true">
+                        <span className={statusClass(check.status)} aria-hidden="true">
                           {statusWord(check.status)}
                         </span>
                         <strong>

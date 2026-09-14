@@ -1384,8 +1384,7 @@
   letter-spacing: -0.05em;
 }
 
-.hobro-audit-status,
-.hobro-audit-key span {
+.hobro-audit-status {
   display: inline-flex;
   align-items: center;
   width: fit-content;
@@ -1401,20 +1400,17 @@
   text-transform: uppercase;
 }
 
-.hobro-audit [data-status="good"] > .hobro-audit-status,
-.hobro-audit-key span[data-status="good"] {
+.hobro-audit-status-good {
   color: var(--audit-ok);
   background: var(--audit-ok-wash);
 }
 
-.hobro-audit [data-status="warning"] > .hobro-audit-status,
-.hobro-audit-key span[data-status="warning"] {
+.hobro-audit-status-warning {
   color: var(--audit-watch);
   background: var(--audit-watch-wash);
 }
 
-.hobro-audit [data-status="bad"] > .hobro-audit-status,
-.hobro-audit-key span[data-status="bad"] {
+.hobro-audit-status-bad {
   color: var(--audit-fix);
   background: var(--audit-fix-wash);
 }
