@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { AgencyPageHero } from "@/components/AgencyHero";
 import CtaSection from "@/components/CtaSection";
-import WebsiteCareLoop from "@/components/WebsiteCareLoop";
 
 export const metadata: Metadata = {
   title: "How It Works | Website Care Made Simple",
@@ -10,23 +9,69 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://hexacombllc.com/how-it-works" },
 };
 
+const loop = [
+  ["Take care of it.", "Updates, upkeep, speed, and the technical details stay handled behind the scenes."],
+  ["Understand it.", "We look at how people find you, what helps them stay, and where they decide to reach out."],
+  ["Improve it.", "The next update is chosen with purpose, then made on the website, not left on a report."],
+];
+
+const onboarding = [
+  ["We learn about your business", "Your customers, goals, current website, and what you want it to do better.", "You get one clear first priority and a plain-English plan. (Week 1)"],
+  ["We build or fix what matters most", "The live site or fix you can show customers. Wording, pages, and next step included.", "You get something shippable, not a status report. (Weeks 2–3)"],
+  ["We keep improving", "Each check-in helps decide the next useful update.", "You get monthly updates and a partner watching the numbers. (Ongoing)"],
+];
+
 export default function HowItWorksPage() {
   return (
-    <main id="main-content" className="growth-page">
-      <section className="growth-page-hero growth-shell">
-        <h1>You have a business to run. We keep the website handled.</h1>
-        <p className="growth-page-lead">We learn what matters to your business, take responsibility for the website, and keep making practical improvements without making you manage another project.</p>
-        <div className="growth-page-actions"><Link href="#contact" className="growth-button growth-button-signal">Talk about your website <ArrowUpRight size={18} aria-hidden /></Link><Link href="/pricing" className="growth-text-link">See plans</Link></div>
+    <main id="main-content" className="hobro-page">
+      <AgencyPageHero
+        kicker="How it works"
+        title="You have a business to run. We keep the website handled."
+        lead="We learn what matters to your business, take responsibility for the website, and keep making practical improvements without making you manage another project."
+        actions={
+          <>
+            <Link href="#contact" className="hobro-deck-btn hobro-deck-btn-solid">
+              Talk about your website
+            </Link>
+            <Link href="/pricing" className="hobro-text-link">
+              See plans
+            </Link>
+          </>
+        }
+      />
+
+      <section className="hobro-white hobro-band">
+        <div className="hobro-shell">
+          <div className="hobro-offer-head">
+            <p className="hobro-kicker">The loop</p>
+            <h2>Take care of it. Understand it. Improve it.</h2>
+          </div>
+          <div className="hobro-offer-table">
+            {loop.map(([title, body]) => (
+              <article key={title}>
+                <h3>{title}</h3>
+                <p>{body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
       </section>
 
-      <WebsiteCareLoop />
-
-      <section className="growth-shell growth-page-section">
-        <div className="growth-page-heading"><h2>A simple start, then steady support.</h2></div>
-        <div className="growth-onboarding">
-          <div><h3>We learn about your business</h3><p>Your customers, goals, current website, and what you want it to do better.</p></div>
-          <div><h3>We start with what matters most</h3><p>You get one clear first priority, not a long technical to-do list.</p></div>
-          <div><h3>We keep improving</h3><p>Each check-in helps decide the next useful update.</p></div>
+      <section className="hobro-white hobro-band">
+        <div className="hobro-shell">
+          <div className="hobro-offer-head">
+            <p className="hobro-kicker">Getting started</p>
+            <h2>A simple start, then steady support.</h2>
+          </div>
+          <div className="hobro-offer-table">
+            {onboarding.map(([title, body, result]) => (
+              <article key={title}>
+                <h3>{title}</h3>
+                <p>{body}</p>
+                <p>{result}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
       <CtaSection />

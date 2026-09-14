@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AgencyPageHero } from "@/components/AgencyHero";
 import CtaSection from "@/components/CtaSection";
 import WebsiteAuditTool from "@/components/WebsiteAuditTool";
 
@@ -10,27 +11,37 @@ export const metadata: Metadata = {
 
 export default function WebsiteAuditPage() {
   return (
-    <main id="main-content" className="growth-page">
-      <section className="growth-page-hero growth-shell growth-audit-hero">
-        <div>
-          <h1>See what your website is leaving on the table.</h1>
-          <p className="growth-page-lead">
-            A first look at search, speed, and trust, written for the person who owns the business, not the person who
-            built the site.
-          </p>
-        </div>
-        <ul className="growth-audit-signals">
-          <li>Would a stranger find it?</li>
-          <li>Would they trust it enough to call?</li>
-          <li>Can they tap a next step on a phone?</li>
-        </ul>
-      </section>
-      <section id="audit-runner" className="growth-page-dark growth-audit-runner" aria-labelledby="audit-heading">
-        <div className="growth-shell">
-          <div className="growth-page-heading">
+    <main id="main-content" className="hobro-page">
+      <AgencyPageHero
+        kicker="Free audit"
+        title="See what your website is leaving on the table."
+        lead="A first look at search, speed, and trust, written for the person who owns the business, not the person who built the site."
+        aside={
+          <ul className="hobro-signals">
+            <li>Would a stranger find it?</li>
+            <li>Would they trust it enough to call?</li>
+            <li>Can they tap a next step on a phone?</li>
+          </ul>
+        }
+      />
+      <section id="audit-runner" className="hobro-white hobro-band" aria-labelledby="audit-heading">
+        <div className="hobro-shell">
+          <div className="hobro-offer-head">
+            <p className="hobro-kicker">First page</p>
             <h2 id="audit-heading">Start with the page customers see first.</h2>
           </div>
           <WebsiteAuditTool />
+        </div>
+      </section>
+      <section className="hobro-white hobro-band">
+        <div className="hobro-shell">
+          <div className="hobro-terms">
+            <p>
+              <strong>No website yet?</strong> Audit a competitor you admire,
+              then mention your Instagram in the contact note. We will start
+              from what is working for them and build yours to beat it.
+            </p>
+          </div>
         </div>
       </section>
       <CtaSection />

@@ -2,25 +2,22 @@
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
-const links = [
-  { href: "/about", label: "About" },
+const navLinks = [
+  { href: "/#projects", label: "Work" },
   { href: "/how-it-works", label: "How it works" },
-  { href: "/website-audit", label: "Website audit" },
-  { href: "/pricing", label: "Plans" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/website-audit", label: "Audit" },
+  { href: "/about", label: "About" },
   { href: "/blog", label: "Blog" },
+  { href: "/#contact", label: "Contact" },
 ];
 
-const mobileLinks = [{ href: "/", label: "Home" }, ...links];
-
 export default function Navbar() {
-  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const menuId = useId();
   const toggleRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
-
   const close = useCallback(() => setIsOpen(false), []);
 
   useEffect(() => {
@@ -36,7 +33,6 @@ export default function Navbar() {
         return;
       }
       if (event.key !== "Tab" || !panelRef.current) return;
-
       const linksInPanel = panelRef.current.querySelectorAll<HTMLElement>("a[href], button");
       const first = linksInPanel[0];
       const last = linksInPanel[linksInPanel.length - 1];
@@ -57,50 +53,59 @@ export default function Navbar() {
   }, [close, isOpen]);
 
   return (
-    <div className="growth-nav-shell">
-      <div className="growth-nav-inner">
-        <Link href="/" onClick={close} className="growth-wordmark" aria-label="Hexacomb LLC — Home">
-          HEXACOMB
-        </Link>
+    <div className="hobro-header">
+      <div className="hobro-shell hobro-header-inner">
+        <div className="hobro-header-left">
+          <Link href="/" onClick={close} className="hobro-logo-link" aria-label="Hexacomb home">
+            <span className="hobro-logo-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <polygon
+                  points="12,2 21.5,7.5 21.5,18.5 12,24 2.5,18.5 2.5,7.5"
+                  strokeWidth="2"
+                />
+              </svg>
+            </span>
+            <span className="hobro-logo-text">HEXACOMB</span>
+          </Link>
+        </div>
 
-        <nav className="growth-nav-desktop" aria-label="Main">
-          {links.map((link) => (
-            <Link key={link.href} href={link.href} className="growth-nav-link" aria-current={pathname === link.href ? "page" : undefined} data-track={`nav_${link.label.toLowerCase().replace(/\s+/g, "_")}`}>
-              {link.label}
-            </Link>
-          ))}
-          <Link href="/#contact" className="growth-nav-cta" data-track="nav_cta_contact">Keep it flowing</Link>
+        <nav className="hobro-header-right" aria-label="Main">
+          <ul className="hobro-nav-list">
+            {navLinks.map((link) => (
+              <li key={link.href} className="hobro-nav-item">
+                <Link href={link.href}>{link.label}</Link>
+              </li>
+            ))}
+          </ul>
         </nav>
 
-        <button
-          ref={toggleRef}
-          type="button"
-          className="growth-mobile-toggle"
-          aria-expanded={isOpen}
-          aria-controls={menuId}
-          aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
-          onClick={() => setIsOpen((value) => !value)}
-        >
-          <span aria-hidden />
-          <span aria-hidden />
-        </button>
+        <div className="hobro-header-mobile">
+          <button
+            ref={toggleRef}
+            type="button"
+            className="hobro-menu-toggle"
+            aria-expanded={isOpen}
+            aria-controls={menuId}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            onClick={() => setIsOpen((value) => !value)}
+          >
+            <span />
+            <span />
+          </button>
+        </div>
       </div>
 
-      <div className="growth-mobile-drawer" data-open={isOpen} aria-hidden={!isOpen}>
-        <button type="button" className="growth-mobile-scrim" aria-label="Close navigation menu" onClick={close} tabIndex={isOpen ? 0 : -1} />
-        <div id={menuId} ref={panelRef} className="growth-mobile-panel" role="dialog" aria-modal="true" aria-label="Navigation menu">
-          <nav aria-label="Mobile">
-            {mobileLinks.map((link) => (
-              <Link key={link.href} href={link.href} onClick={close} className="growth-mobile-link" aria-current={pathname === link.href ? "page" : undefined} tabIndex={isOpen ? 0 : -1}>
+      {isOpen ? (
+        <div className="hobro-drawer" id={menuId}>
+          <div ref={panelRef} className="hobro-drawer-links">
+            {navLinks.map((link) => (
+              <Link key={link.href} href={link.href} onClick={close}>
                 {link.label}
               </Link>
             ))}
-            <Link href="/#contact" onClick={close} className="growth-mobile-link growth-mobile-link-cta" tabIndex={isOpen ? 0 : -1} data-track="nav_mobile_contact">
-              Keep it flowing
-            </Link>
-          </nav>
+          </div>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 }

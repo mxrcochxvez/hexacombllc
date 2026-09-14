@@ -131,7 +131,7 @@ export default function WebsiteAuditTool() {
             aria-required="true"
             aria-describedby="audit-url-hint"
           />
-          <button type="submit" className="growth-button growth-button-signal" disabled={status === "loading"} aria-busy={status === "loading" || undefined}>
+          <button type="submit" className="hobro-deck-btn hobro-deck-btn-solid" disabled={status === "loading"} aria-busy={status === "loading" || undefined}>
             {status === "loading" ? "Reading the page…" : "Check my website"}
           </button>
         </div>
@@ -260,10 +260,24 @@ export default function WebsiteAuditTool() {
           ) : null}
 
           <div className="growth-audit-actions">
-            <a href="#contact" className="growth-button growth-button-signal" data-track="audit_talk_through_report">
+            <a
+              href="#contact"
+              className="hobro-deck-btn hobro-deck-btn-solid"
+              data-track="audit_talk_through_report"
+              onClick={() => {
+                try {
+                  const context = result.shareText
+                    ? `I ran the free audit on ${result.finalUrl}. ${result.headline} Here's what it gave me to share:\n\n${result.shareText}\n\nWhat would you do first?`
+                    : `I ran the free audit on ${result.finalUrl}. ${result.headline} What would you do first?`;
+                  sessionStorage.setItem("hexacomb-contact-context", context);
+                } catch {
+                  /* storage unavailable; contact form still works */
+                }
+              }}
+            >
               Talk through this report <ArrowUpRight size={17} aria-hidden />
             </a>
-            <button type="button" className="growth-text-link" onClick={() => void copyBrief()}>
+            <button type="button" className="hobro-text-link" onClick={() => void copyBrief()}>
               {copied ? "Copied. Send it to whoever owns the site." : "Copy a note for your web person"}
             </button>
           </div>
