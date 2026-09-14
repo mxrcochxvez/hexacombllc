@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, MapPin, Search, Send } from "lucide-react";
+import { attachScrollPin, viewportHeight } from "@/lib/scrollPin";
 
 const chapters = [
   { title: "The moment they need you.", body: "Someone searches for exactly what your business does. Your website needs to give them a reason to stop here." },
@@ -20,20 +21,23 @@ export default function ProcessSteps() {
     const track = trackRef.current;
     if (!track) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const stage = track.querySelector<HTMLElement>(".customer-journey-stage");
     let frame = 0;
     const update = () => {
       frame = 0;
       if (reduced.matches) { setScene(0); return; }
       const rect = track.getBoundingClientRect();
-      const range = Math.max(1, rect.height - window.innerHeight);
+      const view = viewportHeight();
+      const range = Math.max(1, rect.height - view);
       setScene(Math.round(Math.max(0, Math.min(3, -rect.top / range * 3))));
     };
     const queue = () => { if (!frame) frame = requestAnimationFrame(update); };
+    const unpin = stage ? attachScrollPin(track, stage, { scenes: 4, query: "(max-width: 900px)" }) : () => {};
     update();
     window.addEventListener("scroll", queue, { passive: true });
     window.addEventListener("resize", queue);
     reduced.addEventListener("change", queue);
-    return () => { cancelAnimationFrame(frame); window.removeEventListener("scroll", queue); window.removeEventListener("resize", queue); reduced.removeEventListener("change", queue); };
+    return () => { cancelAnimationFrame(frame); unpin(); window.removeEventListener("scroll", queue); window.removeEventListener("resize", queue); reduced.removeEventListener("change", queue); };
   }, []);
 
   return (

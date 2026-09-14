@@ -24,7 +24,7 @@
 .website-anchors span { position: absolute; left: 0; right: 0; height: 20%; scroll-margin-top: 4.5rem; }
 @media (max-width: 760px) {
  .website-journey { height: 500svh; touch-action: pan-y; }
- .website-stage { top: 4rem; height: calc(100svh - 4rem); min-height: 0; overflow: hidden; }
+ .website-stage { position: sticky; top: 4rem; height: calc(100dvh - 4rem); min-height: 0; overflow: hidden; }
  .website-stage::after { background: linear-gradient(180deg, transparent 42%, #080910ee 82%); }
  .website-stage-art { pointer-events: none; touch-action: pan-y; }
  .website-beat { align-items: end; padding: 0 1.5rem 4.5rem; }

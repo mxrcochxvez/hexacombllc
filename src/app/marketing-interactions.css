@@ -93,7 +93,7 @@
 @keyframes journey-cursor { 50% { opacity: 0; } }
 @media (max-width: 900px) {
   .customer-journey { height: 400svh; touch-action: pan-y; }
-  .customer-journey-stage { top: 4rem; height: calc(100svh - 4rem); min-height: 0; overflow: hidden; }
+  .customer-journey-stage { position: sticky; top: 4rem; height: calc(100dvh - 4rem); min-height: 0; overflow: hidden; }
   .customer-journey-shell { display: block; padding-top: 0; }
   .customer-journey-copy { position: absolute; right: 1.5rem; bottom: 3rem; left: 1.5rem; min-height: min(21rem, 46%); }
   .journey-chapter { justify-content: flex-end; }

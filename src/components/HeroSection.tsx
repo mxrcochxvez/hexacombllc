@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import CallFlowDiagram from "@/components/CallFlowDiagram";
 import HeroWebGL from "@/components/HeroWebGL";
+import { attachScrollPin, viewportHeight } from "@/lib/scrollPin";
 import "@/app/website-journey.css";
 
 const scenes = [
@@ -59,15 +60,17 @@ export default function HeroSection() {
     };
     const update = () => {
       const rect = track.getBoundingClientRect();
-      const journey = Math.max(1, rect.height - window.innerHeight);
+      const view = viewportHeight();
+      const journey = Math.max(1, rect.height - view);
       target = stacked() ? 0 : Math.max(0, Math.min(4, -rect.top / journey * 4));
       if (!frame) { last = 0; frame = requestAnimationFrame(draw); }
     };
+    const unpin = stage ? attachScrollPin(track, stage, { scenes: 5, query: "(max-width: 760px)" }) : () => {};
     update();
     window.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
     reduced.addEventListener("change", update);
-    return () => { cancelAnimationFrame(frame); window.removeEventListener("scroll", update); window.removeEventListener("resize", update); reduced.removeEventListener("change", update); };
+    return () => { cancelAnimationFrame(frame); unpin(); window.removeEventListener("scroll", update); window.removeEventListener("resize", update); reduced.removeEventListener("change", update); };
   }, [available]);
   return (
     <div className="website-journey" ref={trackRef} data-static={!available}>
