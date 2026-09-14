@@ -1230,15 +1230,13 @@
   text-transform: uppercase;
 }
 
-.hobro-page .growth-intake-form,
-.hobro-page .growth-audit-tool {
+.hobro-page .growth-intake-form {
   color: inherit;
 }
 
 .hobro-page .growth-intake-form input,
 .hobro-page .growth-intake-form textarea,
-.hobro-page .growth-intake-form select,
-.hobro-page .growth-audit-form input {
+.hobro-page .growth-intake-form select {
   background: transparent !important;
   color: #fff !important;
   border: 0 !important;
@@ -1247,31 +1245,413 @@
   box-shadow: none !important;
 }
 
-.hobro-white .growth-audit-form input {
-  color: #111 !important;
-  border-bottom-color: var(--c-line) !important;
-}
-
 .hobro-page .growth-intake-form label,
 .hobro-page .growth-intake-form h2,
-.hobro-page .growth-intake-form .font-display,
-.hobro-page .growth-audit-form label {
+.hobro-page .growth-intake-form .font-display {
   color: inherit !important;
 }
 
-.hobro-page .growth-intake-form button[type="submit"],
-.hobro-page .growth-audit-form button[type="submit"] {
+.hobro-page .growth-intake-form button[type="submit"] {
   background: #fff;
   color: #000;
   border-radius: 999px;
   border: 0;
 }
 
-.hobro-white .growth-audit-form button[type="submit"],
-.hobro-white .growth-audit-actions .hobro-deck-btn-solid {
-  background: #111;
-  color: #fff;
-  border-color: #111;
+.hobro-audit {
+  --audit-ok: #166534;
+  --audit-ok-wash: rgba(22, 163, 74, 0.12);
+  --audit-watch: #92400e;
+  --audit-watch-wash: rgba(245, 158, 11, 0.18);
+  --audit-fix: #9f1239;
+  --audit-fix-wash: rgba(190, 18, 60, 0.12);
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.hobro-audit-form {
+  display: grid;
+  gap: 0.7rem;
+  max-width: 46rem;
+}
+
+.hobro-audit-form label {
+  margin: 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hobro-audit-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.85rem;
+  align-items: stretch;
+}
+
+.hobro-audit-form input {
+  min-height: 3.2rem;
+  width: 100%;
+  padding: 0;
+  background: transparent;
+  color: var(--c-ink);
+  border: 0;
+  border-bottom: 1px solid var(--c-line);
+  border-radius: 0;
+  box-shadow: none;
+  font: inherit;
+}
+
+.hobro-audit-form input::placeholder {
+  color: var(--c-muted);
+}
+
+.hobro-audit-form input:focus {
+  outline: none;
+  border-bottom-color: var(--c-ink);
+}
+
+.hobro-audit-form input:disabled {
+  opacity: 0.6;
+}
+
+.hobro-audit-form .hobro-deck-btn:disabled {
+  opacity: 0.58;
+  cursor: wait;
+}
+
+.hobro-audit-form p,
+.hobro-audit-loading p {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--c-muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.hobro-audit-error {
+  color: var(--c-ink);
+}
+
+.hobro-audit-report {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4.25rem);
+  scroll-margin-top: 6.5rem;
+}
+
+.hobro-audit-verdict h2 {
+  max-width: 16ch;
+  margin: 0;
+  color: var(--c-ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+}
+
+.hobro-audit-verdict .hobro-audit-mark {
+  margin: 0 0 0.35rem;
+  font-size: clamp(3.2rem, 8vw, 5.5rem);
+  line-height: 0.85;
+}
+
+.hobro-audit-verdict[data-status="good"] .hobro-audit-mark {
+  color: var(--audit-ok);
+}
+
+.hobro-audit-verdict[data-status="warning"] .hobro-audit-mark {
+  color: var(--c-gold);
+}
+
+.hobro-audit-verdict[data-status="bad"] .hobro-audit-mark {
+  color: var(--audit-fix);
+}
+
+.hobro-audit-verdict p:not(.hobro-kicker):not(.hobro-audit-mark) {
+  max-width: 42ch;
+  margin: 1rem 0 0;
+  color: var(--c-muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.hobro-audit-mark {
+  margin: 0;
+  color: var(--c-ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+}
+
+.hobro-audit-status,
+.hobro-audit-key span {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin: 0 0 0.45rem;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.66rem;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.hobro-audit [data-status="good"] > .hobro-audit-status,
+.hobro-audit-key span[data-status="good"] {
+  color: var(--audit-ok);
+  background: var(--audit-ok-wash);
+}
+
+.hobro-audit [data-status="warning"] > .hobro-audit-status,
+.hobro-audit-key span[data-status="warning"] {
+  color: var(--audit-watch);
+  background: var(--audit-watch-wash);
+}
+
+.hobro-audit [data-status="bad"] > .hobro-audit-status,
+.hobro-audit-key span[data-status="bad"] {
+  color: var(--audit-fix);
+  background: var(--audit-fix-wash);
+}
+
+.hobro-audit-brief {
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: start;
+  padding-top: 2rem;
+  border-top: 1px solid var(--c-line);
+}
+
+.hobro-audit-listing {
+  margin: 0;
+}
+
+.hobro-audit-listing > p:not(.hobro-kicker) {
+  max-width: 42ch;
+  margin: 0.9rem 0 0;
+  color: var(--c-muted);
+  line-height: 1.6;
+}
+
+.hobro-audit .growth-google-window {
+  overflow: hidden;
+  max-width: 100%;
+  background: #fff;
+  border: 1px solid var(--c-line);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.hobro-audit-work ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: fix;
+}
+
+.hobro-audit-work li {
+  counter-increment: fix;
+  padding: 1.05rem 0.9rem 1.15rem;
+  border-top: 1px solid var(--c-line);
+  border-left: 3px solid var(--audit-fix);
+  background: var(--audit-fix-wash);
+}
+
+.hobro-audit-work h3 {
+  margin: 0 0 0.4rem;
+  color: var(--c-ink);
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.hobro-audit-work h3::before {
+  content: counter(fix) ". ";
+}
+
+.hobro-audit-work p {
+  margin: 0;
+  color: var(--c-muted);
+  line-height: 1.6;
+}
+
+.hobro-audit-work p + p {
+  margin-top: 0.55rem;
+}
+
+.hobro-audit-work strong {
+  color: var(--c-ink);
+}
+
+.hobro-audit-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+}
+
+.hobro-audit-checks {
+  display: grid;
+  gap: 1.15rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--c-line);
+}
+
+.hobro-audit-key span {
+  margin: 0;
+}
+
+.hobro-audit-ledger {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.75rem 2rem;
+}
+
+.hobro-audit-ledger article {
+  padding: 1.4rem 0 0;
+}
+
+.hobro-audit-ledger-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.65rem;
+}
+
+.hobro-audit-ledger-head h3 {
+  margin: 0;
+}
+
+.hobro-audit-ledger-head .hobro-audit-mark {
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.hobro-audit-ledger article[data-status="good"] .hobro-audit-mark {
+  color: var(--audit-ok);
+}
+
+.hobro-audit-ledger article[data-status="warning"] .hobro-audit-mark {
+  color: var(--c-gold);
+}
+
+.hobro-audit-ledger article[data-status="bad"] .hobro-audit-mark {
+  color: var(--audit-fix);
+}
+
+.hobro-audit-ledger h3 {
+  margin: 0 0 0.65rem;
+  color: var(--c-ink);
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.hobro-audit-ledger article > p {
+  margin: 0 0 1rem;
+  color: var(--c-muted);
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+.hobro-audit-ledger ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hobro-audit-ledger li {
+  padding: 0.85rem 0.85rem 0.9rem;
+  border-top: 1px solid var(--c-line);
+}
+
+.hobro-audit-ledger li[data-status="good"] {
+  border-left: 3px solid var(--audit-ok);
+  background: var(--audit-ok-wash);
+}
+
+.hobro-audit-ledger li[data-status="warning"] {
+  border-left: 3px solid var(--c-gold);
+  background: var(--audit-watch-wash);
+}
+
+.hobro-audit-ledger li[data-status="bad"] {
+  border-left: 3px solid var(--audit-fix);
+  background: var(--audit-fix-wash);
+}
+
+.hobro-audit-ledger strong {
+  display: block;
+  color: var(--c-ink);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.hobro-audit-ledger li p {
+  margin: 0.35rem 0 0;
+  color: var(--c-muted);
+  line-height: 1.55;
+}
+
+.hobro-audit-extra {
+  padding-top: 2rem;
+  border-top: 1px solid var(--c-line);
+}
+
+.hobro-audit-extra ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 54ch;
+}
+
+.hobro-audit-extra li {
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--c-line);
+  color: var(--c-muted);
+  line-height: 1.65;
+}
+
+.hobro-audit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.75rem;
+}
+
+.hobro-audit-actions .hobro-text-link {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  border-radius: 0;
+  padding: 0 0 0.12rem;
+  cursor: pointer;
+  font: inherit;
+}
+
+@media (max-width: 900px) {
+  .hobro-audit-row,
+  .hobro-audit-brief,
+  .hobro-audit-ledger {
+    grid-template-columns: 1fr;
+  }
+
+  .hobro-audit-form .hobro-deck-btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 .hobro-page .blog-index {
@@ -1350,12 +1730,6 @@
   color: var(--c-muted);
 }
 
-.hobro-page .growth-audit-report,
-.hobro-page .growth-audit-verdict h2,
-.hobro-page .growth-audit-work h3,
-.hobro-page .growth-audit-ledger h3 {
-  color: inherit;
-}
 
 .hobro-white .blog-card {
   border-bottom: 1px solid var(--c-line);
@@ -1370,20 +1744,6 @@
 .hobro-white .blog-card__meta,
 .hobro-white .blog-empty p {
   color: var(--c-muted);
-}
-
-.hobro-page .growth-audit-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.hobro-page .growth-audit-form label {
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 @media (max-width: 900px) {
@@ -1714,4 +2074,20 @@ dialog.hobro-modal::backdrop {
 .site-chrome .hobro-page .growth-intake-form button[type="submit"] {
   color: #000;
   background: #fff;
+}
+
+.site-chrome .hobro-page .hobro-audit .growth-google-window {
+  border-radius: 0;
+}
+
+.site-chrome .hobro-page .hobro-audit-form input {
+  color: var(--c-ink) !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--c-line) !important;
+  border-radius: 0 !important;
+}
+
+.site-chrome .hobro-page .hobro-audit-form input::placeholder {
+  color: var(--c-muted) !important;
 }
