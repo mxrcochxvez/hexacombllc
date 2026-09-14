@@ -6,6 +6,7 @@ import CtaSection from "@/components/CtaSection";
 import { MarkdownContent } from "@/components/MarkdownContent";
 import { getBlogCover, isUnoptimizedCover, stripLeadingCoverImage } from "@/lib/blogCover";
 import { getPublishedBlogPost } from "@/lib/convex";
+import "../blog-article.css";
 
 export const dynamic = "force-dynamic";
 type Props = { params: Promise<{ slug: string }> };
@@ -53,35 +54,44 @@ export default async function BlogPostPage({ params }: Props) {
   };
   return (
     <main id="main-content" className="hobro-page">
-      <article className="blog-post hobro-article hobro-band">
-        <div className="hobro-shell">
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
-        <header className={cover ? "blog-post__header blog-post__header--with-image" : "blog-post__header"}>
-          <div>
-            <Link href="/blog" className="blog-back">← All articles</Link>
-            <div className="blog-card__meta">
-              <time dateTime={published.toISOString()}>{published.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</time>
+      <article className="blog-article">
+        <div className="blog-article__shell">
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
+          <p className="blog-article__kicker">
+            <Link href="/blog">← All articles</Link>
+          </p>
+          <header className="blog-article__header">
+            <div className="blog-article__meta">
+              <time dateTime={published.toISOString()}>
+                {published.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+              </time>
               <span>{post.author}</span>
             </div>
             <h1>{post.title}</h1>
-            <p>{post.excerpt}</p>
+            {post.excerpt ? <p className="blog-article__dek">{post.excerpt}</p> : null}
             {post.tags.length ? (
               <ul className="blog-tags" aria-label="Topics">
                 {post.tags.map((tag) => <li key={tag}>{tag}</li>)}
               </ul>
             ) : null}
-          </div>
+          </header>
           {cover ? (
-            <figure className="blog-post__cover">
+            <figure className="blog-article__cover">
               {!isUnoptimizedCover(cover.url) ? (
-                <Image src={cover.url} alt={cover.alt} fill sizes="(max-width: 700px) 100vw, 320px" style={{ objectFit: "cover" }} />
+                <Image
+                  src={cover.url}
+                  alt={cover.alt}
+                  fill
+                  priority
+                  sizes="(max-width: 720px) 100vw, 42rem"
+                  style={{ objectFit: "cover" }}
+                />
               ) : (
                 <img src={cover.url} alt={cover.alt} />
               )}
             </figure>
           ) : null}
-        </header>
-        <MarkdownContent markdown={stripLeadingCoverImage(post.contentMarkdown)} />
+          <MarkdownContent markdown={stripLeadingCoverImage(post.contentMarkdown)} />
         </div>
       </article>
       <CtaSection />

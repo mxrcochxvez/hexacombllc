@@ -1,0 +1,232 @@
+/* Blog post reading layout.
+   Public posts are a paper document on the dark site chrome.
+   Colors are owned here so marketing dark-theme overrides cannot
+   wash body copy into the background. */
+
+.site-chrome:has(.blog-article) .hobro-header {
+  background: var(--c-paper-soft, #f4f1ea);
+}
+
+.site-chrome:has(.blog-article) .hobro-header-left,
+.site-chrome:has(.blog-article) .hobro-header-right,
+.site-chrome:has(.blog-article) .hobro-header-mobile {
+  mix-blend-mode: normal;
+  color: #161513;
+}
+
+.site-chrome .hobro-page .blog-article {
+  --article-bg: var(--c-paper-soft, #f4f1ea);
+  --article-ink: #161513;
+  --article-muted: #3f3c37;
+  --article-line: rgba(22, 21, 19, 0.14);
+  --article-link: #7a3d08;
+  --article-link-hover: #5c2c05;
+  --article-chip: rgba(22, 21, 19, 0.06);
+
+  background: var(--article-bg);
+  color: var(--article-ink);
+  padding: 7.25rem 0 5.5rem;
+}
+
+.site-chrome .hobro-page .blog-article__shell {
+  width: min(100% - 1.75rem, 42rem);
+  margin-inline: auto;
+}
+
+.site-chrome .hobro-page .blog-article__kicker {
+  margin: 0 0 2rem;
+}
+
+.site-chrome .hobro-page .blog-article__kicker a {
+  color: var(--article-muted);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.02rem;
+  text-decoration: none;
+}
+
+.site-chrome .hobro-page .blog-article__kicker a:hover {
+  color: var(--article-ink);
+}
+
+.site-chrome .hobro-page .blog-article__header {
+  margin-bottom: 2rem;
+}
+
+.site-chrome .hobro-page .blog-article__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin: 0 0 1rem;
+  color: var(--article-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.site-chrome .hobro-page .blog-article__header h1 {
+  max-width: none;
+  margin: 0 0 1rem;
+  color: var(--article-ink);
+  font-family: var(--font-display);
+  font-size: clamp(2.15rem, 6.4vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+  text-transform: none;
+  text-wrap: balance;
+}
+
+.site-chrome .hobro-page .blog-article__dek {
+  max-width: none;
+  margin: 0;
+  color: var(--article-muted);
+  font-size: clamp(1.12rem, 2.1vw, 1.28rem);
+  line-height: 1.55;
+}
+
+.site-chrome .hobro-page .blog-article .blog-tags {
+  margin: 1.35rem 0 0;
+}
+
+.site-chrome .hobro-page .blog-article .blog-tags li {
+  color: var(--article-ink);
+  background: var(--article-chip);
+  border-color: var(--article-line);
+}
+
+.site-chrome .hobro-page .blog-article__cover {
+  position: relative;
+  margin: 2.25rem 0 2.75rem;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 1.1rem;
+  background: #ddd6c8;
+}
+
+.site-chrome .hobro-page .blog-article__cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.site-chrome .hobro-page .blog-article .blog-prose,
+.site-chrome .hobro-page .blog-article .blog-prose p,
+.site-chrome .hobro-page .blog-article .blog-prose li {
+  color: var(--article-ink);
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+
+.site-chrome .hobro-page .blog-article .blog-prose p {
+  margin: 0 0 1.35rem;
+}
+
+.site-chrome .hobro-page .blog-article .blog-prose h2,
+.site-chrome .hobro-page .blog-article .blog-prose h3,
+.site-chrome .hobro-page .blog-article .blog-prose h4,
+.site-chrome .hobro-page .blog-article .blog-prose strong {
+  color: var(--article-ink);
+}
+
+.site-chrome .hobro-page .blog-article .blog-prose h2,
+.site-chrome .hobro-page .blog-article .blog-prose h3,
+.site-chrome .hobro-page .blog-article .blog-prose h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin: 2.35rem 0 0.75rem;
+}
+
+.site-chrome .hobro-page .blog-article .blog-prose h2 {
+  font-size: clamp(1.45rem, 3.4vw, 1.85rem);
+}
+
+.site-chrome .hobro-page .blog-article .blog-prose h3 {
+  font-size: clamp(1.2rem, 2.6vw, 1.4rem);
+}
+
+.site-chrome .hobro-page .blog-article .blog-prose a {
+  color: var(--article-link);
+  text-underline-offset: 3px;
+}
+
+.site-chrome .hobro-page .blog-article .blog-prose a:hover {
+  color: var(--article-link-hover);
+}
+
+.site-chrome .hobro-page .blog-article .blog-prose blockquote {
+  margin: 2rem 0;
+  padding: 0.15rem 0 0.15rem 1.2rem;
+  border-left: 3px solid var(--c-gold, #f59e0b);
+  color: var(--article-ink);
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-style: italic;
+  line-height: 1.55;
+}
+
+.site-chrome .hobro-page .blog-article .blog-prose ul,
+.site-chrome .hobro-page .blog-article .blog-prose ol {
+  margin: 0 0 1.5rem;
+  padding-left: 1.35rem;
+}
+
+.site-chrome .hobro-page .blog-article .blog-prose li {
+  margin-bottom: 0.5rem;
+}
+
+.site-chrome .hobro-page .blog-article .blog-prose img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0.5rem 0 1.75rem;
+  border-radius: 0.85rem;
+}
+
+.site-chrome .hobro-page .blog-article .blog-prose pre {
+  overflow-x: auto;
+  margin: 0 0 1.75rem;
+  padding: 1.15rem 1.2rem;
+  border: 0;
+  border-radius: 0.85rem;
+  background: #1c1915;
+  color: #f6f1e8;
+  line-height: 1.6;
+}
+
+.site-chrome .hobro-page .blog-article .blog-prose :not(pre) > code {
+  padding: 0.12rem 0.38rem;
+  border-radius: 4px;
+  background: var(--article-chip);
+  color: var(--article-ink);
+  font-size: 0.9em;
+}
+
+.site-chrome .hobro-page .blog-article .blog-prose hr {
+  margin: 2.75rem 0;
+  border: 0;
+  border-top: 1px solid var(--article-line);
+}
+
+@media (max-width: 640px) {
+  .site-chrome .hobro-page .blog-article {
+    padding: 6.5rem 0 4.25rem;
+  }
+
+  .site-chrome .hobro-page .blog-article__shell {
+    width: min(100% - 1.25rem, 42rem);
+  }
+
+  .site-chrome .hobro-page .blog-article__header h1 {
+    font-size: clamp(2.05rem, 10vw, 2.7rem);
+  }
+
+  .site-chrome .hobro-page .blog-article .blog-prose,
+  .site-chrome .hobro-page .blog-article .blog-prose p,
+  .site-chrome .hobro-page .blog-article .blog-prose li {
+    font-size: 1.0625rem;
+  }
+}
