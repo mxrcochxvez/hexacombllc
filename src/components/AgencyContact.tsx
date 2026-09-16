@@ -18,7 +18,7 @@ export default function AgencyContact({
             few lines. I answer from Clovis, usually within a day.
           </p>
           <p>
-            <a href="mailto:hi@hexacombllc.com">hi@hexacombllc.com</a>
+            <a href="mailto:marco@hexacombllc.com">marco@hexacombllc.com</a>
           </p>
         </div>
         <div>

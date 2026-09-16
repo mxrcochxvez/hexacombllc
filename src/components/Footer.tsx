@@ -59,7 +59,7 @@ export default function Footer() {
           </div>
           <div>
             <span className="hobro-footer-title">Contact</span>
-            <a href="mailto:hi@hexacombllc.com">hi@hexacombllc.com</a>
+            <a href="mailto:marco@hexacombllc.com">marco@hexacombllc.com</a>
             <p>Reply from Marco, usually within a day.</p>
           </div>
         </div>

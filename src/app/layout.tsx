@@ -68,8 +68,10 @@ const structuredData = {
         "Nonprofit websites",
         "Human rights organization websites",
       ],
+      email: "marco@hexacombllc.com",
       contactPoint: {
         "@type": "ContactPoint",
+        email: "marco@hexacombllc.com",
         contactType: "sales",
         areaServed: ["US-CA"],
         availableLanguage: ["English"],
@@ -80,6 +82,7 @@ const structuredData = {
       "@id": `${siteUrl}/#localbusiness`,
       name: "Hexacomb LLC",
       url: siteUrl,
+      email: "marco@hexacombllc.com",
       image: `${siteUrl}/hexacomb_logo_wordmark.png`,
       description:
         "Local website growth partner serving Fresno, Clovis, and Central Valley businesses.",
