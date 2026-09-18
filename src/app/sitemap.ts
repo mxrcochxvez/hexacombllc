@@ -3,6 +3,8 @@ import { listPublishedBlogPosts } from "@/lib/convex";
 
 const baseUrl = "https://hexacombllc.com";
 
+export const dynamic = "force-dynamic";
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
     {
@@ -48,10 +50,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
   ];
+  let posts;
   try {
-    const posts = await listPublishedBlogPosts(100);
-    return [...staticPages, ...posts.map((post) => ({ url: `${baseUrl}/blog/${post.slug}`, lastModified: new Date(post.updatedAt), changeFrequency: "monthly" as const, priority: 0.7 }))];
-  } catch {
-    return staticPages;
+    posts = await listPublishedBlogPosts(100);
+  } catch (error) {
+    console.error("Sitemap published-post fetch failed:", error);
+    throw error;
   }
+  return [
+    ...staticPages,
+    ...posts.map((post) => ({
+      url: `${baseUrl}/blog/${post.slug}`,
+      lastModified: new Date(post.updatedAt),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+  ];
 }
