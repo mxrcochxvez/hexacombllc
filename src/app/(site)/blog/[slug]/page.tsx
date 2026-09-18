@@ -16,19 +16,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await getPublishedBlogPost(slug).catch(() => null);
   if (!post) return { title: "Post not found" };
   const cover = getBlogCover(post);
+  const title = post.metaTitle || post.title;
+  const description = post.metaDescription || post.excerpt;
   const images = cover ? [{ url: cover.url }] : undefined;
   return {
-    title: post.metaTitle || post.title,
-    description: post.metaDescription || post.excerpt,
+    title,
+    description,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
       type: "article",
-      title: post.metaTitle || post.title,
-      description: post.metaDescription || post.excerpt,
+      title,
+      description,
       url: `/blog/${post.slug}`,
       publishedTime: post.publishedAt ? new Date(post.publishedAt).toISOString() : undefined,
       authors: [post.author],
       tags: post.tags,
+      images,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
       images,
     },
   };
