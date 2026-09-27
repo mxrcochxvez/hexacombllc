@@ -576,6 +576,14 @@
   margin: 0;
 }
 
+.hobro-map-reveal-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--c-paper-soft);
+}
+
 .hobro-map-figure img {
   width: 100%;
   height: auto;

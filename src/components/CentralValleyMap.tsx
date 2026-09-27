@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import HalftoneReveal from "./HalftoneReveal";
 import type { CaseStudy } from "@/lib/cases";
 
 export default function CentralValleyMap({
@@ -33,14 +33,19 @@ export default function CentralValleyMap({
         </div>
 
         <figure className="hobro-map-figure">
-          <Image
-            src="/images/fresno_satellite_dark.jpg"
-            alt="Night aerial of Fresno and the orchard grid around it, looking toward the Sierra."
-            width={1376}
-            height={768}
-            sizes="(max-width: 800px) calc(100vw - 2.5rem), 48vw"
-          />
-          <figcaption>Fresno, looking east toward the Sierra.</figcaption>
+          <div className="hobro-map-reveal-wrapper">
+            <HalftoneReveal
+              src="/images/fresno_satellite_dark.jpg"
+              inkColor="#111111"
+              paperColor="#f4f1ea"
+              mode="mono"
+              dotDensity={80}
+              angle={45}
+              revealRadius={0.35}
+              borderRadius="0px"
+            />
+          </div>
+          <figcaption>Fresno, looking east toward the Sierra. Hover to inspect.</figcaption>
         </figure>
       </div>
     </section>
