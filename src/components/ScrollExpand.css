@@ -1,0 +1,222 @@
+/* React Bits: ScrollExpand component styles */
+
+.scroll-expand {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.scroll-expand--scroller {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior: contain;
+}
+
+.scroll-expand--scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-expand__track {
+  position: relative;
+  width: 100%;
+}
+
+.scroll-expand__stage {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+  --se-title-size: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Base frame when using standard clip-path mode */
+.scroll-expand__frame {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(21% 29% 21% 29% round 24px);
+  will-change: clip-path, transform;
+}
+
+/* MacBook Pro mode: expanding frame with container queries */
+.scroll-expand__frame--macbook {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  clip-path: none;
+  overflow: hidden;
+  will-change: width, height, transform, border-radius;
+  container-type: inline-size;
+  container-name: heroframe;
+  z-index: 2;
+  background: #0a0a0a;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+.scroll-expand__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+  transform-origin: center;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.scroll-expand__scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.1) 45%, rgba(0, 0, 0, 0.35));
+  opacity: 0;
+  z-index: 1;
+}
+
+.scroll-expand__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6%;
+  opacity: 0;
+  will-change: opacity, transform;
+  z-index: 2;
+}
+
+.scroll-expand__title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0 6%;
+  text-align: center;
+  font-size: var(--se-title-size);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: #fff;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+  will-change: opacity, transform;
+  z-index: 3;
+}
+
+.scroll-expand__hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  pointer-events: none;
+  will-change: opacity, transform;
+  z-index: 15;
+}
+
+.scroll-expand__hint-arrow {
+  display: inline-block;
+  animation: se-hint-bounce 1.8s ease-in-out infinite;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+@keyframes se-hint-bounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(5px);
+    opacity: 1;
+  }
+}
+
+/* MacBook Pro Device Mockup */
+.scroll-expand__macbook {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, opacity;
+  transition: opacity 0.1s linear;
+}
+
+.scroll-expand__macbook-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  filter: drop-shadow(0 28px 60px rgba(0, 0, 0, 0.85));
+}
+
+/* Inner hero adaptations when inside the expanding frame */
+.scroll-expand__frame--macbook .hobro-hero {
+  min-height: 100%;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.scroll-expand__frame--macbook .hobro-hero-copy {
+  padding: clamp(1.5rem, 5cqw, 6rem) 1.25rem clamp(1.5rem, 4cqw, 5rem);
+}
+
+.scroll-expand__frame--macbook .hobro-hero-title {
+  font-size: clamp(1.4rem, 6.8cqw, 7.2rem);
+  text-shadow: 0 0.08em 0.4em rgba(0, 0, 0, 0.5);
+}
+
+.scroll-expand__frame--macbook .hobro-hero-punch {
+  font-size: clamp(0.75rem, 2.2cqw, 2.35rem);
+  max-width: 24ch;
+  margin-top: clamp(0.4rem, 1cqw, 1rem);
+}
+
+.scroll-expand__frame--macbook .hobro-hero-credit {
+  font-size: clamp(0.55rem, 0.9cqw, 0.78rem);
+  margin-top: clamp(0.5rem, 1.2cqw, 1.35rem);
+}
+
+.scroll-expand__frame--macbook .hobro-hero-card {
+  right: clamp(0.6rem, 1.8cqw, 1.5rem);
+  bottom: clamp(0.6rem, 1.8cqw, 1.5rem);
+  width: min(clamp(11rem, 24cqw, 20rem), calc(100% - 1.25rem));
+  padding: clamp(0.65rem, 1.2cqw, 1.15rem) clamp(0.75rem, 1.2cqw, 1.2rem) clamp(0.75rem, 1.2cqw, 1.2rem);
+  border-radius: clamp(0.75rem, 1.4cqw, 1.35rem);
+}
+
+.scroll-expand__frame--macbook .hobro-hero-card p {
+  font-size: clamp(0.52rem, 0.75cqw, 0.72rem);
+  margin-bottom: clamp(0.4rem, 0.8cqw, 0.9rem);
+}
+
+.scroll-expand__frame--macbook .hobro-hero-card .hobro-deck-btn {
+  font-size: clamp(0.65rem, 0.82cqw, 0.82rem);
+  padding: clamp(0.35rem, 0.5cqw, 0.5rem) clamp(0.65rem, 0.9cqw, 0.95rem);
+}

@@ -2,39 +2,52 @@
 
 import type { ReactNode } from "react";
 import Link from "next/link";
+import ScrollExpand from "@/components/ScrollExpand";
 import RippleDistortion from "@/components/RippleDistortion";
 
 export default function AgencyHero() {
   return (
-    <section className="hobro-hero">
-      <div className="hobro-hero-media" aria-hidden="true">
-        {/* Pexels License. Logan Voss, Southern California suburb aerial. */}
-        <video
-          className="hobro-hero-video"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster="/images/hero/california-aerial.jpg"
-        >
-          <source src="/videos/california-aerial.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <div className="hobro-hero-copy">
-        <h1 className="hobro-hero-title">Your new website</h1>
-        <p className="hobro-hero-punch">
-          deserves to be badass, like you and your business.
-        </p>
-        <p className="hobro-hero-credit">Designs &amp; Websites by Hexacomb LLC</p>
-      </div>
-      <aside className="hobro-hero-card">
-        <p>Your website should be working for you when you can&apos;t.</p>
-        <Link href="#contact" className="hobro-deck-btn hobro-deck-btn-solid">
-          Let&apos;s talk
-        </Link>
-      </aside>
-    </section>
+    <ScrollExpand
+      macbook
+      useWindowScroll
+      scrollDistance={1.3}
+      holdDistance={0.4}
+      scrollHint="Scroll to expand"
+      startRadius={8}
+      endRadius={0}
+      smoothing={0.08}
+      frameContent={
+        <div className="hobro-hero">
+          <div className="hobro-hero-media" aria-hidden="true">
+            {/* Pexels License. Logan Voss, Southern California suburb aerial. */}
+            <video
+              className="hobro-hero-video"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster="/images/hero/california-aerial.jpg"
+            >
+              <source src="/videos/california-aerial.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div className="hobro-hero-copy">
+            <h1 className="hobro-hero-title">Your new website</h1>
+            <p className="hobro-hero-punch">
+              deserves to be badass, like you and your business.
+            </p>
+            <p className="hobro-hero-credit">Designs &amp; Websites by Hexacomb LLC</p>
+          </div>
+          <aside className="hobro-hero-card">
+            <p>Your website should be working for you when you can&apos;t.</p>
+            <Link href="#contact" className="hobro-deck-btn hobro-deck-btn-solid">
+              Let&apos;s talk
+            </Link>
+          </aside>
+        </div>
+      }
+    />
   );
 }
 
