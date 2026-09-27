@@ -8,6 +8,7 @@ import "../ui/space.theme.css";
 import "../ui/kit.css";
 import CloudflareAnalytics from "@/components/CloudflareAnalytics";
 import TrackClicks from "@/components/TrackClicks";
+import SmoothScroll from "@/components/SmoothScroll";
 
 const geologica = Geologica({
   variable: "--font-geologica",
@@ -231,7 +232,6 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-scroll-behavior="smooth"
       className={`${geologica.variable} ${atkinson.variable} ${instrument.variable} ${archivo.variable}`}
     >
       <body>
@@ -249,7 +249,7 @@ export default function RootLayout({
         />
         <CloudflareAnalytics token={process.env.CF_ANALYTICS_TOKEN} />
         <TrackClicks />
-        {children}
+        <SmoothScroll>{children}</SmoothScroll>
       </body>
       <GoogleAnalytics gaId="G-3JYGDR8ZVE" />
     </html>
