@@ -1,13 +1,29 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
+import { useState, useMemo } from "react";
 import { clientCaseStudies, type CaseStudy } from "@/lib/cases";
 import CaseStudyModal from "./CaseStudyModal";
 import CentralValleyMap from "./CentralValleyMap";
+import MorphSlider, { type MorphTransition } from "./MorphSlider";
 
 export default function PortfolioShowcase() {
   const [selectedCase, setSelectedCase] = useState<CaseStudy | null>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [transition, setTransition] = useState<MorphTransition>("melt");
+
+  const sliderItems = useMemo(
+    () =>
+      clientCaseStudies.map((item) => ({
+        image: item.imageSrc,
+        caption: `${item.title} · ${item.city}`,
+        id: item.id,
+        title: item.title,
+        city: item.city,
+      })),
+    []
+  );
+
+  const currentCase = clientCaseStudies[activeSlide] ?? clientCaseStudies[0];
 
   return (
     <div id="projects">
@@ -15,28 +31,96 @@ export default function PortfolioShowcase() {
         <div className="hobro-shell">
           <div className="hobro-cases-head">
             <p>Live sites</p>
-            <h2>Work in the valley</h2>
+            <div className="hobro-cases-title-row">
+              <h2>Work in the valley</h2>
+              <div
+                className="hobro-morph-modes"
+                role="group"
+                aria-label="Slider morph effect"
+              >
+                {(["melt", "ripple", "shear", "swirl"] as const).map((mode) => (
+                  <button
+                    key={mode}
+                    type="button"
+                    className={`hobro-morph-mode-btn ${transition === mode ? "is-active" : ""}`}
+                    onClick={() => setTransition(mode)}
+                  >
+                    {mode}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
-          <div className="hobro-cases-grid">
-            {clientCaseStudies.map((item) => (
+
+          <div className="hobro-cases-slider-container">
+            <MorphSlider
+              items={sliderItems}
+              transition={transition}
+              intensity={0.55}
+              aberration={0.35}
+              drift={0.4}
+              autoplay
+              autoplayDelay={4.5}
+              radius={16}
+              onIndexChange={setActiveSlide}
+            />
+          </div>
+
+          <div className="hobro-cases-details-bar">
+            <div className="hobro-cases-details-meta">
+              <span className="hobro-cases-details-tagline">
+                Active Project • {currentCase.city}, CA
+              </span>
+              <h3 className="hobro-cases-details-title">{currentCase.title}</h3>
+              <p className="hobro-cases-details-desc">{currentCase.summary}</p>
+              <div className="hobro-cases-details-tags">
+                {currentCase.tags.map((tag) => (
+                  <span key={tag} className="hobro-cases-tag">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <button
+              type="button"
+              className="hobro-cases-open-btn"
+              onClick={() => setSelectedCase(currentCase)}
+            >
+              <span>Explore Case Study</span>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+
+          <div className="hobro-cases-cards">
+            {clientCaseStudies.map((item, idx) => (
               <button
                 key={item.id}
                 type="button"
-                className="hobro-case"
+                className={`hobro-case-card ${activeSlide === idx ? "is-active" : ""}`}
                 onClick={() => setSelectedCase(item)}
               >
-                <div className="hobro-case-media">
-                  <Image
-                    src={item.imageSrc}
-                    alt={`${item.title} website`}
-                    width={1440}
-                    height={900}
-                  />
+                <div className="hobro-case-card-header">
+                  <span className="hobro-case-card-num">0{idx + 1}</span>
+                  <span className="hobro-case-card-city">{item.city}</span>
                 </div>
-                <span className="hobro-case-caption">
-                  <span>{item.title}</span>
-                  <span>{item.city}</span>
-                </span>
+                <h4 className="hobro-case-card-title">{item.title}</h4>
+                <p className="hobro-case-card-summary">{item.summary}</p>
+                <div className="hobro-case-card-footer">
+                  <span>{item.tags.join(" · ")}</span>
+                  <span>View Details ↗</span>
+                </div>
               </button>
             ))}
           </div>

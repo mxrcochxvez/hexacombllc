@@ -525,6 +525,217 @@
   color: var(--c-muted);
 }
 
+.hobro-cases-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.hobro-morph-modes {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.35rem;
+  background: var(--c-paper, #f4f1ea);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 999px;
+}
+
+.hobro-morph-mode-btn {
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  color: var(--c-muted, #767676);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hobro-morph-mode-btn:hover {
+  color: var(--c-ink, #111111);
+}
+
+.hobro-morph-mode-btn.is-active {
+  background: var(--c-ink, #111111);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.hobro-cases-slider-container {
+  position: relative;
+  width: 100%;
+  height: clamp(380px, 48vw, 560px);
+  margin-bottom: 1.75rem;
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.24);
+  border-radius: 16px;
+  overflow: hidden;
+  background: #0c0c0e;
+}
+
+.hobro-cases-details-bar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: center;
+  padding: 1.5rem 1.75rem;
+  background: var(--c-paper, #f7f5f0);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 14px;
+  margin-bottom: 2rem;
+}
+
+.hobro-cases-details-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.hobro-cases-details-tagline {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-accent, #c9510c);
+}
+
+.hobro-cases-details-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--c-ink, #111111);
+}
+
+.hobro-cases-details-desc {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--c-muted, #555555);
+  max-width: 60ch;
+}
+
+.hobro-cases-details-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.3rem;
+}
+
+.hobro-cases-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--c-ink, #111111);
+}
+
+.hobro-cases-open-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.35rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-radius: 8px;
+  background: var(--c-ink, #111111);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.hobro-cases-open-btn:hover {
+  background: #000000;
+  transform: translateY(-1px);
+}
+
+.hobro-cases-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.hobro-case-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.25rem;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.hobro-case-card:hover,
+.hobro-case-card.is-active {
+  border-color: var(--c-ink, #111111);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.hobro-case-card.is-active {
+  background: var(--c-paper, #fdfbf7);
+}
+
+.hobro-case-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.hobro-case-card-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--c-muted, #888888);
+}
+
+.hobro-case-card-city {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--c-muted, #888888);
+}
+
+.hobro-case-card-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--c-ink, #111111);
+}
+
+.hobro-case-card-summary {
+  margin: 0 0 1rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--c-muted, #666666);
+}
+
+.hobro-case-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--c-ink, #111111);
+}
+
 .hobro-cases-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -575,6 +786,17 @@
   font-size: 0.78rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+@media (max-width: 800px) {
+  .hobro-cases-details-bar {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .hobro-cases-cards {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 700px) {
