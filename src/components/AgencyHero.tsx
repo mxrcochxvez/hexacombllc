@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import Link from "next/link";
+import RippleDistortion from "@/components/RippleDistortion";
 
 export default function AgencyHero() {
   return (
@@ -69,13 +70,38 @@ export function AgencyIntro() {
   return (
     <section className="hobro-intro">
       <div className="hobro-shell">
-        <p className="hobro-intro-statement">
-          We take the website worries out of your hands.
-        </p>
-        <p className="hobro-intro-body">
-          You run the business. The site keeps finding customers, loading
-          fast, and taking the next step while you&apos;re on a job.
-        </p>
+        <div className="hobro-intro-water-stage">
+          <RippleDistortion
+            src="/images/water-surface.jpg"
+            brushSize={140}
+            strength={0.24}
+            swirl={0.8}
+            rings={4}
+            spread={5.5}
+            fade={3}
+            spacing={12}
+            dispersion={0.02}
+            glint={0.35}
+            tint="#38bdf8"
+            tintAmount={0.16}
+            grayscale={false}
+            trigger="both"
+            clickStrength={2.4}
+            quality="high"
+            className="hobro-intro-ripple"
+          />
+          <div className="hobro-intro-water-overlay" />
+          <div className="hobro-intro-water-content">
+            <p className="hobro-intro-statement">
+              We take the website worries out of your hands.
+            </p>
+            <p className="hobro-intro-body">
+              You run the business. The site keeps finding customers, loading
+              fast, and taking the next step while you&apos;re on a job.
+            </p>
+          </div>
+        </div>
+
         <Link href="#contact" className="hobro-talk">
           <small>Got a project?</small>
           <span className="hobro-talk-row">
