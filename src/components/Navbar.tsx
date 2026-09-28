@@ -21,18 +21,23 @@ export default function Navbar() {
 
   useEffect(() => {
     const hero = document.querySelector(".scroll-expand, .hobro-page-hero");
-    if (!hero) {
+    if (!hero || typeof IntersectionObserver === "undefined") {
       setPastHero(false);
       return;
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        const above = entry.boundingClientRect.bottom <= 72;
-        setPastHero(!entry.isIntersecting && above);
-      },
-      { rootMargin: "-4.5rem 0px 0px 0px", threshold: 0 }
-    );
+    let observer: IntersectionObserver;
+    try {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          const above = entry.boundingClientRect.bottom <= 72;
+          setPastHero(!entry.isIntersecting && above);
+        },
+        { rootMargin: "-72px 0px 0px 0px", threshold: 0 }
+      );
+    } catch {
+      return;
+    }
     observer.observe(hero);
     return () => observer.disconnect();
   }, [pathname]);
