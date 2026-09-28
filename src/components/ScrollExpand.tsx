@@ -1,7 +1,7 @@
 'use client';
 /* eslint-disable @next/next/no-img-element */
 
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import './ScrollExpand.css';
 
 const clamp = (v: number, a: number, b: number) => (v < a ? a : v > b ? b : v);
@@ -10,6 +10,79 @@ const smoothstep = (edge0: number, edge1: number, x: number) => {
   const t = clamp((x - edge0) / (edge1 - edge0 || 1e-6), 0, 1);
   return t * t * (3 - 2 * t);
 };
+
+type DeviceKind = 'laptop' | 'phone';
+
+type DeviceSpec = {
+  kind: DeviceKind;
+  aspect: number;
+  maxW: number;
+  maxH: number;
+  cap: number;
+  lid: { x: number; y: number; w: number; h: number };
+  pad: number;
+  radius: number;
+};
+
+const LAPTOP: DeviceSpec = {
+  kind: 'laptop',
+  aspect: 1.42,
+  maxW: 0.84,
+  maxH: 0.68,
+  cap: 1120,
+  lid: { x: 0.02, y: 0.02, w: 0.96, h: 0.78 },
+  pad: 0.011,
+  radius: 0.023,
+};
+
+const PHONE: DeviceSpec = {
+  kind: 'phone',
+  aspect: 0.482,
+  maxW: 0.7,
+  maxH: 0.7,
+  cap: 380,
+  lid: { x: 0, y: 0, w: 1, h: 1 },
+  pad: 0.034,
+  radius: 0.155,
+};
+
+const PHONE_QUERY = '(max-width: 760px)';
+
+function deviceBox(spec: DeviceSpec, stageW: number, stageH: number) {
+  let width = Math.min(stageW * spec.maxW, spec.cap);
+  let height = width / spec.aspect;
+  const maxHeight = stageH * spec.maxH;
+  if (height > maxHeight) {
+    height = maxHeight;
+    width = height * spec.aspect;
+  }
+
+  const pad = width * spec.pad;
+  const lidX = width * spec.lid.x;
+  const lidY = height * spec.lid.y;
+  const lidW = width * spec.lid.w;
+  const lidH = height * spec.lid.h;
+  const screenW = lidW - pad * 2;
+  const screenH = lidH - pad * 2;
+  const screenX = lidX + pad;
+  const screenY = lidY + pad;
+
+  return {
+    width,
+    height,
+    pad,
+    lidX,
+    lidY,
+    lidW,
+    lidH,
+    screenW,
+    screenH,
+    offsetX: screenX + screenW / 2 - width / 2,
+    offsetY: screenY + screenH / 2 - height / 2,
+    radius: Math.max(4, width * spec.radius - pad),
+    lidRadius: width * spec.radius,
+  };
+}
 
 export interface ScrollExpandProps {
   src?: string;
@@ -33,9 +106,8 @@ export interface ScrollExpandProps {
   className?: string;
   style?: React.CSSProperties;
 
-  /* Custom MacBook Pro expansion mode */
+  /* Device chassis: CSS laptop, or a CSS phone under 760px */
   macbook?: boolean;
-  macbookImageSrc?: string;
   frameContent?: React.ReactNode;
 }
 
@@ -61,7 +133,6 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
   className = '',
   style,
   macbook = false,
-  macbookImageSrc = '/images/macbook-frame-hires.png',
   frameContent,
   ...rest
 }) => {
@@ -86,6 +157,7 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     screenH: 0,
     offsetX: 0,
     offsetY: 0,
+    radius: 10,
   });
 
   const propsRef = useRef({
@@ -147,7 +219,7 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
         const curH = m.screenH + (m.stageH - m.screenH) * e;
         const curOffsetX = m.offsetX * (1 - e);
         const curOffsetY = m.offsetY * (1 - e);
-        const r = c.startRadius * (1 - e);
+        const r = m.radius * (1 - e);
 
         frame.style.width = `${curW}px`;
         frame.style.height = `${curH}px`;
@@ -199,7 +271,7 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     }
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const root = rootRef.current;
     const track = trackRef.current;
     const stage = stageRef.current;
@@ -212,11 +284,16 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     let target = 0;
     let stageH = 0;
     let running = false;
+    let measureTries = 0;
 
     const measure = () => {
       const c = propsRef.current;
       stageH = c.useWindowScroll ? window.innerHeight : root.clientHeight;
-      if (stageH <= 0) return;
+      if (stageH <= 0) {
+        if (measureTries++ < 40) requestAnimationFrame(measure);
+        return;
+      }
+      measureTries = 0;
       stage.style.height = `${stageH}px`;
       track.style.height = `${stageH * (1 + Math.max(0, c.scrollDistance) + Math.max(0, c.holdDistance))}px`;
 
@@ -224,45 +301,37 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
       stage.style.setProperty('--se-title-size', `${clamp(stageW * 0.075, 20, 84)}px`);
 
       if (c.macbook) {
-        // High-res MacBook Pro 686x444 frame geometry
-        // Aspect ratio: 686 / 444 = 1.545
-        // Screen hole in image:
-        // left: 90/686 (13.12%), width: 488/686 (71.14%)
-        // top: 16/444 (3.60%), height: 301/444 (67.79%)
-        const maxLaptopW = Math.min(stageW * 0.88, 1060);
-        const maxLaptopH = stageH * 0.72;
-        let laptopW = maxLaptopW;
-        let laptopH = laptopW / 1.545;
-
-        if (laptopH > maxLaptopH) {
-          laptopH = maxLaptopH;
-          laptopW = laptopH * 1.545;
-        }
-
-        const screenW = laptopW * 0.730;
-        const screenH = laptopH * 0.686;
-
-        // Screen center offset relative to laptop center
-        const screenCenterX = laptopW * 0.489;
-        const screenCenterY = laptopH * 0.375;
-        const offsetX = screenCenterX - laptopW * 0.5;
-        const offsetY = screenCenterY - laptopH * 0.5;
-
+        const spec = window.matchMedia(PHONE_QUERY).matches ? PHONE : LAPTOP;
+        const box = deviceBox(spec, stageW, stageH);
         macbookMetricsRef.current = {
           stageW,
           stageH,
-          laptopW,
-          laptopH,
-          screenW,
-          screenH,
-          offsetX,
-          offsetY,
+          laptopW: box.width,
+          laptopH: box.height,
+          screenW: box.screenW,
+          screenH: box.screenH,
+          offsetX: box.offsetX,
+          offsetY: box.offsetY,
+          radius: box.radius,
         };
 
-        if (macbookRef.current) {
-          macbookRef.current.style.width = `${laptopW}px`;
-          macbookRef.current.style.height = `${laptopH}px`;
+        const chassis = macbookRef.current;
+        if (chassis) {
+          chassis.dataset.device = spec.kind;
+          chassis.style.width = `${box.width}px`;
+          chassis.style.height = `${box.height}px`;
+          chassis.style.setProperty('--lid-x', `${box.lidX}px`);
+          chassis.style.setProperty('--lid-y', `${box.lidY}px`);
+          chassis.style.setProperty('--lid-w', `${box.lidW}px`);
+          chassis.style.setProperty('--lid-h', `${box.lidH}px`);
+          chassis.style.setProperty('--lid-pad', `${box.pad}px`);
+          chassis.style.setProperty('--lid-r', `${box.lidRadius}px`);
+          chassis.style.setProperty('--hole-x', `${box.lidX + box.pad}px`);
+          chassis.style.setProperty('--hole-y', `${box.lidY + box.pad}px`);
+          chassis.style.setProperty('--hole-w', `${box.screenW}px`);
+          chassis.style.setProperty('--hole-h', `${box.screenH}px`);
         }
+        frameRef.current?.classList.toggle('scroll-expand__frame--phone', spec.kind === 'phone');
       }
     };
 
@@ -318,8 +387,10 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     applyProgress(current);
 
     const scroller = useWindowScroll ? window : root;
+    const phoneQuery = window.matchMedia(PHONE_QUERY);
     scroller.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onResize);
+    phoneQuery.addEventListener('change', onResize);
     const ro = new ResizeObserver(onResize);
     ro.observe(root);
 
@@ -327,6 +398,7 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
       if (raf) cancelAnimationFrame(raf);
       scroller.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onResize);
+      phoneQuery.removeEventListener('change', onResize);
       ro.disconnect();
     };
   }, [applyProgress, useWindowScroll]);
@@ -363,15 +435,15 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     >
       <div ref={trackRef} className="scroll-expand__track">
         <div ref={stageRef} className="scroll-expand__stage">
-          {/* MacBook Pro frame mockup */}
           {macbook ? (
-            <div ref={macbookRef} className="scroll-expand__macbook" aria-hidden="true">
-              <img
-                src={macbookImageSrc}
-                alt=""
-                className="scroll-expand__macbook-img"
-                draggable={false}
-              />
+            <div ref={macbookRef} className="scroll-expand__device" data-device="laptop" aria-hidden="true">
+              <div className="scroll-expand__device-lid" />
+              <div className="scroll-expand__device-neck" />
+              <div className="scroll-expand__device-foot" />
+              <div className="scroll-expand__device-camera" />
+              <div className="scroll-expand__device-island" />
+              <div className="scroll-expand__device-btn scroll-expand__device-btn--vol" />
+              <div className="scroll-expand__device-btn scroll-expand__device-btn--power" />
             </div>
           ) : null}
 

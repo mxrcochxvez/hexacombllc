@@ -27,6 +27,7 @@
   position: sticky;
   top: 0;
   width: 100%;
+  height: 100svh;
   overflow: hidden;
   --se-title-size: 4rem;
   display: flex;
@@ -55,7 +56,7 @@
   container-name: heroframe;
   z-index: 2;
   background: #0a0a0a;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  box-shadow: none;
 }
 
 .scroll-expand__media {
@@ -149,30 +150,197 @@
   }
 }
 
-/* MacBook Pro Device Mockup */
-.scroll-expand__macbook {
+/* CSS monitor / phone chassis. The glass is a hole; the hero frame sits in it. */
+.scroll-expand__device {
+  --lid-x: 2%;
+  --lid-y: 2%;
+  --lid-w: 96%;
+  --lid-h: 78%;
+  --lid-pad: 1.1%;
+  --lid-r: 2.3%;
+  --hole-x: 3.1%;
+  --hole-y: 3.56%;
+  --hole-w: 93.8%;
+  --hole-h: 74.88%;
   position: absolute;
   top: 50%;
   left: 50%;
+  width: min(84vw, 1120px);
+  aspect-ratio: 1.42;
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   will-change: transform, opacity;
-  transition: opacity 0.1s linear;
+  filter: drop-shadow(0 22px 28px rgba(0, 0, 0, 0.55));
 }
 
-.scroll-expand__macbook-img {
+@media (min-width: 761px) {
+  .scroll-expand {
+    --device-w: min(84vw, 1120px, calc(68svh * 1.42));
+  }
+
+  .scroll-expand__device {
+    width: var(--device-w);
+  }
+
+  .scroll-expand__frame--macbook {
+    width: calc(var(--device-w) * 0.938);
+    height: calc(var(--device-w) / 1.42 * 0.7488);
+    border-radius: calc(var(--device-w) * 0.012);
+    transform: translate(-50%, calc(-50% - var(--device-w) / 1.42 * 0.09));
+  }
+}
+
+@media (max-width: 760px) {
+  .scroll-expand {
+    --device-w: min(70vw, 380px, calc(70svh * 0.482));
+  }
+
+  .scroll-expand__device {
+    --lid-x: 0%;
+    --lid-y: 0%;
+    --lid-w: 100%;
+    --lid-h: 100%;
+    --lid-pad: 3.4%;
+    --lid-r: 15.5%;
+    --hole-x: 3.4%;
+    --hole-y: 1.64%;
+    --hole-w: 93.2%;
+    --hole-h: 96.7%;
+    width: var(--device-w);
+    aspect-ratio: 0.482;
+  }
+
+  .scroll-expand__device .scroll-expand__device-neck,
+  .scroll-expand__device .scroll-expand__device-foot,
+  .scroll-expand__device .scroll-expand__device-camera {
+    display: none;
+  }
+
+  .scroll-expand__device .scroll-expand__device-island,
+  .scroll-expand__device .scroll-expand__device-btn {
+    display: block;
+  }
+
+  .scroll-expand__frame--macbook {
+    width: calc(var(--device-w) * 0.932);
+    height: calc(var(--device-w) / 0.482 - var(--device-w) * 0.068);
+    border-radius: calc(var(--device-w) * 0.121);
+    transform: translate(-50%, -50%);
+  }
+}
+
+.scroll-expand__device-lid {
+  position: absolute;
+  left: var(--lid-x, 0px);
+  top: var(--lid-y, 0px);
+  width: var(--lid-w, 100%);
+  height: var(--lid-h, 64%);
+  padding: var(--lid-pad, 10px);
+  border-radius: var(--lid-r, 14px);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 1.5px),
+    linear-gradient(180deg, #3a3a3e 0%, #1c1c1e 16%, #121214 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+  -webkit-mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+  -webkit-mask-clip: content-box, border-box;
+  -webkit-mask-composite: xor;
+  mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+  mask-clip: content-box, border-box;
+  mask-composite: exclude;
+}
+
+.scroll-expand__device-neck {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--lid-y, 0px) + var(--lid-h, 78%) - 2px);
+  width: 3.6%;
+  height: 15%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #3c3c40 0%, #242428 100%);
+  clip-path: polygon(18% 0, 82% 0, 100% 100%, 0 100%);
+}
+
+.scroll-expand__device-foot {
+  position: absolute;
+  left: 50%;
+  bottom: 2.4%;
+  width: 28%;
+  height: 2.2%;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #6a6a70 0%, #2c2c30 38%, #141416 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.2) inset,
+    0 10px 18px rgba(0, 0, 0, 0.35);
+}
+
+.scroll-expand__device-camera {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--lid-y, 0px) + (var(--lid-pad, 10px) - 5px) / 2);
+  width: 5px;
+  height: 5px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #6a6a72, #070709 62%);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.scroll-expand__device-island,
+.scroll-expand__device-btn {
+  display: none;
+}
+
+.scroll-expand__device[data-device="phone"] .scroll-expand__device-neck,
+.scroll-expand__device[data-device="phone"] .scroll-expand__device-foot,
+.scroll-expand__device[data-device="phone"] .scroll-expand__device-camera {
+  display: none;
+}
+
+.scroll-expand__device[data-device="phone"] .scroll-expand__device-lid {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 1px),
+    linear-gradient(165deg, #5a5a60 0%, #2a2a2e 18%, #141416 55%, #0c0c0e 100%);
+}
+
+.scroll-expand__device[data-device="phone"] .scroll-expand__device-island,
+.scroll-expand__device[data-device="phone"] .scroll-expand__device-btn {
   display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-drag: none;
-  filter: drop-shadow(0 28px 60px rgba(0, 0, 0, 0.85));
+}
+
+.scroll-expand__device-island {
+  position: absolute;
+  left: calc(var(--hole-x, 0px) + var(--hole-w, 100%) / 2);
+  top: calc(var(--hole-y, 0px) + var(--hole-w, 100%) * 0.042);
+  width: calc(var(--hole-w, 100%) * 0.3);
+  height: calc(var(--hole-w, 100%) * 0.085);
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: #050506;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.scroll-expand__device-btn {
+  position: absolute;
+  width: 3px;
+  border-radius: 2px 0 0 2px;
+  background: linear-gradient(90deg, #1a1a1c, #8d8d93);
+}
+
+.scroll-expand__device-btn--vol {
+  left: -3px;
+  top: 24%;
+  height: 15%;
+}
+
+.scroll-expand__device-btn--power {
+  right: -3px;
+  left: auto;
+  top: 30%;
+  height: 11%;
+  border-radius: 0 2px 2px 0;
+  background: linear-gradient(270deg, #1a1a1c, #8d8d93);
 }
 
 /* Inner hero adaptations when inside the expanding frame */
@@ -204,6 +372,7 @@
 }
 
 .scroll-expand__frame--macbook .hobro-hero-card {
+  left: auto;
   right: clamp(0.6rem, 1.8cqw, 1.5rem);
   bottom: clamp(0.6rem, 1.8cqw, 1.5rem);
   width: min(clamp(11rem, 24cqw, 20rem), calc(100% - 1.25rem));
@@ -219,4 +388,74 @@
 .scroll-expand__frame--macbook .hobro-hero-card .hobro-deck-btn {
   font-size: clamp(0.65rem, 0.82cqw, 0.82rem);
   padding: clamp(0.35rem, 0.5cqw, 0.5rem) clamp(0.65rem, 0.9cqw, 0.95rem);
+}
+
+@container heroframe (max-width: 420px) {
+  .scroll-expand__frame--macbook .hobro-hero-copy {
+    transform: translateY(-7cqw);
+  }
+
+  .scroll-expand__frame--macbook .hobro-hero-card {
+    right: 2cqw;
+    bottom: 2cqw;
+    width: 36cqw;
+    padding: 1.4cqw 1.6cqw 1.5cqw;
+    border-radius: 2cqw;
+  }
+
+  .scroll-expand__frame--macbook .hobro-hero-card p {
+    font-size: 1.85cqw;
+    margin-bottom: 1cqw;
+    letter-spacing: 0.035em;
+    line-height: 1.25;
+  }
+
+  .scroll-expand__frame--macbook .hobro-hero-card .hobro-deck-btn {
+    font-size: 1.8cqw;
+    padding: 0.65cqw 1.4cqw;
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+}
+
+@media (max-width: 760px) {
+  .scroll-expand__frame--macbook .hobro-hero-copy {
+    transform: none;
+    padding: 14% 1.15rem 22%;
+  }
+
+  .scroll-expand__frame--macbook .hobro-hero-title {
+    font-size: clamp(2.15rem, 13.5cqw, 3.5rem);
+  }
+
+  .scroll-expand__frame--macbook .hobro-hero-punch {
+    font-size: clamp(1.05rem, 5cqw, 1.45rem);
+    max-width: 16ch;
+  }
+
+  .scroll-expand__frame--macbook .hobro-hero-credit {
+    font-size: clamp(0.62rem, 2.6cqw, 0.74rem);
+  }
+
+  .scroll-expand__frame--macbook .hobro-hero-card {
+    right: 0.85rem;
+    bottom: 1.35rem;
+    width: min(11.25rem, calc(100% - 1.7rem));
+    padding: 0.7rem 0.75rem 0.75rem;
+    border-radius: 1rem;
+  }
+
+  .scroll-expand__frame--macbook .hobro-hero-card p {
+    font-size: 0.62rem;
+    margin-bottom: 0.55rem;
+    letter-spacing: 0.05em;
+    line-height: 1.35;
+  }
+
+  .scroll-expand__frame--macbook .hobro-hero-card .hobro-deck-btn {
+    font-size: 0.68rem;
+    padding: 0.42rem 0.75rem;
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+  }
 }
