@@ -9,6 +9,7 @@ import CentralValleyMap from "./CentralValleyMap";
 export default function PortfolioShowcase() {
   const [selectedCase, setSelectedCase] = useState<CaseStudy | null>(null);
   const [activeSlide, setActiveSlide] = useState(0);
+  const [cycling, setCycling] = useState(true);
 
   const galleryItems = useMemo(
     () =>
@@ -37,7 +38,18 @@ export default function PortfolioShowcase() {
         <div className="hobro-shell">
           <div className="hobro-cases-head">
             <h2>Work in the valley</h2>
-            <p>Bring one forward, then open the project.</p>
+            <div className="hobro-cases-head-note">
+              <p>They step forward on their own. Open the one you want.</p>
+              <button
+                type="button"
+                className="hobro-cases-cycle"
+                aria-pressed={cycling}
+                aria-label={cycling ? "Pause project rotation" : "Play project rotation"}
+                onClick={() => setCycling((on) => !on)}
+              >
+                {cycling ? "Pause" : "Play"}
+              </button>
+            </div>
           </div>
 
           <div className="hobro-cases-gallery">
@@ -51,13 +63,15 @@ export default function PortfolioShowcase() {
               accentColor="#f4efe4"
               overlayColor="#161513"
               listLabel="Work in the valley"
+              autoplay={cycling && selectedCase === null}
+              autoplayMs={4200}
               onActiveChange={onActiveChange}
               onOpen={onOpen}
             />
           </div>
 
           <div className="hobro-cases-details-bar">
-            <div className="hobro-cases-details-meta">
+            <div className="hobro-cases-details-meta" key={currentCase.id}>
               <span className="hobro-cases-details-tagline">
                 {currentCase.city}, CA
               </span>

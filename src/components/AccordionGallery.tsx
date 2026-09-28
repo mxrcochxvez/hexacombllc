@@ -36,6 +36,9 @@ export interface AccordionGalleryProps {
   listLabel?: string;
   onOpen?: (index: number) => void;
   onActiveChange?: (index: number) => void;
+  /** Advance the active panel on a timer. Pauses while hovered, focused, or just clicked. */
+  autoplay?: boolean;
+  autoplayMs?: number;
 }
 
 const DEFAULT_ITEMS: AccordionGalleryItem[] = [
@@ -68,7 +71,9 @@ const AccordionGallery = ({
   className = '',
   listLabel = 'Image accordion gallery',
   onOpen,
-  onActiveChange
+  onActiveChange,
+  autoplay = false,
+  autoplayMs = 4200
 }: AccordionGalleryProps) => {
   const rootRef = useRef<HTMLDivElement>(null);
   const panelRefs = useRef<(HTMLElement | null)[]>([]);
@@ -82,6 +87,62 @@ const AccordionGallery = ({
   const vertical = orientation === 'vertical';
   const count = items.length;
   const [active, setActive] = useState(Math.min(Math.max(defaultIndex, 0), count - 1));
+  const [inView, setInView] = useState(false);
+  const [engaged, setEngaged] = useState(false);
+  const engagedRef = useRef({ pointer: false, focus: false, hold: false });
+  const holdTimerRef = useRef<number | null>(null);
+  const finePointerRef = useRef(false);
+
+  const syncEngaged = useCallback(() => {
+    const state = engagedRef.current;
+    setEngaged(state.pointer || state.focus || state.hold);
+  }, []);
+
+  const holdReading = useCallback(() => {
+    engagedRef.current.hold = true;
+    syncEngaged();
+    if (holdTimerRef.current !== null) window.clearTimeout(holdTimerRef.current);
+    holdTimerRef.current = window.setTimeout(() => {
+      engagedRef.current.hold = false;
+      holdTimerRef.current = null;
+      syncEngaged();
+    }, 7000);
+  }, [syncEngaged]);
+
+  useEffect(() => {
+    finePointerRef.current = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    return () => {
+      if (holdTimerRef.current !== null) window.clearTimeout(holdTimerRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el || !autoplay) {
+      setInView(false);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting && entry.intersectionRatio >= 0.4);
+      },
+      { threshold: [0, 0.4, 0.7] }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [autoplay]);
+
+  useEffect(() => {
+    if (!autoplay || engaged || !inView || count < 2) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const timer = window.setInterval(() => {
+      if (document.hidden) return;
+      setActive(index => (index + 1) % count);
+    }, Math.max(autoplayMs, 1600));
+
+    return () => window.clearInterval(timer);
+  }, [autoplay, autoplayMs, count, engaged, inView]);
 
   useEffect(() => {
     onActiveChange?.(active);
@@ -204,6 +265,7 @@ const AccordionGallery = ({
     if (i !== active) {
       e.preventDefault();
       setActive(i);
+      holdReading();
       return;
     }
     onOpen?.(i);
@@ -238,6 +300,30 @@ const AccordionGallery = ({
       style={rootStyle}
       role="list"
       aria-label={listLabel}
+      onMouseEnter={() => {
+        if (!finePointerRef.current) return;
+        engagedRef.current.pointer = true;
+        syncEngaged();
+      }}
+      onMouseLeave={() => {
+        engagedRef.current.pointer = false;
+        syncEngaged();
+      }}
+      onFocus={event => {
+        const target = event.target;
+        if (!(target instanceof HTMLElement)) return;
+        window.requestAnimationFrame(() => {
+          if (document.activeElement !== target || !target.matches(':focus-visible')) return;
+          engagedRef.current.focus = true;
+          syncEngaged();
+        });
+      }}
+      onBlur={event => {
+        const next = event.relatedTarget;
+        if (next instanceof Node && rootRef.current?.contains(next)) return;
+        engagedRef.current.focus = false;
+        syncEngaged();
+      }}
     >
       {items.map((item, i) => {
         const isActive = i === active;
