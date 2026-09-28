@@ -13,10 +13,12 @@ export default function AgencyContact({
       <div className="hobro-shell hobro-contact-grid">
         <div>
           <p className="hobro-kicker">Contact</p>
-          <h2>Let&apos;s take the website off your plate.</h2>
+          <h2>What should the site be bringing in?</h2>
           <p>
-            Starting fresh or replacing a site that stopped working. Write a
-            few lines. I answer from Clovis, usually within a day.
+            New business, or one whose website went quiet. Say what you do,
+            the towns you cover, and drop the link if you have one. I write
+            back from Clovis, usually within a day. The first note is about
+            your jobs, not a list of packages.
           </p>
           <p>
             <a href="mailto:marco@hexacombllc.com">marco@hexacombllc.com</a>

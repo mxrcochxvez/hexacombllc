@@ -28,18 +28,19 @@ export default function AgencyVision() {
       <div className="hobro-shell hobro-vision-grid">
         <div>
           <p className="hobro-kicker">The point</p>
-          <h2>Take the website off your plate.</h2>
+          <h2>Same person. Start to finish.</h2>
         </div>
         <div>
           <p>
-            Hexacomb is Marco Chavez, working from Clovis. There is no account
-            manager relay and no offshore bench. If a page is slow or a form
-            stops working, you are talking to the person who will fix it.
+            Hexacomb is Marco Chavez in Clovis. There is no account manager
+            to retell the problem, and nobody offshore waiting on a ticket.
+            Slow page, dead form, a Google listing that went quiet — you are
+            already talking to the one who will fix it.
           </p>
           <p>
-            The job is a site that keeps working when you can&apos;t. Fast
-            pages, regular SEO checks, and a clear path to a call or a booked
-            job, even at 11pm when you&apos;re done for the day.
+            A website is not something you pay for once and leave. It is who
+            speaks for the business when you are on a job. Someone has to
+            keep owning that. I do.
           </p>
           <p className="hobro-vision-meta">Marco Chavez · Clovis, California</p>
         </div>
