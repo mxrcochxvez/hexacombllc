@@ -1,0 +1,104 @@
+.hobro-bento.card-grid {
+  --glow-color: 245, 158, 11;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: none;
+  padding: 0;
+  position: relative;
+}
+
+.hobro-bento .magic-bento-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+  position: relative;
+  min-height: 0;
+  padding: 1.45rem 1.35rem 1.35rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  background: #111111;
+  overflow: hidden;
+  box-shadow: 0 18px 40px -28px rgba(17, 17, 17, 0.7);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  --glow-x: 50%;
+  --glow-y: 50%;
+  --glow-intensity: 0;
+  --glow-radius: 240px;
+}
+
+.hobro-bento .magic-bento-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 40px -24px rgba(17, 17, 17, 0.8);
+}
+
+.hobro-bento .magic-bento-card__title {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  color: #f4f1ea;
+  text-wrap: balance;
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 2.6vw, 2.45rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 0.92;
+}
+
+.hobro-bento .magic-bento-card__description {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  max-width: 38ch;
+  color: rgba(244, 241, 234, 0.74);
+  font-size: 1.02rem;
+  line-height: 1.5;
+}
+
+.hobro-bento .magic-bento-card--border-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  background: radial-gradient(
+    var(--glow-radius) circle at var(--glow-x) var(--glow-y),
+    rgba(var(--glow-color), calc(var(--glow-intensity) * 0.95)) 0%,
+    rgba(var(--glow-color), calc(var(--glow-intensity) * 0.45)) 28%,
+    transparent 62%
+  );
+  border-radius: inherit;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (min-width: 760px) {
+  .hobro-bento.card-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hobro-bento .magic-bento-card {
+    min-height: 17rem;
+    padding: 1.7rem 1.6rem 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hobro-bento .magic-bento-card,
+  .hobro-bento .magic-bento-card:hover {
+    transition: none;
+    transform: none;
+  }
+}
