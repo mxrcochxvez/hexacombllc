@@ -807,6 +807,25 @@
   padding: clamp(4.5rem, 10vw, 8rem) 0;
 }
 
+.hobro-vision-metal {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hobro-vision-metal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    oklch(16% 0.045 245 / 0.42) 0%,
+    oklch(16% 0.045 245 / 0.12) 46%,
+    oklch(16% 0.045 245 / 0.5) 100%
+  );
+}
+
 .hobro-vision .hobro-kicker {
   color: oklch(82% 0.07 195);
 }
@@ -825,6 +844,8 @@
 }
 
 .hobro-vision-grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 3rem;
