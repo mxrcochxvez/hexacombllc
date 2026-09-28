@@ -1,26 +1,33 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { clientCaseStudies, type CaseStudy } from "@/lib/cases";
+import AccordionGallery from "./AccordionGallery";
 import CaseStudyModal from "./CaseStudyModal";
 import CentralValleyMap from "./CentralValleyMap";
-import MorphSlider from "./MorphSlider";
 
 export default function PortfolioShowcase() {
   const [selectedCase, setSelectedCase] = useState<CaseStudy | null>(null);
   const [activeSlide, setActiveSlide] = useState(0);
 
-  const sliderItems = useMemo(
+  const galleryItems = useMemo(
     () =>
       clientCaseStudies.map((item) => ({
         image: item.imageSrc,
-        caption: `${item.title} · ${item.city}`,
-        id: item.id,
-        title: item.title,
-        city: item.city,
+        label: `${item.title} · ${item.city}`,
+        alt: `${item.title} website, ${item.city}`,
       })),
     []
   );
+
+  const onActiveChange = useCallback((index: number) => {
+    setActiveSlide(index);
+  }, []);
+
+  const onOpen = useCallback((index: number) => {
+    const item = clientCaseStudies[index];
+    if (item) setSelectedCase(item);
+  }, []);
 
   const currentCase = clientCaseStudies[activeSlide] ?? clientCaseStudies[0];
 
@@ -29,28 +36,30 @@ export default function PortfolioShowcase() {
       <section className="hobro-white hobro-cases">
         <div className="hobro-shell">
           <div className="hobro-cases-head">
-            <p>Live sites</p>
             <h2>Work in the valley</h2>
+            <p>Bring one forward, then open the project.</p>
           </div>
 
-          <div className="hobro-cases-slider-container">
-            <MorphSlider
-              items={sliderItems}
-              transition="shear"
-              intensity={0.55}
-              aberration={0.35}
-              drift={0.4}
-              autoplay
-              autoplayDelay={4.5}
+          <div className="hobro-cases-gallery">
+            <AccordionGallery
+              items={galleryItems}
+              defaultIndex={0}
+              height={440}
+              expandRatio={0.58}
               radius={16}
-              onIndexChange={setActiveSlide}
+              gap={12}
+              accentColor="#f4efe4"
+              overlayColor="#161513"
+              listLabel="Work in the valley"
+              onActiveChange={onActiveChange}
+              onOpen={onOpen}
             />
           </div>
 
           <div className="hobro-cases-details-bar">
             <div className="hobro-cases-details-meta">
               <span className="hobro-cases-details-tagline">
-                Active Project • {currentCase.city}, CA
+                {currentCase.city}, CA
               </span>
               <h3 className="hobro-cases-details-title">{currentCase.title}</h3>
               <p className="hobro-cases-details-desc">{currentCase.summary}</p>
@@ -67,7 +76,7 @@ export default function PortfolioShowcase() {
               className="hobro-cases-open-btn"
               onClick={() => setSelectedCase(currentCase)}
             >
-              <span>check out site</span>
+              <span>See this project</span>
               <svg
                 width="16"
                 height="16"
@@ -84,30 +93,10 @@ export default function PortfolioShowcase() {
             </button>
           </div>
 
-          <div className="hobro-cases-cards">
-            {clientCaseStudies.map((item, idx) => (
-              <button
-                key={item.id}
-                type="button"
-                className={`hobro-case-card ${activeSlide === idx ? "is-active" : ""}`}
-                onClick={() => setSelectedCase(item)}
-              >
-                <div className="hobro-case-card-header">
-                  <span className="hobro-case-card-city">{item.city}</span>
-                </div>
-                <h4 className="hobro-case-card-title">{item.title}</h4>
-                <p className="hobro-case-card-summary">{item.summary}</p>
-                <div className="hobro-case-card-footer">
-                  <span>{item.tags.join(" · ")}</span>
-                  <span>View Details ↗</span>
-                </div>
-              </button>
-            ))}
-          </div>
         </div>
       </section>
 
-      <CentralValleyMap cases={clientCaseStudies} onSelect={setSelectedCase} />
+      <CentralValleyMap />
 
       <CaseStudyModal
         caseStudy={selectedCase}
