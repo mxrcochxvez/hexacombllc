@@ -44,6 +44,21 @@
 .hobro-header {
   background: transparent;
   border: 0;
+  transition: background-color 0.35s ease, border-color 0.35s ease;
+}
+
+.hobro-header--scrolled {
+  background: rgba(12, 11, 10, 0.72);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px) saturate(1.25);
+  -webkit-backdrop-filter: blur(16px) saturate(1.25);
+}
+
+.hobro-header--scrolled .hobro-header-left,
+.hobro-header--scrolled .hobro-header-right,
+.hobro-header--scrolled .hobro-header-mobile {
+  mix-blend-mode: normal;
+  color: #fff;
 }
 
 .hobro-header-inner {
@@ -2459,6 +2474,10 @@ dialog.hobro-modal::backdrop {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hobro-header {
+    transition: none;
+  }
+
   .hobro-hero-video {
     display: none;
   }

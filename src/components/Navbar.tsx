@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import StaggeredMenu from "@/components/StaggeredMenu";
 
 const navLinks = [
@@ -14,8 +16,29 @@ const navLinks = [
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const [pastHero, setPastHero] = useState(false);
+
+  useEffect(() => {
+    const hero = document.querySelector(".scroll-expand, .hobro-page-hero");
+    if (!hero) {
+      setPastHero(false);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const above = entry.boundingClientRect.bottom <= 72;
+        setPastHero(!entry.isIntersecting && above);
+      },
+      { rootMargin: "-4.5rem 0px 0px 0px", threshold: 0 }
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, [pathname]);
+
   return (
-    <div className="hobro-header">
+    <div className={`hobro-header${pastHero ? " hobro-header--scrolled" : ""}`}>
       <div className="hobro-shell hobro-header-inner">
         <div className="hobro-header-left">
           <Link href="/" className="hobro-logo-link" aria-label="Hexacomb home">
