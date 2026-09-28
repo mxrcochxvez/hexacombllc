@@ -6,11 +6,10 @@ import { track, trackGA4 } from "@/lib/analytics";
 
 const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "0x4AAAAAADC6NwtGoO-9AuVg";
 
-const labelClass = "mb-1.5 block font-display text-sm font-semibold text-ink";
-const inputClass =
-  "w-full rounded-md border border-border bg-canvas px-3.5 py-2.5 text-ink placeholder:text-ink-muted/50 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 disabled:cursor-not-allowed disabled:opacity-60 aria-[invalid=true]:border-danger aria-[invalid=true]:focus:ring-danger/20 transition-colors";
-const errorClass = "mt-1 block font-display text-xs text-danger";
-const fieldWrap = "mb-4";
+const labelClass = "hobro-label";
+const inputClass = "hobro-input";
+const errorClass = "hobro-field-error";
+const fieldWrap = "hobro-field";
 
 interface FieldErrors {
   name?: string;
@@ -187,14 +186,13 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
     return (
       <div
         ref={statusRef}
-        className="rounded-md border border-success/30 bg-success-soft px-5 py-7"
+        className="hobro-form-success"
         role="status"
         aria-live="polite"
         tabIndex={-1}
       >
-        <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-full bg-success/10">
+        <div className="hobro-form-success-mark" aria-hidden="true">
           <svg
-            className="text-success"
             width="17"
             height="17"
             viewBox="0 0 17 17"
@@ -210,10 +208,8 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
             />
           </svg>
         </div>
-        <h3 className="font-display text-lg font-semibold text-success">
-          Message received
-        </h3>
-        <p className="mt-2 text-sm leading-relaxed text-ink">
+        <h3>Message received</h3>
+        <p>
           We&rsquo;ll follow up by the end of the next business day. No sales pitch, just
           honest next steps.
         </p>
@@ -224,12 +220,11 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
   const isSubmitDisabled = status === "sending" || !turnstileToken;
 
   return (
-    <form onSubmit={handleSubmit} aria-label="Contact form" noValidate>
-      {/* Name + Email */}
-      <div className="sm:grid sm:grid-cols-2 sm:gap-4">
+    <form className="hobro-form" onSubmit={handleSubmit} aria-label="Contact form" noValidate>
+      <div className="hobro-form-row">
         <div className={fieldWrap}>
           <label htmlFor="name" className={labelClass}>
-            Full name <span className="text-accent" aria-hidden="true">*</span>
+            Full name <span className="hobro-required" aria-hidden="true">*</span>
             <span className="sr-only">(required)</span>
           </label>
           <input
@@ -255,7 +250,7 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
         </div>
         <div className={fieldWrap}>
           <label htmlFor="email" className={labelClass}>
-            Email <span className="text-accent" aria-hidden="true">*</span>
+            Email <span className="hobro-required" aria-hidden="true">*</span>
             <span className="sr-only">(required)</span>
           </label>
           <input
@@ -281,8 +276,7 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
         </div>
       </div>
 
-      {/* Business + Phone */}
-      <div className="sm:grid sm:grid-cols-2 sm:gap-4">
+      <div className="hobro-form-row">
         <div className={fieldWrap}>
           <label htmlFor="business" className={labelClass}>
             Business name
@@ -325,8 +319,7 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
       {/* Website */}
       <div className={fieldWrap}>
         <label htmlFor="website" className={labelClass}>
-          Current website{" "}
-          <span className="font-normal text-ink-muted">(optional)</span>
+          Current website <span className="hobro-optional">(optional)</span>
         </label>
         <input
           type="url"
@@ -351,8 +344,7 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
       {/* Message */}
       <div className={fieldWrap}>
         <label htmlFor="message" className={labelClass}>
-          What can we help with?{" "}
-          <span className="font-normal text-ink-muted">(optional)</span>
+          What can we help with? <span className="hobro-optional">(optional)</span>
         </label>
         <textarea
           id="message"
@@ -363,11 +355,11 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
           placeholder="Describe what you're trying to get done…"
           disabled={status === "sending"}
           maxLength={1000}
-          className="w-full resize-none rounded-md border border-border bg-canvas px-3.5 py-2.5 text-ink placeholder:text-ink-muted/50 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 disabled:cursor-not-allowed disabled:opacity-60 transition-colors"
+          className={inputClass}
         />
       </div>
 
-      <div className="mb-5">
+      <div className="hobro-turnstile">
         <Turnstile
           siteKey={SITE_KEY}
           onSuccess={setTurnstileToken}
@@ -377,12 +369,14 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
       </div>
 
       {errorMsg && (
-        <p
-          className="mb-4 rounded-md border border-danger/20 bg-danger-soft px-3.5 py-2.5 font-display text-sm text-danger"
-          role="alert"
-          aria-live="assertive"
-        >
+        <p className="hobro-form-alert" role="alert" aria-live="assertive">
           {errorMsg}
+        </p>
+      )}
+
+      {!turnstileToken && status !== "sending" && (
+        <p className="hobro-form-hint" id="send-hint">
+          The security check has to finish before this can send.
         </p>
       )}
 
@@ -390,12 +384,13 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
         type="submit"
         disabled={isSubmitDisabled}
         aria-disabled={isSubmitDisabled}
-        className="group inline-flex w-full min-h-12 items-center justify-center gap-2 rounded-md bg-accent px-4 py-3 font-display text-base font-semibold text-canvas transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
+        aria-describedby={!turnstileToken ? "send-hint" : undefined}
+        className="hobro-send"
       >
         {status === "sending" ? (
           <>
             <svg
-              className="h-4 w-4 animate-spin"
+              className="hobro-send-spin"
               viewBox="0 0 24 24"
               fill="none"
               aria-hidden="true"
@@ -420,7 +415,7 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
           <>
             Send message
             <svg
-              className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+              className="hobro-send-arrow"
               viewBox="0 0 16 16"
               fill="none"
               aria-hidden="true"
