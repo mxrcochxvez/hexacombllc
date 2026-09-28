@@ -307,7 +307,7 @@ class MorphEngine {
     this.gl = this.renderer.gl;
     this.gl.clearColor(0.05, 0.05, 0.06, 1);
 
-    this.canvas = this.gl.canvas;
+    this.canvas = this.gl.canvas as HTMLCanvasElement;
     this.canvas.className = "morph-slider-canvas";
     container.appendChild(this.canvas);
 

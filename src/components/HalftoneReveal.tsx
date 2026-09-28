@@ -249,11 +249,12 @@ export const HalftoneReveal = ({
     const gl = renderer.gl;
     if (!gl) return;
 
+    const canvas = gl.canvas as HTMLCanvasElement;
     gl.clearColor(0, 0, 0, 1);
-    gl.canvas.style.width = "100%";
-    gl.canvas.style.height = "100%";
-    gl.canvas.style.display = "block";
-    container.appendChild(gl.canvas);
+    canvas.style.width = "100%";
+    canvas.style.height = "100%";
+    canvas.style.display = "block";
+    container.appendChild(canvas);
 
     const texture = new Texture(gl, { generateMipmaps: false });
 
@@ -350,7 +351,7 @@ export const HalftoneReveal = ({
       container.removeEventListener("pointerleave", onLeave as EventListener);
       const ext = gl.getExtension("WEBGL_lose_context");
       if (ext) ext.loseContext();
-      if (gl.canvas.parentNode) gl.canvas.parentNode.removeChild(gl.canvas);
+      if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
       rendererRef.current = null;
       uniformsRef.current = null;
     };

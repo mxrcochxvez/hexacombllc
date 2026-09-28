@@ -10,6 +10,7 @@ declare module "ogl" {
     constructor(gl: WebGLRenderingContext, options: any);
     setBlendFunc(src: number, dst: number): void;
     uniforms: Record<string, { value: any }>;
+    program: WebGLProgram | null;
   }
   export class Geometry {
     constructor(gl: WebGLRenderingContext, attributes: Record<string, any>);
@@ -24,6 +25,7 @@ declare module "ogl" {
   export class Texture {
     constructor(gl: WebGLRenderingContext, options?: any);
     image: HTMLImageElement | null;
+    texture: WebGLTexture | null;
   }
   export class RenderTarget {
     constructor(gl: WebGLRenderingContext, options?: any);
