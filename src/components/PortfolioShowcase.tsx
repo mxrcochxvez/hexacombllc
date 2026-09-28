@@ -4,12 +4,11 @@ import { useState, useMemo } from "react";
 import { clientCaseStudies, type CaseStudy } from "@/lib/cases";
 import CaseStudyModal from "./CaseStudyModal";
 import CentralValleyMap from "./CentralValleyMap";
-import MorphSlider, { type MorphTransition } from "./MorphSlider";
+import MorphSlider from "./MorphSlider";
 
 export default function PortfolioShowcase() {
   const [selectedCase, setSelectedCase] = useState<CaseStudy | null>(null);
   const [activeSlide, setActiveSlide] = useState(0);
-  const [transition, setTransition] = useState<MorphTransition>("melt");
 
   const sliderItems = useMemo(
     () =>
@@ -31,31 +30,13 @@ export default function PortfolioShowcase() {
         <div className="hobro-shell">
           <div className="hobro-cases-head">
             <p>Live sites</p>
-            <div className="hobro-cases-title-row">
-              <h2>Work in the valley</h2>
-              <div
-                className="hobro-morph-modes"
-                role="group"
-                aria-label="Slider morph effect"
-              >
-                {(["melt", "ripple", "shear", "swirl"] as const).map((mode) => (
-                  <button
-                    key={mode}
-                    type="button"
-                    className={`hobro-morph-mode-btn ${transition === mode ? "is-active" : ""}`}
-                    onClick={() => setTransition(mode)}
-                  >
-                    {mode}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <h2>Work in the valley</h2>
           </div>
 
           <div className="hobro-cases-slider-container">
             <MorphSlider
               items={sliderItems}
-              transition={transition}
+              transition="shear"
               intensity={0.55}
               aberration={0.35}
               drift={0.4}
@@ -86,7 +67,7 @@ export default function PortfolioShowcase() {
               className="hobro-cases-open-btn"
               onClick={() => setSelectedCase(currentCase)}
             >
-              <span>Explore Case Study</span>
+              <span>check out site</span>
               <svg
                 width="16"
                 height="16"
@@ -112,7 +93,6 @@ export default function PortfolioShowcase() {
                 onClick={() => setSelectedCase(item)}
               >
                 <div className="hobro-case-card-header">
-                  <span className="hobro-case-card-num">0{idx + 1}</span>
                   <span className="hobro-case-card-city">{item.city}</span>
                 </div>
                 <h4 className="hobro-case-card-title">{item.title}</h4>
