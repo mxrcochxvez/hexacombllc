@@ -1150,12 +1150,44 @@ textarea.hobro-input {
 }
 
 .hobro-footer {
-  background:
-    radial-gradient(ellipse 60% 50% at 0% 100%, oklch(28% 0.06 245 / 0.4), transparent 55%),
-    var(--c-deep);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--c-deep);
   color: #fff;
   padding: 3rem 0 2rem;
   border-top: 0;
+}
+
+.hobro-footer-waves {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hobro-footer-waves .waves::before {
+  content: none;
+}
+
+.hobro-footer-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, oklch(10% 0.03 250 / 0.78) 0%, oklch(10% 0.04 230 / 0.34) 46%, oklch(8% 0.04 220 / 0.62) 100%);
+}
+
+.hobro-footer-content {
+  position: relative;
+  z-index: 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hobro-footer-waves {
+    display: none;
+  }
 }
 
 .hobro-footer-wordmark {

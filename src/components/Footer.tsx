@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Waves from "@/components/Waves";
 
 const exploreLinks = [
   { href: "/pricing", label: "Plans & pricing" },
@@ -35,7 +36,23 @@ export default function Footer() {
 
   return (
     <footer className="hobro-footer">
-      <div className="hobro-shell">
+      <div className="hobro-footer-waves" aria-hidden="true">
+        <Waves
+          lineColor="rgba(228, 194, 122, 0.72)"
+          backgroundColor="transparent"
+          waveSpeedX={0.02}
+          waveSpeedY={0.01}
+          waveAmpX={40}
+          waveAmpY={20}
+          friction={0.9}
+          tension={0.01}
+          maxCursorMove={120}
+          xGap={12}
+          yGap={36}
+        />
+      </div>
+      <div className="hobro-footer-scrim" aria-hidden="true" />
+      <div className="hobro-shell hobro-footer-content">
         <div className="hobro-footer-wordmark">HEXACOMB</div>
         <div className="hobro-footer-grid">
           <div>
