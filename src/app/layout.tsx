@@ -36,6 +36,7 @@ const archivo = Archivo_Narrow({
 });
 
 const siteUrl = "https://hexacombllc.com";
+const sitePhone = "+1-559-492-7402";
 const siteDescription =
   "Ongoing website management, local SEO, analytics, and conversion copy for Fresno and Clovis small businesses. One local partner focused on making your website work harder every month.";
 
@@ -70,9 +71,11 @@ const structuredData = {
         "Human rights organization websites",
       ],
       email: "marco@hexacombllc.com",
+      telephone: sitePhone,
       contactPoint: {
         "@type": "ContactPoint",
         email: "marco@hexacombllc.com",
+        telephone: sitePhone,
         contactType: "sales",
         areaServed: ["US-CA"],
         availableLanguage: ["English"],
@@ -84,6 +87,7 @@ const structuredData = {
       name: "Hexacomb LLC",
       url: siteUrl,
       email: "marco@hexacombllc.com",
+      telephone: sitePhone,
       image: `${siteUrl}/hexacomb_logo_wordmark.png`,
       description:
         "Local website growth partner serving Fresno, Clovis, and Central Valley businesses.",
