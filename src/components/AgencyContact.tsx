@@ -22,6 +22,8 @@ export default function AgencyContact({
           </p>
           <p>
             <a href="mailto:marco@hexacombllc.com">marco@hexacombllc.com</a>
+            <br />
+            <a href="tel:+15594927402">(559) 492-7402</a>
           </p>
         </div>
         <SpotlightCard
