@@ -58,11 +58,11 @@ export default function Footer() {
           <div>
             <span className="hobro-footer-title">Studio</span>
             <p>
-              Clovis &amp; Fresno, California
+              Clovis & Fresno, California
               <br />
               {timeString}
             </p>
-            <p>Your website should be working for you when you can&apos;t.</p>
+            <p>Your website should be working for you when you can't.</p>
           </div>
           <div>
             <span className="hobro-footer-title">Explore</span>
@@ -77,6 +77,8 @@ export default function Footer() {
           <div>
             <span className="hobro-footer-title">Contact</span>
             <a href="mailto:marco@hexacombllc.com">marco@hexacombllc.com</a>
+            <br />
+            <a href="tel:+15594927402">(559) 492-7402</a>
             <p>Reply from Marco, usually within a day.</p>
           </div>
         </div>
