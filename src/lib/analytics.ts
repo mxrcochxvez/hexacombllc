@@ -46,14 +46,15 @@ export function track(
 
 /**
  * Fire a GA4 event using window.gtag if available.
- * Only sends if the user has accepted cookies.
+ * Not consent-gated: gtag already loads for every visitor (see layout.tsx),
+ * so GA4 events follow the same rules as page_view. The first-party
+ * /api/track beacon in track() above stays accept-only.
  */
 export function trackGA4(
   event: string,
   params?: Record<string, unknown>
 ): void {
   if (typeof window === "undefined") return;
-  if (getConsent() !== "accepted") return;
 
   try {
     if (typeof window.gtag === "function") {
