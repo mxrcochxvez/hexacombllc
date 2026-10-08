@@ -168,9 +168,9 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
         throw new Error(data.error || "Something went wrong. Please try again.");
       }
 
-      setStatus("success");
       track("contact_form_success");
       trackGA4("generate_lead");
+      setStatus("success");
     } catch (err) {
       setStatus("error");
       setErrorMsg(

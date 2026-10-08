@@ -1,13 +1,16 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { getConsent, setConsent } from "@/lib/consent";
+import { applyGtagConsent, getConsent, setConsent } from "@/lib/consent";
 
 export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
   const bannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const stored = getConsent();
+    if (stored) applyGtagConsent(stored);
+
     const check = () => setVisible(getConsent() === null);
     check();
 
