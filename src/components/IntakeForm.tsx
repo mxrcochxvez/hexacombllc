@@ -221,9 +221,9 @@ export function IntakeForm() {
         );
       }
 
-      setStatus("success");
       track("intake_form_success");
       trackGA4("generate_lead");
+      setStatus("success");
     } catch (err) {
       setStatus("error");
       setErrorMsg(

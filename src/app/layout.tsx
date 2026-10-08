@@ -240,6 +240,29 @@ export default function RootLayout({
     >
       <body>
         {/*
+          Native blocking script (not next/script): Consent Mode default must
+          execute during HTML parse, before GA's gtag('js')/'config'.
+          Key matches src/lib/consent.ts.
+        */}
+        <script
+          id="ga-consent-default"
+          dangerouslySetInnerHTML={{
+            __html: `
+window.dataLayer = window.dataLayer || [];
+function gtag(){window.dataLayer.push(arguments);}
+window.gtag = window.gtag || gtag;
+var granted = false;
+try { granted = localStorage.getItem("cookie-consent") === "accepted"; } catch (e) {}
+var s = granted ? "granted" : "denied";
+gtag("consent", "default", {
+  analytics_storage: s,
+  ad_storage: s,
+  ad_user_data: s,
+  ad_personalization: s
+});`,
+          }}
+        />
+        {/*
           THESIS: Continuous website ownership keeps the search→site→call flow open—not a static brochure site.
           OWN-WORLD: Irrigation Canal Blueprint — sun-bleached concrete canvas, canal-teal surfaces, blueprint navy ink, citrus sluice-gate CTAs, condensed Geologica + Atkinson.
           STORY: Visitor feels neglect as a dry field, believes Hexacomb keeps care flowing, starts a conversation.

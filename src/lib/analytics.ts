@@ -45,20 +45,24 @@ export function track(
 }
 
 /**
- * Fire a GA4 event using window.gtag if available.
- * Only sends if the user has accepted cookies.
+ * Fire a GA4 event using window.gtag (queued on dataLayer if gtag.js is still
+ * loading). Consent Mode v2 decides cookie vs cookieless — do not gate on the
+ * banner, or generate_lead never reaches GA for visitors who ignore/decline.
  */
 export function trackGA4(
   event: string,
   params?: Record<string, unknown>
 ): void {
   if (typeof window === "undefined") return;
-  if (getConsent() !== "accepted") return;
 
   try {
+    const payload = params ?? {};
     if (typeof window.gtag === "function") {
-      window.gtag("event", event, params ?? {});
+      window.gtag("event", event, payload);
+      return;
     }
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(["event", event, payload]);
   } catch {
     // silently fail — analytics should never break the UX
   }
