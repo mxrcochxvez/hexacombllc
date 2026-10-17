@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { track, trackGA4 } from "@/lib/analytics";
+import { getUtm } from "@/lib/utmClient";
 
 const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "0x4AAAAAADC6NwtGoO-9AuVg";
 
@@ -145,7 +146,7 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
 
     setStatus("sending");
     setErrorMsg("");
-    track("contact_form_submit", { name, email, hasWebsite: !!website });
+    track("contact_form_submit", { hasWebsite: !!website });
 
     try {
       const res = await fetch("/api/contact", {
@@ -159,6 +160,7 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
           website,
           message,
           turnstileToken,
+          attribution: getUtm(),
         }),
       });
 

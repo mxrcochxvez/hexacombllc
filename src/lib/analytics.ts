@@ -1,6 +1,7 @@
 "use client";
 
 import { getConsent } from "@/lib/consent";
+import { getUtm } from "@/lib/utmClient";
 
 /**
  * Lightweight client-side analytics helper.
@@ -20,6 +21,7 @@ export function track(
     const payload = {
       event,
       properties: properties ?? {},
+      attribution: getUtm(),
       url: window.location.href,
       referrer: document.referrer || undefined,
       timestamp: Date.now(),

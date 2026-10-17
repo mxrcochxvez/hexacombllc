@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Suspense } from "react";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Archivo_Narrow, Atkinson_Hyperlegible, Geologica, Instrument_Serif } from "next/font/google";
 import "./brand.css";
@@ -8,6 +9,7 @@ import "../ui/space.theme.css";
 import "../ui/kit.css";
 import CloudflareAnalytics from "@/components/CloudflareAnalytics";
 import TrackClicks from "@/components/TrackClicks";
+import UtmCapture from "@/components/UtmCapture";
 import SmoothScroll from "@/components/SmoothScroll";
 
 const geologica = Geologica({
@@ -253,6 +255,9 @@ export default function RootLayout({
         />
         <CloudflareAnalytics token={process.env.CF_ANALYTICS_TOKEN} />
         <TrackClicks />
+        <Suspense fallback={null}>
+          <UtmCapture />
+        </Suspense>
         <SmoothScroll>{children}</SmoothScroll>
       </body>
       <GoogleAnalytics gaId="G-3JYGDR8ZVE" />
