@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createLead } from "@/lib/convex";
+import { sanitizeUtm } from "@/lib/utm";
 
 export const dynamic = "force-dynamic";
+
+function escapeHtml(value: string): string {
+  return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
 
 let _resend: import("resend").Resend | null = null;
 
@@ -21,6 +26,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as Record<string, unknown>;
     const { name, email, phone, business, website, message, turnstileToken } = body;
+    const attribution = sanitizeUtm(body.attribution);
 
     if (!name || typeof name !== "string" || !name.trim()) {
       return NextResponse.json(
@@ -82,6 +88,7 @@ export async function POST(request: NextRequest) {
       website: typeof website === "string" ? website : undefined,
       message: typeof message === "string" ? message : undefined,
       source: "contact",
+      attribution,
     });
 
     const resend = await getResend();
@@ -100,6 +107,7 @@ export async function POST(request: NextRequest) {
 <tr><td style="padding:8px;font-weight:bold">Business</td><td style="padding:8px">${String(business || "N/A").trim()}</td></tr>
 <tr><td style="padding:8px;font-weight:bold">Website</td><td style="padding:8px">${String(website || "N/A").trim()}</td></tr>
 ${typeof message === "string" && message.trim() ? `<tr><td style="padding:8px;font-weight:bold;vertical-align:top">Message</td><td style="padding:8px;white-space:pre-wrap">${message.trim()}</td></tr>` : ""}
+${attribution ? Object.entries(attribution).map(([key, value]) => `<tr><td style="padding:8px;font-weight:bold">UTM ${key}</td><td style="padding:8px">${escapeHtml(value)}</td></tr>`).join("") : ""}
 </table>`,
       replyTo: email.trim(),
     });

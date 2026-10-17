@@ -4,7 +4,7 @@ import {
   ensureClientForLead,
   removeClientForLead,
 } from "./lib/ensureClient";
-import { leadDocValidator, leadSource, leadStatus } from "./schema";
+import { leadDocValidator, leadSource, leadStatus, utmAttribution } from "./schema";
 import {
   canTransitionLeadStatus,
   LEAD_STATUS_LABELS,
@@ -33,6 +33,7 @@ export const create = mutation({
     business: v.optional(v.string()),
     website: v.optional(v.string()),
     source: leadSource,
+    attribution: v.optional(utmAttribution),
     industry: v.optional(v.string()),
     hasExistingWebsite: v.optional(v.string()),
     goal: v.optional(v.string()),
@@ -57,6 +58,7 @@ export const create = mutation({
       business: optionalTrimmed(args.business),
       website: optionalTrimmed(args.website),
       source: args.source,
+      attribution: args.attribution,
       temperature,
       status: "fresh",
       industry: optionalTrimmed(args.industry),
