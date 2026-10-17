@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import type { UtmAttribution } from "@/lib/utm";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
@@ -22,6 +23,7 @@ type LeadDetail = {
   status: LeadStatus;
   temperature: "warm" | "cool";
   source: "intake" | "contact";
+  attribution?: UtmAttribution;
   industry?: string;
   goal?: string;
   message?: string;
@@ -269,8 +271,28 @@ export function DashboardLeadDetail({
             <dd>{lead.website || "—"}</dd>
           </div>
           <div>
-            <dt>Source</dt>
+            <dt>Form</dt>
             <dd>{lead.source}</dd>
+          </div>
+          <div>
+            <dt>UTM source</dt>
+            <dd>{lead.attribution?.source || "—"}</dd>
+          </div>
+          <div>
+            <dt>UTM medium</dt>
+            <dd>{lead.attribution?.medium || "—"}</dd>
+          </div>
+          <div>
+            <dt>UTM campaign</dt>
+            <dd>{lead.attribution?.campaign || "—"}</dd>
+          </div>
+          <div>
+            <dt>UTM content</dt>
+            <dd>{lead.attribution?.content || "—"}</dd>
+          </div>
+          <div>
+            <dt>UTM term</dt>
+            <dd>{lead.attribution?.term || "—"}</dd>
           </div>
           <div>
             <dt>Temperature</dt>

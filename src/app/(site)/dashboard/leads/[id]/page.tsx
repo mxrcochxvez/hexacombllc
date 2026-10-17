@@ -51,6 +51,7 @@ export default async function DashboardLeadPage({ params }: PageProps) {
           status: lead.status as LeadStatus,
           temperature: lead.temperature,
           source: lead.source,
+          attribution: lead.attribution,
           industry: lead.industry,
           goal: lead.goal,
           message: lead.message,

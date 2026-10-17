@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import type { UtmAttribution } from "@/lib/utm";
 import {
   LEAD_STATUS_LABELS,
   type LeadStatus,
@@ -14,6 +15,7 @@ export type DashboardLeadRow = {
   status: LeadStatus;
   temperature: "warm" | "cool";
   source: "intake" | "contact";
+  attribution?: UtmAttribution;
   business?: string;
   createdAt: number;
 };
@@ -45,7 +47,8 @@ export function DashboardLeadList({ leads }: { leads: DashboardLeadRow[] }) {
                 <th>Email</th>
                 <th>Status</th>
                 <th>Temp</th>
-                <th>Source</th>
+                <th>Form</th>
+                <th>Marketing source</th>
                 <th>Created</th>
               </tr>
             </thead>
@@ -66,6 +69,13 @@ export function DashboardLeadList({ leads }: { leads: DashboardLeadRow[] }) {
                   <td>{LEAD_STATUS_LABELS[lead.status]}</td>
                   <td>{lead.temperature}</td>
                   <td>{lead.source}</td>
+                  <td>
+                    {lead.attribution?.source || "—"}
+                    {lead.attribution?.medium ? ` / ${lead.attribution.medium}` : ""}
+                    {lead.attribution?.campaign ? (
+                      <span className="dash-muted block text-sm">{lead.attribution.campaign}</span>
+                    ) : null}
+                  </td>
                   <td>{formatDate(lead.createdAt)}</td>
                 </tr>
               ))}
