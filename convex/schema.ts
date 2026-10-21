@@ -22,6 +22,14 @@ export const leadSource = v.union(v.literal("intake"), v.literal("contact"));
 
 export const leadTemperature = v.union(v.literal("warm"), v.literal("cool"));
 
+export const utmAttribution = v.object({
+  source: v.optional(v.string()),
+  medium: v.optional(v.string()),
+  campaign: v.optional(v.string()),
+  content: v.optional(v.string()),
+  term: v.optional(v.string()),
+});
+
 export const contractStatus = v.union(
   v.literal(CONTRACT_STATUSES[0]),
   v.literal(CONTRACT_STATUSES[1]),
@@ -96,6 +104,7 @@ export const leadDocValidator = v.object({
   business: v.optional(v.string()),
   website: v.optional(v.string()),
   source: leadSource,
+  attribution: v.optional(utmAttribution),
   temperature: leadTemperature,
   status: leadStatus,
   industry: v.optional(v.string()),
@@ -222,6 +231,7 @@ export default defineSchema({
     business: v.optional(v.string()),
     website: v.optional(v.string()),
     source: leadSource,
+    attribution: v.optional(utmAttribution),
     temperature: leadTemperature,
     status: leadStatus,
     industry: v.optional(v.string()),

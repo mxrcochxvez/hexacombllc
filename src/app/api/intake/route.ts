@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createLead } from "@/lib/convex";
+import { sanitizeUtm } from "@/lib/utm";
 
 export const dynamic = "force-dynamic";
 
@@ -43,6 +44,7 @@ function buildEmailHtml(body: Record<string, unknown>): string {
   } = body;
 
   const featuresArr = Array.isArray(features) ? (features as string[]) : [];
+  const attribution = sanitizeUtm(body.attribution);
 
   const row = (label: string, value: string) =>
     value
@@ -87,6 +89,15 @@ function buildEmailHtml(body: Record<string, unknown>): string {
     }
   </table>
 
+  ${attribution ? `<h3 style="color:#555;margin:24px 0 12px">Campaign attribution</h3>
+  <table style="border-collapse:collapse;width:100%">
+    ${row("UTM source", attribution.source ?? "")}
+    ${row("UTM medium", attribution.medium ?? "")}
+    ${row("UTM campaign", attribution.campaign ?? "")}
+    ${row("UTM content", attribution.content ?? "")}
+    ${row("UTM term", attribution.term ?? "")}
+  </table>` : ""}
+
   <h3 style="color:#555;margin:24px 0 12px">Timeline</h3>
   <table style="border-collapse:collapse;width:100%">
     ${row("Timeline", String(timeline || "N/A"))}
@@ -110,6 +121,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as Record<string, unknown>;
     const { name, email, phone, turnstileToken } = body;
+    const attribution = sanitizeUtm(body.attribution);
 
     // ── Validate required fields ────────────────────────────────
     if (!name || typeof name !== "string" || !name.trim()) {
@@ -185,6 +197,7 @@ export async function POST(request: NextRequest) {
       business: typeof body.business === "string" ? body.business : undefined,
       website: typeof body.website === "string" ? body.website : undefined,
       source: "intake",
+      attribution,
       industry: typeof body.industry === "string" ? body.industry : undefined,
       hasExistingWebsite:
         typeof body.hasExistingWebsite === "string"

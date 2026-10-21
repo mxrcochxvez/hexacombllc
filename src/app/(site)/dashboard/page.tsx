@@ -40,6 +40,7 @@ export default async function DashboardPage() {
           status: lead.status as LeadStatus,
           temperature: lead.temperature,
           source: lead.source,
+          attribution: lead.attribution,
           business: lead.business,
           createdAt: lead.createdAt,
         }))}

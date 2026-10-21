@@ -2,6 +2,7 @@ import { ConvexHttpClient } from "convex/browser";
 import { api } from "../../convex/_generated/api";
 import type { Doc, Id } from "../../convex/_generated/dataModel";
 import type { ClientPhase, LeadStatus } from "../../convex/statuses";
+import type { UtmAttribution } from "@/lib/utm";
 
 export type { Doc, Id } from "../../convex/_generated/dataModel";
 export type {
@@ -17,6 +18,7 @@ export type LeadCreateInput = {
   business?: string;
   website?: string;
   source: "intake" | "contact";
+  attribution?: UtmAttribution;
   industry?: string;
   hasExistingWebsite?: string;
   goal?: string;

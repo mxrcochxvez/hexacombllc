@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef } from "react";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { track, trackGA4 } from "@/lib/analytics";
+import { getUtm } from "@/lib/utmClient";
 
 const SITE_KEY =
   process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "0x4AAAAAADC6NwtGoO-9AuVg";
@@ -210,6 +211,7 @@ export function IntakeForm() {
           timeline: formData.get("timeline") ?? "",
           notes: formData.get("notes") ?? "",
           turnstileToken,
+          attribution: getUtm(),
         }),
       });
 
