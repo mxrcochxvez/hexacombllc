@@ -1,3 +1,4 @@
+import { seasonalCopy } from "@/lib/seasonal-theme";
 import type { Metadata } from "next";
 import { IntakeForm } from "@/components/IntakeForm";
 
@@ -20,7 +21,7 @@ export default function IntakePage() {
         <div className="hobro-shell hobro-intake-grid">
           <div className="hobro-intake-copy">
             <p className="hobro-kicker">Intake</p>
-            <h1 className="hobro-page-title">Put the website on our desk.</h1>
+            <h1 className="hobro-page-title">{seasonalCopy("Put the website on our desk.", "Tell us what you’re brewing.")}</h1>
             <p className="hobro-page-lead">
               Give us the business context once. We&rsquo;ll use it to shape the
               site, the search strategy, and the work ahead.

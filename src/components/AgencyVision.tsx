@@ -1,9 +1,10 @@
+import { isHalloween, seasonalCopy } from "@/lib/seasonal-theme";
 import MoltenMetal from "@/components/MoltenMetal";
 
 export default function AgencyVision() {
   return (
     <section id="agency" className="hobro-vision">
-      <div className="hobro-vision-metal" aria-hidden="true">
+      {!isHalloween && <div className="hobro-vision-metal" aria-hidden="true">
         <MoltenMetal
           color1="#856200"
           color2="#f2d551"
@@ -24,11 +25,11 @@ export default function AgencyVision() {
           mouseStrength={0.3}
           opacity={1}
         />
-      </div>
+      </div>}
       <div className="hobro-shell hobro-vision-grid">
         <div>
           <p className="hobro-kicker">The point</p>
-          <h2>Same person. Start to finish.</h2>
+          <h2>{seasonalCopy("Same person. Start to finish.", "No disappearing acts.")}</h2>
         </div>
         <div>
           <p>

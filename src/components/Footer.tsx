@@ -1,5 +1,6 @@
 "use client";
 
+import { isHalloween, seasonalCopy } from "@/lib/seasonal-theme";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Waves from "@/components/Waves";
@@ -36,7 +37,7 @@ export default function Footer() {
 
   return (
     <footer className="hobro-footer">
-      <div className="hobro-footer-waves" aria-hidden="true">
+      {!isHalloween && <div className="hobro-footer-waves" aria-hidden="true">
         <Waves
           lineColor="rgba(228, 194, 122, 0.72)"
           backgroundColor="transparent"
@@ -50,19 +51,19 @@ export default function Footer() {
           xGap={12}
           yGap={36}
         />
-      </div>
+      </div>}
       <div className="hobro-footer-scrim" aria-hidden="true" />
       <div className="hobro-shell hobro-footer-content">
         <div className="hobro-footer-wordmark">HEXACOMB</div>
         <div className="hobro-footer-grid">
           <div>
-            <span className="hobro-footer-title">Studio</span>
+            <span className="hobro-footer-title">Agency</span>
             <p>
               Clovis & Fresno, California
               <br />
               {timeString}
             </p>
-            <p>Your website should be working for you when you can't.</p>
+            <p>Your website should be working for you when you can&apos;t.</p>
           </div>
           <div>
             <span className="hobro-footer-title">Explore</span>
@@ -84,9 +85,9 @@ export default function Footer() {
         </div>
         <div className="hobro-footer-bottom">
           <span>© {year} Hexacomb LLC</span>
-          <span>Built in the Central Valley</span>
+          <span>{seasonalCopy("Built in the Central Valley", "Made in Clovis. Dressed for Halloween.")}</span>
           <span>
-            <Link href="/dashboard">Studio portal</Link>
+            <Link href="/dashboard">Agency portal</Link>
           </span>
         </div>
       </div>

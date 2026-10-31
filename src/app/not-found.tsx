@@ -1,3 +1,4 @@
+import { isHalloween, SITE_THEME, seasonalCopy } from "@/lib/seasonal-theme";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <html lang="en">
+    <html lang="en" data-season={SITE_THEME}>
       <body>
         <main
           role="main"
@@ -24,21 +25,21 @@ export default function NotFound() {
             padding: "2rem",
             fontFamily: "DM Sans, sans-serif",
             textAlign: "center",
-            background: "#faf8f5",
-            color: "#1a1a1a",
+            background: isHalloween ? "#19131f" : "#faf8f5",
+            color: isHalloween ? "#f7e9ce" : "#1a1a1a",
           }}
         >
           <h1
             style={{
               fontSize: "clamp(3rem, 8vw, 8rem)",
               margin: 0,
-              color: "#92400e",
+              color: isHalloween ? "#f29a52" : "#92400e",
             }}
           >
             404
           </h1>
           <p style={{ fontSize: "1.25rem", marginTop: "1rem" }}>
-            This page doesn&rsquo;t exist.
+            {seasonalCopy("This page doesn’t exist.", "This page has vanished into the night.")}
           </p>
           <Link
             href="/"

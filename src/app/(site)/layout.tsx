@@ -2,6 +2,8 @@ import "../marketing-interactions.css";
 import "../site-chrome.css";
 import Navbar from "@/components/Navbar";
 import CookieBanner from "@/components/CookieBanner";
+import { isHalloween } from "@/lib/seasonal-theme";
+import SeasonalAtmosphere from "@/components/SeasonalAtmosphere";
 import Footer from "@/components/Footer";
 
 export default function SiteLayout({
@@ -18,6 +20,7 @@ export default function SiteLayout({
         <Navbar />
       </header>
       <div>{children}</div>
+      {isHalloween && <SeasonalAtmosphere />}
       <CookieBanner />
       <Footer />
     </div>

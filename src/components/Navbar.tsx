@@ -1,5 +1,6 @@
 "use client";
 
+import { isHalloween } from "@/lib/seasonal-theme";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -20,10 +21,10 @@ export default function Navbar() {
   const [pastHero, setPastHero] = useState(false);
 
   useEffect(() => {
-    const hero = document.querySelector(".scroll-expand, .hobro-page-hero");
+    const hero = document.querySelector(".scroll-expand, .hobro-page-hero, .halloween-hero");
     if (!hero || typeof IntersectionObserver === "undefined") {
-      setPastHero(false);
-      return;
+      const frame = requestAnimationFrame(() => setPastHero(false));
+      return () => cancelAnimationFrame(frame);
     }
 
     let observer: IntersectionObserver;
@@ -53,6 +54,7 @@ export default function Navbar() {
                   points="12,2 21.5,7.5 21.5,18.5 12,24 2.5,18.5 2.5,7.5"
                   strokeWidth="2"
                 />
+                {isHalloween && <path className="halloween-logo-face" d="M6 10l4 2H6zm12 0v2h-4zM7 16l3 1 2-1 2 1 3-1-2 4H9z" />}
               </svg>
             </span>
             <span className="hobro-logo-text">HEXACOMB</span>
@@ -82,7 +84,7 @@ export default function Navbar() {
             menuButtonColor="inherit"
             openMenuButtonColor="inherit"
             changeMenuColorOnOpen={false}
-            colors={["#141210", "#f59e0b"]}
+            colors={isHalloween ? ["#402b47", "#f29a52"] : ["#141210", "#f59e0b"]}
             accentColor="#b45309"
           />
         </div>

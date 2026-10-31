@@ -10,6 +10,8 @@ import "../ui/kit.css";
 import CloudflareAnalytics from "@/components/CloudflareAnalytics";
 import TrackClicks from "@/components/TrackClicks";
 import UtmCapture from "@/components/UtmCapture";
+import "./halloween.css";
+import { SITE_THEME } from "@/lib/seasonal-theme";
 import SmoothScroll from "@/components/SmoothScroll";
 
 const geologica = Geologica({
@@ -40,7 +42,7 @@ const archivo = Archivo_Narrow({
 const siteUrl = "https://hexacombllc.com";
 const sitePhone = "+1-559-492-7402";
 const siteDescription =
-  "Ongoing website management, local SEO, analytics, and conversion copy for Fresno and Clovis small businesses. One local partner focused on making your website work harder every month.";
+  "Hexacomb LLC is a marketing agency focused on websites for Fresno and Clovis small businesses. Website design, local SEO, analytics, and ongoing care that help turn visitors into customers.";
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -238,6 +240,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-season={SITE_THEME}
       className={`${geologica.variable} ${atkinson.variable} ${instrument.variable} ${archivo.variable}`}
     >
       <body>
