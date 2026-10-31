@@ -60,7 +60,7 @@ html[data-season="halloween"] .hobro-page-hero {
 }
 html[data-season="halloween"] .hobro-page-hero::before {
   content: ""; position: absolute; inset: 0; z-index: -1; opacity: .2;
-  background: url('/images/seasonal/haunted-studio.svg') right 48% / auto 140% no-repeat;
+  background: url('/images/seasonal/haunted-agency.svg') right 48% / auto 140% no-repeat;
 }
 html[data-season="halloween"] .hobro-page-hero::after {
   content: ""; position: absolute; top: 4.5rem; right: 0; width: 10rem; aspect-ratio: 1;
@@ -119,7 +119,7 @@ html[data-season="halloween"] .review-bare { background: #211727; }
 html[data-season="halloween"] :is(.dash-page, .contract-shell, [data-density="operate"]) { --color-canvas: #f3e8d5; --color-surface: #eadac1; }
 
 .halloween-hero { position: relative; isolation: isolate; min-height: min(60rem, 100svh); overflow: hidden; background: #19131f; color: #f7e9ce; display: flex; align-items: center; padding: 8.5rem 0 7rem; }
-.halloween-hero-art { position: absolute; inset: 0; z-index: -1; background: url('/images/seasonal/haunted-studio.svg') center / cover no-repeat; }
+.halloween-hero-art { position: absolute; inset: 0; z-index: -1; background: url('/images/seasonal/haunted-agency.svg') center / cover no-repeat; }
 .halloween-hero-inner { position: relative; }
 .halloween-edition { display: flex; align-items: center; flex-wrap: wrap; gap: .8rem; font-size: .7rem; text-transform: uppercase; letter-spacing: .16em; color: #f1b47a; margin: 0 0 2rem; }
 .halloween-hero h1 { margin: 0; max-width: 10ch; font-family: var(--font-instrument), Georgia, serif; font-size: clamp(4.5rem, 8.5vw, 9.5rem); font-weight: 400; line-height: .92; letter-spacing: -.035em; color: #f7e9ce; }
@@ -166,3 +166,4 @@ html[data-season="halloween"] :is(.dash-page, .contract-shell, [data-density="op
 @media print {
   .seasonal-atmosphere, .seasonal-motion-toggle, .halloween-hero-art { display: none !important; }
 }
+html[data-season="halloween"] .hobro-cases-head h2 { font-family: var(--font-instrument), Georgia, serif; font-weight: 400; letter-spacing: -.025em; }

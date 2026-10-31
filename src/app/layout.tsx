@@ -42,7 +42,7 @@ const archivo = Archivo_Narrow({
 const siteUrl = "https://hexacombllc.com";
 const sitePhone = "+1-559-492-7402";
 const siteDescription =
-  "Ongoing website management, local SEO, analytics, and conversion copy for Fresno and Clovis small businesses. One local partner focused on making your website work harder every month.";
+  "Hexacomb LLC is a marketing agency focused on websites for Fresno and Clovis small businesses. Website design, local SEO, analytics, and ongoing care that help turn visitors into customers.";
 
 const structuredData = {
   "@context": "https://schema.org",

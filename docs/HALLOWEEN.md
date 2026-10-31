@@ -11,7 +11,7 @@ Reverting this PR is an alternative.
 
 ## Coverage
 
-- Home: original illustrated haunted-studio hero, sales-led headline and CTA,
+- Home: original illustrated haunted-agency hero, sales-led headline and CTA,
   updated service headings, portfolio heading, contact and founder sections.
 - About, how it works, pricing, website audit, nonprofit/causes, blog index:
   shared seasonal page heroes with page-specific sales headlines, all content

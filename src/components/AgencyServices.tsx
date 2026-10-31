@@ -1,4 +1,4 @@
-import { seasonalCopy } from "@/lib/seasonal-theme";
+import { isHalloween, seasonalCopy } from "@/lib/seasonal-theme";
 import MagicBento from "@/components/MagicBento";
 
 const offers = [
@@ -39,8 +39,8 @@ export default function AgencyServices() {
         <MagicBento
           cards={offers}
           glowColor="245, 158, 11"
-          enableSpotlight
-          enableBorderGlow
+          enableSpotlight={!isHalloween}
+          enableBorderGlow={!isHalloween}
         />
       </div>
     </section>

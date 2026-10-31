@@ -57,7 +57,7 @@ export default function Footer() {
         <div className="hobro-footer-wordmark">HEXACOMB</div>
         <div className="hobro-footer-grid">
           <div>
-            <span className="hobro-footer-title">Studio</span>
+            <span className="hobro-footer-title">Agency</span>
             <p>
               Clovis & Fresno, California
               <br />
@@ -87,7 +87,7 @@ export default function Footer() {
           <span>© {year} Hexacomb LLC</span>
           <span>{seasonalCopy("Built in the Central Valley", "Made in Clovis. Dressed for Halloween.")}</span>
           <span>
-            <Link href="/dashboard">Studio portal</Link>
+            <Link href="/dashboard">Agency portal</Link>
           </span>
         </div>
       </div>
