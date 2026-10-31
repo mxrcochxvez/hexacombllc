@@ -1,11 +1,14 @@
 "use client";
 
+import { isHalloween, seasonalCopy, seasonalHeadline } from "@/lib/seasonal-theme";
+import HalloweenHero from "@/components/HalloweenHero";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import ScrollExpand from "@/components/ScrollExpand";
 import RippleDistortion from "@/components/RippleDistortion";
 
 export default function AgencyHero() {
+  if (isHalloween) return <HalloweenHero />;
   return (
     <ScrollExpand
       macbook
@@ -69,7 +72,7 @@ export function AgencyPageHero({
       <div className={`hobro-shell${aside ? " hobro-page-hero-split" : ""}`}>
         <div>
           {kicker ? <p className="hobro-kicker">{kicker}</p> : null}
-          <h1 className="hobro-page-title">{title}</h1>
+          <h1 className="hobro-page-title">{seasonalHeadline(title)}</h1>
           <div className="hobro-page-lead">{lead}</div>
           {actions ? <div className="hobro-page-actions">{actions}</div> : null}
         </div>
@@ -84,7 +87,7 @@ export function AgencyIntro() {
     <section className="hobro-intro">
       <div className="hobro-shell">
         <div className="hobro-intro-water-stage">
-          <RippleDistortion
+          {!isHalloween && <RippleDistortion
             src="/images/water-surface.jpg"
             brushSize={140}
             strength={0.24}
@@ -102,11 +105,11 @@ export function AgencyIntro() {
             clickStrength={2.4}
             quality="high"
             className="hobro-intro-ripple"
-          />
+          />}
           <div className="hobro-intro-water-overlay" />
           <div className="hobro-intro-water-content">
             <p className="hobro-intro-statement">
-              We take the website worries out of your hands.
+              {seasonalCopy("We take the website worries out of your hands.", "Your website shouldn’t be the scary part of running a business.")}
             </p>
             <p className="hobro-intro-body">
               You run the business. The site keeps finding customers, loading

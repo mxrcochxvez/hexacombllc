@@ -1,5 +1,6 @@
 "use client";
 
+import { seasonalCopy } from "@/lib/seasonal-theme";
 import { ContactFormClient } from "@/components/ContactFormClient";
 import SpotlightCard from "@/components/SpotlightCard";
 
@@ -13,7 +14,7 @@ export default function AgencyContact({
       <div className="hobro-shell hobro-contact-grid">
         <div>
           <p className="hobro-kicker">Contact</p>
-          <h2>What should the site be bringing in?</h2>
+          <h2>{seasonalCopy("What should the site be bringing in?", "Let’s bring your website back to life.")}</h2>
           <p>
             New business, or one whose website went quiet. Say what you do,
             the towns you cover, and drop the link if you have one. I write

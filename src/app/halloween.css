@@ -1,0 +1,168 @@
+/* Halloween is a fully scoped edition. Set SITE_THEME to "default" to restore
+   the original site. Keep this file last in the root layout's CSS imports. */
+html[data-season="halloween"] {
+  --c-bg: #19131f;
+  --c-paper: #eee0c5;
+  --c-paper-soft: #e5d4b2;
+  --c-ink: #211727;
+  --c-muted: #635067;
+  --c-line: #39263d33;
+  --c-gold: #f29a52;
+  --c-line-on-dark: #ecd9be40;
+  --color-canvas: #f3e8d5;
+  --color-surface: #eadac1;
+  --color-ink: #281d30;
+  --color-ink-muted: #64516d;
+  --color-border: #cbb69c;
+  --color-accent: #85421e;
+  --color-accent-hover: #613017;
+  --color-signal: #f29a52;
+  --color-deep: #211727;
+  --color-on-deep: #f7e9ce;
+  --color-on-deep-muted: #d8c4dc;
+  --site-bg: #19131f;
+  --site-ink: #f7e9ce;
+  background: #19131f;
+}
+html[data-season="halloween"] body { background: #19131f; }
+html[data-season="halloween"] .site-chrome {
+  --site-bg: #19131f;
+  --site-raised: #2a1e32;
+  --site-ink: #f7e9ce;
+  --site-muted: #d8c4dc;
+  --site-faint: #bfa8c4;
+  --site-line: #ecd9be40;
+  --site-accent: #ffac65;
+  --site-cta: #f29a52;
+  --site-cta-ink: #211727;
+  --site-pink: #d0b2e4;
+  --site-pink-ink: #211727;
+}
+html[data-season="halloween"] .hobro-page { background: #19131f; color: #f7e9ce; }
+html[data-season="halloween"] .site-chrome .hobro-header {
+  background: #19131ff2; border-bottom: 1px solid #eed9bb33;
+}
+html[data-season="halloween"] .site-chrome .hobro-header-left,
+html[data-season="halloween"] .site-chrome .hobro-header-right,
+html[data-season="halloween"] .site-chrome .hobro-header-mobile { mix-blend-mode: normal; color: #f7e9ce; }
+html[data-season="halloween"] .hobro-logo-mark { width: 2rem; height: 2rem; color: #f29a52; }
+html[data-season="halloween"] .hobro-logo-text { letter-spacing: .08em; }
+html[data-season="halloween"] .hobro-nav-list a:hover { color: #ffac65; }
+.halloween-logo-face { fill: currentColor; stroke: none; }
+html[data-season="halloween"] .hobro-kicker { color: #ffac65; font-family: var(--font-body); font-size: .75rem; font-style: normal; letter-spacing: .14em; text-transform: uppercase; }
+html[data-season="halloween"] .hobro-white .hobro-kicker { color: #87411f; }
+html[data-season="halloween"] :is(.hobro-page-title, .hobro-offer-head h2, .hobro-statement h2, .hobro-talk strong, .hobro-contact h2, .hobro-vision h2) {
+  font-family: var(--font-instrument), Georgia, serif; font-weight: 400; letter-spacing: -.025em; text-transform: none; line-height: 1.02;
+}
+html[data-season="halloween"] .hobro-page-hero {
+  position: relative; isolation: isolate; background: #19131f; overflow: hidden;
+  border-bottom: 1px solid #f29a5255;
+}
+html[data-season="halloween"] .hobro-page-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; opacity: .2;
+  background: url('/images/seasonal/haunted-studio.svg') right 48% / auto 140% no-repeat;
+}
+html[data-season="halloween"] .hobro-page-hero::after {
+  content: ""; position: absolute; top: 4.5rem; right: 0; width: 10rem; aspect-ratio: 1;
+  background: url('/images/seasonal/cobweb.svg') center / contain no-repeat; transform: rotate(90deg); pointer-events: none;
+}
+html[data-season="halloween"] .hobro-page-title { color: #f7e9ce; max-width: 17ch; }
+html[data-season="halloween"] .hobro-page-lead { color: #dfcfdf; }
+html[data-season="halloween"] .hobro-white { background: #eee0c5; color: #211727; }
+html[data-season="halloween"] .hobro-statement { background: #2d2035; color: #f7e9ce; border-block: 1px solid #e7c5ee33; }
+html[data-season="halloween"] .hobro-statement h2 { color: #ffac65; }
+html[data-season="halloween"] .hobro-statement p { color: #e2d0e1; }
+html[data-season="halloween"] .hobro-deck-btn { border-color: currentColor; border-radius: .35rem; min-height: 3.25rem; transition: transform .2s, box-shadow .2s, background-color .2s; }
+html[data-season="halloween"] .hobro-deck-btn-solid,
+html[data-season="halloween"] .site-chrome .hobro-contact button[type="submit"],
+html[data-season="halloween"] .site-chrome .growth-intake-form button[type="submit"] {
+  background: #f29a52; color: #211727; border-color: #f29a52;
+}
+html[data-season="halloween"] .hobro-deck-btn:hover { transform: translateY(-3px) rotate(-1deg); box-shadow: 5px 5px 0 #8f6097; }
+html[data-season="halloween"] .hobro-deck-btn-solid:hover { background: #ffb77b; }
+html[data-season="halloween"] :focus-visible { outline: 3px solid #dc8c46; outline-offset: 4px; }
+html[data-season="halloween"] .hobro-white :focus-visible { outline-color: #7b3e22; }
+html[data-season="halloween"] .hobro-intro { background: #211727; }
+html[data-season="halloween"] .hobro-intro-water-stage { background: #33243d; border: 1px solid #e7c5ee33; border-radius: 50% 50% .5rem .5rem / 18% 18% .5rem .5rem; }
+html[data-season="halloween"] .hobro-intro-water-stage::before { content: "✦"; position: absolute; inset: .6rem 0 auto; color: #f29a52; font-size: 2.5rem; text-align: center; }
+html[data-season="halloween"] .hobro-intro-water-overlay { display: none; }
+html[data-season="halloween"] .hobro-intro-statement { font-family: var(--font-instrument), Georgia, serif; color: #f7e9ce; font-weight: 400; }
+html[data-season="halloween"] .hobro-talk { color: #f29a52; }
+html[data-season="halloween"] .hobro-bento .magic-bento-card { background: #2b2034; border: 1px solid #ad794c; border-radius: .4rem; box-shadow: 5px 5px 0 #d2ba94; }
+html[data-season="halloween"] .hobro-bento .magic-bento-card__title { color: #ffb77b; font-family: var(--font-instrument), Georgia, serif; font-weight: 400; font-size: 2.2rem; line-height: 1.1; }
+html[data-season="halloween"] .hobro-bento .magic-bento-card__description { color: #f0dfd0; }
+html[data-season="halloween"] .hobro-price-card { background: #f5ebd7; border: 1px solid #8d6d54; border-top: 5px solid #a65025; box-shadow: 6px 6px 0 #d1ba98; border-radius: .4rem; }
+html[data-season="halloween"] .hobro-price-card h3 { font-family: var(--font-instrument), Georgia, serif; }
+html[data-season="halloween"] .hobro-vision { background: #402b47; color: #f7e9ce; }
+html[data-season="halloween"] .hobro-vision h2 { color: #ffb77b; }
+html[data-season="halloween"] .hobro-vision p { color: #f0dfd0; }
+html[data-season="halloween"] .hobro-contact { background: #19131f; color: #f7e9ce; border-top: 1px solid #f29a5244; }
+html[data-season="halloween"] .hobro-contact h2 { color: #ffb77b; }
+html[data-season="halloween"] .hobro-contact-panel { background: #2b2034; border: 1px solid #8c6898; border-radius: .5rem; }
+html[data-season="halloween"] .hobro-contact-form input,
+html[data-season="halloween"] .hobro-contact-form textarea { border-color: #ad92b5 !important; color: #f7e9ce !important; }
+html[data-season="halloween"] .hobro-contact-form input::placeholder,
+html[data-season="halloween"] .hobro-contact-form textarea::placeholder { color: #c9b4d1 !important; }
+html[data-season="halloween"] .site-chrome .hobro-footer { background: #211727; color: #e9d7c0; border-top: 1px solid #f29a5255; }
+html[data-season="halloween"] .hobro-footer-wordmark { color: #f29a52; font-family: var(--font-instrument), Georgia, serif; letter-spacing: -.035em; font-weight: 400; }
+html[data-season="halloween"] .hobro-footer-scrim { display: none; }
+html[data-season="halloween"] .hobro-footer-title { color: #ffb77b; }
+html[data-season="halloween"] .hobro-case-dialog { background: #eee0c5; }
+html[data-season="halloween"] .hobro-case-dialog-copy h2 { color: #211727; }
+html[data-season="halloween"] .hobro-photo { border: 1px solid #b58c5c; box-shadow: 9px 9px 0 #3d2b47; }
+html[data-season="halloween"] .site-chrome .hobro-article { background: #eee0c5; }
+html[data-season="halloween"] .blog-card h2 { font-family: var(--font-instrument), Georgia, serif; }
+html[data-season="halloween"] .site-chrome .staggered-menu-panel { background: #eee0c5; color: #211727; }
+html[data-season="halloween"] .review-bare { background: #211727; }
+/* Transactional pages share the seasonal palette but retain literal labels,
+   contractual copy, readable form surfaces, and all authorization boundaries. */
+html[data-season="halloween"] :is(.dash-page, .contract-shell, [data-density="operate"]) { --color-canvas: #f3e8d5; --color-surface: #eadac1; }
+
+.halloween-hero { position: relative; isolation: isolate; min-height: min(60rem, 100svh); overflow: hidden; background: #19131f; color: #f7e9ce; display: flex; align-items: center; padding: 8.5rem 0 7rem; }
+.halloween-hero-art { position: absolute; inset: 0; z-index: -1; background: url('/images/seasonal/haunted-studio.svg') center / cover no-repeat; }
+.halloween-hero-inner { position: relative; }
+.halloween-edition { display: flex; align-items: center; flex-wrap: wrap; gap: .8rem; font-size: .7rem; text-transform: uppercase; letter-spacing: .16em; color: #f1b47a; margin: 0 0 2rem; }
+.halloween-hero h1 { margin: 0; max-width: 10ch; font-family: var(--font-instrument), Georgia, serif; font-size: clamp(4.5rem, 8.5vw, 9.5rem); font-weight: 400; line-height: .92; letter-spacing: -.035em; color: #f7e9ce; }
+.halloween-hero h1 em { color: #f29a52; font-weight: 400; }
+.halloween-hero-lead { max-width: 34ch; margin: 1.8rem 0; color: #e8d5df; font-size: clamp(1rem, 1.6vw, 1.2rem); line-height: 1.6; }
+.halloween-hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; }
+.halloween-hero-footnote { font-size: .78rem; line-height: 1.6; color: #cdb9ce; margin: 1.8rem 0 0; }
+.halloween-hero-bottom { position: absolute; bottom: 0; left: 0; right: 0; border-top: 1px solid #edd4b733; padding: 1rem max(1.25rem, calc((100vw - 88rem) / 2)); display: flex; justify-content: space-between; gap: 1rem; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: #e4c9dd; }
+.seasonal-atmosphere { position: fixed; inset: 0; z-index: 50; pointer-events: none; overflow: hidden; }
+.seasonal-fog { position: absolute; width: 130vw; height: 15rem; bottom: -2rem; background: url('/images/seasonal/fog.svg') center bottom / 100% 100% no-repeat; animation: halloween-drift 24s ease-in-out infinite alternate; }
+.seasonal-fog-two { opacity: .5; transform: scaleX(-1); animation-duration: 34s; animation-direction: alternate-reverse; bottom: -4rem; }
+.seasonal-ember { position: absolute; width: 3px; height: 3px; background: #efa45b; border-radius: 50%; bottom: 4%; opacity: 0; animation: halloween-ember 13s ease-in-out infinite; }
+.seasonal-ember-one { left: 4%; }
+.seasonal-ember-two { left: 94%; animation-delay: 4s; }
+.seasonal-ember-three { left: 83%; animation-delay: 8s; }
+.seasonal-atmosphere[data-paused="true"] * { animation-play-state: paused; }
+.seasonal-motion-toggle { position: fixed; right: .7rem; bottom: .65rem; z-index: 60; border: 1px solid #cda4cd; border-radius: 99px; background: #211727; color: #f7e9ce; font-size: .65rem; padding: .65rem .85rem; min-height: 44px; cursor: pointer; }
+/* No atmospheric overlay on contracts, admin tools or client feedback. */
+.site-chrome:not(:has(.hobro-page)) :is(.seasonal-atmosphere, .seasonal-motion-toggle) { display: none; }
+@keyframes halloween-drift { from { translate: -12% 0; } to { translate: 0 1.2rem; } }
+@keyframes halloween-ember { 0%, 100% { opacity: 0; translate: 0 0; } 20%, 60% { opacity: .65; } 80% { translate: 2rem -18rem; opacity: 0; } }
+@media (max-width: 900px) {
+  .halloween-hero { min-height: 55rem; padding-top: 8rem; align-items: flex-start; }
+  .halloween-hero-art { background-position: 65% bottom; background-size: auto 60%; background-color: #19131f; }
+  .halloween-hero h1 { font-size: clamp(4.2rem, 13vw, 7rem); }
+  .halloween-hero-lead { max-width: 36ch; }
+  .halloween-hero-inner { padding-bottom: 14rem; }
+  .halloween-hero-footnote { max-width: 20ch; }
+  html[data-season="halloween"] .hobro-page-hero::after { width: 6rem; }
+}
+@media (max-width: 480px) {
+  .halloween-hero { min-height: 59rem; }
+  .halloween-edition { font-size: .6rem; gap: .45rem; }
+  .halloween-hero-actions { align-items: flex-start; flex-direction: column; gap: 1rem; }
+  .halloween-hero-bottom { font-size: .55rem; padding: 1rem .7rem; }
+  .seasonal-fog { height: 8rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .seasonal-atmosphere *, .seasonal-motion-toggle { animation: none !important; }
+  .seasonal-ember, .seasonal-motion-toggle { display: none; }
+  html[data-season="halloween"] .hobro-deck-btn { transition: none; }
+  html[data-season="halloween"] .hobro-deck-btn:hover { transform: none; }
+}
+@media print {
+  .seasonal-atmosphere, .seasonal-motion-toggle, .halloween-hero-art { display: none !important; }
+}

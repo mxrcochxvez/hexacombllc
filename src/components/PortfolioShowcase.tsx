@@ -1,5 +1,6 @@
 "use client";
 
+import { seasonalCopy } from "@/lib/seasonal-theme";
 import { useCallback, useMemo, useState } from "react";
 import { clientCaseStudies, type CaseStudy } from "@/lib/cases";
 import AccordionGallery from "./AccordionGallery";
@@ -37,7 +38,7 @@ export default function PortfolioShowcase() {
       <section className="hobro-white hobro-cases">
         <div className="hobro-shell">
           <div className="hobro-cases-head">
-            <h2>Work in the valley</h2>
+            <h2>{seasonalCopy("Work in the valley", "Real work. Wicked good company.")}</h2>
             <div className="hobro-cases-head-note">
               <p>They step forward on their own. Open the one you want.</p>
               <button

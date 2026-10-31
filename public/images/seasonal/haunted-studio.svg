@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100">
+ <defs><pattern id="grain" width="11" height="13" patternUnits="userSpaceOnUse"><circle cx="3" cy="7" r=".6" fill="#efdfbd" opacity=".13"/></pattern></defs>
+ <path fill="#19131f" d="M0 0h1600v1100H0z"/>
+ <circle cx="1210" cy="350" r="243" fill="#eb8c45"/>
+ <g fill="#c7703d" opacity=".34"><circle cx="1120" cy="235" r="45"/><circle cx="1340" cy="370" r="32"/><circle cx="1230" cy="490" r="55"/><circle cx="1272" cy="225" r="18"/></g>
+ <path fill="#342438" d="M780 790q140-170 280-60t270-30 270-80v480H780z"/>
+ <path fill="#231b2a" d="M0 900q350-70 610 0t480-65 510 15v250H0z"/>
+ <g fill="#100e16"><path d="M1040 809V516h-29l96-106 97 106h-30v293z"/><path d="M1193 826V610h-29l83-108 84 108h-30v216z"/><path d="M1082 823V670l91-79 83 79v153z"/><path d="M1086 450v-80h36v80z"/><path d="M1080 370l24-45 24 45z"/><path d="M1240 534v-65h16v65z"/></g>
+ <g fill="#efb65b"><path d="M1093 520q15-30 30 0v37h-30z"/><path d="M1093 592h12v29h-12zM1113 592h12v29h-12zM1240 625h17v31h-17zM1240 688h17v31h-17z"/><path d="M1155 738q19-32 38 0v72h-38z"/></g>
+ <g fill="#100e16"><path d="M1020 815h303v20h-303z"/><path d="M978 1020l13-355 13 355zM982 774l-75-124 80 95zM995 730l75-120-72 87zM990 856l-115-91 116 62z"/><path d="M1500 1100l-30-530-20 530zM1470 788l-125-138 124 95zM1471 732l108-163-110 128zM1469 916l-150-117 150 80z"/></g>
+ <g fill="#100e16"><path d="M1110 259q-22-35-51-24 16 8 12 25 22-8 39 11 16-22 39-20-7-15 8-26-30-5-47 34z"/><path d="M1390 460q-18-27-38-17 12 5 9 18 17-5 29 9 12-16 29-15-5-11 6-19-23-4-35 24z"/><path d="M932 394q-15-23-34-16 11 5 8 17 15-5 26 8 11-15 26-13-4-11 5-18-20-4-31 22z"/></g>
+ <g transform="translate(1220 895)"><path d="M-5-52q0-40 22-48l7 16Q5-75 8-50" fill="#817957"/><path d="M0-52C-97-91-122 66-55 95q26 12 55 0 30 12 59 0 70-35 33-120Q68-72 0-52z" fill="#df6b2d"/><path d="M0-52C-50-75-62 72-12 97M8-52c50-23 62 124 12 149" fill="none" stroke="#ac4727" stroke-width="5"/><path d="M-61-1l36-17-6 31zm89-17 36 17-30 14zM-49 47l18 9 10-12 16 15 18-12 12 10 25-13-13 30-71-1z" fill="#ffdb8b"/></g>
+ <path fill="url(#grain)" d="M0 0h1600v1100H0z"/>
+</svg>
