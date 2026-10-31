@@ -175,3 +175,6 @@ html[data-season="halloween"] .site-chrome .hobro-page .blog-article {
 html[data-season="halloween"] .site-chrome .hobro-page .blog-article__header h1 {
   font-family: var(--font-instrument), Georgia, serif; font-weight: 400; letter-spacing: -.025em;
 }
+
+/* Blog cards sit on bone paper, not the dark site chrome. */
+html[data-season="halloween"] .blog-card__body > p { color: #635067; }
