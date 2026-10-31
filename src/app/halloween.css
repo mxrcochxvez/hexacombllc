@@ -167,3 +167,11 @@ html[data-season="halloween"] :is(.dash-page, .contract-shell, [data-density="op
   .seasonal-atmosphere, .seasonal-motion-toggle, .halloween-hero-art { display: none !important; }
 }
 html[data-season="halloween"] .hobro-cases-head h2 { font-family: var(--font-instrument), Georgia, serif; font-weight: 400; letter-spacing: -.025em; }
+html[data-season="halloween"] .site-chrome .hobro-page .blog-article {
+  --article-bg: #eee0c5; --article-ink: #211727; --article-muted: #635067;
+  --article-line: #39263d33; --article-link: #87411f; --article-link-hover: #5f2a12;
+  --article-chip: #dabf98; border-top: 1px solid #f29a52;
+}
+html[data-season="halloween"] .site-chrome .hobro-page .blog-article__header h1 {
+  font-family: var(--font-instrument), Georgia, serif; font-weight: 400; letter-spacing: -.025em;
+}
