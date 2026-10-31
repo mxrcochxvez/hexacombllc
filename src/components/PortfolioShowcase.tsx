@@ -1,123 +1,52 @@
-"use client";
-
+import Image from "next/image";
 import { seasonalCopy } from "@/lib/seasonal-theme";
-import { useCallback, useMemo, useState } from "react";
-import { clientCaseStudies, type CaseStudy } from "@/lib/cases";
-import AccordionGallery from "./AccordionGallery";
-import CaseStudyModal from "./CaseStudyModal";
+import { clientCaseStudies } from "@/lib/cases";
 import CentralValleyMap from "./CentralValleyMap";
 
 export default function PortfolioShowcase() {
-  const [selectedCase, setSelectedCase] = useState<CaseStudy | null>(null);
-  const [activeSlide, setActiveSlide] = useState(0);
-  const [cycling, setCycling] = useState(true);
-
-  const galleryItems = useMemo(
-    () =>
-      clientCaseStudies.map((item) => ({
-        image: item.imageSrc,
-        label: `${item.title} · ${item.city}`,
-        alt: `${item.title} website, ${item.city}`,
-      })),
-    []
-  );
-
-  const onActiveChange = useCallback((index: number) => {
-    setActiveSlide(index);
-  }, []);
-
-  const onOpen = useCallback((index: number) => {
-    const item = clientCaseStudies[index];
-    if (item) setSelectedCase(item);
-  }, []);
-
-  const currentCase = clientCaseStudies[activeSlide] ?? clientCaseStudies[0];
-
   return (
     <div id="projects">
-      <section className="hobro-white hobro-cases">
+      <section className="hobro-white hobro-cases portfolio-section" aria-labelledby="portfolio-heading">
         <div className="hobro-shell">
-          <div className="hobro-cases-head">
-            <h2>{seasonalCopy("Work in the valley", "Real work. Wicked good company.")}</h2>
-            <div className="hobro-cases-head-note">
-              <p>They step forward on their own. Open the one you want.</p>
-              <button
-                type="button"
-                className="hobro-cases-cycle"
-                aria-pressed={cycling}
-                aria-label={cycling ? "Pause project rotation" : "Play project rotation"}
-                onClick={() => setCycling((on) => !on)}
-              >
-                {cycling ? "Pause" : "Play"}
-              </button>
+          <div className="portfolio-heading">
+            <div>
+              <p className="portfolio-eyebrow">SELECTED WEBSITE WORK</p>
+              <h2 id="portfolio-heading">{seasonalCopy("Good businesses. Better websites.", "Real work. Wicked good company.")}</h2>
             </div>
+            <p>Take a closer look. Browse every project below, then open the website to explore it for yourself.</p>
           </div>
-
-          <div className="hobro-cases-gallery">
-            <AccordionGallery
-              items={galleryItems}
-              defaultIndex={0}
-              height={440}
-              expandRatio={0.58}
-              radius={16}
-              gap={12}
-              accentColor="#f4efe4"
-              overlayColor="#161513"
-              listLabel="Work in the valley"
-              autoplay={cycling && selectedCase === null}
-              autoplayMs={4200}
-              onActiveChange={onActiveChange}
-              onOpen={onOpen}
-            />
+          <div className="portfolio-grid">
+            {clientCaseStudies.map((project) => (
+              <article className="portfolio-card" key={project.id} aria-labelledby={`project-${project.id}`}>
+                <a className="portfolio-image" href={project.liveUrl} target="_blank" rel="noopener noreferrer" aria-label={`Open ${project.title} ${project.isPreview ? "preview" : "website"} in a new tab`}>
+                  <Image src={project.imageSrc} alt={`${project.title} website homepage`} width={1200} height={770} sizes="(max-width: 760px) 100vw, 50vw" />
+                  <span className="portfolio-status">{project.isPreview ? "PREVIEW SITE" : "LIVE WEBSITE"}</span>
+                </a>
+                <div className="portfolio-card-body">
+                  <p className="portfolio-location">{project.city}</p>
+                  <h3 id={`project-${project.id}`}>{project.title}</h3>
+                  <p className="portfolio-summary">{project.summary}</p>
+                  <ul className="portfolio-tags" aria-label="Project focus">
+                    {project.tags.map((tag) => <li key={tag}>{tag}</li>)}
+                  </ul>
+                  <a className="portfolio-visit" href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                    {project.isPreview ? "View preview" : "Visit website"} <span aria-hidden="true">↗</span>
+                    <span className="portfolio-sr-only"> — {project.title} (opens in a new tab)</span>
+                  </a>
+                  {project.isPreview && <p className="portfolio-preview-note">Preview URL — custom domain coming later.</p>}
+                  <details className="portfolio-details">
+                    <summary>About this project<span className="portfolio-sr-only"> — {project.title}</span></summary>
+                    <p>{project.clientDescription}</p>
+                    <p>{project.solutionDescription}</p>
+                    <ul>{project.highlights.map((item) => <li key={item}>{item}</li>)}</ul>
+                  </details>
+                </div>
+              </article>
+            ))}
           </div>
-
-          <div className="hobro-cases-details-bar">
-            <div className="hobro-cases-details-meta" key={currentCase.id}>
-              <span className="hobro-cases-details-tagline">
-                {currentCase.city}, CA
-              </span>
-              <h3 className="hobro-cases-details-title">{currentCase.title}</h3>
-              <p className="hobro-cases-details-desc">{currentCase.summary}</p>
-              <div className="hobro-cases-details-tags">
-                {currentCase.tags.map((tag) => (
-                  <span key={tag} className="hobro-cases-tag">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <button
-              type="button"
-              className="hobro-cases-open-btn"
-              onClick={() => setSelectedCase(currentCase)}
-            >
-              <span>See this project</span>
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-
         </div>
       </section>
-
       <CentralValleyMap />
-
-      <CaseStudyModal
-        caseStudy={selectedCase}
-        isOpen={selectedCase !== null}
-        onClose={() => setSelectedCase(null)}
-      />
     </div>
   );
 }

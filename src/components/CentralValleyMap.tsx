@@ -17,7 +17,7 @@ export default function CentralValleyMap() {
             too.
           </p>
           <p className="hobro-map-body">
-            The work above is Fresno and Sanger. I answer from Clovis. When
+            Our clients work across the Central Valley. I answer from Clovis. When
             someone nearby searches on their phone, the site should feel like
             it was made for that town.
           </p>
