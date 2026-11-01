@@ -13,7 +13,6 @@ import UtmCapture from "@/components/UtmCapture";
 import "./halloween.css";
 import { SITE_THEME } from "@/lib/seasonal-theme";
 
-
 const geologica = Geologica({
   variable: "--font-geologica",
   subsets: ["latin"],
@@ -35,10 +34,47 @@ const siteDescription =
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
-    { "@type": ["Organization", "ProfessionalService"], "@id": `${siteUrl}/#organization`, name: "Hexacomb LLC", url: siteUrl, logo: `${siteUrl}/hexacomb_logo_wordmark.png`, image: `${siteUrl}/hexacomb_logo_wordmark.png`, description: siteDescription, email: "marco@hexacombllc.com", telephone: sitePhone, founder: { "@id": `${siteUrl}/#marco` }, address: { "@type": "PostalAddress", addressLocality: "Clovis", addressRegion: "CA", addressCountry: "US" }, areaServed: ["Fresno, California", "Clovis, California", "California Central Valley"] },
-    { "@type": "Person", "@id": `${siteUrl}/#marco`, name: "Marco Chavez", url: `${siteUrl}/about`, jobTitle: "Founder", worksFor: { "@id": `${siteUrl}/#organization` } },
-    { "@type": "WebSite", "@id": `${siteUrl}/#website`, url: siteUrl, name: "Hexacomb", description: siteDescription, publisher: { "@id": `${siteUrl}/#organization` }, inLanguage: "en-US" }
-  ]
+    {
+      "@type": ["Organization", "ProfessionalService"],
+      "@id": `${siteUrl}/#organization`,
+      name: "Hexacomb LLC",
+      url: siteUrl,
+      logo: `${siteUrl}/hexacomb_logo_wordmark.png`,
+      image: `${siteUrl}/hexacomb_logo_wordmark.png`,
+      description: siteDescription,
+      email: "marco@hexacombllc.com",
+      telephone: sitePhone,
+      founder: { "@id": `${siteUrl}/#marco` },
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Clovis",
+        addressRegion: "CA",
+        addressCountry: "US",
+      },
+      areaServed: [
+        "Fresno, California",
+        "Clovis, California",
+        "California Central Valley",
+      ],
+    },
+    {
+      "@type": "Person",
+      "@id": `${siteUrl}/#marco`,
+      name: "Marco Chavez",
+      url: `${siteUrl}/about`,
+      jobTitle: "Founder",
+      worksFor: { "@id": `${siteUrl}/#organization` },
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      url: siteUrl,
+      name: "Hexacomb",
+      description: siteDescription,
+      publisher: { "@id": `${siteUrl}/#organization` },
+      inLanguage: "en-US",
+    },
+  ],
 };
 
 export const viewport: Viewport = {

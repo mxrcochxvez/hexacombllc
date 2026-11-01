@@ -1,4 +1,40 @@
 import Link from "next/link";
 export default function Footer() {
-  return <footer className="premium-footer"><div className="premium-shell"><div className="premium-footer-top"><div><Link href="/" className="premium-footer-wordmark">HEXACOMB</Link><p>A marketing agency focused on websites.<br />Clovis, California. Built around your business.</p></div><nav aria-label="Footer"><Link href="/work">Selected work</Link><Link href="/how-it-works">How it works</Link><Link href="/pricing">Plans &amp; pricing</Link><Link href="/website-audit">Website audit</Link><Link href="/about">About Marco</Link><Link href="/blog">Insights</Link><Link href="/human-rights">Nonprofits &amp; causes</Link><Link href="/intake">Project intake</Link></nav><div className="premium-footer-contact"><a href="mailto:marco@hexacombllc.com">marco@hexacombllc.com</a><a href="tel:+15594927402">(559) 492-7402</a></div></div><div className="premium-footer-bottom"><span>© {new Date().getFullYear()} Hexacomb LLC</span><span>Personally handled. Thoughtfully built.</span><Link href="/dashboard">Agency portal</Link></div></div></footer>;
+  return (
+    <footer className="premium-footer">
+      <div className="premium-shell">
+        <div className="premium-footer-top">
+          <div>
+            <Link href="/" className="premium-footer-wordmark">
+              HEXACOMB
+            </Link>
+            <p>
+              A marketing agency focused on websites.
+              <br />
+              Clovis, California. Built around your business.
+            </p>
+          </div>
+          <nav aria-label="Footer">
+            <Link href="/work">Selected work</Link>
+            <Link href="/how-it-works">How it works</Link>
+            <Link href="/pricing">Plans &amp; pricing</Link>
+            <Link href="/website-audit">Website audit</Link>
+            <Link href="/about">About Marco</Link>
+            <Link href="/blog">Insights</Link>
+            <Link href="/human-rights">Nonprofits &amp; causes</Link>
+            <Link href="/intake">Project intake</Link>
+          </nav>
+          <div className="premium-footer-contact">
+            <a href="mailto:marco@hexacombllc.com">marco@hexacombllc.com</a>
+            <a href="tel:+15594927402">(559) 492-7402</a>
+          </div>
+        </div>
+        <div className="premium-footer-bottom">
+          <span>© {new Date().getFullYear()} Hexacomb LLC</span>
+          <span>Personally handled. Thoughtfully built.</span>
+          <Link href="/dashboard">Agency portal</Link>
+        </div>
+      </div>
+    </footer>
+  );
 }
