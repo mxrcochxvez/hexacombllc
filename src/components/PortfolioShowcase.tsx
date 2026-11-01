@@ -1,5 +1,6 @@
 import ArrowIcon from "@/components/ArrowIcon";
 import Image from "next/image";
+import Link from "next/link";
 import { seasonalCopy } from "@/lib/seasonal-theme";
 import { clientCaseStudies } from "@/lib/cases";
 import CentralValleyMap from "./CentralValleyMap";
@@ -74,6 +75,19 @@ export default function PortfolioShowcase() {
                       — {project.title} (opens in a new tab)
                     </span>
                   </a>
+                  {(project.id === "m5painting" ||
+                    project.id === "thebugdude") && (
+                    <Link
+                      className="portfolio-case-link"
+                      href={
+                        project.id === "m5painting"
+                          ? "/work/m5-painting"
+                          : "/work/the-bug-dude"
+                      }
+                    >
+                      Read the {project.title} project story
+                    </Link>
+                  )}
                   {project.isPreview && (
                     <p className="portfolio-preview-note">
                       Preview URL — custom domain coming later.

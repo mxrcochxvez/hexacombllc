@@ -8,21 +8,21 @@ import AgencyContact from "@/components/AgencyContact";
 
 const services = [
   {
-    name: "Websites with purpose.",
+    name: "Website design & development.",
     detail:
       "Design, copy and development built around the next step: a call, an estimate, a booking. Clear on a phone. Easy to understand.",
-    href: "/work",
-    link: "Explore the work",
+    href: "/website-design",
+    link: "Explore website design",
   },
   {
-    name: "Make the right impression in search.",
+    name: "Local SEO & search visibility.",
     detail:
       "Local SEO, useful service pages and clear business information. A foundation that helps search engines and AI answers understand what you do and where you work.",
     href: "/website-audit",
     link: "Check your website",
   },
   {
-    name: "Care that carries on.",
+    name: "Website hosting & ongoing care.",
     detail:
       "Hosting, maintenance, updates and practical reporting. Your services change. Your website should keep up. Choose the support that fits your business.",
     href: "/pricing",

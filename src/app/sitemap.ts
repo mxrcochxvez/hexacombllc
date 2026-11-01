@@ -56,6 +56,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: "monthly",
     priority: 0.9,
   });
+  for (const path of [
+    "/website-design",
+    "/work/m5-painting",
+    "/work/the-bug-dude",
+  ]) {
+    staticPages.push({
+      url: `${baseUrl}${path}`,
+      lastModified: "2026-11-01",
+      changeFrequency: "monthly",
+      priority: path === "/website-design" ? 0.9 : 0.7,
+    });
+  }
   let posts;
   try {
     posts = await listPublishedBlogPosts(100);

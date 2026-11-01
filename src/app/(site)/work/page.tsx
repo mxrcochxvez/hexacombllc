@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { pageSocialMetadata } from "@/lib/seo";
 import PortfolioShowcase from "@/components/PortfolioShowcase";
@@ -25,6 +26,11 @@ export default function WorkPage() {
         </h1>
         <p>
           Explore the projects. Open the websites. See the details for yourself.
+          Looking for a site of your own?{" "}
+          <Link href="/website-design">
+            Explore website design in Fresno and Clovis
+          </Link>
+          .
         </p>
       </div>
       <PortfolioShowcase />

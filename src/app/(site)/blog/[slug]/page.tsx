@@ -5,7 +5,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import CtaSection from "@/components/CtaSection";
 import { MarkdownContent } from "@/components/MarkdownContent";
-import { getBlogCover, isUnoptimizedCover, stripLeadingCoverImage } from "@/lib/blogCover";
+import {
+  getBlogCover,
+  isUnoptimizedCover,
+  stripLeadingCoverImage,
+} from "@/lib/blogCover";
 import { getPublishedBlogPost } from "@/lib/convex";
 import "../blog-article.css";
 
@@ -29,7 +33,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       url: `/blog/${post.slug}`,
-      publishedTime: post.publishedAt ? new Date(post.publishedAt).toISOString() : undefined,
+      publishedTime: post.publishedAt
+        ? new Date(post.publishedAt).toISOString()
+        : undefined,
       authors: [post.author],
       tags: post.tags,
       images,
@@ -58,29 +64,46 @@ export default async function BlogPostPage({ params }: Props) {
     datePublished: published.toISOString(),
     dateModified: new Date(post.updatedAt).toISOString(),
     author: { "@type": "Organization", name: post.author },
-    publisher: { "@type": "Organization", name: "Hexacomb LLC", url: "https://hexacombllc.com" },
+    publisher: {
+      "@type": "Organization",
+      name: "Hexacomb LLC",
+      url: "https://hexacombllc.com",
+    },
     mainEntityOfPage: `https://hexacombllc.com/blog/${post.slug}`,
   };
   return (
     <main id="main-content" className="hobro-page">
       <article className="blog-article">
         <div className="blog-article__shell">
-          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+            }}
+          />
           <p className="blog-article__kicker">
             <Link href="/blog">← All articles</Link>
           </p>
           <header className="blog-article__header">
             <div className="blog-article__meta">
               <time dateTime={published.toISOString()}>
-                {published.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+                {published.toLocaleDateString("en-US", {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                })}
               </time>
               <span>{post.author}</span>
             </div>
             <h1>{post.title}</h1>
-            {post.excerpt ? <p className="blog-article__dek">{post.excerpt}</p> : null}
+            {post.excerpt ? (
+              <p className="blog-article__dek">{post.excerpt}</p>
+            ) : null}
             {post.tags.length ? (
               <ul className="blog-tags" aria-label="Topics">
-                {post.tags.map((tag) => <li key={tag}>{tag}</li>)}
+                {post.tags.map((tag) => (
+                  <li key={tag}>{tag}</li>
+                ))}
               </ul>
             ) : null}
           </header>
@@ -100,9 +123,26 @@ export default async function BlogPostPage({ params }: Props) {
               )}
             </figure>
           ) : null}
-          <MarkdownContent markdown={stripLeadingCoverImage(post.contentMarkdown)} />
+          <MarkdownContent
+            markdown={stripLeadingCoverImage(post.contentMarkdown)}
+          />
         </div>
       </article>
+      <aside
+        className="premium-shell service-section"
+        aria-label="Website design help"
+      >
+        <h2>Put the ideas to work.</h2>
+        <p className="service-support">
+          Explore{" "}
+          <Link href="/website-design">
+            website design for Fresno and Clovis businesses
+          </Link>
+          , or see the practical website choices in the{" "}
+          <Link href="/work/m5-painting">M5 Painting project</Link> and{" "}
+          <Link href="/work/the-bug-dude">The Bug Dude project</Link>.
+        </p>
+      </aside>
       <CtaSection />
     </main>
   );
