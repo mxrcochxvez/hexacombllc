@@ -8,7 +8,6 @@ import AgencyContact from "@/components/AgencyContact";
 
 const services = [
   {
-    number: "01",
     name: "Websites with purpose.",
     detail:
       "Design, copy and development built around the next step: a call, an estimate, a booking. Clear on a phone. Easy to understand.",
@@ -16,7 +15,6 @@ const services = [
     link: "Explore the work",
   },
   {
-    number: "02",
     name: "Make the right impression in search.",
     detail:
       "Local SEO, useful service pages and clear business information. A foundation that helps search engines and AI answers understand what you do and where you work.",
@@ -24,7 +22,6 @@ const services = [
     link: "Check your website",
   },
   {
-    number: "03",
     name: "Care that carries on.",
     detail:
       "Hosting, maintenance, updates and practical reporting. Your services change. Your website should keep up. Choose the support that fits your business.",
@@ -89,7 +86,7 @@ export default function AgencyHome() {
       >
         <div className="premium-shell">
           <div className="premium-section-heading">
-            <p className="premium-eyebrow">01 / SERVICES</p>
+            <p className="premium-eyebrow">SERVICES</p>
             <h2 id="services-title">
               Everything your website needs.
               <br />
@@ -98,8 +95,7 @@ export default function AgencyHome() {
           </div>
           <div className="premium-service-list">
             {services.map((s) => (
-              <article className="premium-service" key={s.number}>
-                <span className="premium-number">{s.number}</span>
+              <article className="premium-service" key={s.name}>
                 <h3>{s.name}</h3>
                 <div>
                   <p>{s.detail}</p>
@@ -145,7 +141,7 @@ export default function AgencyHome() {
             <span>MARCO CHAVEZ / FOUNDER</span>
           </div>
           <div>
-            <p className="premium-eyebrow">02 / ABOUT ME</p>
+            <p className="premium-eyebrow">ABOUT ME</p>
             <h2 id="about-title">
               A real person.
               <br />

@@ -3,10 +3,7 @@ import { testimonials } from "@/lib/testimonials";
 export default function ClientTestimonials() {
   const approved = testimonials.filter(
     (item) =>
-      item.approvedForPublication &&
-      item.quote.trim() &&
-      item.name.trim() &&
-      item.sourceUrl.startsWith("https://"),
+      item.approvedForPublication && item.quote.trim() && item.name.trim(),
   );
   if (!approved.length)
     return (
@@ -16,7 +13,7 @@ export default function ClientTestimonials() {
         aria-labelledby="reviews-title"
       >
         <div className="premium-shell">
-          <p className="premium-eyebrow">03 / CLIENT REVIEWS</p>
+          <p className="premium-eyebrow">CLIENT REVIEWS</p>
           <h2 id="reviews-title">
             A little perspective.
             <br />
@@ -51,11 +48,11 @@ export default function ClientTestimonials() {
       aria-labelledby="reviews-title"
     >
       <div className="premium-shell">
-        <p className="premium-eyebrow">03 / CLIENT REVIEWS</p>
+        <p className="premium-eyebrow">CLIENT REVIEWS</p>
         <h2 id="reviews-title">In their words.</h2>
         <div className="premium-testimonials">
           {approved.map((item) => (
-            <figure key={`${item.name}-${item.sourceUrl}`}>
+            <figure key={item.name}>
               <blockquote>
                 <p>{item.quote}</p>
               </blockquote>
@@ -66,13 +63,15 @@ export default function ClientTestimonials() {
                 <div>
                   <strong>{item.name}</strong>
                   {item.company && <span>{item.company}</span>}
-                  <a
-                    href={item.sourceUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Read the original review
-                  </a>
+                  {item.sourceUrl && (
+                    <a
+                      href={item.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Read the original review
+                    </a>
+                  )}
                 </div>
               </figcaption>
             </figure>

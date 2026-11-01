@@ -254,14 +254,10 @@ html[data-season="default"] .site-chrome > header {
 }
 .premium-service {
   display: grid;
-  grid-template-columns: 0.18fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 2rem;
   border-top: 1px solid #24272330;
   padding-block: 2rem;
-}
-.premium-number {
-  color: #656860;
-  font-size: 0.7rem;
 }
 .premium-service h3 {
   font-family: var(--font-geologica), sans-serif;
@@ -637,11 +633,8 @@ html[data-season="default"] .growth-intake-form {
     padding-block: 4.5rem;
   }
   .premium-service {
-    grid-template-columns: 2rem 1fr;
+    grid-template-columns: 1fr;
     gap: 0.8rem 1rem;
-  }
-  .premium-service > div {
-    grid-column: 2;
   }
   .premium-service h3 {
     font-size: 1.1rem;
