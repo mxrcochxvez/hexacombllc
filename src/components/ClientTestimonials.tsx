@@ -16,7 +16,7 @@ export default function ClientTestimonials() {
         aria-labelledby="reviews-title"
       >
         <div className="premium-shell">
-          <p className="premium-eyebrow">03 / CLIENT REVIEWS</p>
+          <p className="premium-eyebrow">CLIENT REVIEWS</p>
           <h2 id="reviews-title">
             A little perspective.
             <br />
@@ -51,7 +51,7 @@ export default function ClientTestimonials() {
       aria-labelledby="reviews-title"
     >
       <div className="premium-shell">
-        <p className="premium-eyebrow">03 / CLIENT REVIEWS</p>
+        <p className="premium-eyebrow">CLIENT REVIEWS</p>
         <h2 id="reviews-title">In their words.</h2>
         <div className="premium-testimonials">
           {approved.map((item) => (
