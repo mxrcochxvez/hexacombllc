@@ -1,3 +1,4 @@
+import { privatePageRobots } from "@/lib/seo";
 import type { Metadata } from "next";
 import { isAdminAuthenticated } from "@/lib/adminAuth";
 import { listLeads } from "@/lib/convex";
@@ -8,7 +9,7 @@ import { OperatePage } from "@/ui";
 
 export const metadata: Metadata = {
   title: "Dashboard",
-  robots: { index: false, follow: false },
+  robots: privatePageRobots,
 };
 
 export const dynamic = "force-dynamic";

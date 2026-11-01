@@ -1,3 +1,4 @@
+import { privatePageRobots } from "@/lib/seo";
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import type { Id } from "@/lib/convex";
@@ -12,7 +13,7 @@ import type { ClientPhase, DesignDemoStatus } from "@/lib/statuses";
 
 export const metadata: Metadata = {
   title: "Client",
-  robots: { index: false, follow: false },
+  robots: privatePageRobots,
 };
 
 export const dynamic = "force-dynamic";

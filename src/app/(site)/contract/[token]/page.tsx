@@ -1,3 +1,4 @@
+import { privatePageRobots } from "@/lib/seo";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { ContractStatus } from "@/lib/statuses";
@@ -6,7 +7,7 @@ import { ContractAcceptForm } from "@/components/ContractAcceptForm";
 
 export const metadata: Metadata = {
   title: "Website agreement",
-  robots: { index: false, follow: false },
+  robots: privatePageRobots,
 };
 
 export const dynamic = "force-dynamic";

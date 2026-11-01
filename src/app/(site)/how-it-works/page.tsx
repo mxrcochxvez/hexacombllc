@@ -1,9 +1,11 @@
+import { pageSocialMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AgencyPageHero } from "@/components/AgencyHero";
+import { AgencyPageHero } from "@/components/AgencyPageHero";
 import CtaSection from "@/components/CtaSection";
 
 export const metadata: Metadata = {
+  ...pageSocialMetadata("/how-it-works", "How It Works | Design, Launch, Then Monthly Care", "Unlimited design until it feels right, then search, your photos, and the domain. After launch, a monthly report and a conversation about what to change."),
   title: "How It Works | Design, Launch, Then Monthly Care",
   description:
     "Unlimited design until it feels right, then search, your photos, and the domain. After launch, a monthly report and a conversation about what to change.",

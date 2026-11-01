@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { AgencyPageHero } from "@/components/AgencyHero";
+import { AgencyPageHero } from "@/components/AgencyPageHero";
 import CtaSection from "@/components/CtaSection";
 
 const pageUrl = "https://hexacombllc.com/human-rights";
@@ -30,14 +30,14 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/hexacomb_logo_wordmark.png",
-        width: 1200,
-        height: 630,
+        width: 800,
+        height: 800,
         alt: "Hexacomb: websites for human rights organizations and nonprofits",
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: pageTitle,
     description: pageDescription,
     images: ["/hexacomb_logo_wordmark.png"],

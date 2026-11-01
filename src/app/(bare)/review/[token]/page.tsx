@@ -1,3 +1,4 @@
+import { privatePageRobots } from "@/lib/seo";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getDesignDemoByToken } from "@/lib/convex";
@@ -5,7 +6,7 @@ import { DesignReviewViewer } from "@/components/DesignReviewViewer";
 
 export const metadata: Metadata = {
   title: "Design review",
-  robots: { index: false, follow: false },
+  robots: privatePageRobots,
 };
 
 export const dynamic = "force-dynamic";

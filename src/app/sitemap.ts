@@ -9,53 +9,60 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: "2026-09-14",
+      lastModified: "2026-11-01",
       changeFrequency: "weekly",
       priority: 1,
     },
     {
       url: `${baseUrl}/about`,
-      lastModified: "2026-09-14",
+      lastModified: "2026-11-01",
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${baseUrl}/how-it-works`,
-      lastModified: "2026-09-14",
+      lastModified: "2026-11-01",
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/pricing`,
-      lastModified: "2026-09-14",
+      lastModified: "2026-11-01",
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/website-audit`,
-      lastModified: "2026-09-14",
+      lastModified: "2026-11-01",
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/human-rights`,
-      lastModified: "2026-09-05",
+      lastModified: "2026-11-01",
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${baseUrl}/blog`,
-      lastModified: "2026-08-23",
+      lastModified: "2026-11-01",
       changeFrequency: "weekly",
       priority: 0.8,
     },
   ];
+  staticPages.push({
+    url: `${baseUrl}/work`,
+    lastModified: "2026-11-01",
+    changeFrequency: "monthly",
+    priority: 0.9,
+  });
   let posts;
   try {
     posts = await listPublishedBlogPosts(100);
   } catch (error) {
     console.error("Sitemap published-post fetch failed:", error);
-    throw error;
+    // Keep public core pages discoverable during a temporary blog-service outage.
+    return staticPages;
   }
   return [
     ...staticPages,

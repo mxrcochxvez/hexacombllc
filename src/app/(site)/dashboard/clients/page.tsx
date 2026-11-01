@@ -1,3 +1,4 @@
+import { privatePageRobots } from "@/lib/seo";
 import type { Metadata } from "next";
 import { isAdminAuthenticated } from "@/lib/adminAuth";
 import {
@@ -10,7 +11,7 @@ import type { ClientPhase } from "@/lib/statuses";
 
 export const metadata: Metadata = {
   title: "Clients",
-  robots: { index: false, follow: false },
+  robots: privatePageRobots,
 };
 
 export const dynamic = "force-dynamic";

@@ -1,12 +1,14 @@
+import { pageSocialMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { AgencyPageHero } from "@/components/AgencyHero";
+import { AgencyPageHero } from "@/components/AgencyPageHero";
 import CtaSection from "@/components/CtaSection";
 import { getBlogCover, isUnoptimizedCover } from "@/lib/blogCover";
 import { listPublishedBlogPosts } from "@/lib/convex";
 
 export const metadata: Metadata = {
+  ...pageSocialMetadata("/blog", "Small business website advice", "Practical website, SEO, analytics, and conversion advice for Fresno, Clovis, and Central Valley small-business owners."),
   title: "Small business website advice",
   description: "Practical website, SEO, analytics, and conversion advice for Fresno, Clovis, and Central Valley small-business owners.",
   alternates: { canonical: "/blog" },

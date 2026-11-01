@@ -1,94 +1,38 @@
-"use client";
-
-import { isHalloween, seasonalCopy } from "@/lib/seasonal-theme";
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import Waves from "@/components/Waves";
-
-const exploreLinks = [
-  { href: "/pricing", label: "Plans & pricing" },
-  { href: "/website-audit", label: "Website audit" },
-  { href: "/how-it-works", label: "How it works" },
-  { href: "/about", label: "About" },
-  { href: "/blog", label: "Blog" },
-  { href: "/human-rights", label: "Nonprofit & causes" },
-  { href: "/intake", label: "Project intake" },
-  { href: "/#contact", label: "Start a project" },
-];
-
 export default function Footer() {
-  const [timeString, setTimeString] = useState("");
-  const year = new Date().getFullYear();
-
-  useEffect(() => {
-    const updateTime = () => {
-      const formatted = new Date().toLocaleTimeString("en-US", {
-        timeZone: "America/Los_Angeles",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      });
-      setTimeString(`${formatted} PT`);
-    };
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <footer className="hobro-footer">
-      {!isHalloween && <div className="hobro-footer-waves" aria-hidden="true">
-        <Waves
-          lineColor="rgba(228, 194, 122, 0.72)"
-          backgroundColor="transparent"
-          waveSpeedX={0.02}
-          waveSpeedY={0.01}
-          waveAmpX={40}
-          waveAmpY={20}
-          friction={0.9}
-          tension={0.01}
-          maxCursorMove={120}
-          xGap={12}
-          yGap={36}
-        />
-      </div>}
-      <div className="hobro-footer-scrim" aria-hidden="true" />
-      <div className="hobro-shell hobro-footer-content">
-        <div className="hobro-footer-wordmark">HEXACOMB</div>
-        <div className="hobro-footer-grid">
+    <footer className="premium-footer">
+      <div className="premium-shell">
+        <div className="premium-footer-top">
           <div>
-            <span className="hobro-footer-title">Agency</span>
+            <Link href="/" className="premium-footer-wordmark">
+              HEXACOMB
+            </Link>
             <p>
-              Clovis & Fresno, California
+              A marketing agency focused on websites.
               <br />
-              {timeString}
+              Clovis, California. Built around your business.
             </p>
-            <p>Your website should be working for you when you can&apos;t.</p>
           </div>
-          <div>
-            <span className="hobro-footer-title">Explore</span>
-            <ul className="hobro-footer-links">
-              {exploreLinks.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href}>{link.label}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <span className="hobro-footer-title">Contact</span>
+          <nav aria-label="Footer">
+            <Link href="/work">Selected work</Link>
+            <Link href="/how-it-works">How it works</Link>
+            <Link href="/pricing">Plans &amp; pricing</Link>
+            <Link href="/website-audit">Website audit</Link>
+            <Link href="/about">About Marco</Link>
+            <Link href="/blog">Insights</Link>
+            <Link href="/human-rights">Nonprofits &amp; causes</Link>
+            <Link href="/intake">Project intake</Link>
+          </nav>
+          <div className="premium-footer-contact">
             <a href="mailto:marco@hexacombllc.com">marco@hexacombllc.com</a>
-            <br />
             <a href="tel:+15594927402">(559) 492-7402</a>
-            <p>Reply from Marco, usually within a day.</p>
           </div>
         </div>
-        <div className="hobro-footer-bottom">
-          <span>© {year} Hexacomb LLC</span>
-          <span>{seasonalCopy("Built in the Central Valley", "Made in Clovis. Dressed for Halloween.")}</span>
-          <span>
-            <Link href="/dashboard">Agency portal</Link>
-          </span>
+        <div className="premium-footer-bottom">
+          <span>© {new Date().getFullYear()} Hexacomb LLC</span>
+          <span>Personally handled. Thoughtfully built.</span>
+          <Link href="/dashboard">Agency portal</Link>
         </div>
       </div>
     </footer>

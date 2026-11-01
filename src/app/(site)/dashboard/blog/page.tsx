@@ -1,10 +1,11 @@
+import { privatePageRobots } from "@/lib/seo";
 import type { Metadata } from "next";
 import { DashboardBlog } from "@/components/DashboardBlog";
 import { DashboardLoginForm } from "@/components/DashboardLoginForm";
 import { isAdminAuthenticated } from "@/lib/adminAuth";
 import { listAdminBlogPosts, listBlogApiKeys } from "@/lib/convex";
 
-export const metadata: Metadata = { title: "Blog dashboard", robots: { index: false, follow: false } };
+export const metadata: Metadata = { title: "Blog dashboard", robots: privatePageRobots };
 export const dynamic = "force-dynamic";
 
 export default async function DashboardBlogPage() {

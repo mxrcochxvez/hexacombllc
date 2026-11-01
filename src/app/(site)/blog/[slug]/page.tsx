@@ -1,3 +1,4 @@
+import { privatePageRobots } from "@/lib/seo";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,7 +15,7 @@ type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPublishedBlogPost(slug).catch(() => null);
-  if (!post) return { title: "Post not found" };
+  if (!post) return { title: "Post not found", robots: privatePageRobots };
   const cover = getBlogCover(post);
   const title = post.metaTitle || post.title;
   const description = post.metaDescription || post.excerpt;
