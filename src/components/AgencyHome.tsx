@@ -53,11 +53,8 @@ const answers = [
 export default function AgencyHome() {
   return (
     <main id="main-content" className="premium-home hobro-page">
-      <section
-        className="premium-hero premium-shell"
-        aria-labelledby="home-title"
-      >
-        <div className="premium-hero-copy">
+      <section className="premium-hero" aria-labelledby="home-title">
+        <div className="premium-hero-copy premium-shell">
           <p className="premium-eyebrow">HEXACOMB · CLOVIS, CALIFORNIA</p>
           <h1 id="home-title">
             A better website.

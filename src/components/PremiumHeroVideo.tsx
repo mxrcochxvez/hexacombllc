@@ -58,7 +58,7 @@ export default function PremiumHeroVideo({
           fill
           preload
           unoptimized
-          sizes="(max-width: 800px) 340px, 370px"
+          sizes="100vw"
           className="premium-film-poster"
         />
       )}
@@ -71,9 +71,8 @@ export default function PremiumHeroVideo({
           muted={muted}
           loop
           playsInline
-          controls
           preload="none"
-          aria-label="Hexacomb website design film"
+          aria-label="Hexacomb background film"
           onVolumeChange={() => setMuted(ref.current?.muted ?? true)}
           onPlay={() => setPaused(false)}
           onPause={() => setPaused(true)}

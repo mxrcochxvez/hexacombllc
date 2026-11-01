@@ -27,3 +27,7 @@ These are eligibility, usability and performance improvements—not a promise of
 ## Seasonal switch
 
 `SITE_THEME` is`default`. Archived Halloween styling/artwork stays dormant; it is not mounted on public pages. The premium homepage is the new baseline, not the old animated laptop hero.
+
+## Hero background
+
+The selected portrait advert fills the hero behind the copy. Desktop uses a cover crop with a 32% vertical focal point, a flat dark overlay, muted inline autoplay and visible pause/sound controls. Reduced-motion and Save-Data visitors see the poster until they choose play. The full portrait composition is necessarily cropped on wider screens.
