@@ -1,9 +1,11 @@
+import { pageSocialMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
-import { AgencyPageHero } from "@/components/AgencyHero";
+import { AgencyPageHero } from "@/components/AgencyPageHero";
 import CtaSection from "@/components/CtaSection";
 import WebsiteAuditTool from "@/components/WebsiteAuditTool";
 
 export const metadata: Metadata = {
+  ...pageSocialMetadata("/website-audit", "Free Website Audit", "See what may be hurting your website's search visibility, speed, and customer trust in plain English."),
   title: "Free Website Audit",
   description: "See what may be hurting your website's search visibility, speed, and customer trust in plain English.",
   alternates: { canonical: "https://hexacombllc.com/website-audit" },

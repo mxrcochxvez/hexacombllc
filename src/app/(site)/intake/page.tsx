@@ -1,14 +1,16 @@
+import { pageSocialMetadata, privatePageRobots } from "@/lib/seo";
 import { seasonalCopy } from "@/lib/seasonal-theme";
 import type { Metadata } from "next";
 import { IntakeForm } from "@/components/IntakeForm";
 
 export const metadata: Metadata = {
+  ...pageSocialMetadata("/intake", "Project Intake | Hexacomb", "Tell us about your project so we can provide a tailored recommendation."),
   title: {
     absolute: "Project Intake | Hexacomb",
   },
   description:
     "Tell us about your project so we can provide a tailored recommendation.",
-  robots: { index: false, follow: false },
+  robots: privatePageRobots,
   alternates: {
     canonical: "https://hexacombllc.com/intake",
   },

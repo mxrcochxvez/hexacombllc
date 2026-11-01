@@ -1,5 +1,6 @@
 import "../marketing-interactions.css";
 import "../site-chrome.css";
+import "../premium.css";
 import Navbar from "@/components/Navbar";
 import CookieBanner from "@/components/CookieBanner";
 import { isHalloween } from "@/lib/seasonal-theme";

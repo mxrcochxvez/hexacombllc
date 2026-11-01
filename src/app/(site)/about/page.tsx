@@ -1,10 +1,12 @@
+import { pageSocialMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { AgencyPageHero } from "@/components/AgencyHero";
+import { AgencyPageHero } from "@/components/AgencyPageHero";
 import CtaSection from "@/components/CtaSection";
 
 export const metadata: Metadata = {
+  ...pageSocialMetadata("/about", "About Marco | Your Website Partner", "Meet Marco, the Fresno-area partner who manages, measures, and grows small-business websites."),
   title: "About Marco | Your Website Partner",
   description: "Meet Marco, the Fresno-area partner who manages, measures, and grows small-business websites.",
   alternates: { canonical: "https://hexacombllc.com/about" },

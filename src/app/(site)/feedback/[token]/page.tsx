@@ -1,3 +1,4 @@
+import { privatePageRobots } from "@/lib/seo";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getClientFeedbackByToken } from "@/lib/convex";
@@ -5,7 +6,7 @@ import { ClientFeedbackForm } from "@/components/ClientFeedbackForm";
 
 export const metadata: Metadata = {
   title: "Share feedback",
-  robots: { index: false, follow: false },
+  robots: privatePageRobots,
 };
 
 export const dynamic = "force-dynamic";

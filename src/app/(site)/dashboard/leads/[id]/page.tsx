@@ -1,3 +1,4 @@
+import { privatePageRobots } from "@/lib/seo";
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import type { Id, ContractStatus, LeadStatus } from "@/lib/convex";
@@ -7,7 +8,7 @@ import { DashboardLeadDetail } from "@/components/DashboardLeadDetail";
 
 export const metadata: Metadata = {
   title: "Lead",
-  robots: { index: false, follow: false },
+  robots: privatePageRobots,
 };
 
 export const dynamic = "force-dynamic";

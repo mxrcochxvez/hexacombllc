@@ -1,41 +1,4 @@
-"use client";
-
-import { seasonalCopy } from "@/lib/seasonal-theme";
 import { ContactFormClient } from "@/components/ContactFormClient";
-import SpotlightCard from "@/components/SpotlightCard";
-
-export default function AgencyContact({
-  initialMessage,
-}: {
-  initialMessage?: string;
-}) {
-  return (
-    <section id="contact" className="hobro-contact">
-      <div className="hobro-shell hobro-contact-grid">
-        <div>
-          <p className="hobro-kicker">Contact</p>
-          <h2>{seasonalCopy("What should the site be bringing in?", "Let’s bring your website back to life.")}</h2>
-          <p>
-            New business, or one whose website went quiet. Say what you do,
-            the towns you cover, and drop the link if you have one. I write
-            back from Clovis, usually within a day. The first note is about
-            your jobs, not a list of packages.
-          </p>
-          <p>
-            <a href="mailto:marco@hexacombllc.com">marco@hexacombllc.com</a>
-            <br />
-            <a href="tel:+15594927402">(559) 492-7402</a>
-          </p>
-        </div>
-        <SpotlightCard
-          className="hobro-contact-panel"
-          spotlightColor="rgba(255, 210, 140, 0.38)"
-        >
-          <div className="hobro-contact-form">
-            <ContactFormClient initialMessage={initialMessage} />
-          </div>
-        </SpotlightCard>
-      </div>
-    </section>
-  );
+export default function AgencyContact({ initialMessage }: { initialMessage?: string }) {
+  return <section id="contact" className="hobro-contact premium-contact" aria-labelledby="contact-heading"><div className="premium-shell hobro-contact-grid"><div><p className="premium-eyebrow">LET’S START A CONVERSATION</p><h2 id="contact-heading">What’s next<br /><em>for your business?</em></h2><p>Tell me what you do, where you work, and what your website should be doing better. I’ll write back personally, usually within a day.</p><div className="premium-contact-links"><a href="mailto:marco@hexacombllc.com">marco@hexacombllc.com</a><a href="tel:+15594927402">(559) 492-7402</a></div><p className="premium-small">Based in Clovis. Working with businesses across the Central Valley.</p></div><div className="hobro-contact-panel"><div className="hobro-contact-form"><ContactFormClient initialMessage={initialMessage} /></div></div></div></section>;
 }

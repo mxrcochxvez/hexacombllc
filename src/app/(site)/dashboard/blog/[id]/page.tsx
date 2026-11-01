@@ -1,3 +1,4 @@
+import { privatePageRobots } from "@/lib/seo";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BlogPostEditor } from "@/components/BlogPostEditor";
@@ -6,7 +7,7 @@ import { DashboardNav } from "@/components/DashboardNav";
 import { isAdminAuthenticated } from "@/lib/adminAuth";
 import { getAdminBlogPost, type Id } from "@/lib/convex";
 
-export const metadata: Metadata = { title: "Edit blog post", robots: { index: false, follow: false } };
+export const metadata: Metadata = { title: "Edit blog post", robots: privatePageRobots };
 export const dynamic = "force-dynamic";
 
 export default async function EditBlogPostPage({ params }: { params: Promise<{ id: string }> }) {

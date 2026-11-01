@@ -1,9 +1,11 @@
+import { pageSocialMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AgencyPageHero } from "@/components/AgencyHero";
+import { AgencyPageHero } from "@/components/AgencyPageHero";
 import CtaSection from "@/components/CtaSection";
 
 export const metadata: Metadata = {
+  ...pageSocialMetadata("/pricing", "Website Care Plans", "Straightforward monthly website plans for keeping your site updated, helping customers find you, and improving it over time."),
   title: "Website Care Plans",
   description: "Straightforward monthly website plans for keeping your site updated, helping customers find you, and improving it over time.",
   alternates: { canonical: "https://hexacombllc.com/pricing" },

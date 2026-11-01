@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { Archivo_Narrow, Atkinson_Hyperlegible, Geologica, Instrument_Serif } from "next/font/google";
+import { Geologica, Instrument_Serif } from "next/font/google";
 import "./brand.css";
 import "./globals.css";
 import "./hobro-agency.css";
@@ -12,18 +12,12 @@ import TrackClicks from "@/components/TrackClicks";
 import UtmCapture from "@/components/UtmCapture";
 import "./halloween.css";
 import { SITE_THEME } from "@/lib/seasonal-theme";
-import SmoothScroll from "@/components/SmoothScroll";
+
 
 const geologica = Geologica({
   variable: "--font-geologica",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-});
-
-const atkinson = Atkinson_Hyperlegible({
-  variable: "--font-atkinson",
-  subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const instrument = Instrument_Serif({
@@ -31,12 +25,6 @@ const instrument = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
   style: ["normal", "italic"],
-});
-
-const archivo = Archivo_Narrow({
-  variable: "--font-condensed",
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
 });
 
 const siteUrl = "https://hexacombllc.com";
@@ -47,103 +35,14 @@ const siteDescription =
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
-    {
-      "@type": "Organization",
-      "@id": `${siteUrl}/#organization`,
-      name: "Hexacomb LLC",
-      url: siteUrl,
-      logo: `${siteUrl}/hexacomb_logo_wordmark.png`,
-      description: siteDescription,
-      foundingDate: "2025",
-      areaServed: [
-        {
-          "@type": "City",
-          name: "Fresno",
-          sameAs: "https://en.wikipedia.org/wiki/Fresno,_California",
-        },
-        { "@type": "City", name: "Clovis" },
-        { "@type": "AdministrativeArea", name: "California Central Valley" },
-      ],
-      knowsAbout: [
-        "Website management",
-        "Website optimization",
-        "Search engine optimization",
-        "Web analytics",
-        "Conversion copywriting",
-        "Local search marketing",
-        "Nonprofit websites",
-        "Human rights organization websites",
-      ],
-      email: "marco@hexacombllc.com",
-      telephone: sitePhone,
-      contactPoint: {
-        "@type": "ContactPoint",
-        email: "marco@hexacombllc.com",
-        telephone: sitePhone,
-        contactType: "sales",
-        areaServed: ["US-CA"],
-        availableLanguage: ["English"],
-      },
-    },
-    {
-      "@type": "LocalBusiness",
-      "@id": `${siteUrl}/#localbusiness`,
-      name: "Hexacomb LLC",
-      url: siteUrl,
-      email: "marco@hexacombllc.com",
-      telephone: sitePhone,
-      image: `${siteUrl}/hexacomb_logo_wordmark.png`,
-      description:
-        "Local website growth partner serving Fresno, Clovis, and Central Valley businesses.",
-      areaServed: {
-        "@type": "GeoCircle",
-        geoMidpoint: {
-          "@type": "GeoCoordinates",
-          latitude: 36.7378,
-          longitude: -119.7871,
-        },
-        geoRadius: "100000",
-      },
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Fresno",
-        addressRegion: "CA",
-        addressCountry: "US",
-      },
-      priceRange: "$$",
-    },
-    {
-      "@type": "WebSite",
-      "@id": `${siteUrl}/#website`,
-      url: siteUrl,
-      name: "Hexacomb: ongoing website growth for local businesses",
-      description: siteDescription,
-      publisher: { "@id": `${siteUrl}/#organization` },
-      inLanguage: "en-US",
-    },
-    {
-      "@type": "ProfessionalService",
-      "@id": `${siteUrl}/#service`,
-      name: "Hexacomb LLC",
-      url: siteUrl,
-      image: `${siteUrl}/hexacomb_logo_wordmark.png`,
-      description: siteDescription,
-      priceRange: "$$",
-      areaServed: ["Fresno, CA", "Clovis, CA", "Central Valley, CA"],
-      provider: { "@id": `${siteUrl}/#organization` },
-      serviceType: [
-        "Ongoing website management",
-        "Search engine optimization",
-        "Website analytics",
-        "Conversion copywriting",
-        "Website design and development",
-      ],
-    },
-  ],
+    { "@type": ["Organization", "ProfessionalService"], "@id": `${siteUrl}/#organization`, name: "Hexacomb LLC", url: siteUrl, logo: `${siteUrl}/hexacomb_logo_wordmark.png`, image: `${siteUrl}/hexacomb_logo_wordmark.png`, description: siteDescription, email: "marco@hexacombllc.com", telephone: sitePhone, founder: { "@id": `${siteUrl}/#marco` }, address: { "@type": "PostalAddress", addressLocality: "Clovis", addressRegion: "CA", addressCountry: "US" }, areaServed: ["Fresno, California", "Clovis, California", "California Central Valley"] },
+    { "@type": "Person", "@id": `${siteUrl}/#marco`, name: "Marco Chavez", url: `${siteUrl}/about`, jobTitle: "Founder", worksFor: { "@id": `${siteUrl}/#organization` } },
+    { "@type": "WebSite", "@id": `${siteUrl}/#website`, url: siteUrl, name: "Hexacomb", description: siteDescription, publisher: { "@id": `${siteUrl}/#organization` }, inLanguage: "en-US" }
+  ]
 };
 
 export const viewport: Viewport = {
-  themeColor: "#080910",
+  themeColor: "#f3f1eb",
 };
 
 export const metadata: Metadata = {
@@ -187,13 +86,6 @@ export const metadata: Metadata = {
     "max-image-preview": "large",
     "max-snippet": -1,
     "max-video-preview": -1,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
   },
   openGraph: {
     type: "website",
@@ -205,8 +97,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/hexacomb_logo_wordmark.png",
-        width: 1200,
-        height: 630,
+        width: 800,
+        height: 800,
         alt: "Hexacomb: ongoing website growth for Fresno and Clovis small businesses",
       },
     ],
@@ -241,17 +133,9 @@ export default function RootLayout({
     <html
       lang="en"
       data-season={SITE_THEME}
-      className={`${geologica.variable} ${atkinson.variable} ${instrument.variable} ${archivo.variable}`}
+      className={`${geologica.variable} ${instrument.variable}`}
     >
       <body>
-        {/*
-          THESIS: Continuous website ownership keeps the search→site→call flow open—not a static brochure site.
-          OWN-WORLD: Irrigation Canal Blueprint — sun-bleached concrete canvas, canal-teal surfaces, blueprint navy ink, citrus sluice-gate CTAs, condensed Geologica + Atkinson.
-          STORY: Visitor feels neglect as a dry field, believes Hexacomb keeps care flowing, starts a conversation.
-          FIRST VIEWPORT: Hero-scale HEXACOMB title block left, cycling local outcomes, one citrus CTA, live flow diagram right.
-          FORM: Irrigation Canal Blueprint (grounded #3, seed 5fa491f1).
-          FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
-        */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
@@ -261,9 +145,9 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <UtmCapture />
         </Suspense>
-        <SmoothScroll>{children}</SmoothScroll>
+        {children}
+        <GoogleAnalytics gaId="G-3JYGDR8ZVE" />
       </body>
-      <GoogleAnalytics gaId="G-3JYGDR8ZVE" />
     </html>
   );
 }
