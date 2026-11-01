@@ -2,7 +2,7 @@
 import Link from "next/link";
 import ArrowIcon from "@/components/ArrowIcon";
 const links = [
-  { href: "/#services", label: "Services" },
+  { href: "/website-design", label: "Website design" },
   { href: "/work", label: "Work" },
   { href: "/about", label: "About" },
   { href: "/pricing", label: "Pricing" },

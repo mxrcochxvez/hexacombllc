@@ -1,4 +1,5 @@
-export type CaseId = "unreelviews" | "thebugdude" | "m5painting" | "aacpainters" | "ruiz";
+export type CaseId =
+  "unreelviews" | "thebugdude" | "m5painting" | "aacpainters" | "ruiz";
 
 export type CaseStudy = {
   id: CaseId;
@@ -21,12 +22,19 @@ export const clientCaseStudies: CaseStudy[] = [
     liveUrl: "https://aac-painters.marcode-chavez-jr.workers.dev/",
     imageSrc: "/images/cases/aacpainters-home.jpg",
     tags: ["Painting", "Epoxy flooring", "Estimates"],
-    summary: "A colorful home for painting, commercial finishes and epoxy flooring. Clear services, real project work, and an easy next step.",
+    summary:
+      "A colorful home for painting, commercial finishes and epoxy flooring. Clear services, real project work, and an easy next step.",
     city: "Central Valley & Bay Area",
     isPreview: true,
-    clientDescription: "AAC Painters offers residential and commercial painting, epoxy flooring and surface services across the Central Valley and Bay Area.",
-    solutionDescription: "The website brings their services, project gallery and estimate request into one straightforward browsing experience.",
-    highlights: ["Dedicated service pages", "Project photos and videos", "Clear estimate and phone links"],
+    clientDescription:
+      "AAC Painters offers residential and commercial painting, epoxy flooring and surface services across the Central Valley and Bay Area.",
+    solutionDescription:
+      "The website brings their services, project gallery and estimate request into one straightforward browsing experience.",
+    highlights: [
+      "Dedicated service pages",
+      "Project photos and videos",
+      "Clear estimate and phone links",
+    ],
   },
   {
     id: "ruiz",
@@ -34,12 +42,19 @@ export const clientCaseStudies: CaseStudy[] = [
     liveUrl: "https://ruiz-ent.marcode-chavez-jr.workers.dev/",
     imageSrc: "/images/cases/ruiz-home.jpg",
     tags: ["Engineering", "Concrete", "Masonry"],
-    summary: "Big plans, solid work. A practical showcase for general engineering, concrete and masonry, with the work front and center.",
+    summary:
+      "Big plans, solid work. A practical showcase for general engineering, concrete and masonry, with the work front and center.",
     city: "Kingsburg, California",
     isPreview: true,
-    clientDescription: "Ruiz Family Enterprises is based in Kingsburg and handles general engineering, concrete and masonry projects across the Central Valley.",
-    solutionDescription: "The website organizes the service range and project work so visitors can find the right service and discuss their project.",
-    highlights: ["Organized service categories", "Project work galleries", "Direct project inquiry links"],
+    clientDescription:
+      "Ruiz Family Enterprises is based in Kingsburg and handles general engineering, concrete and masonry projects across the Central Valley.",
+    solutionDescription:
+      "The website organizes the service range and project work so visitors can find the right service and discuss their project.",
+    highlights: [
+      "Organized service categories",
+      "Project work galleries",
+      "Direct project inquiry links",
+    ],
   },
   {
     id: "unreelviews",
@@ -47,7 +62,8 @@ export const clientCaseStudies: CaseStudy[] = [
     liveUrl: "https://unreelviews.com/",
     imageSrc: "/images/cases/unreelviews-home.jpg",
     tags: ["Brand", "Web", "Video"],
-    summary: "A video and positioning studio in Fresno. The site has to feel as sharp as the work.",
+    summary:
+      "A video and positioning studio in Fresno. The site has to feel as sharp as the work.",
     city: "Fresno",
     clientDescription:
       "Unreelviews is a Fresno video production and brand-positioning studio. Their site had to carry the same energy as the films they make, without slowing down on a phone.",
@@ -65,16 +81,17 @@ export const clientCaseStudies: CaseStudy[] = [
     liveUrl: "https://www.thebugdudepestcontrol.com/",
     imageSrc: "/images/cases/thebugdude-home.jpg",
     tags: ["Local search", "Web", "Calls"],
-    summary: "Pest control in Fresno and Clovis. When something is in the house, the next tap is a phone call.",
+    summary:
+      "Pest control in Fresno and Clovis. When something is in the house, the next tap is a phone call.",
     city: "Fresno",
     clientDescription:
       "A Fresno and Clovis pest-control company. People find them in a hurry, usually on a phone, usually after they have already seen the bug.",
     solutionDescription:
       "We designed a one-purpose site: prove they are local, show the service area, and put a call button where a thumb already is.",
     highlights: [
-      "Tap-to-call on every screen",
-      "Service-area pages for Fresno neighborhoods",
-      "Local search markup for the Google map pack",
+      "Direct call, text and booking links",
+      "Service-area information for Fresno and Madera counties",
+      "Pest-specific pages and clear local business information",
     ],
   },
   {
@@ -83,16 +100,17 @@ export const clientCaseStudies: CaseStudy[] = [
     liveUrl: "https://m5painting.com/",
     imageSrc: "/images/cases/m5painting-home.jpg",
     tags: ["Brand", "Web", "Estimates"],
-    summary: "A Sanger painting contractor. Licensed, bonded, and easy to request an estimate from.",
+    summary:
+      "A Sanger painting contractor. Licensed, bonded, and easy to request an estimate from.",
     city: "Sanger",
     clientDescription:
       "M5 Painting is a family painting contractor in Sanger, working homes and commercial jobs across the Central Valley.",
     solutionDescription:
       "We gave them a site that leads with proof (license, insurance, reviews) and an estimate path that does not feel like a form gauntlet.",
     highlights: [
-      "Instant estimate path by room and square footage",
+      "Estimate request form, phone and email links",
       "Trust credentials on the first screen",
-      "Before-and-after work in a layout that still loads quickly",
+      "Project media and dedicated painting service pages",
     ],
   },
 ];

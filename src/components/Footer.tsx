@@ -15,6 +15,7 @@ export default function Footer() {
             </p>
           </div>
           <nav aria-label="Footer">
+            <Link href="/website-design">Website design</Link>
             <Link href="/work">Selected work</Link>
             <Link href="/how-it-works">How it works</Link>
             <Link href="/pricing">Plans &amp; pricing</Link>

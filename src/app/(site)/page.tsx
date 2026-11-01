@@ -20,7 +20,7 @@ const services = {
       serviceType: "Website design",
       description: "Website design, copy and development for small businesses.",
       provider: { "@id": "https://hexacombllc.com/#organization" },
-      url: "https://hexacombllc.com/#services",
+      url: "https://hexacombllc.com/website-design",
       areaServed: ["Fresno", "Clovis", "California Central Valley"],
     },
     {
