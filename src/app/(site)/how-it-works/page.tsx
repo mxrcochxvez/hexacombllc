@@ -5,10 +5,10 @@ import { AgencyPageHero } from "@/components/AgencyPageHero";
 import CtaSection from "@/components/CtaSection";
 
 export const metadata: Metadata = {
-  ...pageSocialMetadata("/how-it-works", "How It Works | Design, Launch, Then Monthly Care", "Unlimited design until it feels right, then search, your photos, and the domain. After launch, a monthly report and a conversation about what to change."),
+  ...pageSocialMetadata("/how-it-works", "How It Works | Design, Launch, Then Monthly Care", "Unlimited design until it feels right, then search, your photos, and the domain. After launch, support follows the care plan we agree on."),
   title: "How It Works | Design, Launch, Then Monthly Care",
   description:
-    "Unlimited design until it feels right, then search, your photos, and the domain. After launch, a monthly report and a conversation about what to change.",
+    "Unlimited design until it feels right, then search, your photos, and the domain. After launch, support follows the care plan we agree on.",
   alternates: { canonical: "https://hexacombllc.com/how-it-works" },
 };
 
@@ -47,15 +47,20 @@ const build: Chapter[] = [
 const launch = {
   title: "Then it's up.",
   story:
-    "The project part is over. Customers can find the site, see the work, and take the next step. Care starts now.",
+    "The project part is over. Customers can find the site, see the work, and take the next step. After launch, support follows the care plan we agree on.",
 };
 
 const care: Chapter[] = [
   {
-    title: "I pull the report. We talk. I change what needs changing.",
+    title: "The essentials stay handled.",
     story:
-      "Each month I look at search, AI answers, and generated results. People call that SEO, AEO, and GEO. If a page slipped, a listing looks wrong, or a competitor started showing up, we talk about it. Then I make the change. You do not get a PDF to decode on a Tuesday night.",
-    you: "One conversation. I bring the findings.",
+      "Every care plan includes hosting, SSL, maintenance, backups and support. Starter keeps those essentials covered. We agree on what your website needs before work begins.",
+  },
+  {
+    title: "Updates and reporting match your plan.",
+    story:
+      "Growing adds simple website reporting, small monthly content updates and a quarterly check-in. Established includes ongoing search improvements, inquiry tracking, more content updates, integrations and a monthly planning call. Enterprise support is scoped individually.",
+    you: "Need work outside the plan? You see the quote before it starts.",
   },
 ];
 
@@ -80,13 +85,13 @@ export default function HowItWorksPage() {
     <main id="main-content" className="hobro-page">
       <AgencyPageHero
         kicker="How it works"
-        title="The design keeps going until you like it. Then the site goes live. Then we talk every month."
+        title="The design keeps going until you like it. Then the site goes live. Care follows your plan."
         lead={
           <>
             <p>
               You should not have to manage a website project. You react to the
-              design. I do the rest, get it live, and then we look at the
-              numbers together each month.
+              design. I do the rest and get it live. After launch, support
+              follows the care plan we agree on.
             </p>
             <p>
               Already have a site? We start at the step that is still
@@ -141,8 +146,8 @@ export default function HowItWorksPage() {
         <div className="hobro-shell">
           <div className="hobro-offer-head">
             <p className="hobro-kicker">Keeping it working</p>
-            <h2 id="care-heading">Every month, a report and a conversation.</h2>
-            <p>Launch is not the last time we talk.</p>
+            <h2 id="care-heading">Ongoing support, with a clear scope.</h2>
+            <p>After launch, support follows the care plan we agree on.{" "}<Link href="/pricing">Compare the current care plans</Link>.</p>
           </div>
           <ChapterList chapters={care} />
         </div>

@@ -139,6 +139,38 @@ export default async function PricingPage({
           </div>
         </div>
       </section>
+      <section className="hobro-white hobro-band" aria-labelledby="pricing-questions-heading">
+        <div className="hobro-shell">
+          <div className="hobro-offer-head">
+            <p className="hobro-kicker">Before you choose</p>
+            <h2 id="pricing-questions-heading">Build costs and ongoing care.</h2>
+          </div>
+          <div className="hobro-terms">
+            <div>
+              <h3>Is a new website included in the monthly price?</h3>
+              <p>
+                No. A new website is a one-time build, quoted separately based
+                on its pages, content and functionality. The monthly prices
+                above are for ongoing care.{" "}
+                <Link href="/website-design">Explore website design</Link> or{" "}
+                <Link href="#contact">request a website quote</Link>.
+              </p>
+            </div>
+            <div>
+              <h3>What does a care plan include?</h3>
+              <p>
+                Every plan includes hosting, SSL, maintenance, backups and
+                support. Starter covers the essentials. Growing adds simple
+                reporting, small monthly content updates and a quarterly
+                check-in. Established includes ongoing search improvements,
+                inquiry tracking, more content updates, integrations and a
+                monthly planning call. Enterprise scope is agreed individually.
+                The plan details above show the current inclusions.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
       <CtaSection initialMessage={planMessage} />
     </main>
   );

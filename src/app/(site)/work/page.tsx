@@ -4,13 +4,13 @@ import { pageSocialMetadata } from "@/lib/seo";
 import PortfolioShowcase from "@/components/PortfolioShowcase";
 import AgencyContact from "@/components/AgencyContact";
 export const metadata: Metadata = {
-  title: "Website design portfolio",
+  title: "Website Design Portfolio for Fresno & Clovis",
   description:
     "Explore websites by Hexacomb for AAC Painters, Ruiz Family Enterprises, Unreelviews, The Bug Dude Fresno and M5 Painting.",
   alternates: { canonical: "/work" },
   ...pageSocialMetadata(
     "/work",
-    "Website design portfolio | Hexacomb",
+    "Website Design Portfolio for Fresno & Clovis | Hexacomb",
     "Real websites for Central Valley businesses. Browse the work and visit each project.",
   ),
 };

@@ -9,7 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: "2026-11-01",
+      lastModified: "2026-11-03",
       changeFrequency: "weekly",
       priority: 1,
     },
@@ -21,13 +21,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${baseUrl}/how-it-works`,
-      lastModified: "2026-11-01",
+      lastModified: "2026-11-03",
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/pricing`,
-      lastModified: "2026-11-01",
+      lastModified: "2026-11-03",
       changeFrequency: "monthly",
       priority: 0.9,
     },
@@ -52,20 +52,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
   staticPages.push({
     url: `${baseUrl}/work`,
-    lastModified: "2026-11-01",
+    lastModified: "2026-11-03",
     changeFrequency: "monthly",
     priority: 0.9,
   });
   for (const path of [
     "/website-design",
+    "/local-seo",
     "/work/m5-painting",
     "/work/the-bug-dude",
   ]) {
     staticPages.push({
       url: `${baseUrl}${path}`,
-      lastModified: "2026-11-01",
+      lastModified: ["/website-design", "/local-seo"].includes(path) ? "2026-11-03" : "2026-11-01",
       changeFrequency: "monthly",
-      priority: path === "/website-design" ? 0.9 : 0.7,
+      priority: ["/website-design", "/local-seo"].includes(path) ? 0.9 : 0.7,
     });
   }
   let posts;

@@ -16,11 +16,13 @@ export default function Footer() {
           </div>
           <nav aria-label="Footer">
             <Link href="/website-design">Website design</Link>
+            <Link href="/local-seo">Local SEO</Link>
             <Link href="/work">Selected work</Link>
             <Link href="/how-it-works">How it works</Link>
             <Link href="/pricing">Plans &amp; pricing</Link>
             <Link href="/website-audit">Website audit</Link>
             <Link href="/about">About Marco</Link>
+            <Link href="/#reviews">Client feedback</Link>
             <Link href="/blog">Insights</Link>
             <Link href="/human-rights">Nonprofits &amp; causes</Link>
             <Link href="/intake">Project intake</Link>
