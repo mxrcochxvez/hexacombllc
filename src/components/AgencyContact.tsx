@@ -19,8 +19,9 @@ export default function AgencyContact({
             <em>for your business?</em>
           </h2>
           <p>
-            Tell me what you do, where you work, and what your website should be
-            doing better. I’ll write back personally, usually within a day.
+            Tell me whether you need a new website, a redesign, or ongoing care.
+            Share what you do, where you work, and what you want to improve.
+            I’ll write back personally, usually within a day.
           </p>
           <div className="premium-contact-links">
             <a href="mailto:marco@hexacombllc.com">marco@hexacombllc.com</a>

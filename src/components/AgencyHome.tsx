@@ -18,8 +18,8 @@ const services = [
     name: "Local SEO & search visibility.",
     detail:
       "Local SEO, useful service pages and clear business information. A foundation that helps search engines and AI answers understand what you do and where you work.",
-    href: "/website-audit",
-    link: "Check your website",
+    href: "/local-seo",
+    link: "Explore local SEO",
   },
   {
     name: "Website hosting & ongoing care.",
@@ -67,7 +67,7 @@ export default function AgencyHome() {
           </p>
           <div className="premium-actions">
             <Link className="premium-button" href="#contact">
-              Let’s talk about your website <ArrowIcon />
+              Request a website quote <ArrowIcon />
             </Link>
             <Link className="premium-text-link" href="/work">
               View selected work

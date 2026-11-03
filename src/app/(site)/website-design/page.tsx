@@ -98,7 +98,7 @@ export default function WebsiteDesignPage() {
         </p>
         <div className="premium-actions">
           <Link href="#contact" className="premium-button">
-            Talk about your website
+            Request a website quote
           </Link>
           <Link href="#local-work" className="premium-text-link">
             See local examples
@@ -220,12 +220,26 @@ export default function WebsiteDesignPage() {
           </p>
         </article>
         <article>
-          <h3>Can you help with an existing website?</h3>
+          <h3>Should I improve my existing website or rebuild it?</h3>
           <p>
-            Yes. A redesign is not always the first step. Clearer service copy,
-            a better contact path or a technical fix may be more useful.{" "}
+            A rebuild is not always the first step. If the structure still works,
+            clearer service copy, a better contact path or a technical fix may
+            be enough. If the site no longer fits your services or is difficult
+            to use and maintain, a rebuild may make more sense. We review what
+            you have before recommending the scope.{" "}
             <Link href="/website-audit">Start with the free website audit</Link>{" "}
             if you want a first look.
+          </p>
+        </article>
+        <article>
+          <h3>How much does a small-business website cost?</h3>
+          <p>
+            New websites are quoted for the work involved: the number of pages,
+            copy and image needs, forms, integrations and special functionality.
+            We agree on the scope and quote before work starts. The one-time
+            build is separate from ongoing hosting and care.{" "}
+            <Link href="/pricing">See current care plans</Link> or{" "}
+            <Link href="#contact">request a website quote</Link>.
           </p>
         </article>
         <article>

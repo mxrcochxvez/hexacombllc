@@ -354,7 +354,7 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
           ref={messageRef}
           rows={3}
           defaultValue={initialMessage}
-          placeholder="Describe what you're trying to get done…"
+          placeholder="Do you need a new website, a redesign, or ongoing care? Tell me about your business and what you want to improve…"
           disabled={status === "sending"}
           maxLength={1000}
           className={inputClass}

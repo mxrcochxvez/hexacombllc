@@ -34,7 +34,7 @@ export default function Navbar() {
             </Link>
           ))}
           <Link href="/#contact" className="premium-nav-cta">
-            Let’s talk <ArrowIcon />
+            Contact <ArrowIcon />
           </Link>
         </nav>
         <details className="premium-mobile-nav">
@@ -42,7 +42,7 @@ export default function Navbar() {
             Menu <span aria-hidden="true">+</span>
           </summary>
           <nav aria-label="Mobile">
-            {[...links, { href: "/#contact", label: "Let’s talk" }].map((l) => (
+            {[...links, { href: "/#contact", label: "Contact" }].map((l) => (
               <Link
                 href={l.href}
                 key={l.href}
