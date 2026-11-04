@@ -39,7 +39,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${baseUrl}/human-rights`,
-      lastModified: "2026-11-01",
+      lastModified: "2026-11-04",
       changeFrequency: "monthly",
       priority: 0.8,
     },
