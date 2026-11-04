@@ -30,7 +30,8 @@ const services = {
       description:
         "Local SEO, useful service pages and clear business information.",
       provider: { "@id": "https://hexacombllc.com/#organization" },
-      url: "https://hexacombllc.com/website-audit",
+      url: "https://hexacombllc.com/local-seo",
+      areaServed: ["Fresno", "Clovis", "California Central Valley"],
     },
     {
       "@type": "Service",

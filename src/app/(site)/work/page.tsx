@@ -32,6 +32,11 @@ export default function WorkPage() {
           </Link>
           .
         </p>
+        <p>
+          The project stories show how service information, local coverage and
+          contact paths fit together. For search-focused website improvements,{" "}
+          <Link href="/local-seo">explore local SEO in Fresno and Clovis</Link>.
+        </p>
       </div>
       <PortfolioShowcase />
       <AgencyContact />

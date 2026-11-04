@@ -257,7 +257,9 @@ export default function WebsiteDesignPage() {
             No. Useful content and a well-built site give search engines clearer
             information, but rankings, indexing and inclusion in AI answers are
             not guaranteed. Ongoing search work is a separate conversation about
-            priorities, not a promise of a particular position.
+            priorities, not a promise of a particular position.{" "}
+            <Link href="/local-seo">Explore local SEO for Fresno and Clovis</Link>{" "}
+            for service-page, business-information and search improvements.
           </p>
         </article>
         <p className="service-support">

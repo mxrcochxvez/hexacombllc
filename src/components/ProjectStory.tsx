@@ -149,6 +149,9 @@ export default function ProjectStory({ slug }: { slug: ProjectStorySlug }) {
           <Link href="/website-design" className="premium-text-link">
             Website design in Fresno &amp; Clovis
           </Link>
+          <Link href="/local-seo" className="premium-text-link">
+            Local SEO &amp; service-page improvements
+          </Link>
           <Link
             href={`/work/${project.relatedSlug}`}
             className="premium-text-link"
