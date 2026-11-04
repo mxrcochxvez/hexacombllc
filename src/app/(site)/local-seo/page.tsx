@@ -130,6 +130,43 @@ export default function LocalSeoPage() {
           </p>
         </div>
       </section>
+      <section className="premium-shell service-section" aria-labelledby="seo-projects-heading">
+        <p className="premium-eyebrow">LOCAL WEBSITES, IN CONTEXT</p>
+        <h2 id="seo-projects-heading">Real services. <em>Clear local information.</em></h2>
+        <p className="service-support">
+          See how two Central Valley websites organize the details a local
+          customer needs. These project stories describe the pages and contact
+          paths, not measured rankings, traffic or lead results.
+        </p>
+        <div className="service-grid">
+          <article>
+            <h3>M5 Painting in Sanger</h3>
+            <p>
+              Dedicated painting-service pages, service-area information and
+              project media help a visitor understand the work before asking
+              for an estimate.
+            </p>
+            <Link href="/work/m5-painting" className="premium-text-link">
+              Read the M5 Painting project story
+            </Link>
+          </article>
+          <article>
+            <h3>The Bug Dude Fresno</h3>
+            <p>
+              Pest-specific pages and Fresno and Madera county coverage
+              information give customers a useful starting point, with direct
+              call, text and booking options.
+            </p>
+            <Link href="/work/the-bug-dude" className="premium-text-link">
+              Read The Bug Dude project story
+            </Link>
+          </article>
+        </div>
+        <p className="service-support">
+          <Link href="/work">Browse all five website projects</Link> for more
+          examples of local businesses and their websites.
+        </p>
+      </section>
       <section className="service-band" aria-labelledby="seo-questions-heading">
         <div className="premium-shell service-questions">
           <p className="premium-eyebrow">BEFORE WE START</p>

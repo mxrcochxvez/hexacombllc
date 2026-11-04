@@ -66,13 +66,13 @@ export const clientCaseStudies: CaseStudy[] = [
       "A video and positioning studio in Fresno. The site has to feel as sharp as the work.",
     city: "Fresno",
     clientDescription:
-      "Unreelviews is a Fresno video production and brand-positioning studio. Their site had to carry the same energy as the films they make, without slowing down on a phone.",
+      "Unreelviews is a Fresno video production and brand-positioning studio working across the Central Valley and California. Its website puts films and the production process at the center of the experience.",
     solutionDescription:
-      "We built a custom Next.js site around their velocity offer, with a mobile path that gets a serious inquiry in as few taps as possible.",
+      "The website brings selected films, creative strategy, production details and project inquiries into one browsing path, with a choice to skip the introduction and go straight to the work.",
     highlights: [
-      "Custom offer architecture for their velocity tiers",
-      "Fast loading for heavy video embeds",
-      "Copy that qualifies the right clients before a call",
+      "Selected films with individual playback controls",
+      "Clear strategy, production and launch process",
+      "Practical FAQs and direct project inquiry links",
     ],
   },
   {
