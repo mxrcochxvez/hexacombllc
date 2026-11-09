@@ -6,7 +6,7 @@ import { pageSocialMetadata } from "@/lib/seo";
 
 const title = "Website Design for Fresno & Clovis Businesses";
 const description =
-  "Work directly with Marco Chavez in Clovis on website design, copy, development and ongoing care. Explore local projects and discuss the right scope for your business.";
+  "Website design, copy and development for Fresno and Clovis businesses. Work directly with Marco Chavez, explore local projects and plan ongoing care.";
 export const metadata: Metadata = {
   title,
   description,

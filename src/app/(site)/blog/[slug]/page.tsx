@@ -1,4 +1,4 @@
-import { privatePageRobots } from "@/lib/seo";
+import { blogMetadataTitle, privatePageRobots } from "@/lib/seo";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = post.metaDescription || post.excerpt;
   const images = cover ? [{ url: cover.url }] : undefined;
   return {
-    title,
+    title: blogMetadataTitle(title),
     description,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {

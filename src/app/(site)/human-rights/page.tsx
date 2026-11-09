@@ -5,9 +5,9 @@ import { AgencyPageHero } from "@/components/AgencyPageHero";
 import CtaSection from "@/components/CtaSection";
 
 const pageUrl = "https://hexacombllc.com/human-rights";
-const pageTitle = "Websites for Human Rights Organizations and Nonprofits";
+const pageTitle = "Web Design for Human Rights & Nonprofits";
 const pageDescription =
-  "Marco at Hexacomb builds websites for human rights organizations and nonprofits — so the people behind the work have a face, a story, and a clear way for others to help.";
+  "Websites for human rights organizations and nonprofits, built by Marco at Hexacomb. Tell your story and make it easier for people to donate, volunteer or help.";
 
 export const metadata: Metadata = {
   title: pageTitle,

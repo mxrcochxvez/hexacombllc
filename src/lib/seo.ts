@@ -23,3 +23,9 @@ export const privatePageRobots: Metadata["robots"] = {
   follow: false,
   googleBot: { index: false, follow: false },
 };
+
+/** Keep the full editorial title; branding is optional when space is tight. */
+export function blogMetadataTitle(title: string): { absolute: string } {
+  const brandedTitle = `${title} | Hexacomb`;
+  return { absolute: brandedTitle.length <= 60 ? brandedTitle : title };
+}
