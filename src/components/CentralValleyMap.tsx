@@ -27,6 +27,8 @@ export default function CentralValleyMap() {
           <img
             src="/images/fresno_satellite_dark.jpg"
             alt=""
+            loading="lazy"
+            decoding="async"
             width={1376}
             height={768}
           />

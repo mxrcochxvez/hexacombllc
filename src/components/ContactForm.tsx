@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { track, trackGA4 } from "@/lib/analytics";
 import { getUtm } from "@/lib/utmClient";
+import { observeNearby } from "@/lib/deferred-media";
 
 const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "0x4AAAAAADC6NwtGoO-9AuVg";
 
@@ -60,6 +61,13 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const statusRef = useRef<HTMLDivElement>(null);
   const messageRef = useRef<HTMLTextAreaElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const [securityReady, setSecurityReady] = useState(false);
+
+  useEffect(() => {
+    if (!formRef.current) return;
+    return observeNearby(formRef.current, () => setSecurityReady(true));
+  }, []);
 
   useEffect(() => {
     if (messageRef.current && !messageRef.current.value) {
@@ -222,7 +230,7 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
   const isSubmitDisabled = status === "sending" || !turnstileToken;
 
   return (
-    <form className="hobro-form" onSubmit={handleSubmit} aria-label="Contact form" noValidate>
+    <form ref={formRef} onFocusCapture={() => setSecurityReady(true)} className="hobro-form" onSubmit={handleSubmit} aria-label="Contact form" noValidate>
       <div className="hobro-form-row">
         <div className={fieldWrap}>
           <label htmlFor="name" className={labelClass}>
@@ -361,13 +369,13 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
         />
       </div>
 
-      <div className="hobro-turnstile">
-        <Turnstile
+      <div className="hobro-turnstile" style={{ minHeight: 65 }}>
+        {securityReady && <Turnstile
           siteKey={SITE_KEY}
           onSuccess={setTurnstileToken}
           onExpire={() => setTurnstileToken(null)}
           onError={() => setTurnstileToken(null)}
-        />
+        />}
       </div>
 
       {errorMsg && (
