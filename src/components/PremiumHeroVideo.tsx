@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { afterPagePaint } from "@/lib/deferred-media";
 
 export default function PremiumHeroVideo({
   src,
@@ -10,8 +11,9 @@ export default function PremiumHeroVideo({
   poster: string | null;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
+  const cancelAutoplay = useRef(() => {});
   const [enabled, setEnabled] = useState(false);
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(true);
   const [muted, setMuted] = useState(true);
   useEffect(() => {
     const motion = matchMedia("(prefers-reduced-motion: reduce)");
@@ -19,17 +21,31 @@ export default function PremiumHeroVideo({
       navigator as Navigator & { connection?: { saveData?: boolean } }
     ).connection;
     const update = () => {
-      setEnabled(!motion.matches && !connection?.saveData);
-      setPaused(motion.matches || !!connection?.saveData);
+      cancelAutoplay.current();
+      const shouldPlay = !motion.matches && !connection?.saveData;
+      if (!shouldPlay) {
+        ref.current?.pause();
+        setEnabled(false);
+        setPaused(true);
+        return;
+      }
+      // Let the poster and page finish loading/painting before downloading film.
+      cancelAutoplay.current = afterPagePaint(window, () => {
+        if (!motion.matches && !connection?.saveData) setEnabled(true);
+      });
     };
     update();
     motion.addEventListener("change", update);
-    return () => motion.removeEventListener("change", update);
+    return () => {
+      cancelAutoplay.current();
+      motion.removeEventListener("change", update);
+    };
   }, []);
   useEffect(() => {
     if (enabled) void ref.current?.play().catch(() => setPaused(true));
   }, [enabled]);
   async function toggle() {
+    cancelAutoplay.current();
     if (!enabled) {
       setEnabled(true);
       setPaused(false);
@@ -56,7 +72,8 @@ export default function PremiumHeroVideo({
           src={poster}
           alt=""
           fill
-          preload
+          loading="eager"
+          fetchPriority="high"
           unoptimized
           sizes="100vw"
           className="premium-film-poster"
