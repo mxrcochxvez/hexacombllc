@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { track } from "@/lib/analytics";
+import { track, trackGA4 } from "@/lib/analytics";
 
 /**
  * Global click tracker using event delegation.
@@ -13,7 +13,20 @@ import { track } from "@/lib/analytics";
 export default function TrackClicks() {
   useEffect(() => {
     const handler = (e: MouseEvent) => {
-      const el = (e.target as HTMLElement).closest<HTMLElement>("[data-track]");
+      if (!(e.target instanceof Element)) return;
+
+      // A phone-link click is intent, not evidence of a completed call or lead.
+      // Send only the link placement, never the phone number or visible text.
+      const phoneLink = e.target.closest<HTMLAnchorElement>(
+        'a[href^="tel:"][data-phone-location]',
+      );
+      if (phoneLink) {
+        trackGA4("phone_click", {
+          link_location: phoneLink.getAttribute("data-phone-location"),
+        });
+      }
+
+      const el = e.target.closest<HTMLElement>("[data-track]");
       if (!el) return;
 
       const eventName = el.getAttribute("data-track");

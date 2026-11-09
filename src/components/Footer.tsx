@@ -29,7 +29,7 @@ export default function Footer() {
           </nav>
           <div className="premium-footer-contact">
             <a href="mailto:marco@hexacombllc.com">marco@hexacombllc.com</a>
-            <a href="tel:+15594927402">(559) 492-7402</a>
+            <a href="tel:+15594927402" data-phone-location="footer">(559) 492-7402</a>
           </div>
         </div>
         <div className="premium-footer-bottom">
