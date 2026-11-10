@@ -25,7 +25,7 @@ export default function AgencyContact({
           </p>
           <div className="premium-contact-links">
             <a href="mailto:marco@hexacombllc.com">marco@hexacombllc.com</a>
-            <a href="tel:+15594927402">(559) 492-7402</a>
+            <a href="tel:+15594927402" data-phone-location="contact">(559) 492-7402</a>
           </div>
           <p className="premium-small">
             Based in Clovis. Working with businesses across the Central Valley.
