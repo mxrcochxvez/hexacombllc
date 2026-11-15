@@ -24,7 +24,7 @@ export default function Footer() {
             <Link href="/website-audit">Website audit</Link>
             <Link href="/about">About Marco</Link>
             <Link href="/#reviews">Client feedback</Link>
-            <Link href={BLOG_URL}>Insights</Link>
+            <Link href={BLOG_URL}>Blog</Link>
             <Link href="/human-rights">Nonprofits &amp; causes</Link>
             <Link href="/intake">Project intake</Link>
           </nav>

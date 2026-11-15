@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import AgencyHome from "@/components/AgencyHome";
 import { pageSocialMetadata } from "@/lib/seo";
+// Refresh the hosted-blog previews periodically without rebuilding the site.
+export const revalidate = 3600;
+
 const title = "Website Design & Local SEO in Fresno & Clovis";
 const description =
   "Hexacomb is Marco Chavez’s website-focused marketing agency in Clovis, California. Website design, local SEO and ongoing care for Central Valley businesses.";
