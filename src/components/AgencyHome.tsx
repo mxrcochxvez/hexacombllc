@@ -5,6 +5,8 @@ import PremiumHeroVideo from "@/components/PremiumHeroVideo";
 import { heroMedia } from "@/lib/hero-media";
 import ClientTestimonials from "@/components/ClientTestimonials";
 import AgencyContact from "@/components/AgencyContact";
+import { Suspense } from "react";
+import BlogPreview, { BlogPreviewFallback } from "@/components/BlogPreview";
 
 const services = [
   {
@@ -167,6 +169,9 @@ export default function AgencyHome() {
         </div>
       </section>
       <ClientTestimonials />
+      <Suspense fallback={<BlogPreviewFallback />}>
+        <BlogPreview />
+      </Suspense>
       <AgencyContact />
     </main>
   );
