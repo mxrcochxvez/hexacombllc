@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BLOG_URL } from "@/lib/blogNavigation";
 export default function Footer() {
   return (
     <footer className="premium-footer">
@@ -23,7 +24,7 @@ export default function Footer() {
             <Link href="/website-audit">Website audit</Link>
             <Link href="/about">About Marco</Link>
             <Link href="/#reviews">Client feedback</Link>
-            <Link href="/blog">Insights</Link>
+            <Link href={BLOG_URL}>Insights</Link>
             <Link href="/human-rights">Nonprofits &amp; causes</Link>
             <Link href="/intake">Project intake</Link>
           </nav>
