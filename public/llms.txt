@@ -1,0 +1,17 @@
+# Hexacomb
+
+> Hexacomb shares information about website design, local SEO, hosting, and ongoing website care for small businesses in Fresno, Clovis, and California’s Central Valley.
+
+Based in Clovis, California, Hexacomb is Marco Chavez’s independent, website-focused marketing agency. The site explains its services, care plans, selected work, and approach to working directly with business owners.
+
+## Core Content
+
+- [Website Design & Development](https://hexacombllc.com/website-design) — Website design, copy, and development focused on clear next steps for customers.
+- [Local SEO & Search Visibility](https://hexacombllc.com/local-seo) — Local SEO, service pages, and clear business information to help customers and search systems understand what a business does and where it operates.
+- [Hosting & Care Plans](https://hexacombllc.com/pricing) — Website hosting, maintenance, updates, and ongoing support.
+- [About Marco Chavez](https://hexacombllc.com/about) — Background on the founder and Hexacomb’s direct, personal approach.
+- [Selected Work](https://hexacombllc.com/work) — Examples of Hexacomb’s website projects.
+
+## Optional
+
+- [Hexacomb homepage](https://hexacombllc.com/) — Agency overview, service summaries, client reviews, and contact information.
