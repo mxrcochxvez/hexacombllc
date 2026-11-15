@@ -1,13 +1,14 @@
 "use client";
 import Link from "next/link";
 import ArrowIcon from "@/components/ArrowIcon";
+import { BLOG_URL } from "@/lib/blogNavigation";
 const links = [
   { href: "/website-design", label: "Website design" },
   { href: "/local-seo", label: "Local SEO" },
   { href: "/work", label: "Work" },
   { href: "/about", label: "About" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/blog", label: "Insights" },
+  { href: BLOG_URL, label: "Insights" },
 ];
 export default function Navbar() {
   return (
