@@ -139,7 +139,7 @@ export default function WebsiteDesignPage() {
         <div className="service-projects">
           <Link href="/work/m5-painting">
             <Image
-              src="/images/cases/m5painting-home.jpg"
+              src="/images/cases/m5painting-redesign-2026.jpg"
               alt="M5 Painting website homepage"
               width={1200}
               height={770}

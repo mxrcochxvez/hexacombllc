@@ -98,7 +98,7 @@ export const clientCaseStudies: CaseStudy[] = [
     id: "m5painting",
     title: "M5 Painting",
     liveUrl: "https://m5painting.com/",
-    imageSrc: "/images/cases/m5painting-home.jpg",
+    imageSrc: "/images/cases/m5painting-redesign-2026.jpg",
     tags: ["Brand", "Web", "Estimates"],
     summary:
       "A Sanger painting contractor. Licensed, bonded, and easy to request an estimate from.",

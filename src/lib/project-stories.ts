@@ -7,7 +7,7 @@ export const projectStories = {
     city: "Sanger, California",
     sector: "Residential & commercial painting",
     url: "https://m5painting.com/",
-    image: "/images/cases/m5painting-home.jpg",
+    image: "/images/cases/m5painting-redesign-2026.jpg",
     intro:
       "M5 Painting is a family-owned painting business based in Sanger, serving the Central Valley. The website connects a homeowner or commercial customer with the information they need before asking for an estimate.",
     focus:
