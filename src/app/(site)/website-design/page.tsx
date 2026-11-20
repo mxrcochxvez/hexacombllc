@@ -87,14 +87,16 @@ export default function WebsiteDesignPage() {
           Website design for <em>Fresno &amp; Clovis businesses.</em>
         </h1>
         <p className="service-intro">
-          Hexacomb is a marketing agency focused on websites, run by Marco
-          Chavez in Clovis. I design, write and build small-business websites,
-          then help keep them useful after launch.
+          Your business shouldn’t look smaller than the national chains just
+          because your marketing budget is smaller. I build custom websites
+          that reflect the quality of your work, earn customer trust, and make
+          it easy to reach you. You work directly with me—Marco, in Clovis.
         </p>
         <p className="service-support">
-          For a contractor, that next step might be an estimate. For a service
-          business, it might be a phone call. The website should make that path
-          clear.
+          We start with a straightforward conversation, agree on the build
+          and its price, and design around what your customers need to see.
+          Hosting and ongoing care are separate, so you can choose the support
+          that fits as your business grows.
         </p>
         <div className="premium-actions">
           <Link href="#contact" className="premium-button">
