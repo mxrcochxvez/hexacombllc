@@ -1224,3 +1224,179 @@ html[data-season="default"] .site-chrome .premium-hero a.premium-button {
     font-size: clamp(2.8rem, 10vw, 4rem);
   }
 }
+
+
+/* Conversion-led homepage: actual local client work, straightforward process, owner-to-owner value. */
+#work { scroll-margin-top: 6rem; }
+.premium-featured-work {
+  background: #f3f1eb;
+}
+.premium-featured-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  align-items: end;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+.premium-featured-heading > p,
+.premium-section-intro {
+  font-size: 0.96rem;
+  line-height: 1.8;
+  color: #565d52;
+  max-width: 55ch;
+}
+.premium-featured-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.6rem;
+}
+.premium-featured-project {
+  min-width: 0;
+  border-top: 1px solid #24272330;
+  padding-top: 1rem;
+}
+.premium-featured-image {
+  display: block;
+  overflow: hidden;
+  background: #e9e7df;
+}
+.premium-featured-image img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1200 / 770;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  transition: transform 250ms ease;
+}
+.premium-featured-image:hover img {
+  transform: scale(1.025);
+}
+.premium-featured-location {
+  color: #656860;
+  font-size: 0.65rem;
+  margin: 1.5rem 0 0.4rem;
+  letter-spacing: 0.05em;
+}
+.premium-featured-project h3 {
+  font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+  font-weight: 500;
+  margin: 0 0 0.75rem;
+  line-height: 1.4;
+}
+.premium-featured-summary {
+  font-size: 0.84rem;
+  line-height: 1.75;
+  color: #565d52;
+  margin-bottom: 0.7rem;
+}
+.premium-featured-more {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem 2rem;
+  border-top: 1px solid #24272330;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+}
+.premium-featured-more p {
+  color: #565d52;
+  font-size: 0.85rem;
+  margin: 0;
+}
+.premium-owner-promise {
+  background: #242723;
+  color: #f3f1eb;
+}
+.premium-owner-promise .premium-eyebrow {
+  color: #c9cec4;
+}
+.premium-owner-promise-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.88fr);
+  gap: 5rem;
+}
+.premium-owner-promise h2 {
+  color: #f3f1eb;
+}
+.premium-owner-promise-copy p {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: #e0e2d9;
+  max-width: 50ch;
+  margin: 0 0 1.3rem;
+}
+.premium-owner-promise-copy .premium-text-link {
+  color: #f3f1eb;
+}
+.premium-process {
+  background: #e9e7df;
+}
+.premium-process-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2.5rem;
+  margin: 2.5rem 0 3rem;
+}
+.premium-process-grid article {
+  border-top: 1px solid #24272350;
+  padding-top: 1.5rem;
+}
+.premium-process-grid h3 {
+  font-size: 1.2rem;
+  line-height: 1.35;
+  font-weight: 500;
+  margin: 0 0 0.8rem;
+}
+.premium-process-grid p {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: #565d52;
+  max-width: 40ch;
+}
+.premium-process-assurance {
+  color: #565d52;
+  font-size: 0.75rem;
+  margin-top: 1rem;
+}
+.premium-answers-section .premium-answers {
+  margin-top: 0;
+}
+.premium-answers-section .premium-answers > h2 {
+  font-size: clamp(2.1rem, 3.4vw, 3.25rem);
+}
+@media (max-width: 950px) {
+  .premium-featured-heading,
+  .premium-owner-promise-grid {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+  .premium-featured-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 700px) {
+  .premium-featured-grid,
+  .premium-process-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .premium-featured-heading {
+    margin-bottom: 2rem;
+  }
+  .premium-featured-more {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .premium-owner-promise-copy p {
+    font-size: 0.95rem;
+  }
+  .premium-process-grid {
+    margin-bottom: 2.5rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .premium-featured-image img { transition: none; }
+  .premium-featured-image:hover img { transform: none; }
+}

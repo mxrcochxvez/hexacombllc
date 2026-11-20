@@ -57,9 +57,10 @@ export default async function PricingPage({
         lead={
           <>
             <p>
-              Every plan keeps your website online, secure, and maintained.
-              Higher plans include more updates, simple reporting, and help
-              getting found online.
+              These are monthly hosting and care plans, not the cost of
+              building a new website. Every plan keeps your website online,
+              secure, and maintained. Higher plans include more updates,
+              simple reporting, and ongoing help with search visibility.
             </p>
             <p>
               <strong>Need a new website first?</strong> That is a one-time

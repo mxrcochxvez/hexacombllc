@@ -6,7 +6,7 @@ export const revalidate = 3600;
 
 const title = "Website Design & Local SEO in Fresno & Clovis";
 const description =
-  "Hexacomb is Marco Chavez’s website-focused marketing agency in Clovis, California. Website design, local SEO and ongoing care for Central Valley businesses.";
+  "Custom, premium websites for Fresno, Clovis and Central Valley businesses—without big-agency overhead. Work directly with Marco on design, local SEO and ongoing website care.";
 export const metadata: Metadata = {
   title,
   description,

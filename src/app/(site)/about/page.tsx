@@ -23,8 +23,8 @@ export default function AboutPage() {
     <main id="main-content" className="hobro-page">
       <AgencyPageHero
         kicker="About"
-        title="Your website should be owned by someone who knows your business."
-        lead="I'm Marco. I run Hexacomb so business owners can stop carrying the website in the back of their minds."
+        title="Premium websites for the businesses doing the real work."
+        lead="I’m Marco. I run a lean, website-focused agency in Clovis because local business owners deserve the same quality and attention as the big brands—without the agency layers."
         actions={
           <Link href="#contact" className="hobro-deck-btn hobro-deck-btn-solid">
             Talk to Marco
@@ -48,9 +48,10 @@ export default function AboutPage() {
         <div className="hobro-shell">
           <h2>A website is too important to be everybody&rsquo;s side job.</h2>
           <p>
-            Owners should not spend Tuesday night updating services, deciphering
-            traffic reports, or wondering why competitors outrank them. That
-            ongoing responsibility is the business.
+            I believe in the independent businesses that keep our communities
+            moving. You should be proud to send someone to your website, and
+            you shouldn’t need a corporate marketing budget or a full-time
+            marketing department to make that happen.
           </p>
         </div>
       </section>

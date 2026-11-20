@@ -3,84 +3,153 @@ import Link from "next/link";
 import ArrowIcon from "@/components/ArrowIcon";
 import PremiumHeroVideo from "@/components/PremiumHeroVideo";
 import { heroMedia } from "@/lib/hero-media";
+import { clientCaseStudies } from "@/lib/cases";
 import ClientTestimonials from "@/components/ClientTestimonials";
 import AgencyContact from "@/components/AgencyContact";
 import { Suspense } from "react";
 import BlogPreview, { BlogPreviewFallback } from "@/components/BlogPreview";
 
+const featuredProjects = clientCaseStudies.filter((project) =>
+  ["aacpainters", "ruiz", "m5painting"].includes(project.id),
+);
+
 const services = [
   {
-    name: "Website design & development.",
+    name: "A website that earns the first call.",
     detail:
-      "Design, copy and development built around the next step: a call, an estimate, a booking. Clear on a phone. Easy to understand.",
+      "Custom design, clear writing, real photos of your work, and an easy way to ask for a quote. Not a generic template that makes a great local business look ordinary.",
     href: "/website-design",
     link: "Explore website design",
   },
   {
-    name: "Local SEO & search visibility.",
+    name: "A stronger presence when customers search.",
     detail:
-      "Local SEO, useful service pages and clear business information. A foundation that helps search engines and AI answers understand what you do and where you work.",
+      "Clear service pages, accurate local information, and practical Google search improvements. We build a solid foundation and keep working on visibility where it makes sense.",
     href: "/local-seo",
     link: "Explore local SEO",
   },
   {
-    name: "Website hosting & ongoing care.",
+    name: "Someone in your corner after launch.",
     detail:
-      "Hosting, maintenance, updates and practical reporting. Your services change. Your website should keep up. Choose the support that fits your business.",
+      "Hosting, maintenance, updates, and support so the site keeps up with your business. You get back to the work you do best; I take care of the website.",
     href: "/pricing",
-    link: "View care plans",
+    link: "Explore ongoing care",
   },
 ];
+
 const answers = [
   [
-    "What does Hexacomb do?",
-    "Hexacomb is a marketing agency focused on websites. Marco Chavez designs, builds and maintains small-business websites, with local SEO, copy and analytics support.",
+    "Is Hexacomb right for a small local business?",
+    "That’s who I built Hexacomb for. I work with owners who are serious about their work, whether they’re starting out, replacing an outdated site, or ready to look more established online.",
   ],
   [
-    "Where do you work?",
-    "Hexacomb is based in Clovis, California, and serves businesses in Fresno and the Central Valley. Tell Marco where your customers are and what you need the website to do.",
+    "Do I need to know anything about websites or SEO?",
+    "Not at all. Tell me about your customers, what you do, and what isn’t working. I’ll explain the options in plain English and recommend a sensible first step.",
   ],
   [
-    "Can you improve an existing website?",
-    "Yes. Start with a website audit or a conversation about what is not working. The first priority might be clearer services, a better contact path, faster pages or a full redesign.",
+    "Is the website included in the monthly plan?",
+    "A new website is a one-time project with a clear quote before we start. Hosting and ongoing care are separate monthly plans; the level of ongoing Google search work depends on the plan. You can see the options before committing.",
   ],
   [
-    "How much does it cost?",
-    "New websites are quoted to match the scope. Ongoing care plans currently start at $50 per month. See the pricing page for current inclusions and talk to Marco before work begins.",
+    "Do you only work in Clovis?",
+    "I’m based in Clovis and work with businesses across Fresno and the Central Valley. I work directly with every owner, so you know who’s designing the site and who’s looking after it.",
   ],
 ];
+
 export default function AgencyHome() {
   return (
     <main id="main-content" className="premium-home hobro-page">
       <section className="premium-hero" aria-labelledby="home-title">
         <div className="premium-hero-copy premium-shell">
-          <p className="premium-eyebrow">HEXACOMB · CLOVIS, CALIFORNIA</p>
+          <p className="premium-eyebrow">HEXACOMB · BUILT IN CLOVIS FOR LOCAL BUSINESS</p>
           <h1 id="home-title">
-            A better website.
+            Outshine the big guys.
             <br />
-            <em>A stronger first impression.</em>
+            <em>Stay proudly local.</em>
           </h1>
           <p className="premium-lead">
-            Website design, local SEO and ongoing care for businesses in Fresno,
-            Clovis and the Central Valley.
+            You know your customers better than any national chain. I build
+            premium websites that show why your business deserves the call,
+            without the big-agency overhead.
           </p>
           <p className="premium-hero-note">
-            You run the business. I take care of how it shows up online.
+            Custom design, local Google visibility, hosting, and ongoing care.
+            One partner who sticks around as you grow.
           </p>
           <div className="premium-actions">
-            <Link className="premium-button" href="#contact">
-              Request a website quote <ArrowIcon />
+            <Link className="premium-button" href="#contact" data-track="homepage_hero_quote">
+              Talk about your website <ArrowIcon />
             </Link>
-            <Link className="premium-text-link" href="/work">
-              View selected work
+            <Link className="premium-text-link" href="#work" data-track="homepage_hero_work">
+              See websites I’ve built <ArrowIcon />
             </Link>
           </div>
           <p className="premium-hero-credit">
-            Independent by design. Personally handled by Marco Chavez.
+            No technical brief needed. Talk directly with Marco Chavez.
           </p>
         </div>
         <PremiumHeroVideo src={heroMedia.src} poster={heroMedia.poster} />
       </section>
+
+      <section
+        id="work"
+        className="premium-featured-work premium-section"
+        aria-labelledby="featured-work-title"
+      >
+        <div className="premium-shell">
+          <div className="premium-featured-heading">
+            <div>
+              <p className="premium-eyebrow">REAL BUSINESSES. REAL WEBSITES.</p>
+              <h2 id="featured-work-title">
+                Local businesses.
+                <br />
+                <em>Nothing ordinary about them.</em>
+              </h2>
+            </div>
+            <p>
+              Your work should do the talking. These are websites made for
+              Central Valley businesses, built to show what makes each one worth
+              choosing and give visitors a clear next step.
+            </p>
+          </div>
+          <div className="premium-featured-grid">
+            {featuredProjects.map((project) => (
+              <article className="premium-featured-project" key={project.id}>
+                <Link
+                  className="premium-featured-image"
+                  href={project.id === "m5painting" ? "/work/m5-painting" : "/work#project-" + project.id}
+                  aria-label={"See the " + project.title + " project"}
+                  data-track={"homepage_project_" + project.id}
+                >
+                  <Image
+                    src={project.imageSrc}
+                    alt={project.title + " website homepage"}
+                    width={1200}
+                    height={770}
+                    sizes="(max-width: 800px) 100vw, (max-width: 1100px) 50vw, 33vw"
+                  />
+                </Link>
+                <p className="premium-featured-location">{project.city}</p>
+                <h3>{project.title}</h3>
+                <p className="premium-featured-summary">{project.solutionDescription}</p>
+                <Link
+                  className="premium-text-link"
+                  href={project.id === "m5painting" ? "/work/m5-painting" : "/work#project-" + project.id}
+                >
+                  See the project <ArrowIcon />
+                </Link>
+              </article>
+            ))}
+          </div>
+          <div className="premium-featured-more">
+            <p>Different industries. Different customers. Never the same cookie-cutter website.</p>
+            <Link className="premium-text-link" href="/work" data-track="homepage_all_work">
+              Explore more local work <ArrowIcon />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section
         id="services"
         className="premium-services premium-section"
@@ -88,44 +157,100 @@ export default function AgencyHome() {
       >
         <div className="premium-shell">
           <div className="premium-section-heading">
-            <p className="premium-eyebrow">SERVICES</p>
+            <p className="premium-eyebrow">MORE THAN A PRETTY WEBSITE</p>
             <h2 id="services-title">
-              Everything your website needs.
+              Look the part.
               <br />
-              <em>Nothing it doesn’t.</em>
+              <em>Get found. Get the call.</em>
             </h2>
+            <p className="premium-section-intro">
+              A good-looking website matters. But the real job is helping
+              customers trust you, understand your services, and get in touch.
+              That’s what we design around.
+            </p>
           </div>
           <div className="premium-service-list">
-            {services.map((s) => (
-              <article className="premium-service" key={s.name}>
-                <h3>{s.name}</h3>
+            {services.map((service) => (
+              <article className="premium-service" key={service.name}>
+                <h3>{service.name}</h3>
                 <div>
-                  <p>{s.detail}</p>
-                  <Link href={s.href} className="premium-text-link">
-                    {s.link} <ArrowIcon />
+                  <p>{service.detail}</p>
+                  <Link href={service.href} className="premium-text-link">
+                    {service.link} <ArrowIcon />
                   </Link>
                 </div>
               </article>
             ))}
           </div>
-          <div className="premium-answers">
-            <h3>A few useful answers.</h3>
-            <div>
-              {answers.map(([q, a]) => (
-                <details key={q}>
-                  <summary>{q}</summary>
-                  <p>
-                    {a}{" "}
-                    {q === "How much does it cost?" && (
-                      <Link href="/pricing">See plans and pricing.</Link>
-                    )}
-                  </p>
-                </details>
-              ))}
-            </div>
+        </div>
+      </section>
+
+      <section className="premium-owner-promise premium-section" aria-labelledby="owner-promise-title">
+        <div className="premium-shell premium-owner-promise-grid">
+          <div>
+            <p className="premium-eyebrow">SMALL BUSINESS IS THE POINT</p>
+            <h2 id="owner-promise-title">
+              Big-agency quality.
+              <br />
+              <em>None of the runaround.</em>
+            </h2>
+          </div>
+          <div className="premium-owner-promise-copy">
+            <p>
+              You shouldn’t have to choose between a website you’re proud of
+              and a price that makes sense for your business.
+            </p>
+            <p>
+              I keep Hexacomb lean on purpose. There aren’t layers of
+              account managers or an expensive agency office to pay for. You
+              work with the person who builds your site, answers your questions,
+              and helps improve it after launch.
+            </p>
+            <p>
+              I’m not here to sell you every service under the sun. I want to
+              be the website partner you can count on as your business grows.
+            </p>
+            <Link href="/about" className="premium-text-link">
+              Meet your website partner <ArrowIcon />
+            </Link>
           </div>
         </div>
       </section>
+
+      <section className="premium-process premium-section" aria-labelledby="process-title">
+        <div className="premium-shell">
+          <div className="premium-section-heading">
+            <p className="premium-eyebrow">EASY TO GET STARTED</p>
+            <h2 id="process-title">
+              No big pitch.
+              <br />
+              <em>Just a clear next step.</em>
+            </h2>
+            <p className="premium-section-intro">
+              You don’t need a plan or a list of technical requirements. That’s my job.
+            </p>
+          </div>
+          <div className="premium-process-grid">
+            <article>
+              <h3>Tell me what you do.</h3>
+              <p>We’ll talk about your business, who you serve, and what you want your website to do better.</p>
+            </article>
+            <article>
+              <h3>Get a plan that fits.</h3>
+              <p>I’ll recommend what makes sense and give you a clear project quote. A new build and monthly care are priced separately.</p>
+            </article>
+            <article>
+              <h3>Launch. Then keep growing.</h3>
+              <p>We create a custom site around your business. Ongoing hosting, updates, and search support are available as you need them.</p>
+            </article>
+          </div>
+          <Link href="#contact" className="premium-button" data-track="homepage_process_quote">
+            Tell me about your business <ArrowIcon />
+          </Link>
+          <p className="premium-process-assurance">A conversation first. No pressure to buy.</p>
+        </div>
+      </section>
+
       <section
         id="about"
         className="premium-about premium-section"
@@ -143,32 +268,54 @@ export default function AgencyHome() {
             <span>MARCO CHAVEZ / FOUNDER</span>
           </div>
           <div>
-            <p className="premium-eyebrow">ABOUT ME</p>
+            <p className="premium-eyebrow">THE PERSON BEHIND THE WORK</p>
             <h2 id="about-title">
-              A real person.
+              Your business matters.
               <br />
-              <em>On your side.</em>
+              <em>So does who builds for it.</em>
             </h2>
             <p className="premium-lead">
-              I’m Marco. I run Hexacomb from Clovis, and I work directly with
-              the people behind the businesses.
+              I’m Marco. I run Hexacomb from Clovis, and I built it for the
+              owners doing great work without a corporate marketing budget.
             </p>
             <p>
-              You don’t need another dashboard to babysit. You need someone who
-              understands what you do, makes the website clearer, and keeps it
-              working after launch.
+              When your customer checks you out online, I want them to see a
+              business worth trusting—not a website that looks like an
+              afterthought.
             </p>
             <p>
-              From the first conversation to the next update, you’re talking to
-              the person doing the work.
+              You’ll talk to me from the first conversation through the
+              ongoing updates. Your growth matters more than selling you things
+              you don’t need.
             </p>
             <Link className="premium-text-link" href="/about">
-              A little more about me <ArrowIcon />
+              Get to know Marco <ArrowIcon />
             </Link>
           </div>
         </div>
       </section>
+
       <ClientTestimonials />
+      <section className="premium-answers-section premium-section" aria-labelledby="answers-title">
+        <div className="premium-shell">
+          <div className="premium-answers">
+            <h2 id="answers-title">A few useful answers.</h2>
+            <div>
+              {answers.map(([question, answer]) => (
+                <details key={question}>
+                  <summary>{question}</summary>
+                  <p>
+                    {answer}{" "}
+                    {question === "Is the website included in the monthly plan?" && (
+                      <Link href="/pricing">See plans and pricing.</Link>
+                    )}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
       <Suspense fallback={<BlogPreviewFallback />}>
         <BlogPreview />
       </Suspense>
