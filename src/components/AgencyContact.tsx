@@ -14,14 +14,15 @@ export default function AgencyContact({
         <div>
           <p className="premium-eyebrow">LET’S START A CONVERSATION</p>
           <h2 id="contact-heading">
-            What’s next
+            Tell me about your business.
             <br />
-            <em>for your business?</em>
+            <em>I’ll help with the website.</em>
           </h2>
           <p>
-            Tell me whether you need a new website, a redesign, or ongoing care.
-            Share what you do, where you work, and what you want to improve.
-            I’ll write back personally, usually within a day.
+            You don’t need to know what kind of website you need. Tell me
+            about your business, what you want to change, or what isn’t working.
+            I’ll get back to you personally with a sensible next step, usually
+            within a day.
           </p>
           <div className="premium-contact-links">
             <a href="mailto:marco@hexacombllc.com">marco@hexacombllc.com</a>
