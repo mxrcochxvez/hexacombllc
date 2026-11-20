@@ -40,11 +40,11 @@ const services = [
 const answers = [
   [
     "Is Hexacomb right for a small local business?",
-    "That's who I built Hexacomb for. I work with owners who are serious about their work, whether they're starting out, replacing an outdated site, or ready to look more established online.",
+    "That’s who I built Hexacomb for. I work with owners who are serious about their work, whether they’re starting out, replacing an outdated site, or ready to look more established online.",
   ],
   [
     "Do I need to know anything about websites or SEO?",
-    "Not at all. Tell me about your customers, what you do, and what isn't working. I'll explain the options in plain English and recommend a sensible first step.",
+    "Not at all. Tell me about your customers, what you do, and what isn’t working. I’ll explain the options in plain English and recommend a sensible first step.",
   ],
   [
     "Is the website included in the monthly plan?",
@@ -52,7 +52,7 @@ const answers = [
   ],
   [
     "Do you only work in Clovis?",
-    "I'm based in Clovis and work with businesses across Fresno and the Central Valley. I work directly with every owner, so you know who's designing the site and who's looking after it.",
+    "I’m based in Clovis and work with businesses across Fresno and the Central Valley. I work directly with every owner, so you know who’s designing the site and who’s looking after it.",
   ],
 ];
 
@@ -81,7 +81,7 @@ export default function AgencyHome() {
               Talk about your website <ArrowIcon />
             </Link>
             <Link className="premium-text-link" href="#work" data-track="homepage_hero_work">
-              See websites I've built <ArrowIcon />
+              See websites I’ve built <ArrowIcon />
             </Link>
           </div>
           <p className="premium-hero-credit">
@@ -166,7 +166,7 @@ export default function AgencyHome() {
             <p className="premium-section-intro">
               A good-looking website matters. But the real job is helping
               customers trust you, understand your services, and get in touch.
-              That's what we design around.
+              That’s what we design around.
             </p>
           </div>
           <div className="premium-service-list">
@@ -197,17 +197,17 @@ export default function AgencyHome() {
           </div>
           <div className="premium-owner-promise-copy">
             <p>
-              You shouldn't have to choose between a website you're proud of
+              You shouldn’t have to choose between a website you’re proud of
               and a price that makes sense for your business.
             </p>
             <p>
-              I keep Hexacomb lean on purpose. There aren't layers of
+              I keep Hexacomb lean on purpose. There aren’t layers of
               account managers or an expensive agency office to pay for. You
               work with the person who builds your site, answers your questions,
               and helps improve it after launch.
             </p>
             <p>
-              I'm not here to sell you every service under the sun. I want to
+              I’m not here to sell you every service under the sun. I want to
               be the website partner you can count on as your business grows.
             </p>
             <Link href="/about" className="premium-text-link">
@@ -227,17 +227,17 @@ export default function AgencyHome() {
               <em>Just a clear next step.</em>
             </h2>
             <p className="premium-section-intro">
-              You don't need a plan or a list of technical requirements. That's my job.
+              You don’t need a plan or a list of technical requirements. That’s my job.
             </p>
           </div>
           <div className="premium-process-grid">
             <article>
               <h3>Tell me what you do.</h3>
-              <p>We'll talk about your business, who you serve, and what you want your website to do better.</p>
+              <p>We’ll talk about your business, who you serve, and what you want your website to do better.</p>
             </article>
             <article>
               <h3>Get a plan that fits.</h3>
-              <p>I'll recommend what makes sense and give you a clear project quote. A new build and monthly care are priced separately.</p>
+              <p>I’ll recommend what makes sense and give you a clear project quote. A new build and monthly care are priced separately.</p>
             </article>
             <article>
               <h3>Launch. Then keep growing.</h3>
@@ -275,7 +275,7 @@ export default function AgencyHome() {
               <em>So does who builds for it.</em>
             </h2>
             <p className="premium-lead">
-              I'm Marco. I run Hexacomb from Clovis, and I built it for the
+              I’m Marco. I run Hexacomb from Clovis, and I built it for the
               owners doing great work without a corporate marketing budget.
             </p>
             <p>
@@ -284,9 +284,9 @@ export default function AgencyHome() {
               afterthought.
             </p>
             <p>
-              You'll talk to me from the first conversation through the
+              You’ll talk to me from the first conversation through the
               ongoing updates. Your growth matters more than selling you things
-              you don't need.
+              you don’t need.
             </p>
             <Link className="premium-text-link" href="/about">
               Get to know Marco <ArrowIcon />
