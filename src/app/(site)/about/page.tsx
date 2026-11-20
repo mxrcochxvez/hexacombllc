@@ -24,7 +24,7 @@ export default function AboutPage() {
       <AgencyPageHero
         kicker="About"
         title="Premium websites for the businesses doing the real work."
-        lead="I'm Marco. I run a lean, website-focused agency in Clovis because local business owners deserve the same quality and attention as the big brands—without the agency layers."
+        lead="I’m Marco. I run a lean, website-focused agency in Clovis because local business owners deserve the same quality and attention as the big brands—without the agency layers."
         actions={
           <Link href="#contact" className="hobro-deck-btn hobro-deck-btn-solid">
             Talk to Marco
@@ -50,7 +50,7 @@ export default function AboutPage() {
           <p>
             I believe in the independent businesses that keep our communities
             moving. You should be proud to send someone to your website, and
-            you shouldn't need a corporate marketing budget or a full-time
+            you shouldn’t need a corporate marketing budget or a full-time
             marketing department to make that happen.
           </p>
         </div>
