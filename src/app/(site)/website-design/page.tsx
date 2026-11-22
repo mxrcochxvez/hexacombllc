@@ -140,38 +140,45 @@ export default function WebsiteDesignPage() {
           <article>
             <h3>Contractor websites</h3>
             <p>
-              For painting contractors like{" "}
-              <Link href="/work/m5-painting">M5 Painting</Link> and AAC Painters,
-              I build sites where customers can see past jobs and request an
-              estimate. My <Link href="/work">contractor portfolio</Link> also
-              includes the site for Ruiz Family Enterprises, a concrete and
-              masonry contractor in Kingsburg.
+              A homeowner pricing a stucco repaint and a property manager
+              planning an office repaint need to see different work. For{" "}
+              <Link href="/work/m5-painting">M5 Painting</Link>, I gave exterior
+              and commercial painting their own sections and showed what to
+              expect from the walkthrough and written quote. My{" "}
+              <Link href="/work">contractor portfolio</Link> also includes
+              AAC Painters and Kingsburg concrete and masonry contractor Ruiz
+              Family Enterprises.
             </p>
           </article>
           <article>
             <h3>Restaurant websites</h3>
             <p>
-              I can put your menu, hours and directions in one place so someone
-              choosing dinner on their phone can find you. If you take online
-              orders or reservations, I can link to the system you already use.
+              A guest checking the lunch menu on a phone should be able to
+              read the prices without pinching and zooming a PDF. I’d build
+              the menu as a web page, put kitchen hours beside it, and send
+              pickup orders or table bookings to the system your staff
+              already uses.
             </p>
           </article>
           <article>
             <h3>Insurance broker websites</h3>
             <p>
-              I built a website for Ivan M. Lopez of{" "}
-              <a href="https://ivan-m-lopez-insurance.pages.dev/">Van Berg Insurance Services</a>{" "}
-              in Brentwood. Visitors can explore Medicare and group health
-              insurance options, then call or text Ivan with questions in
-              English or Spanish.
+              On the site I built for Ivan M. Lopez at{" "}
+              <a href="https://ivan-m-lopez-insurance.pages.dev/">Van Berg Insurance Services</a>,
+              people exploring Medicare and employers choosing group coverage
+              can go straight to the information each needs. Ivan’s California
+              license number, the states he serves, and his English and Spanish
+              contact options are visible before anyone shares personal details.
             </p>
           </article>
           <article>
             <h3>Websites for arts and community programs</h3>
             <p>
               I built <a href="https://pixelandpaint.vercel.app/">Pixel &amp; Paint</a>{" "}
-              for a program that brings free art and technology pop-ups to kids
-              in Fresno housing communities.
+              around two audiences. Fresno families can see what kids make at
+              the free art and technology pop-ups and follow announcements
+              for the next one. People who want to contribute materials or
+              time have a separate invitation to contact the organizers.
             </p>
           </article>
         </div>
@@ -188,8 +195,9 @@ export default function WebsiteDesignPage() {
               />
               <h3>M5 Painting</h3>
               <p>
-                A Sanger painting business with service information, project work
-                and an estimate path.
+                Jobsite footage lets homeowners see the crew’s prep work.
+                The estimate section explains what happens next, from an
+                on-site walkthrough to a written quote.
               </p>
               <span>Read the project story →</span>
             </Link>
@@ -210,8 +218,9 @@ export default function WebsiteDesignPage() {
             />
             <h3>The Bug Dude Fresno</h3>
             <p>
-              A local pest-control website with clear services, coverage
-              information and direct contact options.
+              Someone dealing with bed bugs can start on a page about that
+              pest, check coverage in Fresno and Madera counties, and call
+              or text the team.
             </p>
             <span>Read the project story →</span>
           </Link>
@@ -220,10 +229,11 @@ export default function WebsiteDesignPage() {
           <Link href="/work">Explore the website portfolio</Link>.
         </p>
         <p className="service-support">
-          I also do SEO for existing websites, including{" "}
-          <a href="https://www.vallejomotor.com/">Vallejo Electric Motor</a>,
-          an industrial motor repair business. Learn more about my{" "}
-          <Link href="/local-seo">local SEO services</Link>.
+          I also handle SEO for{" "}
+          <a href="https://www.vallejomotor.com/">Vallejo Electric Motor</a>.
+          A buyer sourcing a replacement motor and a plant manager looking
+          for a repair shop have different questions. See the{" "}
+          <Link href="/local-seo#seo-projects-heading">industrial and local service SEO examples</Link>.
         </p>
       </section>
       <section className="service-band" aria-labelledby="process-heading">
@@ -332,9 +342,12 @@ export default function WebsiteDesignPage() {
           <h2 id="consulting-heading">AI and software engineering consulting</h2>
           <div className="service-copy">
             <p>
-              I consult for <a href="https://babbagellc.com/team">Babbage LLC</a>{" "}
-              as a software architect and engineer. My work includes building
-              applications and using AI to automate repetitive tasks.
+              I consult on software architecture, application development and
+              AI automation. The <a href="https://babbagellc.com/team">Babbage LLC team page</a>{" "}
+              lists me, Marco Chavez, as its Software Architect &amp; Engineer.
+              If your team is considering automation, bring me a task someone
+              does by hand. We can walk through the inputs, the decisions and
+              what a person needs to review.
             </p>
             <p>
               I’m always looking for more types of business partnerships.{" "}
