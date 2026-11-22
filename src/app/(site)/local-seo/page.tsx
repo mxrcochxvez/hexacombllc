@@ -134,10 +134,12 @@ export default function LocalSeoPage() {
       <section className="premium-shell service-section" aria-labelledby="seo-projects-heading">
         <h2 id="seo-projects-heading">SEO for industrial and local service businesses</h2>
         <p className="service-support">
-          I provide SEO for <a href="https://www.vallejomotor.com/">Vallejo Electric Motor</a>,
-          an industrial motor repair business. For examples of how I build
-          local search into a new website, explore the painting and pest
-          control projects below.
+          I provide SEO for Vallejo Electric Motor. The company describes itself
+          as the West Coast’s largest stocking distributor of{" "}
+          <a href="https://www.vallejomotor.com/home/sales">new industrial motors</a>.
+          Its <a href="https://www.vallejomotor.com/home/shop-capabilities">industrial
+          motor repair shop on Mare Island</a> has an in-house machine shop and
+          can run no-load tests at up to 13.8 kV.
         </p>
         <div className="service-grid">
           <article>
