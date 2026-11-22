@@ -38,6 +38,43 @@ const schema = {
         { "@type": "ListItem", position: 2, name: "Local SEO", item: "https://hexacombllc.com/local-seo" },
       ],
     },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "Do I need a new website for local SEO?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Not necessarily. Useful service copy, accurate business details and technical fixes may be enough to improve the foundation of your current site. We review what is there before recommending a rebuild.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Do you guarantee rankings, map placement or AI mentions?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No. Rankings, indexing, map placement and inclusion in AI answers are controlled by those platforms and are not guaranteed. Clear, accurate content helps them understand your business.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is ongoing local SEO included in every care plan?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No. Starter and Growing include search basics. Established and Enterprise include ongoing search improvements. Reporting, content updates and check-ins also vary by plan.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can you help businesses elsewhere in the Central Valley?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes. Hexacomb is based in Clovis and works with businesses across the Central Valley. Tell me where your customers are so the website reflects your real service area.",
+          },
+        },
+      ],
+    },
   ],
 };
 
@@ -47,8 +84,8 @@ const scope = [
     "Your services, service area and contact options should be easy to understand. I help organize useful service pages around what you actually offer and where you work, rather than adding place names to generic copy.",
   ],
   [
-    "Clear business information.",
-    "Business names, contact details and service areas need to tell the same story. We review the information on your website and identify listing details that need attention, with any account or listing work agreed as part of the scope.",
+    "Google Business Profile & local business info.",
+    "Your website, Google Business Profile, and local directories need matching business names, phone numbers, hours, and service areas. We align your site details and flag listing gaps so Google Maps and local search trust your business.",
   ],
   [
     "Search basics that support the content.",
@@ -136,10 +173,22 @@ export default function LocalSeoPage() {
         <p className="service-support">
           I provide SEO for Vallejo Electric Motor. The company describes itself
           as the West Coast’s largest stocking distributor of{" "}
-          <a href="https://www.vallejomotor.com/home/sales">new industrial motors</a>.
-          Its <a href="https://www.vallejomotor.com/home/shop-capabilities">industrial
-          motor repair shop on Mare Island</a> has an in-house machine shop and
-          can run no-load tests at up to 13.8 kV.
+          <a
+            href="https://www.vallejomotor.com/home/sales"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            new industrial motors
+          </a>
+          . Its{" "}
+          <a
+            href="https://www.vallejomotor.com/home/shop-capabilities"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            industrial motor repair shop on Mare Island
+          </a>{" "}
+          has an in-house machine shop and can run no-load tests at up to 13.8 kV.
         </p>
         <div className="service-grid">
           <article>

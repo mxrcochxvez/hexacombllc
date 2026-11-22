@@ -4,11 +4,77 @@ import Link from "next/link";
 import { AgencyPageHero } from "@/components/AgencyPageHero";
 import CtaSection from "@/components/CtaSection";
 
+const title = "Website Design & Monthly Care Pricing (Fresno & Clovis)";
+const description =
+  "Straightforward monthly website care plans ($50–$120/mo) for hosting, updates, and local SEO—plus one-time custom website builds quoted clearly before work starts.";
+
 export const metadata: Metadata = {
-  ...pageSocialMetadata("/pricing", "Website Care Plans", "Straightforward monthly website plans for keeping your site updated, helping customers find you, and improving it over time."),
-  title: "Website Care Plans",
-  description: "Straightforward monthly website plans for keeping your site updated, helping customers find you, and improving it over time.",
+  ...pageSocialMetadata("/pricing", `${title} | Hexacomb`, description),
+  title,
+  description,
   alternates: { canonical: "https://hexacombllc.com/pricing" },
+};
+
+const pricingSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://hexacombllc.com/" },
+        { "@type": "ListItem", position: 2, name: "Pricing", item: "https://hexacombllc.com/pricing" },
+      ],
+    },
+    {
+      "@type": "OfferCatalog",
+      name: "Hexacomb Website Care Plans",
+      url: "https://hexacombllc.com/pricing",
+      itemListElement: [
+        {
+          "@type": "Offer",
+          name: "Starter Website Care Plan",
+          price: "50",
+          priceCurrency: "USD",
+          description: "Up to 5 pages, hosting, SSL, maintenance, search basics, accessibility, and email support.",
+        },
+        {
+          "@type": "Offer",
+          name: "Growing Website Care Plan",
+          price: "70",
+          priceCurrency: "USD",
+          description: "Up to 10 pages, hosting, SSL, maintenance, simple website reporting, small monthly content updates, and quarterly check-in.",
+        },
+        {
+          "@type": "Offer",
+          name: "Established Website Care Plan",
+          price: "120",
+          priceCurrency: "USD",
+          description: "Up to 10+ pages, ongoing local SEO improvements, inquiry tracking, more content updates, integrations, and monthly planning call.",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "Is a new website included in the monthly price?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No. A new website is a one-time build, quoted separately based on its pages, content and functionality. The monthly prices are for ongoing hosting, updates and care.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What does a care plan include?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Every plan includes hosting, SSL, maintenance, backups and support. Starter covers the essentials. Growing adds simple reporting, small monthly content updates and a quarterly check-in. Established includes ongoing search improvements, inquiry tracking, more content updates, integrations and a monthly planning call.",
+          },
+        },
+      ],
+    },
+  ],
 };
 
 const tiers = [
@@ -17,26 +83,30 @@ const tiers = [
     price: "$50",
     note: "Keep the website essentials handled.",
     features: ["Up to 5 pages", "Search basics + accessibility", "Hosting, SSL + maintenance", "Contact form + email support"],
+    featured: false,
   },
   {
     name: "Growing",
     price: "$70",
     note: "Understand your website and keep it fresh.",
-    features: ["Up to about 10 pages", "Search basics + accessibility", "Hosting, SSL + maintenance", "Contact form + email support", "Simple website reporting", "Small monthly content updates", "Quarterly check-in"],
-    kicker: "Popular",
+    features: ["Everything in Starter, plus:", "Up to about 10 pages", "Simple website reporting", "Small monthly content updates", "Quarterly check-in"],
+    kicker: "Most popular",
+    featured: true,
   },
   {
     name: "Established",
     price: "$120",
     note: "Make steady improvements that support growth.",
-    features: ["Up to about 10 pages, then room to grow", "Ongoing search improvements", "Track customer inquiries", "More content updates", "Hosting, SSL + maintenance", "Simple website reporting", "Integrations + monthly planning call"],
+    features: ["Everything in Growing, plus:", "Ongoing search improvements", "Track customer inquiries", "More monthly content updates", "Integrations + monthly planning call"],
     kicker: "Best for growing businesses",
+    featured: false,
   },
   {
     name: "Enterprise",
     price: "Custom",
     note: "For larger or more complex businesses.",
     features: ["More than one location or website", "Custom integrations + reporting", "Dedicated support + SLA", "Ongoing search improvements", "Track customer inquiries"],
+    featured: false,
   },
 ];
 
@@ -51,6 +121,10 @@ export default async function PricingPage({
     : undefined;
   return (
     <main id="main-content" className="hobro-page">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingSchema) }}
+      />
       <AgencyPageHero
         kicker="Pricing"
         title="Choose the level of website support that fits your business."
@@ -88,8 +162,15 @@ export default async function PricingPage({
           </div>
           <div className="hobro-price-grid">
             {tiers.map((tier) => (
-              <article key={tier.name} className="hobro-price-card">
-                <span>{tier.kicker ?? ""}</span>
+              <article
+                key={tier.name}
+                className={
+                  tier.featured
+                    ? "hobro-price-card hobro-price-card-featured"
+                    : "hobro-price-card"
+                }
+              >
+                {tier.kicker ? <span>{tier.kicker}</span> : null}
                 <h3>{tier.name}</h3>
                 <p>{tier.note}</p>
                 <strong>
@@ -103,7 +184,11 @@ export default async function PricingPage({
                 </ul>
                 <Link
                   href={`?plan=${encodeURIComponent(tier.name)}#contact`}
-                  className="hobro-deck-btn"
+                  className={
+                    tier.featured
+                      ? "hobro-deck-btn hobro-deck-btn-solid"
+                      : "hobro-deck-btn"
+                  }
                   data-track={`pricing_ask_${tier.name.toLowerCase()}`}
                 >
                   Ask about {tier.name}

@@ -4,17 +4,18 @@ const siteUrl = "https://hexacombllc.com";
 
 /** Route-specific share cards. Dimensions match the checked-in brand artwork. */
 export function pageSocialMetadata(path: string, title: string, description: string): Pick<Metadata, "openGraph" | "twitter"> {
+  const fullTitle = title.includes("Hexacomb") ? title : `${title} | Hexacomb`;
   return {
     openGraph: {
       type: "website",
       locale: "en_US",
       siteName: "Hexacomb",
       url: `${siteUrl}${path}`,
-      title,
+      title: fullTitle,
       description,
       images: [{ url: "/hexacomb_logo_wordmark.png", width: 800, height: 800, alt: "Hexacomb LLC" }],
     },
-    twitter: { card: "summary", title, description, images: ["/hexacomb_logo_wordmark.png"] },
+    twitter: { card: "summary", title: fullTitle, description, images: ["/hexacomb_logo_wordmark.png"] },
   };
 }
 
