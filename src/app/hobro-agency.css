@@ -1824,7 +1824,7 @@ textarea.hobro-input {
 }
 
 .hobro-audit-error {
-  color: var(--c-ink);
+  color: var(--audit-fix);
 }
 
 .hobro-audit-report {

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
+import Link from "next/link";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { track, trackGA4 } from "@/lib/analytics";
 import { getUtm } from "@/lib/utmClient";
@@ -88,22 +89,32 @@ function validateEmail(value: string): string | undefined {
 
 function validatePhone(value: string): string | undefined {
   const v = value.trim();
-  if (!v) return "Phone number is required.";
+  if (!v) return undefined;
   if (!/^[\d\s\-\+\(\)\.]+$/.test(v) || v.replace(/\D/g, "").length < 10) {
     return "Enter a valid phone number.";
   }
+}
+
+function normalizeWebsiteUrl(value: string): string {
+  const v = value.trim();
+  if (!v) return "";
+  if (/^https?:\/\//i.test(v)) return v;
+  return `https://${v}`;
 }
 
 function validateWebsite(value: string): string | undefined {
   const v = value.trim();
   if (!v) return undefined;
   try {
-    const url = new URL(v);
-    if (url.protocol !== "http:" && url.protocol !== "https:") {
-      return "URL must start with http:// or https://";
+    const url = new URL(normalizeWebsiteUrl(v));
+    if (
+      (url.protocol !== "http:" && url.protocol !== "https:") ||
+      !url.hostname.includes(".")
+    ) {
+      return "Enter a valid website (e.g. yourbusiness.com).";
     }
   } catch {
-    return "Enter a valid URL (e.g. https://example.com).";
+    return "Enter a valid website (e.g. yourbusiness.com).";
   }
 }
 
@@ -113,10 +124,18 @@ export function IntakeForm() {
   >("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileError, setTurnstileError] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [hasExistingWebsite, setHasExistingWebsite] = useState<string>("");
   const formRef = useRef<HTMLFormElement>(null);
+  const statusRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (status === "success" && statusRef.current) {
+      statusRef.current.focus();
+    }
+  }, [status]);
 
   const validateField = useCallback((name: string, value: string) => {
     let error: string | undefined;
@@ -156,13 +175,14 @@ export function IntakeForm() {
     const name = String(formData.get("name") ?? "");
     const email = String(formData.get("email") ?? "");
     const phone = String(formData.get("phone") ?? "");
-    const website = String(formData.get("website") ?? "");
+    const rawWebsite = String(formData.get("website") ?? "");
+    const website = normalizeWebsiteUrl(rawWebsite);
 
     const errors: FieldErrors = {
       name: validateName(name),
       email: validateEmail(email),
       phone: validatePhone(phone),
-      website: validateWebsite(website),
+      website: validateWebsite(rawWebsite),
     };
 
     setTouched({ name: true, email: true, phone: true, website: true });
@@ -237,6 +257,7 @@ export function IntakeForm() {
   if (status === "success") {
     return (
       <div
+        ref={statusRef}
         className="rounded-md border border-success/30 bg-success-soft px-5 py-7"
         role="status"
         aria-live="polite"
@@ -267,6 +288,21 @@ export function IntakeForm() {
           Thank you for sharing your project details. We&rsquo;ll review
           everything and reach out within one business day with tailored
           recommendations and next steps.
+        </p>
+        <p className="mt-3 text-sm leading-relaxed text-ink">
+          Need to talk sooner? Call{" "}
+          <a href="tel:+15594927402" className="underline">
+            (559) 492-7402
+          </a>
+          . You can also{" "}
+          <Link href="/website-audit" className="underline">
+            run a free website audit
+          </Link>{" "}
+          or{" "}
+          <Link href="/work" className="underline">
+            see recent local work
+          </Link>
+          .
         </p>
       </div>
     );
@@ -337,15 +373,12 @@ export function IntakeForm() {
 
       <div className={fieldWrap}>
         <label htmlFor="intake-phone" className={labelClass}>
-          Phone <span className="text-accent" aria-hidden="true">*</span>
-          <span className="sr-only">(required)</span>
+          Phone <span className="font-normal text-ink-muted">(optional)</span>
         </label>
         <input
           type="tel"
           id="intake-phone"
           name="phone"
-          required
-          aria-required="true"
           autoComplete="tel"
           placeholder="(559) 555-0100"
           disabled={status === "sending"}
@@ -439,11 +472,12 @@ export function IntakeForm() {
             Current website URL
           </label>
           <input
-            type="url"
+            type="text"
+            inputMode="url"
             id="intake-website"
             name="website"
             autoComplete="url"
-            placeholder="https://"
+            placeholder="yourbusiness.com"
             disabled={status === "sending"}
             onBlur={handleBlur}
             onChange={handleChange}
@@ -586,9 +620,15 @@ export function IntakeForm() {
       <div className="mb-5">
         <Turnstile
           siteKey={SITE_KEY}
-          onSuccess={setTurnstileToken}
+          onSuccess={(token) => {
+            setTurnstileError(false);
+            setTurnstileToken(token);
+          }}
           onExpire={() => setTurnstileToken(null)}
-          onError={() => setTurnstileToken(null)}
+          onError={() => {
+            setTurnstileToken(null);
+            setTurnstileError(true);
+          }}
         />
       </div>
 
@@ -602,10 +642,31 @@ export function IntakeForm() {
         </p>
       )}
 
+      {turnstileError && !turnstileToken && status !== "sending" && (
+        <p className="mb-4 text-sm text-danger" id="intake-send-hint" role="alert">
+          The spam check couldn&rsquo;t load (an ad blocker may be blocking it). You can email{" "}
+          <a href="mailto:marco@hexacombllc.com" className="underline">
+            marco@hexacombllc.com
+          </a>{" "}
+          or call{" "}
+          <a href="tel:+15594927402" className="underline">
+            (559) 492-7402
+          </a>{" "}
+          directly.
+        </p>
+      )}
+
+      {!turnstileError && !turnstileToken && status !== "sending" && (
+        <p className="mb-4 text-sm text-ink-muted" id="intake-send-hint">
+          The security check has to finish before this can send.
+        </p>
+      )}
+
       <button
         type="submit"
         disabled={isSubmitDisabled}
         aria-disabled={isSubmitDisabled}
+        aria-describedby={!turnstileToken ? "intake-send-hint" : undefined}
         className="group inline-flex w-full min-h-12 items-center justify-center gap-2 rounded-md bg-accent px-4 py-3 font-display text-base font-semibold text-canvas transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
       >
         {status === "sending" ? (

@@ -1,16 +1,50 @@
 "use client";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import ArrowIcon from "@/components/ArrowIcon";
 import { BLOG_URL } from "@/lib/blogNavigation";
 const links = [
   { href: "/website-design", label: "Website design" },
   { href: "/local-seo", label: "Local SEO" },
   { href: "/work", label: "Work" },
-  { href: "/about", label: "About" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/website-audit", label: "Free audit" },
+  { href: "/about", label: "About" },
   { href: BLOG_URL, label: "Blog" },
 ];
 export default function Navbar() {
+  const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const detailsRef = useRef<HTMLDetailsElement>(null);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMenuOpen(false);
+        detailsRef.current?.removeAttribute("open");
+      }
+    };
+    const handleClickOutside = (e: MouseEvent) => {
+      if (detailsRef.current && !detailsRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+        detailsRef.current.removeAttribute("open");
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuOpen]);
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+    detailsRef.current?.removeAttribute("open");
+  };
+
   return (
     <div className="premium-nav">
       <div className="premium-shell premium-nav-inner">
@@ -31,32 +65,49 @@ export default function Navbar() {
         </Link>
         <nav aria-label="Main" className="premium-desktop-nav">
           {links.map((l) => (
-            <Link key={l.href} href={l.href}>
+            <Link
+              key={l.href}
+              href={l.href}
+              aria-current={pathname === l.href ? "page" : undefined}
+            >
               {l.label}
             </Link>
           ))}
           <Link href="/#contact" className="premium-nav-cta">
-            Contact <ArrowIcon />
+            Get a quote <ArrowIcon />
           </Link>
         </nav>
-        <details className="premium-mobile-nav">
-          <summary>
-            Menu <span aria-hidden="true">+</span>
-          </summary>
-          <nav aria-label="Mobile">
-            {[...links, { href: "/#contact", label: "Contact" }].map((l) => (
-              <Link
-                href={l.href}
-                key={l.href}
-                onClick={(e) =>
-                  e.currentTarget.closest("details")?.removeAttribute("open")
-                }
-              >
-                {l.label}
-              </Link>
-            ))}
-          </nav>
-        </details>
+        <div className="premium-mobile-actions">
+          <a
+            href="tel:+15594927402"
+            className="premium-mobile-call"
+            data-phone-location="header"
+          >
+            Call
+          </a>
+          <details
+            ref={detailsRef}
+            className="premium-mobile-nav"
+            onToggle={(e) => setMenuOpen(e.currentTarget.open)}
+          >
+            <summary aria-expanded={menuOpen}>
+              {menuOpen ? "Close" : "Menu"}{" "}
+              <span aria-hidden="true">{menuOpen ? "×" : "+"}</span>
+            </summary>
+            <nav aria-label="Mobile">
+              {[...links, { href: "/#contact", label: "Get a quote" }].map((l) => (
+                <Link
+                  href={l.href}
+                  key={l.href}
+                  aria-current={pathname === l.href ? "page" : undefined}
+                  onClick={closeMenu}
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </nav>
+          </details>
+        </div>
       </div>
     </div>
   );

@@ -36,7 +36,6 @@ export default function Footer() {
         <div className="premium-footer-bottom">
           <span>© {new Date().getFullYear()} Hexacomb LLC</span>
           <span>Personally handled. Thoughtfully built.</span>
-          <Link href="/dashboard">Agency portal</Link>
         </div>
       </div>
     </footer>

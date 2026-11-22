@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
+import Link from "next/link";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { track, trackGA4 } from "@/lib/analytics";
 import { getUtm } from "@/lib/utmClient";
@@ -40,16 +41,26 @@ function validatePhone(value: string): string | undefined {
   }
 }
 
+function normalizeWebsiteUrl(value: string): string {
+  const v = value.trim();
+  if (!v) return "";
+  if (/^https?:\/\//i.test(v)) return v;
+  return `https://${v}`;
+}
+
 function validateWebsite(value: string): string | undefined {
   const v = value.trim();
   if (!v) return undefined;
   try {
-    const url = new URL(v);
-    if (url.protocol !== "http:" && url.protocol !== "https:") {
-      return "URL must start with http:// or https://";
+    const url = new URL(normalizeWebsiteUrl(v));
+    if (
+      (url.protocol !== "http:" && url.protocol !== "https:") ||
+      !url.hostname.includes(".")
+    ) {
+      return "Enter a valid website (e.g. yourbusiness.com).";
     }
   } catch {
-    return "Enter a valid URL (e.g. https://example.com).";
+    return "Enter a valid website (e.g. yourbusiness.com).";
   }
 }
 
@@ -57,11 +68,13 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileError, setTurnstileError] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const statusRef = useRef<HTMLDivElement>(null);
   const messageRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const userEditedMessageRef = useRef(false);
   const [securityReady, setSecurityReady] = useState(false);
 
   useEffect(() => {
@@ -70,19 +83,44 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
   }, []);
 
   useEffect(() => {
-    if (messageRef.current && !messageRef.current.value) {
-      try {
-        const stored = sessionStorage.getItem("hexacomb-contact-context");
-        const prefill = initialMessage ?? (stored ? stored : undefined);
-        if (prefill) {
-          messageRef.current.value = prefill;
-          if (stored && !initialMessage) sessionStorage.removeItem("hexacomb-contact-context");
-        }
-      } catch {
-        if (initialMessage && messageRef.current) messageRef.current.value = initialMessage;
+    if (!messageRef.current) return;
+    if (userEditedMessageRef.current && messageRef.current.value) return;
+    try {
+      const stored = sessionStorage.getItem("hexacomb-contact-context");
+      const prefill = initialMessage ?? (stored ? stored : undefined);
+      if (prefill) {
+        messageRef.current.value = prefill;
+        if (stored && !initialMessage) sessionStorage.removeItem("hexacomb-contact-context");
       }
+    } catch {
+      if (initialMessage && messageRef.current) messageRef.current.value = initialMessage;
     }
   }, [initialMessage]);
+
+  useEffect(() => {
+    const handlePrefill = (event: Event) => {
+      const custom = event as CustomEvent<{ message?: string }>;
+      const nextMessage = custom.detail?.message;
+      if (!nextMessage || !messageRef.current) return;
+      messageRef.current.value = nextMessage;
+      userEditedMessageRef.current = false;
+      setSecurityReady(true);
+      try {
+        sessionStorage.removeItem("hexacomb-contact-context");
+      } catch {
+        /* ignore storage errors */
+      }
+      messageRef.current.focus();
+    };
+    window.addEventListener("hexacomb:prefill-contact", handlePrefill);
+    return () => window.removeEventListener("hexacomb:prefill-contact", handlePrefill);
+  }, []);
+
+  useEffect(() => {
+    if (status === "success" && statusRef.current) {
+      statusRef.current.focus();
+    }
+  }, [status]);
 
   const validateField = useCallback((name: string, value: string) => {
     let error: string | undefined;
@@ -122,14 +160,15 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
     const name = String(formData.get("name") ?? "");
     const email = String(formData.get("email") ?? "");
     const phone = String(formData.get("phone") ?? "");
-    const website = String(formData.get("website") ?? "");
+    const rawWebsite = String(formData.get("website") ?? "");
+    const website = normalizeWebsiteUrl(rawWebsite);
     const message = String(formData.get("message") ?? "");
 
     const errors: FieldErrors = {
       name: validateName(name),
       email: validateEmail(email),
       phone: validatePhone(phone),
-      website: validateWebsite(website),
+      website: validateWebsite(rawWebsite),
     };
 
     setTouched({ name: true, email: true, phone: true, website: true });
@@ -223,6 +262,21 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
           We&rsquo;ll follow up by the end of the next business day. No sales pitch, just
           honest next steps.
         </p>
+        <p style={{ marginTop: "1rem" }}>
+          Need a faster answer? Call or text{" "}
+          <a href="tel:+15594927402" style={{ textDecoration: "underline" }}>
+            (559) 492-7402
+          </a>
+          . While you wait, you can{" "}
+          <Link href="/website-audit" style={{ textDecoration: "underline" }}>
+            run a free website audit
+          </Link>{" "}
+          or{" "}
+          <Link href="/work" style={{ textDecoration: "underline" }}>
+            browse recent local websites
+          </Link>
+          .
+        </p>
       </div>
     );
   }
@@ -289,7 +343,7 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
       <div className="hobro-form-row">
         <div className={fieldWrap}>
           <label htmlFor="business" className={labelClass}>
-            Business name
+            Business name <span className="hobro-optional">(optional)</span>
           </label>
           <input
             type="text"
@@ -303,7 +357,7 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
         </div>
         <div className={fieldWrap}>
           <label htmlFor="phone" className={labelClass}>
-            Phone
+            Phone <span className="hobro-optional">(optional)</span>
           </label>
           <input
             type="tel"
@@ -332,11 +386,12 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
           Current website <span className="hobro-optional">(optional)</span>
         </label>
         <input
-          type="url"
+          type="text"
+          inputMode="url"
           id="website"
           name="website"
           autoComplete="url"
-          placeholder="https://"
+          placeholder="yourbusiness.com"
           disabled={status === "sending"}
           onBlur={handleBlur}
           onChange={handleChange}
@@ -362,6 +417,9 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
           ref={messageRef}
           rows={3}
           defaultValue={initialMessage}
+          onChange={() => {
+            userEditedMessageRef.current = true;
+          }}
           placeholder="Do you need a new website, a redesign, or ongoing care? Tell me about your business and what you want to improve…"
           disabled={status === "sending"}
           maxLength={1000}
@@ -372,9 +430,15 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
       <div className="hobro-turnstile" style={{ minHeight: 65 }}>
         {securityReady && <Turnstile
           siteKey={SITE_KEY}
-          onSuccess={setTurnstileToken}
+          onSuccess={(token) => {
+            setTurnstileError(false);
+            setTurnstileToken(token);
+          }}
           onExpire={() => setTurnstileToken(null)}
-          onError={() => setTurnstileToken(null)}
+          onError={() => {
+            setTurnstileToken(null);
+            setTurnstileError(true);
+          }}
         />}
       </div>
 
@@ -384,7 +448,21 @@ export function ContactForm({ initialMessage }: { initialMessage?: string }) {
         </p>
       )}
 
-      {!turnstileToken && status !== "sending" && (
+      {turnstileError && !turnstileToken && status !== "sending" && (
+        <p className="hobro-form-alert" id="send-hint" role="alert">
+          The spam check couldn&rsquo;t load (an ad blocker may be blocking it). You can email{" "}
+          <a href="mailto:marco@hexacombllc.com" style={{ textDecoration: "underline" }}>
+            marco@hexacombllc.com
+          </a>{" "}
+          or call{" "}
+          <a href="tel:+15594927402" style={{ textDecoration: "underline" }}>
+            (559) 492-7402
+          </a>{" "}
+          directly.
+        </p>
+      )}
+
+      {!turnstileError && !turnstileToken && status !== "sending" && (
         <p className="hobro-form-hint" id="send-hint">
           The security check has to finish before this can send.
         </p>
