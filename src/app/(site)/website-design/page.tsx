@@ -208,7 +208,7 @@ export default function WebsiteDesignPage() {
           <article>
             <h3>Insurance broker websites</h3>
             <p>
-              On the site I built for Ivan M. Lopez at{" "}
+              On the site I built for{" "}
               <a
                 href="https://ivan-m-lopez-insurance.pages.dev/"
                 target="_blank"
@@ -216,10 +216,9 @@ export default function WebsiteDesignPage() {
               >
                 Van Berg Insurance Services
               </a>
-              , people exploring Medicare and employers choosing group coverage
-              can go straight to the information each needs. Ivan’s California
-              license number, the states he serves, and his English and Spanish
-              contact options are visible before anyone shares personal details.
+              , visitors exploring Medicare or group coverage can go straight to
+              the information they need, with key credentials and contact
+              options clear upfront.
             </p>
           </article>
           <article>
