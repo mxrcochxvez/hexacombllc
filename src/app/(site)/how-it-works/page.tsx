@@ -4,12 +4,24 @@ import Link from "next/link";
 import { AgencyPageHero } from "@/components/AgencyPageHero";
 import CtaSection from "@/components/CtaSection";
 
+const title = "How Our Web Design Process Works";
+const description =
+  "Unlimited design revisions until it feels right, then local SEO, your real photos, and domain launch. After launch, support follows the care plan we agree on.";
+
 export const metadata: Metadata = {
-  ...pageSocialMetadata("/how-it-works", "How It Works | Design, Launch, Then Monthly Care", "Unlimited design until it feels right, then search, your photos, and the domain. After launch, support follows the care plan we agree on."),
-  title: "How It Works | Design, Launch, Then Monthly Care",
-  description:
-    "Unlimited design until it feels right, then search, your photos, and the domain. After launch, support follows the care plan we agree on.",
+  ...pageSocialMetadata("/how-it-works", `${title} | Hexacomb`, description),
+  title,
+  description,
   alternates: { canonical: "https://hexacombllc.com/how-it-works" },
+};
+
+const howItWorksSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://hexacombllc.com/" },
+    { "@type": "ListItem", position: 2, name: "How it works", item: "https://hexacombllc.com/how-it-works" },
+  ],
 };
 
 type Chapter = {
@@ -83,6 +95,10 @@ function ChapterList({ chapters }: { chapters: Chapter[] }) {
 export default function HowItWorksPage() {
   return (
     <main id="main-content" className="hobro-page">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howItWorksSchema) }}
+      />
       <AgencyPageHero
         kicker="How it works"
         title="The design keeps going until you like it. Then the site goes live. Care follows your plan."

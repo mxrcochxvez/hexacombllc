@@ -51,6 +51,12 @@ const structuredData = {
         addressRegion: "CA",
         addressCountry: "US",
       },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 36.8252,
+        longitude: -119.7029,
+      },
+      priceRange: "$$",
       areaServed: [
         "Fresno, California",
         "Clovis, California",

@@ -48,6 +48,51 @@ const schema = {
         },
       ],
     },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "Do you work with businesses outside Fresno and Clovis?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes. Hexacomb is based in Clovis and works with businesses across the Central Valley. The portfolio includes businesses in Fresno, Sanger and Kingsburg.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Should I improve my existing website or rebuild it?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "A rebuild is not always the first step. If the structure still works, clearer service copy, a better contact path or a technical fix may be enough. We review what you have before recommending the scope.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How much does a small-business website cost?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "New websites are quoted for the work involved: the number of pages, copy and image needs, forms, integrations and special functionality. We agree on the scope and quote before work starts. The one-time build is separate from ongoing hosting and care.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What should I have ready?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Your service list, business contact information, service area and any existing website or domain details are a good start. Real project photos and approved customer feedback can help.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Does a new website guarantee Google rankings or AI mentions?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No. Useful content and a well-built site give search engines clearer information, but rankings, indexing and inclusion in AI answers are not guaranteed.",
+          },
+        },
+      ],
+    },
   ],
 };
 const scope = [
@@ -164,8 +209,14 @@ export default function WebsiteDesignPage() {
             <h3>Insurance broker websites</h3>
             <p>
               On the site I built for Ivan M. Lopez at{" "}
-              <a href="https://ivan-m-lopez-insurance.pages.dev/">Van Berg Insurance Services</a>,
-              people exploring Medicare and employers choosing group coverage
+              <a
+                href="https://ivan-m-lopez-insurance.pages.dev/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Van Berg Insurance Services
+              </a>
+              , people exploring Medicare and employers choosing group coverage
               can go straight to the information each needs. Ivan’s California
               license number, the states he serves, and his English and Spanish
               contact options are visible before anyone shares personal details.
@@ -174,7 +225,14 @@ export default function WebsiteDesignPage() {
           <article>
             <h3>Websites for arts and community programs</h3>
             <p>
-              I built <a href="https://pixelandpaint.vercel.app/">Pixel &amp; Paint</a>{" "}
+              I built{" "}
+              <a
+                href="https://pixelandpaint.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Pixel &amp; Paint
+              </a>{" "}
               around two audiences. Fresno families can see what kids make at
               the free art and technology pop-ups and follow announcements
               for the next one. People who want to contribute materials or
