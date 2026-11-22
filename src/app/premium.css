@@ -1124,10 +1124,22 @@ html[data-season="default"] .site-chrome .premium-hero a.premium-button {
   text-decoration: underline;
   text-underline-offset: 4px;
 }
-.service-projects > a {
+.service-projects a {
   display: block;
   border-top: 1px solid #24272330;
   padding-top: 1rem;
+}
+.service-project-quote {
+  margin: 1.5rem 0 0;
+  padding-inline-start: 1rem;
+  border-inline-start: 2px solid currentColor;
+}
+.service-project-quote blockquote {
+  margin: 0;
+}
+.service-project-quote figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
 }
 .service-projects img {
   width: 100%;

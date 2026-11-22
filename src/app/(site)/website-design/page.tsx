@@ -3,10 +3,11 @@ import Link from "next/link";
 import Image from "next/image";
 import AgencyContact from "@/components/AgencyContact";
 import { pageSocialMetadata } from "@/lib/seo";
+import { testimonials } from "@/lib/testimonials";
 
 const title = "Website Design for Fresno & Clovis Businesses";
 const description =
-  "Website design, copy and development for Fresno and Clovis businesses. Work directly with Marco Chavez, explore local projects and plan ongoing care.";
+  "Custom website design for Fresno and Clovis businesses. See Hexacomb’s work for contractors and an insurance broker, and how we build local SEO into a new site.";
 export const metadata: Metadata = {
   title,
   description,
@@ -59,8 +60,8 @@ const scope = [
     "Layouts, project images, navigation and contact paths are built for small screens as well as desktop. The point is to help someone understand the business and take the next step without hunting for it.",
   ],
   [
-    "Search foundations in the build.",
-    "Descriptive page titles, useful headings, crawlable links and clear business information are part of the work. Structured data should describe what is actually on the page, not make claims the business cannot support.",
+    "Local SEO in a new website.",
+    "If you’re a painter, someone looking for exterior painting should land on a page that shows the work, names the towns you serve and explains how to get an estimate. I write and organize service pages around those decisions.",
   ],
   [
     "A plan for what happens after launch.",
@@ -68,6 +69,10 @@ const scope = [
   ],
 ];
 export default function WebsiteDesignPage() {
+  const m5Testimonial = testimonials.find(
+    (item) => item.name === "M5 Painting" && item.approvedForPublication,
+  );
+
   return (
     <main id="main-content" className="hobro-page premium-editorial">
       <script
@@ -87,10 +92,10 @@ export default function WebsiteDesignPage() {
           Website design for <em>Fresno &amp; Clovis businesses.</em>
         </h1>
         <p className="service-intro">
-          Your business shouldn’t look smaller than the national chains just
-          because your marketing budget is smaller. I build custom websites
-          that reflect the quality of your work, earn customer trust, and make
-          it easy to reach you. You work directly with me—Marco, in Clovis.
+          I’m Marco Chavez. I run Hexacomb, a web design and local SEO agency
+          in Clovis. I build websites that show customers what you do, where
+          you work and how to hire you. You work directly with me on the
+          design, the words and the build.
         </p>
         <p className="service-support">
           We start with a straightforward conversation, agree on the build
@@ -128,30 +133,73 @@ export default function WebsiteDesignPage() {
         className="premium-shell service-section"
         aria-labelledby="work-heading"
       >
-        <p className="premium-eyebrow">LOCAL WORK, IN CONTEXT</p>
         <h2 id="work-heading">
-          Different businesses. <em>Different next steps.</em>
+          What kinds of websites <em>do I build?</em>
         </h2>
-        <p className="service-support">
-          These examples show the structure and decisions behind the
-          websites—not a promise that every business will get the same results.
-        </p>
-        <div className="service-projects">
-          <Link href="/work/m5-painting">
-            <Image
-              src="/images/cases/m5painting-redesign-2026.jpg"
-              alt="M5 Painting website homepage"
-              width={1200}
-              height={770}
-              sizes="(max-width: 800px) 100vw, 50vw"
-            />
-            <h3>M5 Painting</h3>
+        <div className="service-grid">
+          <article>
+            <h3>Contractor websites</h3>
             <p>
-              A Sanger painting business with service information, project work
-              and an estimate path.
+              For painting contractors like{" "}
+              <Link href="/work/m5-painting">M5 Painting</Link> and AAC Painters,
+              I build sites where customers can see past jobs and request an
+              estimate. My <Link href="/work">contractor portfolio</Link> also
+              includes the site for Ruiz Family Enterprises, a concrete and
+              masonry contractor in Kingsburg.
             </p>
-            <span>Read the project story →</span>
-          </Link>
+          </article>
+          <article>
+            <h3>Restaurant websites</h3>
+            <p>
+              I can put your menu, hours and directions in one place so someone
+              choosing dinner on their phone can find you. If you take online
+              orders or reservations, I can link to the system you already use.
+            </p>
+          </article>
+          <article>
+            <h3>Insurance broker websites</h3>
+            <p>
+              I built a website for Ivan M. Lopez of{" "}
+              <a href="https://ivan-m-lopez-insurance.pages.dev/">Van Berg Insurance Services</a>{" "}
+              in Brentwood. Visitors can explore Medicare and group health
+              insurance options, then call or text Ivan with questions in
+              English or Spanish.
+            </p>
+          </article>
+          <article>
+            <h3>Websites for arts and community programs</h3>
+            <p>
+              I built <a href="https://pixelandpaint.vercel.app/">Pixel &amp; Paint</a>{" "}
+              for a program that brings free art and technology pop-ups to kids
+              in Fresno housing communities.
+            </p>
+          </article>
+        </div>
+        <h2>Selected website projects</h2>
+        <div className="service-projects">
+          <article>
+            <Link href="/work/m5-painting">
+              <Image
+                src="/images/cases/m5painting-redesign-2026.jpg"
+                alt="M5 Painting website homepage"
+                width={1200}
+                height={770}
+                sizes="(max-width: 800px) 100vw, 50vw"
+              />
+              <h3>M5 Painting</h3>
+              <p>
+                A Sanger painting business with service information, project work
+                and an estimate path.
+              </p>
+              <span>Read the project story →</span>
+            </Link>
+            {m5Testimonial && (
+              <figure className="service-project-quote">
+                <blockquote>“{m5Testimonial.quote}”</blockquote>
+                <figcaption>{m5Testimonial.name}</figcaption>
+              </figure>
+            )}
+          </article>
           <Link href="/work/the-bug-dude">
             <Image
               src="/images/cases/thebugdude-home.jpg"
@@ -169,7 +217,13 @@ export default function WebsiteDesignPage() {
           </Link>
         </div>
         <p className="service-support">
-          <Link href="/work">Explore all five website projects</Link>.
+          <Link href="/work">Explore the website portfolio</Link>.
+        </p>
+        <p className="service-support">
+          I also do SEO for existing websites, including{" "}
+          <a href="https://www.vallejomotor.com/">Vallejo Electric Motor</a>,
+          an industrial motor repair business. Learn more about my{" "}
+          <Link href="/local-seo">local SEO services</Link>.
         </p>
       </section>
       <section className="service-band" aria-labelledby="process-heading">
@@ -239,7 +293,11 @@ export default function WebsiteDesignPage() {
             New websites are quoted for the work involved: the number of pages,
             copy and image needs, forms, integrations and special functionality.
             We agree on the scope and quote before work starts. The one-time
-            build is separate from ongoing hosting and care.{" "}
+            build is separate from ongoing hosting and care. Read our{" "}
+            <a href="https://blog.hexacombllc.com/guides/small-business-website-cost-fresno-clovis/">
+              Fresno and Clovis website pricing guide
+            </a>{" "}
+            for a breakdown of build costs.{" "}
             <Link href="/pricing">See current care plans</Link> or{" "}
             <Link href="#contact">request a website quote</Link>.
           </p>
@@ -268,6 +326,22 @@ export default function WebsiteDesignPage() {
           Want to know who you will be working with?{" "}
           <Link href="/about">Meet Marco</Link>.
         </p>
+      </section>
+      <section className="service-band" aria-labelledby="consulting-heading">
+        <div className="premium-shell service-split">
+          <h2 id="consulting-heading">AI and software engineering consulting</h2>
+          <div className="service-copy">
+            <p>
+              I consult for <a href="https://babbagellc.com/team">Babbage LLC</a>{" "}
+              as a software architect and engineer. My work includes building
+              applications and using AI to automate repetitive tasks.
+            </p>
+            <p>
+              I’m always looking for more types of business partnerships.{" "}
+              <Link href="#contact">Tell me what you have in mind.</Link>
+            </p>
+          </div>
+        </div>
       </section>
       <AgencyContact />
     </main>

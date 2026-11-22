@@ -5,7 +5,7 @@ import { pageSocialMetadata } from "@/lib/seo";
 
 const title = "Local SEO for Fresno & Clovis Businesses";
 const description =
-  "Local SEO from Hexacomb in Clovis: clearer service pages, accurate business information and practical website search improvements for Central Valley businesses.";
+  "Local SEO services for Fresno and Clovis businesses. Work with Marco Chavez at Hexacomb on service pages, local business information and technical SEO.";
 
 export const metadata: Metadata = {
   title,
@@ -76,9 +76,10 @@ export default function LocalSeoPage() {
         <p className="premium-eyebrow">CLEAR SERVICES. LOCAL CONTEXT.</p>
         <h1>Local SEO for <em>Fresno &amp; Clovis businesses.</em></h1>
         <p className="service-intro">
-          Help customers understand what you do, where you work and how to reach
-          you. Hexacomb is a marketing agency focused on websites, run by Marco
-          Chavez in Clovis, with local search support grounded in your actual business.
+          I’m Marco Chavez, and I run Hexacomb in Clovis. I help Fresno and
+          Clovis businesses show up for the services they offer. I review
+          what customers can find in search, how your website describes your
+          service area and where a visitor can call or request an estimate.
         </p>
         <p className="service-support">
           A useful service page should answer a customer’s question and make the
@@ -131,12 +132,12 @@ export default function LocalSeoPage() {
         </div>
       </section>
       <section className="premium-shell service-section" aria-labelledby="seo-projects-heading">
-        <p className="premium-eyebrow">LOCAL WEBSITES, IN CONTEXT</p>
-        <h2 id="seo-projects-heading">Real services. <em>Clear local information.</em></h2>
+        <h2 id="seo-projects-heading">SEO for industrial and local service businesses</h2>
         <p className="service-support">
-          See how two Central Valley websites organize the details a local
-          customer needs. These project stories describe the pages and contact
-          paths, not measured rankings, traffic or lead results.
+          I provide SEO for <a href="https://www.vallejomotor.com/">Vallejo Electric Motor</a>,
+          an industrial motor repair business. For examples of how I build
+          local search into a new website, explore the painting and pest
+          control projects below.
         </p>
         <div className="service-grid">
           <article>
