@@ -10,8 +10,14 @@ import { Suspense } from "react";
 import BlogPreview, { BlogPreviewFallback } from "@/components/BlogPreview";
 
 const featuredProjects = clientCaseStudies.filter((project) =>
-  ["aacpainters", "ruiz", "m5painting"].includes(project.id),
+  ["m5painting", "thebugdude", "unreelviews"].includes(project.id),
 );
+
+function getProjectHref(id: string) {
+  if (id === "m5painting") return "/work/m5-painting";
+  if (id === "thebugdude") return "/work/the-bug-dude";
+  return "/work#project-" + id;
+}
 
 const services = [
   {
@@ -80,8 +86,8 @@ export default function AgencyHome() {
             <Link className="premium-button" href="#contact" data-track="homepage_hero_quote">
               Talk about your website <ArrowIcon />
             </Link>
-            <Link className="premium-text-link" href="#work" data-track="homepage_hero_work">
-              See websites I’ve built <ArrowIcon />
+            <Link className="premium-text-link" href="/website-audit" data-track="homepage_hero_audit">
+              Run a free website audit <ArrowIcon />
             </Link>
           </div>
           <p className="premium-hero-credit">
@@ -117,7 +123,7 @@ export default function AgencyHome() {
               <article className="premium-featured-project" key={project.id}>
                 <Link
                   className="premium-featured-image"
-                  href={project.id === "m5painting" ? "/work/m5-painting" : "/work#project-" + project.id}
+                  href={getProjectHref(project.id)}
                   aria-label={"See the " + project.title + " project"}
                   data-track={"homepage_project_" + project.id}
                 >
@@ -134,7 +140,7 @@ export default function AgencyHome() {
                 <p className="premium-featured-summary">{project.solutionDescription}</p>
                 <Link
                   className="premium-text-link"
-                  href={project.id === "m5painting" ? "/work/m5-painting" : "/work#project-" + project.id}
+                  href={getProjectHref(project.id)}
                 >
                   See the project <ArrowIcon />
                 </Link>
@@ -142,7 +148,10 @@ export default function AgencyHome() {
             ))}
           </div>
           <div className="premium-featured-more">
-            <p>Different industries. Different customers. Never the same cookie-cutter website.</p>
+            <p>
+              &ldquo;We got leads the next day after you finished our website!&rdquo;
+              {" "}— M5 Painting, Sanger
+            </p>
             <Link className="premium-text-link" href="/work" data-track="homepage_all_work">
               Explore more local work <ArrowIcon />
             </Link>

@@ -244,6 +244,30 @@ export default function WebsiteAuditTool() {
                     </li>
                   ))}
                 </ol>
+                <div className="hobro-audit-actions" style={{ marginTop: "1.25rem" }}>
+                  <a
+                    href="#contact"
+                    className="hobro-deck-btn hobro-deck-btn-solid"
+                    data-track="audit_talk_through_priorities"
+                    onClick={() => {
+                      const context = result.shareText
+                        ? `I ran the free audit on ${result.finalUrl}. ${result.headline} Here's what it gave me to share:\n\n${result.shareText}\n\nWhat would you do first?`
+                        : `I ran the free audit on ${result.finalUrl}. ${result.headline} What would you do first?`;
+                      try {
+                        sessionStorage.setItem("hexacomb-contact-context", context);
+                      } catch {
+                        /* storage unavailable */
+                      }
+                      window.dispatchEvent(
+                        new CustomEvent("hexacomb:prefill-contact", {
+                          detail: { message: context },
+                        })
+                      );
+                    }}
+                  >
+                    Want help fixing these? Talk through this report
+                  </a>
+                </div>
               </div>
             ) : null}
           </div>
@@ -299,14 +323,19 @@ export default function WebsiteAuditTool() {
               className="hobro-deck-btn hobro-deck-btn-solid"
               data-track="audit_talk_through_report"
               onClick={() => {
+                const context = result.shareText
+                  ? `I ran the free audit on ${result.finalUrl}. ${result.headline} Here's what it gave me to share:\n\n${result.shareText}\n\nWhat would you do first?`
+                  : `I ran the free audit on ${result.finalUrl}. ${result.headline} What would you do first?`;
                 try {
-                  const context = result.shareText
-                    ? `I ran the free audit on ${result.finalUrl}. ${result.headline} Here's what it gave me to share:\n\n${result.shareText}\n\nWhat would you do first?`
-                    : `I ran the free audit on ${result.finalUrl}. ${result.headline} What would you do first?`;
                   sessionStorage.setItem("hexacomb-contact-context", context);
                 } catch {
                   /* storage unavailable; contact form still works */
                 }
+                window.dispatchEvent(
+                  new CustomEvent("hexacomb:prefill-contact", {
+                    detail: { message: context },
+                  })
+                );
               }}
             >
               Talk through this report

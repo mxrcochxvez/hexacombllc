@@ -61,18 +61,18 @@ export default function ProjectStory({ slug }: { slug: ProjectStorySlug }) {
         <h1>{project.title}</h1>
         <p className="service-intro">{project.intro}</p>
         <div className="premium-actions">
+          <Link href="#contact" className="premium-button">
+            Request a quote for your site
+          </Link>
           <a
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="premium-button"
+            className="premium-text-link"
           >
             Visit the client website{" "}
             <span className="portfolio-sr-only">(opens in a new tab)</span>
           </a>
-          <Link href="/website-design" className="premium-text-link">
-            Explore website design
-          </Link>
         </div>
         <dl className="project-facts">
           <div>

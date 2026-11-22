@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { getConsent, setConsent } from "@/lib/consent";
 
 export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
-  const bannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const check = () => setVisible(getConsent() === null);
@@ -15,23 +14,14 @@ export default function CookieBanner() {
     return () => window.removeEventListener("cookie-consent-change", check);
   }, []);
 
-  // Move focus into banner when it appears
-  useEffect(() => {
-    if (visible && bannerRef.current) {
-      bannerRef.current.focus();
-    }
-  }, [visible]);
-
   if (!visible) return null;
 
   return (
     <div
-      ref={bannerRef}
       className="cookie-banner fixed inset-x-0 bottom-0 z-[60] border-t border-border bg-canvas p-4 shadow-[0_-8px_30px_oklch(22%_0.025_265/0.08)] sm:p-5"
-      role="dialog"
+      role="region"
       aria-live="polite"
       aria-label="Cookie consent"
-      tabIndex={-1}
     >
       <div className="mx-auto flex max-w-6xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <p className="text-sm leading-relaxed text-ink-muted">

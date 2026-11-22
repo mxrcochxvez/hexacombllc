@@ -143,13 +143,13 @@ export async function POST(request: NextRequest) {
     }
 
     if (
-      !phone ||
-      typeof phone !== "string" ||
-      !/^[\d\s\-\+\(\)\.]+$/.test(phone.trim()) ||
-      phone.replace(/\D/g, "").length < 10
+      typeof phone === "string" &&
+      phone.trim() &&
+      (!/^[\d\s\-\+\(\)\.]+$/.test(phone.trim()) ||
+        phone.replace(/\D/g, "").length < 10)
     ) {
       return NextResponse.json(
-        { error: "A valid phone number is required." },
+        { error: "Enter a valid phone number." },
         { status: 400 }
       );
     }
@@ -193,7 +193,7 @@ export async function POST(request: NextRequest) {
     await createLead({
       name: name.trim(),
       email: email.trim(),
-      phone: phone.trim(),
+      phone: typeof phone === "string" && phone.trim() ? phone.trim() : undefined,
       business: typeof body.business === "string" ? body.business : undefined,
       website: typeof body.website === "string" ? body.website : undefined,
       source: "intake",
