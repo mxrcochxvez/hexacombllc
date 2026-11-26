@@ -3,8 +3,11 @@ import "../site-chrome.css";
 import "../premium.css";
 import Navbar from "@/components/Navbar";
 import CookieBanner from "@/components/CookieBanner";
-import { isHalloween } from "@/lib/seasonal-theme";
+import { isHalloween, isThanksgiving } from "@/lib/seasonal-theme";
 import SeasonalAtmosphere from "@/components/SeasonalAtmosphere";
+import ThanksgivingExperience, {
+  ThanksgivingRibbon,
+} from "@/components/ThanksgivingExperience";
 import Footer from "@/components/Footer";
 
 export default function SiteLayout({
@@ -19,9 +22,11 @@ export default function SiteLayout({
       </a>
       <header className="sticky top-0 z-[90]">
         <Navbar />
+        {isThanksgiving && <ThanksgivingRibbon />}
       </header>
       <div>{children}</div>
       {isHalloween && <SeasonalAtmosphere />}
+      {isThanksgiving && <ThanksgivingExperience />}
       <CookieBanner />
       <Footer />
     </div>

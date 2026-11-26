@@ -1,8 +1,12 @@
 /** One switch restores ALL original copy, artwork, colors, and effects.
- * Change to "default" and rebuild after Halloween. No dates or visitor state.
+ * Change to "default" (or revert the Thanksgiving commit) to restore.
  */
-export const SITE_THEME = "default" as "halloween" | "default";
+export const SITE_THEME = "thanksgiving" as
+  | "halloween"
+  | "thanksgiving"
+  | "default";
 export const isHalloween = SITE_THEME === "halloween";
+export const isThanksgiving = SITE_THEME === "thanksgiving";
 
 export function seasonalCopy(original: string, halloween: string): string {
   return isHalloween ? halloween : original;

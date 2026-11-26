@@ -11,6 +11,7 @@ import CloudflareAnalytics from "@/components/CloudflareAnalytics";
 import TrackClicks from "@/components/TrackClicks";
 import UtmCapture from "@/components/UtmCapture";
 import "./halloween.css";
+import "./thanksgiving.css";
 import { SITE_THEME } from "@/lib/seasonal-theme";
 
 const geologica = Geologica({

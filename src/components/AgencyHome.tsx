@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ArrowIcon from "@/components/ArrowIcon";
 import PremiumHeroVideo from "@/components/PremiumHeroVideo";
+import { isThanksgiving } from "@/lib/seasonal-theme";
 import { heroMedia } from "@/lib/hero-media";
 import { clientCaseStudies } from "@/lib/cases";
 import ClientTestimonials from "@/components/ClientTestimonials";
@@ -88,7 +89,20 @@ export default function AgencyHome() {
             No technical brief needed. Talk directly with Marco Chavez.
           </p>
         </div>
-        <PremiumHeroVideo src={heroMedia.src} poster={heroMedia.poster} />
+        {isThanksgiving ? (
+          <div className="tg-hero-backdrop" aria-hidden="true">
+            <Image
+              src="/images/seasonal/thanksgiving-hero.jpg"
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="tg-hero-backdrop-img"
+            />
+          </div>
+        ) : (
+          <PremiumHeroVideo src={heroMedia.src} poster={heroMedia.poster} />
+        )}
       </section>
 
       <section

@@ -1,0 +1,780 @@
+/* Thanksgiving Edition — fully scoped to html[data-season="thanksgiving"].
+   Revert the single Thanksgiving commit (or set SITE_THEME to "default") to
+   restore the everyday Hexacomb theme. Keep this file last in layout.tsx. */
+
+html[data-season="thanksgiving"] {
+  --font-atkinson: var(--font-geologica);
+  --font-condensed: var(--font-geologica);
+  --site-bg: #fbf3e4;
+  --site-ink: #2c1b12;
+  --c-bg: #fbf3e4;
+  --c-paper: #fbf3e4;
+  --c-paper-soft: #f2e2c8;
+  --c-ink: #2c1b12;
+  --c-muted: #5a3c2a;
+  --c-line: rgba(90, 50, 26, 0.22);
+  --c-gold: #c67c2e;
+  --color-canvas: #fbf3e4;
+  --color-surface: #f2e2c8;
+  --color-ink: #2c1b12;
+  --color-ink-muted: #5a3c2a;
+  --color-border: #d9bfa0;
+  --color-accent: #9f3c18;
+  --color-accent-hover: #7c2d12;
+  --color-signal: #d98a2b;
+  --color-deep: #2a1810;
+  --color-on-deep: #fbf1df;
+  --color-on-deep-muted: #e5d0b5;
+  background: #fbf3e4;
+  scroll-padding-top: 6rem;
+}
+
+html[data-season="thanksgiving"] body {
+  background: #fbf3e4;
+  color: #2c1b12;
+}
+
+html[data-season="thanksgiving"] .site-chrome {
+  --site-bg: #fbf3e4;
+  --site-raised: #f2e2c8;
+  --site-ink: #2c1b12;
+  --site-muted: #5a3c2a;
+  --site-faint: #6c4b37;
+  --site-line: rgba(90, 50, 26, 0.22);
+  --site-accent: #9f3c18;
+  --site-cta: #9f3c18;
+  --site-cta-ink: #fff8ee;
+  --color-cream-muted: #5a3c2a;
+  --color-cream: #2c1b12;
+  background: #fbf3e4;
+  color: #2c1b12;
+}
+
+html[data-season="thanksgiving"] .hobro-page {
+  margin-top: 0;
+  background: #fbf3e4;
+  color: #2c1b12;
+}
+
+html[data-season="thanksgiving"] .site-chrome > header {
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  background: #fbf3e4;
+}
+
+/* ── Navigation ── */
+html[data-season="thanksgiving"] .premium-nav {
+  background: #fbf3e4;
+  border-bottom: 1px solid rgba(159, 60, 24, 0.22);
+}
+
+html[data-season="thanksgiving"] .premium-logo {
+  color: #2c1b12;
+}
+
+html[data-season="thanksgiving"] .premium-logo svg {
+  color: #9f3c18;
+}
+
+html[data-season="thanksgiving"] .premium-desktop-nav a {
+  color: #2c1b12;
+}
+
+html[data-season="thanksgiving"] .premium-desktop-nav a:hover {
+  color: #9f3c18;
+}
+
+html[data-season="thanksgiving"] .premium-nav-cta {
+  border-color: #9f3c18;
+  background: #9f3c18;
+  color: #fff8ee !important;
+}
+
+html[data-season="thanksgiving"] .premium-nav-cta:hover {
+  background: #7c2d12;
+  text-decoration: none;
+}
+
+html[data-season="thanksgiving"] .premium-mobile-nav nav {
+  background: #fbf3e4;
+  border-bottom-color: #2c1b12;
+}
+
+html[data-season="thanksgiving"] .premium-mobile-nav a {
+  color: #2c1b12;
+}
+
+/* ── Festive Greeting Ribbon ── */
+.tg-ribbon {
+  background: linear-gradient(90deg, #5d2018 0%, #8e3618 48%, #a64d19 100%);
+  color: #fff7eb;
+  font-family: var(--font-geologica), system-ui, sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  border-bottom: 1px solid rgba(255, 224, 178, 0.28);
+}
+
+.tg-ribbon-inner {
+  width: min(100% - 2.5rem, 82rem);
+  margin-inline: auto;
+  padding: 0.58rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  text-align: center;
+}
+
+.tg-ribbon-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.18rem 0.62rem;
+  border-radius: 999px;
+  background: rgba(36, 15, 7, 0.35);
+  border: 1px solid rgba(255, 225, 174, 0.45);
+  color: #ffe7bc;
+  font-size: 0.68rem;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ── Full-bleed Dark Hero (high-contrast cream & warm gold over candlelit scene) ── */
+html[data-season="thanksgiving"] .premium-hero {
+  background: #1c0f09;
+  color: #fff8ee;
+}
+
+.tg-hero-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.tg-hero-backdrop-img {
+  object-fit: cover;
+  object-position: 65% center;
+  transform: scale(1.03);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tg-hero-backdrop-img {
+    animation: tg-hero-drift 28s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes tg-hero-drift {
+  from {
+    transform: scale(1.02) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.08) translate3d(-1.5%, -1%, 0);
+  }
+}
+
+.tg-hero-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    95deg,
+    rgba(22, 11, 6, 0.88) 0%,
+    rgba(26, 13, 7, 0.72) 48%,
+    rgba(26, 13, 7, 0.36) 100%
+  );
+  z-index: 1;
+}
+
+html[data-season="thanksgiving"] .premium-hero h1 {
+  color: #fff8ee;
+}
+
+html[data-season="thanksgiving"] .premium-hero h1 em {
+  color: #f6c06d;
+}
+
+html[data-season="thanksgiving"] .premium-hero .premium-eyebrow {
+  color: #f4c987;
+}
+
+html[data-season="thanksgiving"] .premium-hero .premium-lead {
+  color: #fff8ee;
+}
+
+html[data-season="thanksgiving"] .premium-hero .premium-hero-note,
+html[data-season="thanksgiving"] .premium-hero .premium-hero-credit {
+  color: #ebd8be;
+}
+
+html[data-season="thanksgiving"] .site-chrome .premium-hero a.premium-button {
+  background: #f0ab4c;
+  border-color: #f0ab4c;
+  color: #24130b !important;
+  font-weight: 600;
+}
+
+html[data-season="thanksgiving"] .site-chrome .premium-hero a.premium-button:hover {
+  background: #f7bf6f;
+  border-color: #f7bf6f;
+}
+
+html[data-season="thanksgiving"] .premium-hero .premium-text-link {
+  color: #fff8ee;
+}
+
+html[data-season="thanksgiving"] .premium-hero .premium-text-link:hover {
+  color: #f6c06d;
+}
+
+html[data-season="thanksgiving"] .premium-hero .premium-film-control,
+html[data-season="thanksgiving"] .premium-hero .premium-film-sound {
+  background: rgba(36, 20, 13, 0.9);
+  border-color: rgba(246, 192, 109, 0.65);
+  color: #fff8ee;
+}
+
+/* ── Light Autumn Marketing Sections ── */
+html[data-season="thanksgiving"] .premium-home h2,
+html[data-season="thanksgiving"] .premium-work-intro h1 {
+  color: #2c1b12;
+}
+
+html[data-season="thanksgiving"] .premium-home h2 em {
+  color: #8f3414;
+}
+
+html[data-season="thanksgiving"] .premium-eyebrow {
+  color: #8f3414;
+}
+
+html[data-season="thanksgiving"] .premium-section {
+  border-top-color: rgba(124, 62, 28, 0.2);
+}
+
+html[data-season="thanksgiving"] .premium-featured-work {
+  background: #fbf3e4;
+}
+
+html[data-season="thanksgiving"] .premium-featured-image {
+  background: #f2e2c8;
+}
+
+html[data-season="thanksgiving"] .premium-services,
+html[data-season="thanksgiving"] .premium-process,
+html[data-season="thanksgiving"] .premium-reviews {
+  background: #f2e2c8;
+}
+
+html[data-season="thanksgiving"] .premium-service,
+html[data-season="thanksgiving"] .premium-answers details,
+html[data-season="thanksgiving"] .premium-featured-project,
+html[data-season="thanksgiving"] .premium-featured-more,
+html[data-season="thanksgiving"] .premium-process-grid article,
+html[data-season="thanksgiving"] .premium-testimonials figure {
+  border-top-color: rgba(124, 62, 28, 0.24);
+}
+
+html[data-season="thanksgiving"] .premium-service p,
+html[data-season="thanksgiving"] .premium-featured-heading > p,
+html[data-season="thanksgiving"] .premium-section-intro,
+html[data-season="thanksgiving"] .premium-featured-location,
+html[data-season="thanksgiving"] .premium-featured-summary,
+html[data-season="thanksgiving"] .premium-featured-more p,
+html[data-season="thanksgiving"] .premium-process-grid p,
+html[data-season="thanksgiving"] .premium-process-assurance,
+html[data-season="thanksgiving"] .premium-answers details p,
+html[data-season="thanksgiving"] .premium-about-grid > div > p:not(.premium-eyebrow),
+html[data-season="thanksgiving"] .premium-review-pending,
+html[data-season="thanksgiving"] .premium-portrait span {
+  color: #5a3c2a;
+}
+
+html[data-season="thanksgiving"] .premium-about-grid > div > p.premium-lead {
+  color: #2c1b12;
+}
+
+html[data-season="thanksgiving"] .premium-button {
+  background: #9f3c18;
+  border-color: #9f3c18;
+  color: #fff8ee !important;
+}
+
+html[data-season="thanksgiving"] .premium-button:hover {
+  background: #7c2d12;
+  border-color: #7c2d12;
+}
+
+html[data-season="thanksgiving"] .premium-text-link {
+  color: #7c2d12;
+}
+
+html[data-season="thanksgiving"] .premium-text-link:hover {
+  color: #9f3c18;
+}
+
+html[data-season="thanksgiving"] .premium-portrait img {
+  filter: sepia(0.14) saturate(0.95);
+}
+
+html[data-season="thanksgiving"] .premium-skeleton-card {
+  background: #fbf3e4;
+  border-color: rgba(124, 62, 28, 0.2);
+}
+
+/* ── Dark Autumn Owner Promise Section ── */
+html[data-season="thanksgiving"] .premium-owner-promise {
+  background: #2a1810;
+  color: #fbf1df;
+}
+
+html[data-season="thanksgiving"] .premium-owner-promise .premium-eyebrow {
+  color: #f4c987;
+}
+
+html[data-season="thanksgiving"] .premium-owner-promise h2 {
+  color: #fff8ee;
+}
+
+html[data-season="thanksgiving"] .premium-owner-promise h2 em {
+  color: #f6c06d;
+}
+
+html[data-season="thanksgiving"] .premium-owner-promise-copy p {
+  color: #ebd8be;
+}
+
+html[data-season="thanksgiving"] .premium-owner-promise-copy .premium-text-link {
+  color: #fff8ee;
+}
+
+html[data-season="thanksgiving"] .premium-owner-promise-copy .premium-text-link:hover {
+  color: #f6c06d;
+}
+
+/* ── Dark Autumn Contact Section ── */
+html[data-season="thanksgiving"] .premium-contact {
+  padding: 7rem 0;
+  background: linear-gradient(160deg, #2a1810 0%, #3b2014 100%);
+  color: #fbf1df;
+  border-top: 2px solid #c67c2e;
+}
+
+html[data-season="thanksgiving"] .premium-contact h2 {
+  color: #fff8ee;
+  font-family: var(--font-instrument), Georgia, serif;
+  font-size: clamp(3rem, 5vw, 5.2rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+  text-transform: none;
+  margin-bottom: 2rem;
+}
+
+html[data-season="thanksgiving"] .premium-contact h2 em {
+  color: #f6c06d;
+}
+
+html[data-season="thanksgiving"] .premium-contact p {
+  color: #ebd8be;
+  line-height: 1.8;
+  font-size: 0.9rem;
+  max-width: 40ch;
+}
+
+html[data-season="thanksgiving"] .premium-contact .premium-eyebrow {
+  font-size: 0.62rem;
+  color: #f4c987;
+}
+
+html[data-season="thanksgiving"] .premium-contact .hobro-contact-panel {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+html[data-season="thanksgiving"] .premium-contact-links a {
+  color: #ffe3b8;
+}
+
+html[data-season="thanksgiving"] .premium-contact .premium-small {
+  font-size: 0.65rem;
+}
+
+html[data-season="thanksgiving"] .premium-contact .hobro-input {
+  background: #3f2418;
+  color: #fff8ee;
+  border: 1px solid rgba(235, 198, 148, 0.4);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0.85rem 1rem;
+  font-size: 1rem;
+  min-height: 48px;
+}
+
+html[data-season="thanksgiving"] .premium-contact .hobro-input::placeholder {
+  color: #d4b898;
+}
+
+html[data-season="thanksgiving"] .premium-contact .hobro-label {
+  color: #fff8ee;
+  font-family: var(--font-geologica), sans-serif;
+  font-size: 0.75rem;
+}
+
+html[data-season="thanksgiving"] .premium-contact button[type="submit"] {
+  background: #f0ab4c;
+  color: #24130b;
+  font-weight: 650;
+  border-radius: 0;
+  box-shadow: none;
+  border: 0;
+}
+
+html[data-season="thanksgiving"] .premium-contact button[type="submit"]:hover {
+  background: #f7bf6f;
+}
+
+@media (max-width: 800px) {
+  html[data-season="thanksgiving"] .premium-contact {
+    padding-block: 4.5rem;
+  }
+}
+
+/* ── Secondary Marketing Pages (mirrors default rules in autumn palette) ── */
+html[data-season="thanksgiving"] .hobro-page-hero {
+  background: #fbf3e4;
+  color: #2c1b12;
+  padding-top: 5rem;
+}
+
+html[data-season="thanksgiving"] .hobro-page-title {
+  color: #2c1b12;
+  font-family: var(--font-instrument), Georgia, serif;
+  text-transform: none;
+  font-size: clamp(3rem, 5.5vw, 6rem);
+}
+
+html[data-season="thanksgiving"] .hobro-page-lead {
+  color: #5a3c2a;
+}
+
+html[data-season="thanksgiving"] .hobro-page-lead strong {
+  color: #2c1b12;
+}
+
+html[data-season="thanksgiving"] .hobro-kicker {
+  color: #8f3414;
+}
+
+html[data-season="thanksgiving"] .hobro-white {
+  background: #fbf3e4;
+  color: #2c1b12;
+}
+
+html[data-season="thanksgiving"] .hobro-statement,
+html[data-season="thanksgiving"] .service-band {
+  background: #f2e2c8;
+  color: #2c1b12;
+}
+
+html[data-season="thanksgiving"] .hobro-statement p,
+html[data-season="thanksgiving"] .blog-card__body > p {
+  color: #5a3c2a;
+}
+
+html[data-season="thanksgiving"] .hobro-deck-btn {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html[data-season="thanksgiving"] .hobro-deck-btn-solid {
+  background: #9f3c18;
+  color: #fff8ee;
+  border-color: #9f3c18;
+}
+
+html[data-season="thanksgiving"] .hobro-price-card {
+  background: #fff9ef;
+  border: 1px solid rgba(124, 62, 28, 0.2);
+  border-radius: 0;
+}
+
+html[data-season="thanksgiving"] .hobro-price-card-featured {
+  background: #2a1810;
+  border-color: #2a1810;
+  color: #fff8ee;
+  box-shadow: 0 24px 48px -28px rgba(42, 24, 16, 0.45);
+}
+
+html[data-season="thanksgiving"] .blog-article {
+  --article-bg: #fbf3e4;
+  --article-ink: #2c1b12;
+  --article-muted: #5a3c2a;
+  --article-line: rgba(124, 62, 28, 0.22);
+  --article-chip: #f2e2c8;
+  --article-link: #8f3414;
+}
+
+html[data-season="thanksgiving"] .growth-intake-form,
+html[data-season="thanksgiving"] .site-chrome .hobro-page .growth-intake-form,
+html[data-season="thanksgiving"] .site-chrome .hobro-page .growth-intake-form h2,
+html[data-season="thanksgiving"] .site-chrome .hobro-page .growth-intake-form label,
+html[data-season="thanksgiving"] .site-chrome .hobro-page .growth-intake-form legend,
+html[data-season="thanksgiving"] .site-chrome .hobro-page .growth-intake-form .font-display,
+html[data-season="thanksgiving"] .site-chrome .hobro-page .growth-intake-form .text-ink,
+html[data-season="thanksgiving"] .hobro-intake-copy small {
+  color: #2c1b12;
+}
+
+html[data-season="thanksgiving"] .site-chrome .hobro-page .growth-intake-form input,
+html[data-season="thanksgiving"] .site-chrome .hobro-page .growth-intake-form textarea,
+html[data-season="thanksgiving"] .site-chrome .hobro-page .growth-intake-form select {
+  color: #2c1b12 !important;
+  background: #fffaf2 !important;
+  border: 1px solid rgba(124, 62, 28, 0.4) !important;
+}
+
+html[data-season="thanksgiving"] .site-chrome .hobro-page .growth-intake-form button[type="submit"] {
+  background: #9f3c18;
+  color: #fff8ee;
+}
+
+/* ── Footer (extra bottom padding so floating player never covers links) ── */
+html[data-season="thanksgiving"] .premium-footer {
+  background: #f2e2c8;
+  color: #2c1b12;
+  border-top: 1px solid rgba(124, 62, 28, 0.22);
+  padding-bottom: 5.5rem;
+}
+
+html[data-season="thanksgiving"] .premium-footer p,
+html[data-season="thanksgiving"] .premium-footer-bottom {
+  color: #5a3c2a;
+}
+
+/* ── Focus rings ── */
+html[data-season="thanksgiving"] .site-chrome :focus-visible {
+  outline: 2px solid #c67c2e;
+  outline-offset: 4px;
+}
+
+/* Keep transactional pages clean & readable */
+html[data-season="thanksgiving"]
+  :is(.dash-page, .contract-shell, [data-density="operate"]) {
+  --color-canvas: #fbf3e4;
+  --color-surface: #f2e2c8;
+}
+
+/* Hide decorative leaves, ribbon, and music bar on internal/contract routes */
+.site-chrome:not(:has(.hobro-page)) :is(.tg-leaves, .tg-player, .tg-ribbon) {
+  display: none;
+}
+
+/* ── Falling Autumn Leaves (compositor-only, reduced-motion opt-in) ── */
+.tg-leaves {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.tg-leaf {
+  position: absolute;
+  top: -3rem;
+  left: var(--leaf-x, 12%);
+  width: var(--leaf-size, 22px);
+  height: var(--leaf-size, 22px);
+  color: var(--leaf-color, #c85a22);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tg-leaf {
+    animation: tg-leaf-fall var(--leaf-dur, 16s) linear var(--leaf-delay, 0s)
+      infinite;
+  }
+}
+
+.tg-leaves[data-paused="true"] .tg-leaf {
+  animation-play-state: paused;
+  opacity: 0;
+}
+
+@keyframes tg-leaf-fall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -5vh, 0) rotate(0deg);
+  }
+  10% {
+    opacity: 0.72;
+  }
+  50% {
+    transform: translate3d(var(--leaf-drift, 44px), 52vh, 0) rotate(175deg);
+  }
+  88% {
+    opacity: 0.65;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(calc(var(--leaf-drift, 44px) * -0.5), 108vh, 0)
+      rotate(360deg);
+  }
+}
+
+/* ── Floating Snoopy-Style Thanksgiving Music Player (bottom-left to avoid hero video controls) ── */
+.tg-player {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: calc(100vw - 2rem);
+  padding: 0.6rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(42, 24, 16, 0.95);
+  color: #fff8ee;
+  border: 1px solid rgba(240, 171, 76, 0.55);
+  box-shadow: 0 14px 32px -12px rgba(32, 16, 8, 0.7);
+  backdrop-filter: blur(10px);
+  font-family: var(--font-geologica), system-ui, sans-serif;
+}
+
+.tg-player-art {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: #f5dfb9;
+  color: #2c1b12;
+  display: grid;
+  place-items: center;
+  border: 1px solid #f0ab4c;
+}
+
+.tg-player-notes {
+  position: absolute;
+  top: -6px;
+  right: -4px;
+  font-size: 0.75rem;
+  color: #f6c06d;
+  line-height: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tg-player[data-playing="true"] .tg-player-notes {
+    animation: tg-note-bob 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes tg-note-bob {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateY(-4px) scale(1.12);
+    opacity: 1;
+  }
+}
+
+.tg-player-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.2;
+}
+
+.tg-player-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #fff8ee;
+  white-space: nowrap;
+}
+
+.tg-player-status {
+  font-size: 0.66rem;
+  color: #ebd0a7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tg-player-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.tg-player-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 36px;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(246, 192, 109, 0.55);
+  background: #f0ab4c;
+  color: #24130b;
+  font-size: 0.72rem;
+  font-weight: 650;
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.tg-player-btn:hover {
+  background: #f7bf6f;
+}
+
+.tg-player-btn-secondary {
+  background: rgba(255, 244, 224, 0.12);
+  color: #fff1db;
+  font-weight: 500;
+  padding: 0.35rem 0.6rem;
+}
+
+.tg-player-btn-secondary:hover {
+  background: rgba(255, 244, 224, 0.22);
+}
+
+.tg-player-volume {
+  width: 64px;
+  accent-color: #f0ab4c;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .tg-player {
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    border-radius: 1rem;
+    padding: 0.65rem 0.75rem;
+    justify-content: space-between;
+  }
+
+  .tg-player-volume {
+    display: none;
+  }
+}
+
+@media print {
+  .tg-leaves,
+  .tg-player,
+  .tg-ribbon {
+    display: none !important;
+  }
+}
